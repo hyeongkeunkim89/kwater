@@ -16,29 +16,32 @@ export function WaterHubHeader({
   dense?: boolean;
 }) {
   return (
-    <header className="sticky top-0 z-40 shrink-0 border-b border-white/10 bg-[#152035]/98">
+    <header className="sticky top-0 z-40 shrink-0 border-b border-white/10 bg-[#152035]/98 backdrop-blur-md supports-[backdrop-filter]:bg-[#152035]/92">
       <div
         className={[
-          "mx-auto flex max-w-7xl items-center justify-between gap-4 sm:gap-6",
-          dense ? "px-5 py-2.5 sm:px-8" : "px-6 py-4 sm:px-10",
+          "mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 md:gap-6",
+          dense ? "px-4 py-2.5 sm:px-8" : "px-4 py-3 sm:px-10 sm:py-4",
         ].join(" ")}
       >
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link
+          href="/"
+          className="group flex min-w-0 max-w-full shrink-0 items-center gap-2 sm:gap-3"
+        >
           <Image
             src="/kwater-logo.svg"
             alt="K-water 한국수자원공사"
             width={110}
             height={20}
-            className="brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
+            className="h-4 w-auto shrink-0 brightness-0 invert opacity-90 transition-opacity group-hover:opacity-100 sm:h-5"
             priority
           />
-          <div className="h-5 w-px bg-white/20" />
-          <span className="text-sm font-bold text-white/85 group-hover:text-white transition-colors tracking-tight">
+          <div className="hidden h-4 w-px bg-white/20 sm:block sm:h-5" aria-hidden />
+          <span className="min-w-0 truncate text-xs font-bold tracking-tight text-white/85 transition-colors group-hover:text-white sm:text-sm">
             물문화관 홍보 허브
           </span>
         </Link>
 
-        <nav className="flex items-center gap-6 text-sm font-medium">
+        <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-medium sm:gap-x-5 sm:text-sm md:justify-end">
           <Link
             href="/status"
             className={activeNav === "status" ? navActive : navInactive}
@@ -53,9 +56,11 @@ export function WaterHubHeader({
             href="https://www.kwater.or.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-white/30 px-4 py-1.5 text-white/80 transition hover:border-white hover:text-white"
+            className="whitespace-nowrap rounded-full border border-white/30 px-3 py-1.5 text-white/80 transition hover:border-white hover:text-white sm:px-4"
+            aria-label="K-water 공식 홈페이지"
           >
-            공식 홈페이지
+            <span className="sm:hidden">홈페이지</span>
+            <span className="hidden sm:inline">공식 홈페이지</span>
           </a>
         </nav>
       </div>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 
@@ -17,6 +17,13 @@ export const metadata: Metadata = {
     "한국수자원공사 물문화관·조력문화관의 개요, 위치, 운영 현황을 한눈에 확인할 수 있는 홍보용 안내 페이지입니다.",
 };
 
+/** 모바일 브라우저에서 레이아웃·핀치 줌 기본 동작을 명시 */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,7 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={notoSansKr.variable}>
-      <body className="min-h-screen font-sans antialiased">{children}</body>
+      <body className="min-h-screen min-w-0 overflow-x-hidden font-sans antialiased">
+        {children}
+      </body>
     </html>
   );
 }

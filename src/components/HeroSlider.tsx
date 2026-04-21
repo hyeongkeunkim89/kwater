@@ -164,7 +164,7 @@ export function HeroSlider() {
       })}
 
       {/* ── 텍스트 콘텐츠 ── */}
-      <div className="relative z-10 flex h-full min-h-0 items-end px-6 pb-14 pt-4 sm:px-12 sm:pb-16 lg:px-20 lg:pb-16">
+      <div className="relative z-10 flex h-full min-h-0 items-end px-4 pb-12 pt-4 sm:px-12 sm:pb-16 lg:px-20 lg:pb-16">
 
         {/* 왼쪽: 슬라이드 정보 */}
         <div key={current} className="hero-caption-animate max-w-xl">
@@ -174,7 +174,7 @@ export function HeroSlider() {
               {SLIDES[current].kind}
             </span>
           </div>
-          <h2 className="text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+          <h2 className="text-2xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
             {SLIDES[current].centerName}
           </h2>
           <p className="mt-2 text-sm font-medium text-white/60 sm:mt-3 sm:text-base">

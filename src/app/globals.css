@@ -22,6 +22,8 @@ body {
   font-family: var(--font-noto-sans-kr), "Malgun Gothic", "Apple SD Gothic Neo",
     sans-serif;
   -webkit-font-smoothing: antialiased;
+  /* 모바일에서 더블탭 줌 지연 완화 */
+  touch-action: manipulation;
 }
 
 @media (prefers-reduced-motion: reduce) {
