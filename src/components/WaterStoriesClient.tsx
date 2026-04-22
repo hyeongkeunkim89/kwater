@@ -33,11 +33,14 @@ export function WaterStoriesClient({
   editorialSpotlight,
   initialCenterId = "",
   storiesLive,
+  uploadBlocked = false,
   initialStories,
 }: {
   editorialSpotlight: EditorialPhotoOfMonth | null;
   initialCenterId?: string;
   storiesLive: boolean;
+  /** Vercel 배포인데 DB·Blob 미설정 — 업로드 불가 */
+  uploadBlocked?: boolean;
   initialStories: WaterStory[];
 }) {
   const [stories, setStories] = useState<WaterStory[]>(initialStories);
@@ -107,6 +110,7 @@ export function WaterStoriesClient({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (uploadBlocked) return;
     setFormError(null);
     setFormOk(null);
 
@@ -134,6 +138,17 @@ export function WaterStoriesClient({
     }
     if (!file) {
       setFormError("사진 파일을 선택해 주세요.");
+      return;
+    }
+
+    const heic =
+      file.type === "image/heic" ||
+      file.type === "image/heif" ||
+      /\.(heic|heif)$/i.test(file.name);
+    if (heic) {
+      setFormError(
+        "HEIC/HEIF 형식은 지원하지 않습니다. iPhone은 설정 → 카메라 → 포맷에서 ‘호환성 우선’으로 바꾸거나, 사진을 JPEG로보낸 뒤 올려 주세요.",
+      );
       return;
     }
 
@@ -299,9 +314,25 @@ export function WaterStoriesClient({
           <p className="max-w-md text-sm leading-relaxed text-slate-500">{uploadHint}</p>
         </div>
 
+        {uploadBlocked && (
+          <div
+            className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-relaxed text-amber-950 sm:px-6"
+            role="status"
+          >
+            <p className="font-bold">지금 이 사이트에서는 사진 등록을 받을 수 없습니다.</p>
+            <p className="mt-2 text-amber-900/90">
+              운영 측에서 갤러리 저장소를 연결한 뒤 다시 열어 드릴 때까지 등록이 비활성입니다. 아래 갤러리는
+              그대로 둘러보실 수 있습니다.
+            </p>
+          </div>
+        )}
+
         <form
           onSubmit={handleSubmit}
-          className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8"
+          className={[
+            "rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8",
+            uploadBlocked ? "pointer-events-none opacity-60" : "",
+          ].join(" ")}
         >
           <div className="grid gap-5 sm:grid-cols-2">
             <label className="block min-w-0 sm:col-span-2">
@@ -369,10 +400,10 @@ export function WaterStoriesClient({
           <div className="mt-6 flex flex-wrap gap-3">
             <button
               type="submit"
-              disabled={uploading}
+              disabled={uploading || uploadBlocked}
               className="min-h-11 min-w-[44px] rounded-full bg-sky-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-sky-500/25 transition hover:bg-sky-400 disabled:opacity-60"
             >
-              {uploading ? "올리는 중…" : "갤러리에 등록"}
+              {uploadBlocked ? "등록 비활성" : uploading ? "올리는 중…" : "갤러리에 등록"}
             </button>
           </div>
         </form>

@@ -10,6 +10,17 @@ function safeSegment(s: string) {
 }
 
 export async function POST(req: NextRequest) {
+  /** Vercel 등 클라우드에서는 로컬 디스크에 쓸 수 없어 항상 실패함 → DB+Blob 설정 전 안내 */
+  if (process.env.VERCEL) {
+    return NextResponse.json(
+      {
+        error:
+          "이 사이트는 클라우드에 올라가 있어 여기서는 사진 파일을 저장할 수 없습니다. 관리자에게 갤러리 저장 설정을 요청하거나, 잠시 후 다시 시도해 주세요.",
+      },
+      { status: 503 },
+    );
+  }
+
   try {
     const data = await req.formData();
     const file = data.get("file") as File | null;
@@ -45,6 +56,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ src });
   } catch (e) {
     console.error(e);
-    return NextResponse.json({ error: "서버 오류" }, { status: 500 });
+    const msg =
+      e instanceof Error && /EROFS|read-only|EPERM/i.test(e.message)
+        ? "서버에 파일을 저장할 수 없습니다. 관리자에게 문의해 주세요."
+        : "등록 처리 중 오류가 났습니다. 잠시 후 다시 시도해 주세요.";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

@@ -4,7 +4,7 @@ import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterStoriesClient } from "@/components/WaterStoriesClient";
 import { editorialPhotoOfMonth } from "@/data/water-stories-spotlight";
-import { isWaterStoriesLive } from "@/lib/storiesConfig";
+import { isGalleryUploadBlockedOnVercel, isWaterStoriesLive } from "@/lib/storiesConfig";
 import { listWaterStoriesFromDb } from "@/lib/waterStoriesDb";
 import type { WaterStory } from "@/types/waterStory";
 
@@ -26,6 +26,7 @@ export default async function MulIyagiPage({ searchParams }: Props) {
   const initialCenter = center && /^[a-zA-Z0-9_-]+$/.test(center) ? center : "";
 
   const storiesLive = isWaterStoriesLive();
+  const uploadBlocked = isGalleryUploadBlockedOnVercel();
   let initialStories: WaterStory[] = [];
   if (storiesLive) {
     try {
@@ -111,6 +112,7 @@ export default async function MulIyagiPage({ searchParams }: Props) {
           editorialSpotlight={editorialPhotoOfMonth}
           initialCenterId={initialCenter}
           storiesLive={storiesLive}
+          uploadBlocked={uploadBlocked}
           initialStories={initialStories}
         />
       </main>
