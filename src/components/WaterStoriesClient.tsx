@@ -319,10 +319,10 @@ export function WaterStoriesClient({
             className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-relaxed text-amber-950 sm:px-6"
             role="status"
           >
-            <p className="font-bold">지금 이 사이트에서는 사진 등록을 받을 수 없습니다.</p>
+            <p className="font-bold">지금은 사진 등록을 받지 않습니다.</p>
             <p className="mt-2 text-amber-900/90">
-              운영 측에서 갤러리 저장소를 연결한 뒤 다시 열어 드릴 때까지 등록이 비활성입니다. 아래 갤러리는
-              그대로 둘러보실 수 있습니다.
+              준비가 되면 이 페이지에서 다시 시도해 주세요. 그동안에는 아래 갤러리를 자유롭게 둘러보실 수
+              있습니다.
             </p>
           </div>
         )}

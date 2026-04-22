@@ -10,12 +10,12 @@ function safeSegment(s: string) {
 }
 
 export async function POST(req: NextRequest) {
-  /** Vercel 등 클라우드에서는 로컬 디스크에 쓸 수 없어 항상 실패함 → DB+Blob 설정 전 안내 */
+  /** Vercel에서는 public 디스크 쓰기 불가 — DB+Blob 모드로만 등록 가능 */
   if (process.env.VERCEL) {
     return NextResponse.json(
       {
         error:
-          "이 사이트는 클라우드에 올라가 있어 여기서는 사진 파일을 저장할 수 없습니다. 관리자에게 갤러리 저장 설정을 요청하거나, 잠시 후 다시 시도해 주세요.",
+          "지금은 사진을 등록할 수 없습니다. 잠시 후 다시 시도하시거나, 사이트 담당자에게 문의해 주세요.",
       },
       { status: 503 },
     );
