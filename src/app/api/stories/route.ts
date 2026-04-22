@@ -1,7 +1,7 @@
-import { put } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
 import { waterCenters } from "@/data/centers";
 import { isWaterStoriesLive } from "@/lib/storiesConfig";
+import { uploadStoryImageToStorage } from "@/lib/supabaseAdmin";
 import {
   insertWaterStoryDb,
   listWaterStoriesFromDb,
@@ -80,26 +80,18 @@ export async function POST(req: NextRequest) {
 
     const ext = (file.name.split(".").pop() ?? "jpg").toLowerCase();
     const safeExt = ["jpg", "jpeg", "png", "webp", "gif"].includes(ext) ? ext : "jpg";
-    const pathname = `stories/${safeId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${safeExt}`;
+    const objectPath = `${safeId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${safeExt}`;
 
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!token) {
-      return NextResponse.json(
-        { error: "지금은 사진을 등록할 수 없습니다. 잠시 후 다시 시도해 주세요." },
-        { status: 503 },
-      );
+    const bytes = await file.arrayBuffer();
+    const uploaded = await uploadStoryImageToStorage(objectPath, bytes, file.type);
+    if ("error" in uploaded) {
+      return NextResponse.json({ error: uploaded.error }, { status: 500 });
     }
-
-    const blob = await put(pathname, file, {
-      access: "public",
-      token,
-      addRandomSuffix: false,
-    });
 
     const story = await insertWaterStoryDb({
       centerId: safeId,
       centerName: center.name,
-      imageUrl: blob.url,
+      imageUrl: uploaded.publicUrl,
       nickname,
       caption,
     });

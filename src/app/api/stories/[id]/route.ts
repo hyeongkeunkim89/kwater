@@ -1,6 +1,6 @@
-import { del } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
 import { isWaterStoriesLive } from "@/lib/storiesConfig";
+import { removeStoryImageFromStorage } from "@/lib/supabaseAdmin";
 import { verifyWaterStoriesAdmin, adminStoriesConfigured } from "@/lib/waterStoriesAdminAuth";
 import { deleteWaterStoryDb, getWaterStoryImageUrl, setPhotoOfMonthDb } from "@/lib/waterStoriesDb";
 
@@ -73,22 +73,10 @@ export async function DELETE(req: NextRequest, { params }: Props) {
     return NextResponse.json({ error: "잘못된 ID입니다." }, { status: 400 });
   }
 
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
-  if (!token) {
-    return NextResponse.json(
-      { error: "지금은 삭제를 완료할 수 없습니다. 잠시 후 다시 시도해 주세요." },
-      { status: 503 },
-    );
-  }
-
   try {
     const imageUrl = await getWaterStoryImageUrl(id);
     if (imageUrl) {
-      try {
-        await del(imageUrl, { token });
-      } catch (blobErr) {
-        console.warn("Blob 삭제 실패(무시하고 DB만 삭제):", blobErr);
-      }
+      await removeStoryImageFromStorage(imageUrl);
     }
     await deleteWaterStoryDb(id);
     return NextResponse.json({ ok: true });
