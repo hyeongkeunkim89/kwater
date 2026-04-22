@@ -197,6 +197,12 @@ export function HeroSlider() {
             >
               투어 예약하기
             </Link>
+            <Link
+              href="/mul-iyagi"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-bold text-white/95 backdrop-blur-sm transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b111e] sm:px-6 sm:py-3 sm:text-sm"
+            >
+              물 이야기
+            </Link>
           </div>
         </div>
 

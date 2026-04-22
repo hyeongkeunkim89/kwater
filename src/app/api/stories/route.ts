@@ -1,0 +1,112 @@
+import { put } from "@vercel/blob";
+import { NextRequest, NextResponse } from "next/server";
+import { waterCenters } from "@/data/centers";
+import { isWaterStoriesLive } from "@/lib/storiesConfig";
+import {
+  insertWaterStoryDb,
+  listWaterStoriesFromDb,
+} from "@/lib/waterStoriesDb";
+
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_SIZE = 12 * 1024 * 1024;
+const NICK_MAX = 24;
+const CAPTION_MAX = 280;
+const CAPTION_MIN = 8;
+
+function safeSegment(s: string) {
+  return s.replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
+export async function GET(req: NextRequest) {
+  if (!isWaterStoriesLive()) {
+    return NextResponse.json([]);
+  }
+  const raw = req.nextUrl.searchParams.get("centerId");
+  const centerId =
+    raw && /^[a-zA-Z0-9_-]+$/.test(raw) ? raw : undefined;
+  try {
+    const list = await listWaterStoriesFromDb(centerId);
+    return NextResponse.json(list);
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: "목록을 불러오지 못했습니다." }, { status: 500 });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  if (!isWaterStoriesLive()) {
+    return NextResponse.json(
+      { error: "지금은 사진을 등록할 수 없습니다. 잠시 후 다시 시도하거나 관리자에게 문의해 주세요." },
+      { status: 503 },
+    );
+  }
+
+  try {
+    const data = await req.formData();
+    const file = data.get("file") as File | null;
+    const centerIdRaw = (data.get("centerId") as string | null)?.trim() ?? "";
+    const nickname = (data.get("nickname") as string | null)?.trim() ?? "";
+    const caption = (data.get("caption") as string | null)?.trim() ?? "";
+
+    if (!file || !centerIdRaw) {
+      return NextResponse.json({ error: "파일과 문화관 선택이 필요합니다." }, { status: 400 });
+    }
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      return NextResponse.json({ error: "JPG/PNG/WebP/GIF만 허용됩니다." }, { status: 400 });
+    }
+    if (file.size > MAX_SIZE) {
+      return NextResponse.json({ error: "파일은 12 MB 이하여야 합니다." }, { status: 400 });
+    }
+
+    const safeId = safeSegment(centerIdRaw);
+    if (!safeId) {
+      return NextResponse.json({ error: "유효하지 않은 문화관입니다." }, { status: 400 });
+    }
+
+    const center = waterCenters.find((c) => c.id === safeId);
+    if (!center) {
+      return NextResponse.json({ error: "알 수 없는 문화관입니다." }, { status: 400 });
+    }
+
+    if (!nickname || nickname.length > NICK_MAX) {
+      return NextResponse.json({ error: `닉네임은 1~${NICK_MAX}자로 입력해 주세요.` }, { status: 400 });
+    }
+    if (caption.length < CAPTION_MIN || caption.length > CAPTION_MAX) {
+      return NextResponse.json(
+        { error: `설명은 ${CAPTION_MIN}~${CAPTION_MAX}자로 입력해 주세요.` },
+        { status: 400 },
+      );
+    }
+
+    const ext = (file.name.split(".").pop() ?? "jpg").toLowerCase();
+    const safeExt = ["jpg", "jpeg", "png", "webp", "gif"].includes(ext) ? ext : "jpg";
+    const pathname = `stories/${safeId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${safeExt}`;
+
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    if (!token) {
+      return NextResponse.json(
+        { error: "지금은 사진을 등록할 수 없습니다. 잠시 후 다시 시도해 주세요." },
+        { status: 503 },
+      );
+    }
+
+    const blob = await put(pathname, file, {
+      access: "public",
+      token,
+      addRandomSuffix: false,
+    });
+
+    const story = await insertWaterStoryDb({
+      centerId: safeId,
+      centerName: center.name,
+      imageUrl: blob.url,
+      nickname,
+      caption,
+    });
+
+    return NextResponse.json(story);
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: "등록 처리 중 오류가 났습니다." }, { status: 500 });
+  }
+}

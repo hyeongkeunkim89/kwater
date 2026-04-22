@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         hostname: "tong.visitkorea.or.kr",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+        pathname: "/**",
+      },
     ],
   },
 };

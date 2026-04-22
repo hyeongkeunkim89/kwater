@@ -128,6 +128,19 @@ export default async function CenterDetailPage({ params }: Props) {
           <CenterDetailLiveStatus center={center} />
         </div>
 
+        <aside className="mt-10 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50/90 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5">
+          <p className="min-w-0 text-sm leading-relaxed text-slate-700">
+            주변 산책로·전망 사진을 <strong className="text-slate-900">물 이야기</strong>에 올리면 다른
+            방문객의 동선 참고에도 도움이 됩니다.
+          </p>
+          <Link
+            href={`/mul-iyagi?center=${center.id}`}
+            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-800 transition hover:border-sky-300 hover:text-sky-800"
+          >
+            이 거점으로 사진 올리기
+          </Link>
+        </aside>
+
         {/* 시설현황 */}
         <section className="mt-12" aria-labelledby="facility-profile">
           <div className="mb-6 flex items-center gap-4">

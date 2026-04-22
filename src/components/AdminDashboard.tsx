@@ -9,6 +9,7 @@ import {
   deleteReservation,
 } from "@/lib/reservations";
 import { waterCenters } from "@/data/centers";
+import { AdminWaterStoriesPanel } from "@/components/AdminWaterStoriesPanel";
 
 const STATUS_STYLES: Record<ReservationStatus, string> = {
   대기: "bg-amber-50 text-amber-800 ring-amber-300/60",
@@ -22,7 +23,7 @@ function formatDateKo(dateStr: string) {
   return `${y}.${m}.${d}(${dow})`;
 }
 
-export function AdminDashboard() {
+export function AdminDashboard({ storiesLive = false }: { storiesLive?: boolean }) {
   const [list, setList] = useState<Reservation[]>([]);
   const [filterCenter, setFilterCenter] = useState("전체");
   const [filterStatus, setFilterStatus] = useState<ReservationStatus | "전체">("전체");
@@ -242,6 +243,10 @@ export function AdminDashboard() {
           </div>
         </div>
       )}
+
+      <div className="mt-12 border-t border-slate-200 pt-12">
+        <AdminWaterStoriesPanel storiesLive={storiesLive} />
+      </div>
 
       {/* 삭제 확인 모달 */}
       {confirmDelete && (

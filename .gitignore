@@ -32,9 +32,13 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
+
+# 물 이야기 로컬 업로드(프로덕션은 Blob)
+/public/stories/
 
 # typescript
 *.tsbuildinfo

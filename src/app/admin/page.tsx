@@ -1,4 +1,5 @@
 import { AdminDashboard } from "@/components/AdminDashboard";
+import { isWaterStoriesLive } from "@/lib/storiesConfig";
 import Link from "next/link";
 
 export const metadata = {
@@ -6,6 +7,8 @@ export const metadata = {
 };
 
 export default function AdminPage() {
+  const storiesLive = isWaterStoriesLive();
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       {/* 다크 헤더 */}
@@ -48,7 +51,7 @@ export default function AdminPage() {
       </div>
 
       <main className="mx-auto max-w-7xl px-6 py-10 sm:px-10">
-        <AdminDashboard />
+        <AdminDashboard storiesLive={storiesLive} />
       </main>
 
       <footer className="mt-8 border-t border-slate-200 bg-[#0b111e] py-10">

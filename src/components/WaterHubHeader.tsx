@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-type ActiveNav = "status" | "none";
+type ActiveNav = "status" | "stories" | "none";
 
 const navInactive =
   "link-underline text-white/70 transition hover:text-white";
@@ -48,6 +48,13 @@ export function WaterHubHeader({
             aria-current={activeNav === "status" ? "page" : undefined}
           >
             문화관 현황
+          </Link>
+          <Link
+            href="/mul-iyagi"
+            className={activeNav === "stories" ? navActive : navInactive}
+            aria-current={activeNav === "stories" ? "page" : undefined}
+          >
+            물 이야기
           </Link>
           <Link href="/reserve" className={navInactive}>
             투어 예약
