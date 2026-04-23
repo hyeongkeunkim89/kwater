@@ -16,6 +16,28 @@ import type { WaterStory } from "@/types/waterStory";
 const NICK_MAX = 24;
 const CAPTION_MAX = 280;
 
+const fetchStoriesOpts: RequestInit = {
+  credentials: "same-origin",
+  cache: "no-store",
+};
+
+/** 모바일에서 HTML/빈 본문이 오면 res.json()이 터져 ‘네트워크 오류’로만 보이는 경우 방지 */
+async function parseJsonResponse<T>(res: Response): Promise<T> {
+  const raw = await res.text();
+  const ct = res.headers.get("content-type") ?? "";
+  if (!raw.trim()) {
+    throw new Error(`빈 응답 HTTP ${res.status}`);
+  }
+  if (!ct.includes("application/json")) {
+    throw new Error(raw.trim().slice(0, 200));
+  }
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    throw new Error(`JSON 파싱 실패 HTTP ${res.status}`);
+  }
+}
+
 function formatDateKo(iso: string) {
   try {
     const d = new Date(iso);
@@ -57,9 +79,9 @@ export function WaterStoriesClient({
   const reload = useCallback(async () => {
     if (storiesLive) {
       try {
-        const res = await fetch("/api/stories");
+        const res = await fetch("/api/stories", fetchStoriesOpts);
         if (res.ok) {
-          const data = (await res.json()) as WaterStory[];
+          const data = await parseJsonResponse<WaterStory[]>(res);
           setStories(Array.isArray(data) ? data : []);
         }
       } catch {
@@ -162,12 +184,16 @@ export function WaterStoriesClient({
     try {
       if (storiesLive) {
         const fd = new FormData();
-        fd.append("file", file);
+        fd.append("file", file, file.name || "photo.jpg");
         fd.append("centerId", centerId);
         fd.append("nickname", nick);
         fd.append("caption", cap);
-        const res = await fetch("/api/stories", { method: "POST", body: fd });
-        const data = (await res.json()) as WaterStory & { error?: string };
+        const res = await fetch("/api/stories", {
+          method: "POST",
+          body: fd,
+          ...fetchStoriesOpts,
+        });
+        const data = await parseJsonResponse<WaterStory & { error?: string }>(res);
         if (!res.ok) {
           setFormError(data.error ?? "등록에 실패했습니다.");
           return;
@@ -180,10 +206,14 @@ export function WaterStoriesClient({
       }
 
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", file, file.name || "photo.jpg");
       fd.append("centerId", centerId);
-      const res = await fetch("/api/stories/upload", { method: "POST", body: fd });
-      const data = (await res.json()) as { src?: string; error?: string };
+      const res = await fetch("/api/stories/upload", {
+        method: "POST",
+        body: fd,
+        ...fetchStoriesOpts,
+      });
+      const data = await parseJsonResponse<{ src?: string; error?: string }>(res);
       if (!res.ok) {
         setFormError(data.error ?? "업로드에 실패했습니다.");
         return;
@@ -204,8 +234,23 @@ export function WaterStoriesClient({
       setCaption("");
       setFile(null);
       await reload();
-    } catch {
-      setFormError("네트워크 오류가 났습니다. 잠시 후 다시 시도해 주세요.");
+    } catch (err) {
+      console.error(err);
+      const m = err instanceof Error ? err.message : String(err);
+      const low = m.toLowerCase();
+      if (
+        /failed to fetch|load failed|networkerror|aborted|timeout|timed out|빈 응답|econnreset/i.test(
+          low + m,
+        )
+      ) {
+        setFormError(
+          "연결이 끊기거나 시간이 초과되었습니다. Wi-Fi로 바꾸거나, 사진 용량을 줄인 뒤 다시 시도해 주세요. (iPhone은 카메라 ‘호환성 우선’·JPEG 권장)",
+        );
+      } else if (/json|unexpected token|syntaxerror|파싱/i.test(low + m)) {
+        setFormError("서버 응답을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.");
+      } else {
+        setFormError(`요청에 실패했습니다. ${m.slice(0, 160)}`);
+      }
     } finally {
       setUploading(false);
     }

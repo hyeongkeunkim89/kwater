@@ -7,6 +7,9 @@ import {
   listWaterStoriesFromDb,
 } from "@/lib/waterStoriesDb";
 
+/** 모바일·느린망에서 Storage+DB 업로드가 잘리지 않도록(Vercel 플랜별 상한은 대시보드 참고) */
+export const maxDuration = 60;
+
 const CANONICAL_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"] as const;
 
 /** 브라우저/OS별로 image/jpg, 빈 type 등이 올 수 있어 Storage에 넣기 전에 표준 MIME으로 맞춤 */
