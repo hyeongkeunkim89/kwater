@@ -4,6 +4,8 @@ import { deleteTourReservationDb, updateTourReservationStatusDb } from "@/lib/re
 import { verifyWaterStoriesAdmin, adminStoriesConfigured } from "@/lib/waterStoriesAdminAuth";
 import type { ReservationStatus } from "@/types/reservation";
 
+export const runtime = "nodejs";
+
 const STATUSES: ReservationStatus[] = ["대기", "확정", "취소"];
 
 type Ctx = { params: Promise<{ id: string }> };

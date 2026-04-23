@@ -10,6 +10,8 @@ import { verifyWaterStoriesAdmin, adminStoriesConfigured } from "@/lib/waterStor
 import type { VisitPurpose } from "@/types/reservation";
 import { MAX_PER_SLOT, TOUR_SLOTS, VISIT_PURPOSES } from "@/types/reservation";
 
+export const runtime = "nodejs";
+
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const PHONE_RE = /^[0-9-]{9,13}$/;
 const NAME_MIN = 2;

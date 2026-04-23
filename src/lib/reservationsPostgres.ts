@@ -71,3 +71,16 @@ export function getReservationsSql(): ReturnType<typeof postgres> | null {
   }
   return globalForSql.reservationsSql;
 }
+
+/** 연결 재시도 전에 풀을 비울 때 사용 */
+export async function disposeReservationsSqlClient(): Promise<void> {
+  const c = globalForSql.reservationsSql;
+  globalForSql.reservationsSql = undefined;
+  if (c) {
+    try {
+      await c.end({ timeout: 5 });
+    } catch {
+      /* 연결 끊김 시 무시 */
+    }
+  }
+}

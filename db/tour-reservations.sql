@@ -23,3 +23,9 @@ CREATE INDEX IF NOT EXISTS tour_reservations_slot_idx
 
 CREATE INDEX IF NOT EXISTS tour_reservations_created_idx
   ON tour_reservations (created_at DESC);
+
+-- Supabase Table Editor에 "RLS is disabled"가 뜨면 아래 한 줄을 실행해 RLS를 켤 수 있음.
+-- · 의미: anon/authenticated 등에 대해 "행 단위 접근 제어"를 켠다. 정책이 없으면 PostgREST(공개 API)로는 이 테이블을 읽기 어렵다.
+-- · Next.js 서버가 `RESERVATIONS_DATABASE_URL`의 postgres 역할로 붙는 경우, 해당 역할은 보통 RLS를 우회하므로
+--   기존 `/api/reservations` 동작은 그대로인 경우가 많다(문제 시 한 번만 예약 API로 smoke 테스트).
+ALTER TABLE tour_reservations ENABLE ROW LEVEL SECURITY;

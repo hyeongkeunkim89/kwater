@@ -1,4 +1,5 @@
 import {
+  disposeReservationsSqlClient,
   getReservationsSql,
   reservationsSkipRuntimeSchemaDdl,
 } from "@/lib/reservationsPostgres";
@@ -10,6 +11,39 @@ type ReservationsSql = NonNullable<ReturnType<typeof getReservationsSql>>;
 const globalForSchema = globalThis as unknown as {
   tourReservationsSchemaPromise: Promise<void> | null | undefined;
 };
+
+export async function disposeReservationsSqlForRetry(): Promise<void> {
+  globalForSchema.tourReservationsSchemaPromise = undefined;
+  await disposeReservationsSqlClient();
+}
+
+function isTransientConnectionFailure(err: unknown): boolean {
+  const code =
+    err && typeof err === "object" && "code" in err
+      ? String((err as { code?: string }).code ?? "").toUpperCase()
+      : "";
+  const msg = (err instanceof Error ? err.message : String(err)).toUpperCase();
+  return (
+    code === "ETIMEDOUT" ||
+    code === "ECONNRESET" ||
+    code === "EPIPE" ||
+    code === "ENOTFOUND" ||
+    /ETIMEDOUT|ECONNRESET|EPIPE|ENOTFOUND|SOCKET HANG UP|CONNECT_TIMEOUT|UND_ERR_CONNECT_TIMEOUT/i.test(
+      msg + code,
+    )
+  );
+}
+
+/** DB·드라이버가 bigint 등으로 줄 때도 안전하게 합산용 숫자로 */
+function toFiniteCount(v: unknown): number {
+  if (typeof v === "bigint") return Number(v);
+  if (typeof v === "number" && Number.isFinite(v)) return v;
+  if (typeof v === "string") {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  }
+  return 0;
+}
 
 type TourReservationRow = {
   id: string;
@@ -40,7 +74,7 @@ function rowToReservation(r: TourReservationRow): Reservation {
     centerId: r.center_id,
     centerName: r.center_name,
     date: formatVisitDate(r.visit_date),
-    time: r.visit_time,
+    time: slotKeyFromDbVisitTime(r.visit_time),
     name: r.name,
     phone: r.phone,
     partySize: Number(r.party_size),
@@ -113,7 +147,12 @@ export async function listTourReservationsFromDb(): Promise<Reservation[]> {
   return rows.map(rowToReservation);
 }
 
-export async function getSlotBookedCounts(
+/** 슬롯 키를 `10:00` 형태로 맞춤 — DB에 `10:00:00` 등으로 들어간 행도 같은 슬롯으로 집계 */
+function slotKeyFromDbVisitTime(raw: string): string {
+  return String(raw ?? "").trim().slice(0, 5);
+}
+
+async function getSlotBookedCountsOnce(
   centerId: string,
   visitDate: string,
 ): Promise<Record<string, number>> {
@@ -121,19 +160,44 @@ export async function getSlotBookedCounts(
   const empty: Record<string, number> = Object.fromEntries(TOUR_SLOTS.map((t) => [t, 0]));
   if (!sql) return empty;
   await ensureTourReservationsSchema(sql);
-  const rows = await sql<{ visit_time: string; total: string }[]>`
-    SELECT visit_time, COALESCE(SUM(party_size), 0)::text AS total
+  const rows = await sql<{ visit_time: string; total: string | number | bigint }[]>`
+    SELECT
+      left(btrim(visit_time::text), 5) AS visit_time,
+      COALESCE(SUM(party_size), 0)::text AS total
     FROM tour_reservations
     WHERE center_id = ${centerId}
       AND visit_date = ${visitDate}::date
       AND status <> '취소'
-    GROUP BY visit_time
+    GROUP BY 1
   `;
   const out = { ...empty };
   for (const r of rows) {
-    if (r.visit_time in out) out[r.visit_time] = Number(r.total);
+    const key = slotKeyFromDbVisitTime(r.visit_time);
+    if (key in out) out[key] = toFiniteCount(r.total);
   }
   return out;
+}
+
+export async function getSlotBookedCounts(
+  centerId: string,
+  visitDate: string,
+): Promise<Record<string, number>> {
+  let lastErr: unknown;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      return await getSlotBookedCountsOnce(centerId, visitDate);
+    } catch (e) {
+      lastErr = e;
+      if (attempt < 2 && isTransientConnectionFailure(e)) {
+        console.warn("getSlotBookedCounts: 연결 실패, 재시도", attempt + 1, e);
+        await disposeReservationsSqlForRetry();
+        await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw lastErr;
 }
 
 export class TourReservationSlotFullError extends Error {
@@ -161,7 +225,7 @@ export async function insertTourReservationDb(
       FROM tour_reservations
       WHERE center_id = ${input.centerId}
         AND visit_date = ${input.date}::date
-        AND visit_time = ${input.time}
+        AND left(btrim(visit_time::text), 5) = left(btrim(${input.time}), 5)
         AND status <> '취소'
     `;
     const booked = Number(sumRows[0]?.s ?? 0);
