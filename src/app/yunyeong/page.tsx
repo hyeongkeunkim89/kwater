@@ -1,6 +1,8 @@
 import { AdminDashboard } from "@/components/AdminDashboard";
+import { StaffConsoleLogoutButton } from "@/components/StaffConsoleLogoutButton";
 import { isReservationsLive } from "@/lib/reservationsConfig";
 import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
+import { isStaffConsoleGateEnabled } from "@/lib/staffConsoleGate";
 import { isWaterStoriesLive } from "@/lib/storiesConfig";
 import { adminStoriesConfigured } from "@/lib/waterStoriesAdminAuth";
 import Link from "next/link";
@@ -15,6 +17,7 @@ export default function YunyeongConsolePage() {
   const storiesLive = isWaterStoriesLive();
   const reservationsLive = isReservationsLive();
   const adminSecretConfigured = adminStoriesConfigured();
+  const gateEnabled = isStaffConsoleGateEnabled();
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
@@ -27,16 +30,17 @@ export default function YunyeongConsolePage() {
               <p className="text-sm font-bold leading-none text-white">문화관 운영 콘솔</p>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+            <StaffConsoleLogoutButton show={gateEnabled} />
             <Link
               href="/reserve"
-              className="rounded-full bg-sky-500 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-sky-400"
+              className="inline-flex min-h-[44px] items-center rounded-full bg-sky-500 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-sky-400"
             >
               + 예약 신청
             </Link>
             <Link
               href="/"
-              className="rounded-full border border-white/20 px-4 py-1.5 text-sm text-white/60 transition hover:border-white/50 hover:text-white"
+              className="inline-flex min-h-[44px] items-center rounded-full border border-white/20 px-4 py-1.5 text-sm text-white/60 transition hover:border-white/50 hover:text-white"
             >
               홈으로
             </Link>
@@ -51,7 +55,10 @@ export default function YunyeongConsolePage() {
             예약·콘텐츠 현황
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-slate-500">
-            가이드 투어 예약을 확인·처리하고, 물 이야기 갤러리를 같은 비밀번호로 관리합니다. 북마크는{" "}
+            가이드 투어 예약을 확인·처리하고, 물 이야기 갤러리를 관리합니다. 이 화면에 들어오기 위한 비밀번호(
+            <code className="rounded bg-slate-100 px-1 text-xs">STAFF_CONSOLE_PASSWORD</code>)와, 예약·사진 API에
+            쓰는 <code className="rounded bg-slate-100 px-1 text-xs">WATER_STORIES_ADMIN_SECRET</code>(운영 비밀번호
+            입력란)는 서로 다른 값으로 둘 수 있습니다. 북마크는{" "}
             <span className="font-mono text-slate-700">{STAFF_CONSOLE_HREF}</span> 로 맞춰 주세요.
           </p>
         </div>
