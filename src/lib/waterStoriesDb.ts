@@ -28,6 +28,8 @@ export function getStoriesSql(): ReturnType<typeof postgres> | null {
     globalForSql.waterStoriesSql = postgres(resolved, {
       max: 1,
       prepare: false,
+      connect_timeout: 15,
+      idle_timeout: 20,
       ...(isSupabase ? { ssl: "require" as const } : {}),
     });
   }

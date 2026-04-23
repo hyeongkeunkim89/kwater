@@ -36,33 +36,52 @@ function safeSegment(s: string) {
   return s.replace(/[^a-zA-Z0-9_-]/g, "");
 }
 
+function postgresErrMeta(err: unknown): { msg: string; code: string; detail: string } {
+  const msg = err instanceof Error ? err.message : String(err);
+  if (!err || typeof err !== "object") return { msg, code: "", detail: "" };
+  const o = err as Record<string, unknown>;
+  const code = typeof o.code === "string" ? o.code : "";
+  const detail = typeof o.detail === "string" ? o.detail : "";
+  return { msg, code, detail };
+}
+
 /** INSERT 단계 예외 → 사용자 안내 (이미지는 이미 Storage에 있을 수 있음) */
 function insertStoryDbUserMessage(err: unknown): string {
-  const msg = err instanceof Error ? err.message : String(err);
-  const code =
-    err && typeof err === "object" && "code" in err
-      ? String((err as { code?: string }).code ?? "")
-      : "";
+  const { msg, code, detail } = postgresErrMeta(err);
   const m = msg.toLowerCase();
+  const d = detail.toLowerCase();
+
   if (code === "42P01" || /relation .*does not exist/i.test(msg)) {
     return "글 저장에 실패했습니다. Supabase **SQL Editor**에서 저장소의 `db/water-stories.sql`을 실행해 `water_stories` 테이블을 만든 뒤 다시 시도해 주세요. (Transaction pooler 6543에서는 앱이 자동으로 테이블을 만들지 않습니다.)";
+  }
+  if (code === "42703" || /column .*does not exist/i.test(msg)) {
+    return "글 저장에 실패했습니다. `water_stories` 테이블 컬럼이 `db/water-stories.sql`과 다른 것 같습니다. SQL 파일 전체를 다시 실행해 테이블을 맞춰 주세요.";
+  }
+  if (code === "42883" || /gen_random_uuid|function .* does not exist/i.test(m)) {
+    return "글 저장에 실패했습니다. Supabase SQL Editor에서 `CREATE EXTENSION IF NOT EXISTS pgcrypto;` 를 실행한 뒤 다시 시도해 주세요.";
   }
   if (/password authentication failed|28p01|tenant or user not found|invalid.*password/i.test(m) || code === "28P01") {
     return "글 저장에 실패했습니다. DATABASE_URL의 **DB 비밀번호**와 **사용자 이름**(pooler는 `postgres.[프로젝트ref]` 형식)이 Supabase에 표시된 값과 같은지 확인해 주세요.";
   }
-  if (/econnrefused|etimedout|getaddrinfo|connect/.test(m)) {
+  if (/econnrefused|etimedout|getaddrinfo|connect|closed the connection|connection terminated|connect_timeout/i.test(m)) {
     return "글 저장에 실패했습니다. DATABASE_URL 호스트·포트·비밀번호를 확인해 주세요.";
   }
-  if (/ssl|certificate|tls/.test(m)) {
+  if (/ssl|certificate|tls|self signed/i.test(m)) {
     return "글 저장에 실패했습니다. DB 연결 문자열에 sslmode=require 등 SSL 옵션이 맞는지 확인해 주세요.";
   }
   if (/prepared statement|26000|syntax error.*prepare|pgbouncer/.test(m)) {
     return "글 저장에 실패했습니다. Supabase **Transaction pooler** URI를 쓰는 경우, 문자열 끝에 `?pgbouncer=true`(없다면)를 붙여 주세요.";
   }
-  if (/permission denied|42501/.test(m) || code === "42501") {
+  if (/permission denied|42501/i.test(m) || code === "42501") {
     return "글 저장에 실패했습니다. DB 사용자에게 `water_stories` 테이블 쓰기 권한이 있는지 확인해 주세요.";
   }
-  return "사진은 Storage에 올라갔을 수 있으나, 글(DB) 저장에 실패했습니다. DATABASE_URL·Supabase Database를 확인해 주세요.";
+  if (msg === "INSERT 실패" || /insert 실패/i.test(msg)) {
+    return "글 저장에 실패했습니다. INSERT 결과가 비어 있습니다. 테이블·트리거·RLS를 Supabase에서 확인해 주세요.";
+  }
+
+  const tail = [code && `코드 ${code}`, detail && `상세: ${detail}`].filter(Boolean).join(" · ");
+  const clip = msg.length > 220 ? `${msg.slice(0, 220)}…` : msg;
+  return `사진은 Storage에 올라갔을 수 있으나, 글(DB) 저장에 실패했습니다.${tail ? ` ${tail}.` : ""} DB 메시지: ${clip}`;
 }
 
 export async function GET(req: NextRequest) {
