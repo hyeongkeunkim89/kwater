@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ReservationForm } from "@/components/ReservationForm";
 import { isReservationsLive } from "@/lib/reservationsConfig";
-import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
 
 export const metadata = {
   title: "가이드 투어 예약 | 물문화관",
@@ -26,12 +25,6 @@ export default async function ReservePage({ searchParams }: Props) {
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-xs font-black text-white">K</span>
             <span className="text-sm font-bold text-white">물문화관</span>
           </div>
-          <Link
-            href={STAFF_CONSOLE_HREF}
-            className="inline-flex min-h-[44px] items-center text-sm text-white/50 transition hover:text-white"
-          >
-            운영 콘솔
-          </Link>
         </div>
       </header>
 

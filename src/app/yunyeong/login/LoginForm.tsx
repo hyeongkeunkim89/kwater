@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
 
 export function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const nextRaw = searchParams.get("next");
   const nextPath =
@@ -26,15 +25,16 @@ export function LoginForm() {
       const res = await fetch("/api/staff-console/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password: password.trim() }),
+        credentials: "same-origin",
       });
       const j = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) {
         setError(j.error ?? "로그인에 실패했습니다.");
         return;
       }
-      router.replace(nextPath);
-      router.refresh();
+      // 전체 이동: HttpOnly 쿠키가 클라이언트 라우팅보다 먼저 반영되도록 함
+      window.location.assign(nextPath);
     } catch {
       setError("네트워크 오류가 발생했습니다.");
     } finally {
@@ -45,7 +45,7 @@ export function LoginForm() {
   return (
     <div className="min-h-screen bg-[#0b111e] text-white">
       <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-12">
-        <h1 className="text-center text-2xl font-black tracking-tight">문화관 운영 콘솔</h1>
+        <h1 className="text-center text-2xl font-black tracking-tight">문화관 관리자 페이지</h1>
         <p className="mt-3 text-center text-sm text-white/55">관리자 비밀번호를 입력하세요.</p>
 
         <form onSubmit={(e) => void onSubmit(e)} className="mt-10 space-y-4 rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-xl">

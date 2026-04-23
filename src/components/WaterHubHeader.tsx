@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
 
 type ActiveNav = "status" | "stories" | "none";
 
@@ -10,10 +11,13 @@ const navActive = "text-white font-semibold border-b border-sky-400 pb-0.5";
 export function WaterHubHeader({
   activeNav = "none",
   dense = false,
+  /** 홈(/)에서만 true — 관리자 페이지 링크를 헤더 오른쪽 끝에 표시 */
+  showStaffConsoleLink = false,
 }: {
   activeNav?: ActiveNav;
   /** 홈 한 화면 레이아웃용 — 세로·가로 여백 축소 */
   dense?: boolean;
+  showStaffConsoleLink?: boolean;
 }) {
   return (
     <header className="sticky top-0 z-40 shrink-0 border-b border-white/10 bg-[#152035]/98 backdrop-blur-md supports-[backdrop-filter]:bg-[#152035]/92">
@@ -69,6 +73,14 @@ export function WaterHubHeader({
             <span className="sm:hidden">홈페이지</span>
             <span className="hidden sm:inline">공식 홈페이지</span>
           </a>
+          {showStaffConsoleLink ? (
+            <Link
+              href={STAFF_CONSOLE_HREF}
+              className="inline-flex min-h-10 min-w-0 items-center whitespace-nowrap text-white/55 transition hover:text-white"
+            >
+              관리자 페이지
+            </Link>
+          ) : null}
         </nav>
       </div>
     </header>

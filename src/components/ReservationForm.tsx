@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useCallback, useEffect } from "react";
-import Link from "next/link";
 import { getCenterById, waterCenters } from "@/data/centers";
 import { formatCenterRegionLine } from "@/lib/center-display";
 import {
@@ -15,7 +14,6 @@ import {
   addReservation,
   getAvailableCount,
 } from "@/lib/reservations";
-import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
 
 // ─── 날짜 유틸 ──────────────────────────────────────────────
 function toDateStr(d: Date) {
@@ -325,12 +323,6 @@ export function ReservationForm({
           >
             추가 예약하기
           </button>
-          <Link
-            href={STAFF_CONSOLE_HREF}
-            className="rounded-xl bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700"
-          >
-            운영 콘솔에서 보기
-          </Link>
         </div>
       </div>
     );

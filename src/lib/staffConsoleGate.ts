@@ -1,5 +1,5 @@
 /**
- * 운영 콘솔(/yunyeong) 접근 게이트 — 예약·물 이야기와 동일한 관리 비밀번호로 통합.
+ * 관리자 페이지(/yunyeong) 접근 게이트 — 예약·물 이야기와 동일한 관리 비밀번호로 통합.
  * `STAFF_CONSOLE_PASSWORD`가 있으면 그 값을, 없으면 `WATER_STORIES_ADMIN_SECRET`을 페이지 진입 비밀번호로 사용.
  * 미들웨어(Edge)와 API(Node)에서 공통 사용. Web Crypto만 사용.
  */

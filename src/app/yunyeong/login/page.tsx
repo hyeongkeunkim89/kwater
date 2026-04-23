@@ -5,7 +5,7 @@ import { isStaffConsoleGateEnabled } from "@/lib/staffConsoleGate";
 import { LoginForm } from "./LoginForm";
 
 export const metadata = {
-  title: "운영 콘솔 로그인 | 물문화관",
+  title: "관리자 페이지 로그인 | 물문화관",
   robots: { index: false, follow: false },
 };
 

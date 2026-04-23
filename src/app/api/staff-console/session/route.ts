@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error:
-          "운영 콘솔 게이트가 비활성입니다. Vercel에 WATER_STORIES_ADMIN_SECRET(또는 전용 STAFF_CONSOLE_PASSWORD)을 설정하세요.",
+          "관리자 페이지 접근이 비활성입니다. Vercel에 WATER_STORIES_ADMIN_SECRET(또는 전용 STAFF_CONSOLE_PASSWORD)을 설정하세요.",
       },
       { status: 503 },
     );
@@ -34,10 +34,11 @@ export async function POST(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "JSON 본문이 필요합니다." }, { status: 400 });
   }
-  const pwd =
+  const pwdRaw =
     body && typeof body === "object" && typeof (body as { password?: unknown }).password === "string"
       ? (body as { password: string }).password
       : "";
+  const pwd = pwdRaw.trim();
   const expected = getStaffConsoleGatePassword();
   if (!pwd || !timingSafeEqualUtf8(pwd, expected)) {
     return NextResponse.json({ error: "비밀번호가 올바르지 않습니다." }, { status: 401 });

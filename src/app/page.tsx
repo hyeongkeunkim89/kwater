@@ -7,7 +7,7 @@ import { sidoList, waterCenters } from "@/data/centers";
 export default function Home() {
   return (
     <div className="flex h-dvh max-h-dvh flex-col overflow-hidden bg-[#152035] text-white">
-      <WaterHubHeader dense />
+      <WaterHubHeader dense showStaffConsoleLink />
 
       <section
         aria-label="물문화관 소개 슬라이드쇼"

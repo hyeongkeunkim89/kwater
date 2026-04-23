@@ -7,7 +7,7 @@ import { adminStoriesConfigured } from "@/lib/waterStoriesAdminAuth";
 import Link from "next/link";
 
 export const metadata = {
-  title: "문화관 운영 콘솔 | 물문화관",
+  title: "문화관 관리자 페이지 | 물문화관",
   description: "가이드 투어 예약 현황과 물 이야기 사진을 한 곳에서 관리합니다.",
   robots: { index: false, follow: false },
 };
@@ -24,7 +24,7 @@ export default function YunyeongConsolePage() {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-6 py-4 sm:px-10">
           <div className="flex items-center gap-3">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-xs font-black text-white">K</span>
-            <p className="text-sm font-bold leading-none text-white">문화관 운영 콘솔</p>
+            <p className="text-sm font-bold leading-none text-white">문화관 관리자 페이지</p>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
             <StaffConsoleLogoutButton show={gateEnabled} />
@@ -60,7 +60,7 @@ export default function YunyeongConsolePage() {
 
       <footer className="mt-8 border-t border-slate-200 bg-[#0b111e] py-10">
         <p className="text-center text-xs text-white/30">
-          © {new Date().getFullYear()} K-water 물문화관 · 운영 콘솔
+          © {new Date().getFullYear()} K-water 물문화관 · 관리자 페이지
         </p>
       </footer>
     </div>
