@@ -7,7 +7,26 @@ import {
   listWaterStoriesFromDb,
 } from "@/lib/waterStoriesDb";
 
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const CANONICAL_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"] as const;
+
+/** 브라우저/OS별로 image/jpg, 빈 type 등이 올 수 있어 Storage에 넣기 전에 표준 MIME으로 맞춤 */
+function resolveImageContentType(file: File): string | null {
+  const raw = (file.type ?? "").trim().toLowerCase();
+  if (raw === "image/jpg" || raw === "image/pjpeg") return "image/jpeg";
+  if (CANONICAL_IMAGE_TYPES.includes(raw as (typeof CANONICAL_IMAGE_TYPES)[number])) return raw;
+
+  const ext = (file.name.split(".").pop() ?? "").toLowerCase();
+  const byExt: Record<string, string> = {
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    png: "image/png",
+    webp: "image/webp",
+    gif: "image/gif",
+  };
+  if (ext && byExt[ext]) return byExt[ext];
+
+  return null;
+}
 const MAX_SIZE = 12 * 1024 * 1024;
 const NICK_MAX = 24;
 const CAPTION_MAX = 280;
@@ -51,7 +70,8 @@ export async function POST(req: NextRequest) {
     if (!file || !centerIdRaw) {
       return NextResponse.json({ error: "파일과 문화관 선택이 필요합니다." }, { status: 400 });
     }
-    if (!ALLOWED_TYPES.includes(file.type)) {
+    const contentType = resolveImageContentType(file);
+    if (!contentType) {
       return NextResponse.json({ error: "JPG/PNG/WebP/GIF만 허용됩니다." }, { status: 400 });
     }
     if (file.size > MAX_SIZE) {
@@ -83,7 +103,7 @@ export async function POST(req: NextRequest) {
     const objectPath = `${safeId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${safeExt}`;
 
     const bytes = await file.arrayBuffer();
-    const uploaded = await uploadStoryImageToStorage(objectPath, bytes, file.type);
+    const uploaded = await uploadStoryImageToStorage(objectPath, bytes, contentType);
     if ("error" in uploaded) {
       return NextResponse.json({ error: uploaded.error }, { status: 500 });
     }

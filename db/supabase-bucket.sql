@@ -7,7 +7,7 @@ values (
   'water-stories',
   true,
   12582912,
-  array['image/jpeg', 'image/png', 'image/webp', 'image/gif']::text[]
+  array['image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png', 'image/webp', 'image/gif']::text[]
 )
 on conflict (id) do update set
   public = excluded.public,
