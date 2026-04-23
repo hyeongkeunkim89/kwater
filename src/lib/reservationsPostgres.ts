@@ -18,20 +18,82 @@ function normalizeDatabaseUrlEnv(raw: string | undefined): string {
   return u.replace(/\r\n/g, "").replace(/\n/g, "");
 }
 
+/** Supabase 직접 연결·풀러 등 동일 프로젝트면 `DATABASE_PASSWORD`로 예약 DB 비밀번호를 보완 */
+function supabaseProjectRefFromUrl(urlStr: string): string | null {
+  try {
+    const u = new URL(urlStr);
+    const host = u.hostname.toLowerCase();
+    const dbHost = host.match(/^db\.([a-z0-9]+)\.supabase\.co$/);
+    if (dbHost) return dbHost[1];
+    const user = decodeURIComponent(u.username || "");
+    const poolUser = user.match(/^postgres\.([a-z0-9]+)$/i);
+    if (poolUser) return poolUser[1];
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function sameSupabaseProjectAsMain(resUrl: string, mainUrl: string): boolean {
+  const rr = supabaseProjectRefFromUrl(resUrl);
+  const mr = supabaseProjectRefFromUrl(mainUrl);
+  if (rr && mr) return rr === mr;
+  try {
+    const a = new URL(resUrl);
+    const b = new URL(mainUrl);
+    const portA = a.port || (a.protocol === "postgresql:" || a.protocol === "postgres:" ? "5432" : "");
+    const portB = b.port || (b.protocol === "postgresql:" || b.protocol === "postgres:" ? "5432" : "");
+    return (
+      a.hostname.toLowerCase() === b.hostname.toLowerCase() &&
+      portA === portB &&
+      a.pathname.replace(/\/+$/, "") === b.pathname.replace(/\/+$/, "")
+    );
+  } catch {
+    return false;
+  }
+}
+
+/** URI 문자열에 남은 Supabase 플레이스홀더 제거(평문 비밀번호 병합 전) */
+function stripBrokenPasswordInUri(raw: string): string {
+  if (!/YOUR-?PASSWORD|YOUR_PASSWORD|\[YOUR/i.test(raw)) return raw;
+  try {
+    const u = new URL(raw);
+    u.password = "";
+    return u.href;
+  } catch {
+    return raw;
+  }
+}
+
 /**
- * 물 이야기(`DATABASE_URL`)와 별도. 예약만 `RESERVATIONS_DATABASE_URL`(+선택 `RESERVATIONS_DATABASE_PASSWORD`) 사용.
+ * 물 이야기와 별도 변수 `RESERVATIONS_DATABASE_URL`을 쓰되,
+ * 같은 Supabase 프로젝트이면 `RESERVATIONS_DATABASE_PASSWORD`가 비어 있을 때 `DATABASE_PASSWORD`를 자동 사용(28P01 완화).
  */
 function getResolvedReservationsDatabaseUrl(): string | null {
-  const base = normalizeDatabaseUrlEnv(process.env.RESERVATIONS_DATABASE_URL);
-  if (!base) return null;
-  const plain = process.env.RESERVATIONS_DATABASE_PASSWORD?.trim();
+  const rawRes = normalizeDatabaseUrlEnv(process.env.RESERVATIONS_DATABASE_URL);
+  const rawMain = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
+  if (!rawRes) return null;
+  let base = stripBrokenPasswordInUri(rawRes);
+  const mainStripped = rawMain ? stripBrokenPasswordInUri(rawMain) : "";
+
+  const resPwd = process.env.RESERVATIONS_DATABASE_PASSWORD?.trim() ?? "";
+  const mainPwd = process.env.DATABASE_PASSWORD?.trim() ?? "";
+  const useMainPwdFallback =
+    !resPwd &&
+    Boolean(mainPwd) &&
+    Boolean(rawMain) &&
+    (rawRes === rawMain || sameSupabaseProjectAsMain(base, mainStripped));
+
+  const plain = resPwd || (useMainPwdFallback ? mainPwd : "");
   if (!plain) return base;
+
   try {
     const u = new URL(base);
+    if (/YOUR|PLACEHOLDER|\[.*\]/i.test(u.password)) u.password = "";
     u.password = plain;
     return u.href;
   } catch {
-    console.error("RESERVATIONS_DATABASE_URL + RESERVATIONS_DATABASE_PASSWORD 병합 실패(Invalid URL)");
+    console.error("RESERVATIONS_DATABASE_URL + 비밀번호 병합 실패(Invalid URL)");
     return base;
   }
 }

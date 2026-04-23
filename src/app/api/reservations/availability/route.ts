@@ -97,7 +97,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "예약 DB 비밀번호가 맞지 않습니다. Vercel의 `RESERVATIONS_DATABASE_URL`·`RESERVATIONS_DATABASE_PASSWORD`를 확인해 주세요.",
+            "예약 DB 로그인에 실패했습니다(28P01). URI에 비밀번호를 넣지 말고 `DATABASE_PASSWORD` 또는 `RESERVATIONS_DATABASE_PASSWORD`에 평문만 넣거나, Supabase 복사 문자열에 `[YOUR-PASSWORD]`가 남아 있지 않은지 확인해 주세요. 물 이야기와 같은 Supabase 프로젝트면 `DATABASE_PASSWORD`가 자동으로 쓰입니다.",
           code: c || code,
         },
         { status: 500 },
