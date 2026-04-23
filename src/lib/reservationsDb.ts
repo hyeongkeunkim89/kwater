@@ -28,7 +28,8 @@ function isTransientConnectionFailure(err: unknown): boolean {
     code === "ECONNRESET" ||
     code === "EPIPE" ||
     code === "ENOTFOUND" ||
-    /ETIMEDOUT|ECONNRESET|EPIPE|ENOTFOUND|SOCKET HANG UP|CONNECT_TIMEOUT|UND_ERR_CONNECT_TIMEOUT/i.test(
+    code === "EAI_AGAIN" ||
+    /ETIMEDOUT|ECONNRESET|EPIPE|ENOTFOUND|EAI_AGAIN|SOCKET HANG UP|CONNECT_TIMEOUT|UND_ERR_CONNECT_TIMEOUT|CONNECTION.*CLOSED|TLS.*WRONG/i.test(
       msg + code,
     )
   );
@@ -64,6 +65,11 @@ function formatVisitDate(d: TourReservationRow["visit_date"]): string {
   if (typeof d === "string" && /^\d{4}-\d{2}-\d{2}/.test(d)) return d.slice(0, 10);
   if (d instanceof Date) return d.toISOString().slice(0, 10);
   return String(d).slice(0, 10);
+}
+
+/** 슬롯 키를 `10:00` 형태로 맞춤 — DB에 `10:00:00` 등으로 들어간 행도 같은 슬롯으로 집계 */
+function slotKeyFromDbVisitTime(raw: string): string {
+  return String(raw ?? "").trim().slice(0, 5);
 }
 
 function rowToReservation(r: TourReservationRow): Reservation {
@@ -147,11 +153,6 @@ export async function listTourReservationsFromDb(): Promise<Reservation[]> {
   return rows.map(rowToReservation);
 }
 
-/** 슬롯 키를 `10:00` 형태로 맞춤 — DB에 `10:00:00` 등으로 들어간 행도 같은 슬롯으로 집계 */
-function slotKeyFromDbVisitTime(raw: string): string {
-  return String(raw ?? "").trim().slice(0, 5);
-}
-
 async function getSlotBookedCountsOnce(
   centerId: string,
   visitDate: string,
@@ -160,20 +161,19 @@ async function getSlotBookedCountsOnce(
   const empty: Record<string, number> = Object.fromEntries(TOUR_SLOTS.map((t) => [t, 0]));
   if (!sql) return empty;
   await ensureTourReservationsSchema(sql);
+  /** DB 원본 visit_time 그대로 GROUP BY — `10:00` / `10:00:00` 등은 아래에서 슬롯 키로 합산 */
   const rows = await sql<{ visit_time: string; total: string | number | bigint }[]>`
-    SELECT
-      left(btrim(visit_time::text), 5) AS visit_time,
-      COALESCE(SUM(party_size), 0)::text AS total
+    SELECT visit_time, COALESCE(SUM(party_size), 0)::text AS total
     FROM tour_reservations
     WHERE center_id = ${centerId}
       AND visit_date = ${visitDate}::date
       AND status <> '취소'
-    GROUP BY 1
+    GROUP BY visit_time
   `;
   const out = { ...empty };
   for (const r of rows) {
-    const key = slotKeyFromDbVisitTime(r.visit_time);
-    if (key in out) out[key] = toFiniteCount(r.total);
+    const key = slotKeyFromDbVisitTime(String(r.visit_time));
+    if (key in out) out[key] += toFiniteCount(r.total);
   }
   return out;
 }

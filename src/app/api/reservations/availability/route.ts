@@ -20,7 +20,14 @@ function postgresErrMeta(err: unknown): { msg: string; code: string } {
   const msg = err instanceof Error ? err.message : String(err);
   if (!err || typeof err !== "object") return { msg, code: "" };
   const o = err as Record<string, unknown>;
-  const code = typeof o.code === "string" ? o.code : "";
+  const code =
+    typeof o.code === "string"
+      ? o.code
+      : typeof o.errno === "string"
+        ? o.errno
+        : typeof o.errno === "number"
+          ? String(o.errno)
+          : "";
   return { msg, code };
 }
 
@@ -65,6 +72,7 @@ export async function GET(req: NextRequest) {
     console.error("reservations availability", e);
     const { msg, code } = postgresErrMeta(e);
     const c = code.toUpperCase();
+    const m = msg.toLowerCase();
     if (c === "42P01" || /relation .* does not exist/i.test(msg)) {
       return NextResponse.json(
         {
@@ -85,8 +93,59 @@ export async function GET(req: NextRequest) {
         { status: 500 },
       );
     }
+    if (c === "28P01" || /password authentication failed/i.test(m)) {
+      return NextResponse.json(
+        {
+          error:
+            "예약 DB 비밀번호가 맞지 않습니다. Vercel의 `RESERVATIONS_DATABASE_URL`·`RESERVATIONS_DATABASE_PASSWORD`를 확인해 주세요.",
+          code: c || code,
+        },
+        { status: 500 },
+      );
+    }
+    if (
+      c === "ENOTFOUND" ||
+      c === "EAI_AGAIN" ||
+      /getaddrinfo|ENOTFOUND|EAI_AGAIN/i.test(msg + code)
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "예약 DB 호스트를 찾을 수 없습니다. `RESERVATIONS_DATABASE_URL`의 호스트명이 맞는지 확인해 주세요.",
+          code: c || code,
+        },
+        { status: 500 },
+      );
+    }
+    if (/certificate|ssl|TLS|self-signed|UNABLE_TO_VERIFY/i.test(msg)) {
+      return NextResponse.json(
+        {
+          error:
+            "예약 DB 연결(SSL)에 실패했습니다. Supabase URI에 `sslmode=require`가 포함돼 있는지, 회사망에서 DB 접속이 막히지 않았는지 확인해 주세요.",
+          code: c || code,
+        },
+        { status: 500 },
+      );
+    }
+    if (/connect_timeout|ETIMEDOUT|ECONNRESET|socket hang up/i.test(m)) {
+      return NextResponse.json(
+        {
+          error:
+            "예약 DB에 연결하지 못했습니다. 잠시 후 다시 시도하거나, Vercel·Supabase 리전과 방화벽(6543/5432)을 확인해 주세요.",
+          code: c || code,
+        },
+        { status: 500 },
+      );
+    }
     return NextResponse.json(
-      { error: "잔여 인원 조회에 실패했습니다.", code: code || undefined },
+      {
+        error: "잔여 인원 조회에 실패했습니다.",
+        code: code || undefined,
+        hint:
+          process.env.NODE_ENV === "development"
+            ? msg.slice(0, 300)
+            : "Vercel 로그(Function → reservations/availability)에 원인이 기록됩니다.",
+      },
       { status: 500 },
     );
   }

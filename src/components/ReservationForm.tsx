@@ -143,12 +143,23 @@ export function ReservationForm({
     const q = new URLSearchParams({ centerId, date });
     void fetch(`/api/reservations/availability?${q}`)
       .then(async (res) => {
-        const j = (await res.json().catch(() => ({}))) as {
+        const raw = await res.text();
+        let j: {
           availability?: Record<string, number>;
           error?: string;
-        };
+          hint?: string;
+          code?: string;
+        } = {};
+        try {
+          j = raw ? (JSON.parse(raw) as typeof j) : {};
+        } catch {
+          throw new Error(
+            `잔여 인원 조회 응답을 해석하지 못했습니다. (HTTP ${res.status})`,
+          );
+        }
         if (!res.ok) {
-          throw new Error(j.error ?? "잔여 인원을 불러오지 못했습니다.");
+          const parts = [j.error, j.hint, j.code ? `코드: ${j.code}` : ""].filter(Boolean);
+          throw new Error(parts.join(" ") || "잔여 인원을 불러오지 못했습니다.");
         }
         if (!j.availability || typeof j.availability !== "object") {
           throw new Error("응답 형식이 올바르지 않습니다.");
