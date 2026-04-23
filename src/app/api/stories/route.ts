@@ -51,6 +51,16 @@ function insertStoryDbUserMessage(err: unknown): string {
   const m = msg.toLowerCase();
   const c = code.toUpperCase();
 
+  if (c === "ERR_INVALID_URL" || /invalid url/i.test(m)) {
+    return [
+      "글 저장에 실패했습니다. **DATABASE_URL 형식이 URI로 인식되지 않습니다.**",
+      "① 비밀번호에 `# ? & % +` 등이 있으면 **반드시 URL 인코딩**합니다. 특히 `#`는 그대로 두면 URI가 잘려 **Invalid URL**이 납니다.",
+      "② 값 앞뒤에 **큰따옴표·작은따옴표로 전체를 감싸지 마세요.** (Vercel에는 `postgresql://...` 한 줄만)",
+      "③ 붙여넣기 시 **줄바꿈**이 들어가지 않았는지 확인",
+      "④ Supabase **Connect → Transaction pooler → URI**를 다시 복사하고 `[YOUR-PASSWORD]`만 인코딩된 비밀번호로 교체",
+    ].join(" ");
+  }
+
   if (c === "ETIMEDOUT" || c === "ECONNRESET" || /etimedout|econnreset|connect_timeout|und_err_connect_timeout/i.test(m)) {
     return [
       "글 저장에 실패했습니다. Vercel → Supabase **DB 연결이 시간 초과**입니다.",

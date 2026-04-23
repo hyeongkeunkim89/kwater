@@ -5,6 +5,20 @@ const globalForSql = globalThis as unknown as {
   waterStoriesSql: ReturnType<typeof postgres> | undefined;
 };
 
+/** Vercel에 따옴표·BOM·앞뒤 공백이 섞이면 `Invalid URL`이 날 수 있음 */
+function normalizeDatabaseUrlEnv(raw: string | undefined): string {
+  if (!raw) return "";
+  let u = raw.trim();
+  if (u.charCodeAt(0) === 0xfeff) u = u.slice(1).trim();
+  if (u.length >= 2) {
+    const q = u[0];
+    if ((q === '"' || q === "'") && u[u.length - 1] === q) {
+      u = u.slice(1, -1).trim();
+    }
+  }
+  return u.replace(/\r\n/g, "").replace(/\n/g, "");
+}
+
 /** Supabase 호스트인데 sslmode가 없으면 URI에만 붙임(라이브러리 ssl 옵션과 이중 적용 시 연결 실패할 수 있음) */
 function ensureSupabaseSslQuery(raw: string): string {
   const u = raw.trim();
@@ -23,14 +37,14 @@ function supabasePoolerDatabaseUrl(raw: string): string {
 
 /** Transaction pooler(6543)에서는 DDL(CREATE TABLE)이 막히는 경우가 많아, 테이블은 SQL Editor에서 미리 만들어야 함 */
 function skipRuntimeSchemaDdl(): boolean {
-  const u = process.env.DATABASE_URL?.trim() ?? "";
+  const u = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
   return /pooler\.supabase\.com:6543/i.test(u);
 }
 
 let schemaPromise: Promise<void> | null = null;
 
 export function getStoriesSql(): ReturnType<typeof postgres> | null {
-  const url = process.env.DATABASE_URL?.trim();
+  const url = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
   if (!url) return null;
   if (!globalForSql.waterStoriesSql) {
     const resolved = supabasePoolerDatabaseUrl(ensureSupabaseSslQuery(url));
