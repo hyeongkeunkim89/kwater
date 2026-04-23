@@ -111,7 +111,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "예약 DB 호스트를 찾을 수 없습니다. `RESERVATIONS_DATABASE_URL`의 호스트명이 맞는지 확인해 주세요.",
+            "예약 DB 호스트를 찾을 수 없습니다. `RESERVATIONS_DATABASE_URL` 또는 `DATABASE_URL`의 호스트명을 확인해 주세요.",
           code: c || code,
         },
         { status: 500 },

@@ -1,4 +1,4 @@
--- 가이드 투어 예약 전용 테이블 (물 이야기 `water_stories`와 무관 · `RESERVATIONS_DATABASE_URL` DB에 생성)
+-- 가이드 투어 예약 전용 테이블 (물 이야기와 같은 Postgres에 두면 `DATABASE_URL` DB에 생성)
 -- Supabase SQL Editor 등에서 1회 실행 권장; Transaction pooler 6543에서는 앱 DDL이 생략될 수 있음
 CREATE TABLE IF NOT EXISTS tour_reservations (
   id text PRIMARY KEY,

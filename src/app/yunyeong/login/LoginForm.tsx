@@ -45,18 +45,13 @@ export function LoginForm() {
   return (
     <div className="min-h-screen bg-[#0b111e] text-white">
       <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-12">
-        <p className="text-center text-[10px] font-bold uppercase tracking-widest text-sky-400">Console</p>
-        <h1 className="mt-2 text-center text-2xl font-black tracking-tight">문화관 운영 콘솔</h1>
-        <p className="mt-3 text-center text-sm text-white/50">
-          예약·물 이야기 <strong className="text-white/70">같은 관리자 비밀번호</strong>를 입력하세요. (
-          <code className="text-white/40">WATER_STORIES_ADMIN_SECRET</code>와 동일·또는 전용{" "}
-          <code className="text-white/40">STAFF_CONSOLE_PASSWORD</code>)
-        </p>
+        <h1 className="text-center text-2xl font-black tracking-tight">문화관 운영 콘솔</h1>
+        <p className="mt-3 text-center text-sm text-white/55">관리자 비밀번호를 입력하세요.</p>
 
         <form onSubmit={(e) => void onSubmit(e)} className="mt-10 space-y-4 rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-xl">
           <div>
-            <label htmlFor="staff-gate-pw" className="block text-xs font-semibold text-white/70">
-              비밀번호
+            <label htmlFor="staff-gate-pw" className="sr-only">
+              관리자 비밀번호
             </label>
             <input
               id="staff-gate-pw"

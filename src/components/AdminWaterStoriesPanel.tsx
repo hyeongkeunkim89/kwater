@@ -113,26 +113,20 @@ export function AdminWaterStoriesPanel({ storiesLive }: { storiesLive: boolean }
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-violet-600">UGC</p>
-          <h2 className="text-lg font-black text-slate-900 sm:text-xl">물 이야기 · 이달의 사진</h2>
-        </div>
-        <p className="max-w-md text-xs leading-relaxed text-slate-500">
-          등록된 물 이야기를 확인하고 이달의 사진으로 지정하거나 삭제할 수 있습니다. 삭제·선정은 되돌리기 어려우니 신중히 진행해 주세요.
-        </p>
+      <div className="mb-6">
+        <h2 className="text-lg font-black text-slate-900 sm:text-xl">물 이야기 · 이달의 사진</h2>
       </div>
 
       {storiesLive && (
         <label className="mb-6 block min-w-0">
-          <span className="text-xs font-bold text-slate-700">운영 비밀번호</span>
+          <span className="text-xs font-bold text-slate-700">관리자 비밀번호</span>
           <input
             type="password"
             value={adminSecret}
             onChange={(e) => persistSecret(e.target.value)}
             autoComplete="off"
             className="mt-1.5 w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none ring-sky-400/40 focus:border-sky-400 focus:ring-2"
-            placeholder="배포 시 설정한 운영 비밀번호"
+            placeholder="관리자 비밀번호"
           />
         </label>
       )}
@@ -145,11 +139,10 @@ export function AdminWaterStoriesPanel({ storiesLive }: { storiesLive: boolean }
 
       {list.length === 0 ? (
         <p className="rounded-xl bg-slate-50 px-4 py-6 text-sm text-slate-500">
-          등록된 물 이야기가 없습니다.{" "}
-          <a href="/mul-iyagi" className="font-bold text-sky-700 underline">
+          등록된 글이 없습니다.{" "}
+          <a href="/mul-iyagi" className="font-semibold text-sky-700 underline">
             물 이야기
           </a>
-          에서 글을 올린 뒤 다시 확인해 보세요.
         </p>
       ) : (
         <ul className="space-y-4">

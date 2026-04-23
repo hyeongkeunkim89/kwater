@@ -66,14 +66,16 @@ function stripBrokenPasswordInUri(raw: string): string {
 }
 
 /**
- * 물 이야기와 별도 변수 `RESERVATIONS_DATABASE_URL`을 쓰되,
+ * 우선 `RESERVATIONS_DATABASE_URL`, 없으면 `DATABASE_URL`(물 이야기와 동일 DB·`tour_reservations` 공유).
  * 같은 Supabase 프로젝트이면 `RESERVATIONS_DATABASE_PASSWORD`가 비어 있을 때 `DATABASE_PASSWORD`를 자동 사용(28P01 완화).
  */
 function getResolvedReservationsDatabaseUrl(): string | null {
   const rawRes = normalizeDatabaseUrlEnv(process.env.RESERVATIONS_DATABASE_URL);
   const rawMain = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
-  if (!rawRes) return null;
-  let base = stripBrokenPasswordInUri(rawRes);
+  const rawChosen = rawRes || rawMain;
+  if (!rawChosen) return null;
+
+  let base = stripBrokenPasswordInUri(rawChosen);
   const mainStripped = rawMain ? stripBrokenPasswordInUri(rawMain) : "";
 
   const resPwd = process.env.RESERVATIONS_DATABASE_PASSWORD?.trim() ?? "";
@@ -82,7 +84,7 @@ function getResolvedReservationsDatabaseUrl(): string | null {
     !resPwd &&
     Boolean(mainPwd) &&
     Boolean(rawMain) &&
-    (rawRes === rawMain || sameSupabaseProjectAsMain(base, mainStripped));
+    (!rawRes || rawRes === rawMain || sameSupabaseProjectAsMain(base, mainStripped));
 
   const plain = resPwd || (useMainPwdFallback ? mainPwd : "");
   if (!plain) return base;
