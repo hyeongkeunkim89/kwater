@@ -1,5 +1,6 @@
 /**
- * 운영 콘솔(/yunyeong) 접근 게이트 — `STAFF_CONSOLE_PASSWORD` 설정 시 쿠키 세션(HMAC) 검증.
+ * 운영 콘솔(/yunyeong) 접근 게이트 — 예약·물 이야기와 동일한 관리 비밀번호로 통합.
+ * `STAFF_CONSOLE_PASSWORD`가 있으면 그 값을, 없으면 `WATER_STORIES_ADMIN_SECRET`을 페이지 진입 비밀번호로 사용.
  * 미들웨어(Edge)와 API(Node)에서 공통 사용. Web Crypto만 사용.
  */
 
@@ -57,11 +58,18 @@ export function getStaffGateSigningSecret(): string {
 }
 
 export function isStaffConsoleGateEnabled(): boolean {
-  return Boolean(process.env.STAFF_CONSOLE_PASSWORD?.trim());
+  return Boolean(
+    process.env.STAFF_CONSOLE_PASSWORD?.trim() || process.env.WATER_STORIES_ADMIN_SECRET?.trim(),
+  );
 }
 
+/** 로그인 폼·미들웨어가 비교하는 비밀번호(전용 값 우선, 없으면 물 이야기 관리자 시크릿과 동일) */
 export function getStaffConsoleGatePassword(): string {
-  return process.env.STAFF_CONSOLE_PASSWORD?.trim() ?? "";
+  return (
+    process.env.STAFF_CONSOLE_PASSWORD?.trim() ||
+    process.env.WATER_STORIES_ADMIN_SECRET?.trim() ||
+    ""
+  );
 }
 
 async function importHmacKey(secret: string): Promise<CryptoKey> {
@@ -72,7 +80,11 @@ async function importHmacKey(secret: string): Promise<CryptoKey> {
 /** 로그인 성공 후 Set-Cookie 값 */
 export async function mintStaffGateSessionToken(): Promise<string> {
   const secret = getStaffGateSigningSecret();
-  if (!secret) throw new Error("STAFF_CONSOLE_SESSION_SECRET / WATER_STORIES_ADMIN_SECRET / STAFF_CONSOLE_PASSWORD 중 하나가 필요합니다.");
+  if (!secret) {
+    throw new Error(
+      "세션 서명용 비밀이 없습니다. WATER_STORIES_ADMIN_SECRET 또는 STAFF_CONSOLE_SESSION_SECRET을 설정하세요.",
+    );
+  }
   const exp = Date.now() + TTL_MS;
   const payload = JSON.stringify({ exp, v: GATE_PAYLOAD_VERSION });
   const payloadBytes = utf8Bytes(payload);

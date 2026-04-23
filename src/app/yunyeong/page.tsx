@@ -55,10 +55,11 @@ export default function YunyeongConsolePage() {
             예약·콘텐츠 현황
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-slate-500">
-            가이드 투어 예약을 확인·처리하고, 물 이야기 갤러리를 관리합니다. 이 화면에 들어오기 위한 비밀번호(
-            <code className="rounded bg-slate-100 px-1 text-xs">STAFF_CONSOLE_PASSWORD</code>)와, 예약·사진 API에
-            쓰는 <code className="rounded bg-slate-100 px-1 text-xs">WATER_STORIES_ADMIN_SECRET</code>(운영 비밀번호
-            입력란)는 서로 다른 값으로 둘 수 있습니다. 북마크는{" "}
+            가이드 투어 예약과 물 이야기를 한 화면에서 다룹니다. 브라우저에 들어올 때 쓰는 비밀번호와, 아래
+            표·API에 넣는 <strong>운영 비밀번호</strong>는 기본적으로{" "}
+            <code className="rounded bg-slate-100 px-1 text-xs">WATER_STORIES_ADMIN_SECRET</code> 한 가지입니다. (
+            전용으로 <code className="rounded bg-slate-100 px-1 text-xs">STAFF_CONSOLE_PASSWORD</code>만 쓰면 페이지
+            진입만 따로 둘 수 있습니다.) 북마크는{" "}
             <span className="font-mono text-slate-700">{STAFF_CONSOLE_HREF}</span> 로 맞춰 주세요.
           </p>
         </div>

@@ -48,7 +48,9 @@ export function LoginForm() {
         <p className="text-center text-[10px] font-bold uppercase tracking-widest text-sky-400">Console</p>
         <h1 className="mt-2 text-center text-2xl font-black tracking-tight">문화관 운영 콘솔</h1>
         <p className="mt-3 text-center text-sm text-white/50">
-          이 페이지는 배포 시 설정한 <strong className="text-white/70">운영 콘솔 비밀번호</strong>가 필요합니다.
+          예약·물 이야기 <strong className="text-white/70">같은 관리자 비밀번호</strong>를 입력하세요. (
+          <code className="text-white/40">WATER_STORIES_ADMIN_SECRET</code>와 동일·또는 전용{" "}
+          <code className="text-white/40">STAFF_CONSOLE_PASSWORD</code>)
         </p>
 
         <form onSubmit={(e) => void onSubmit(e)} className="mt-10 space-y-4 rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-xl">
@@ -63,7 +65,7 @@ export function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mt-2 min-h-[48px] w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-sky-500/40 focus:ring-2"
-              placeholder="STAFF_CONSOLE_PASSWORD"
+              placeholder="관리자 비밀번호"
             />
           </div>
           {error && <p className="text-sm text-rose-300">{error}</p>}

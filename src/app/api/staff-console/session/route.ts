@@ -20,7 +20,10 @@ function timingSafeEqualUtf8(a: string, b: string): boolean {
 export async function POST(req: NextRequest) {
   if (!isStaffConsoleGateEnabled()) {
     return NextResponse.json(
-      { error: "운영 콘솔 게이트가 비활성입니다. 배포에 STAFF_CONSOLE_PASSWORD를 설정하세요." },
+      {
+        error:
+          "운영 콘솔 게이트가 비활성입니다. Vercel에 WATER_STORIES_ADMIN_SECRET(또는 전용 STAFF_CONSOLE_PASSWORD)을 설정하세요.",
+      },
       { status: 503 },
     );
   }
