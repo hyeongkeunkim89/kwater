@@ -15,6 +15,7 @@ import {
   addReservation,
   getAvailableCount,
 } from "@/lib/reservations";
+import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
 
 // ─── 날짜 유틸 ──────────────────────────────────────────────
 function toDateStr(d: Date) {
@@ -325,10 +326,10 @@ export function ReservationForm({
             추가 예약하기
           </button>
           <Link
-            href="/admin"
+            href={STAFF_CONSOLE_HREF}
             className="rounded-xl bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700"
           >
-            예약 현황 보기
+            운영 콘솔에서 보기
           </Link>
         </div>
       </div>

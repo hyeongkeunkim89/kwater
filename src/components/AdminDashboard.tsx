@@ -74,7 +74,7 @@ export function AdminDashboard({
           headers: { "x-admin-secret": secret },
         });
         if (res.status === 401) {
-          setListLoadError("관리자 비밀번호가 올바르지 않습니다.");
+          setListLoadError("운영 비밀번호가 올바르지 않습니다.");
           setList([]);
           return;
         }
@@ -166,15 +166,15 @@ export function AdminDashboard({
         <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
           서버 예약 목록을 쓰려면 배포 환경에{" "}
           <code className="rounded bg-amber-100/80 px-1 py-0.5 text-xs">WATER_STORIES_ADMIN_SECRET</code>를
-          설정해 주세요. (물 이야기 관리와 동일한 키입니다.)
+          설정해 주세요. (물 이야기와 동일한 운영 비밀번호입니다.)
         </div>
       )}
 
       {reservationsLive && adminSecretConfigured && (
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="text-sm font-semibold text-slate-800">관리자 비밀번호</p>
+          <p className="text-sm font-semibold text-slate-800">운영 비밀번호</p>
           <p className="mt-1 text-xs text-slate-500">
-            서버에 저장된 예약을 불러오고 상태를 변경하려면 키를 입력하세요. 브라우저에만 잠시 저장됩니다.
+            서버 예약·물 이야기 API에 쓰는 값과 같습니다. 브라우저(sessionStorage)에만 잠시 저장됩니다.
           </p>
           <div className="mt-3 flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
             <input
@@ -182,7 +182,7 @@ export function AdminDashboard({
               autoComplete="off"
               value={adminSecret}
               onChange={(e) => persistAdminSecret(e.target.value)}
-              placeholder="관리자 비밀번호"
+              placeholder="운영 비밀번호"
               className="min-h-[44px] min-w-0 flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
             />
             <button
@@ -272,7 +272,7 @@ export function AdminDashboard({
       {list.length === 0 && (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white py-16 text-center">
           {reservationsLive && adminSecretConfigured && !adminSecret.trim() ? (
-            <p className="text-slate-500">관리자 비밀번호를 입력한 뒤 &quot;목록 새로고침&quot;을 누르면 서버 예약이 표시됩니다.</p>
+            <p className="text-slate-500">운영 비밀번호를 입력한 뒤 &quot;목록 새로고침&quot;을 누르면 서버 예약이 표시됩니다.</p>
           ) : reservationsLive && !adminSecretConfigured ? (
             <p className="text-slate-500">서버 예약 API를 사용할 수 없습니다. 안내 배너를 확인해 주세요.</p>
           ) : (

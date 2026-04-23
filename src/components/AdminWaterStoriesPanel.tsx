@@ -125,14 +125,14 @@ export function AdminWaterStoriesPanel({ storiesLive }: { storiesLive: boolean }
 
       {storiesLive && (
         <label className="mb-6 block min-w-0">
-          <span className="text-xs font-bold text-slate-700">관리자 비밀번호</span>
+          <span className="text-xs font-bold text-slate-700">운영 비밀번호</span>
           <input
             type="password"
             value={adminSecret}
             onChange={(e) => persistSecret(e.target.value)}
             autoComplete="off"
             className="mt-1.5 w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none ring-sky-400/40 focus:border-sky-400 focus:ring-2"
-            placeholder="배포 시 설정한 관리자 비밀번호"
+            placeholder="배포 시 설정한 운영 비밀번호"
           />
         </label>
       )}
