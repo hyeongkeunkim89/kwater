@@ -11,16 +11,23 @@ import {
 } from "@/lib/waterStories";
 import type { WaterStory } from "@/types/waterStory";
 
-const ADMIN_KEY = "kwm_stories_admin_secret";
-
 function centerLabel(id: string) {
   return waterCenters.find((c) => c.id === id)?.name ?? id;
 }
 
-export function AdminWaterStoriesPanel({ storiesLive }: { storiesLive: boolean }) {
+export function AdminWaterStoriesPanel({
+  storiesLive,
+  adminSecret,
+  storiesRefreshKey = 0,
+}: {
+  storiesLive: boolean;
+  /** 예약 영역과 동일 — `AdminDashboard`에서만 입력·sessionStorage 동기화 */
+  adminSecret: string;
+  /** 상단 새로고침 시 증가 → 목록 재요청 */
+  storiesRefreshKey?: number;
+}) {
   const [list, setList] = useState<WaterStory[]>([]);
   const [localPomId, setLocalPomId] = useState<string | null>(null);
-  const [adminSecret, setAdminSecret] = useState("");
   const [adminError, setAdminError] = useState<string | null>(null);
 
   const reload = useCallback(async () => {
@@ -44,22 +51,8 @@ export function AdminWaterStoriesPanel({ storiesLive }: { storiesLive: boolean }
   }, [storiesLive]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setAdminSecret(sessionStorage.getItem(ADMIN_KEY) ?? "");
-    }
-  }, []);
-
-  useEffect(() => {
     void reload();
-  }, [reload]);
-
-  const persistSecret = (value: string) => {
-    setAdminSecret(value);
-    if (typeof window !== "undefined") {
-      if (value.trim()) sessionStorage.setItem(ADMIN_KEY, value.trim());
-      else sessionStorage.removeItem(ADMIN_KEY);
-    }
-  };
+  }, [reload, storiesRefreshKey]);
 
   const authHeaders = (): HeadersInit => ({
     "x-admin-secret": adminSecret.trim(),
@@ -116,20 +109,6 @@ export function AdminWaterStoriesPanel({ storiesLive }: { storiesLive: boolean }
       <div className="mb-6">
         <h2 className="text-lg font-black text-slate-900 sm:text-xl">물 이야기 · 이달의 사진</h2>
       </div>
-
-      {storiesLive && (
-        <label className="mb-6 block min-w-0">
-          <span className="text-xs font-bold text-slate-700">관리자 비밀번호</span>
-          <input
-            type="password"
-            value={adminSecret}
-            onChange={(e) => persistSecret(e.target.value)}
-            autoComplete="off"
-            className="mt-1.5 w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none ring-sky-400/40 focus:border-sky-400 focus:ring-2"
-            placeholder="관리자 비밀번호"
-          />
-        </label>
-      )}
 
       {adminError && (
         <p className="mb-4 rounded-xl bg-rose-50 px-4 py-3 text-sm text-rose-800" role="alert">

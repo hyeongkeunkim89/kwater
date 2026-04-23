@@ -40,7 +40,10 @@ export function AdminDashboard({
   const [filterDate, setFilterDate] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [adminSecret, setAdminSecret] = useState("");
+  const [storiesRefreshKey, setStoriesRefreshKey] = useState(0);
   const [listLoadError, setListLoadError] = useState<string | null>(null);
+
+  const showAdminSecretBar = storiesLive || (reservationsLive && adminSecretConfigured);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -170,7 +173,7 @@ export function AdminDashboard({
         </div>
       )}
 
-      {reservationsLive && adminSecretConfigured && (
+      {showAdminSecretBar && (
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
           <p className="text-sm font-semibold text-slate-800">관리자 비밀번호</p>
           <div className="mt-3 flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
@@ -184,10 +187,13 @@ export function AdminDashboard({
             />
             <button
               type="button"
-              onClick={() => void reload()}
+              onClick={() => {
+                setStoriesRefreshKey((k) => k + 1);
+                void reload();
+              }}
               className="min-h-[44px] shrink-0 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
             >
-              목록 새로고침
+              새로고침
             </button>
           </div>
           {listLoadError && <p className="mt-2 text-sm text-rose-600">{listLoadError}</p>}
@@ -269,7 +275,7 @@ export function AdminDashboard({
       {list.length === 0 && (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white py-16 text-center">
           {reservationsLive && adminSecretConfigured && !adminSecret.trim() ? (
-            <p className="text-slate-500">관리자 비밀번호를 입력한 뒤 목록 새로고침을 누르세요.</p>
+            <p className="text-slate-500">관리자 비밀번호를 입력한 뒤 새로고침을 누르세요.</p>
           ) : reservationsLive && !adminSecretConfigured ? (
             <p className="text-slate-500">예약 API를 사용할 수 없습니다.</p>
           ) : (
@@ -380,7 +386,11 @@ export function AdminDashboard({
       )}
 
       <div className="mt-12 border-t border-slate-200 pt-12">
-        <AdminWaterStoriesPanel storiesLive={storiesLive} />
+        <AdminWaterStoriesPanel
+          storiesLive={storiesLive}
+          adminSecret={adminSecret}
+          storiesRefreshKey={storiesRefreshKey}
+        />
       </div>
 
       {/* 삭제 확인 모달 */}
