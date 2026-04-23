@@ -39,17 +39,27 @@ function safeSegment(s: string) {
 /** INSERT 단계 예외 → 사용자 안내 (이미지는 이미 Storage에 있을 수 있음) */
 function insertStoryDbUserMessage(err: unknown): string {
   const msg = err instanceof Error ? err.message : String(err);
+  const code =
+    err && typeof err === "object" && "code" in err
+      ? String((err as { code?: string }).code ?? "")
+      : "";
   const m = msg.toLowerCase();
+  if (code === "42P01" || /relation .*does not exist/i.test(msg)) {
+    return "글 저장에 실패했습니다. Supabase **SQL Editor**에서 저장소의 `db/water-stories.sql`을 실행해 `water_stories` 테이블을 만든 뒤 다시 시도해 주세요. (Transaction pooler 6543에서는 앱이 자동으로 테이블을 만들지 않습니다.)";
+  }
+  if (/password authentication failed|28p01|tenant or user not found|invalid.*password/i.test(m) || code === "28P01") {
+    return "글 저장에 실패했습니다. DATABASE_URL의 **DB 비밀번호**와 **사용자 이름**(pooler는 `postgres.[프로젝트ref]` 형식)이 Supabase에 표시된 값과 같은지 확인해 주세요.";
+  }
   if (/econnrefused|etimedout|getaddrinfo|connect/.test(m)) {
     return "글 저장에 실패했습니다. DATABASE_URL 호스트·포트·비밀번호를 확인해 주세요.";
   }
   if (/ssl|certificate|tls/.test(m)) {
     return "글 저장에 실패했습니다. DB 연결 문자열에 sslmode=require 등 SSL 옵션이 맞는지 확인해 주세요.";
   }
-  if (/prepared statement|26000|42p01|syntax error.*prepare|pgbouncer/.test(m)) {
+  if (/prepared statement|26000|syntax error.*prepare|pgbouncer/.test(m)) {
     return "글 저장에 실패했습니다. Supabase **Transaction pooler** URI를 쓰는 경우, 문자열 끝에 `?pgbouncer=true`(없다면)를 붙여 주세요.";
   }
-  if (/permission denied|42501/.test(m)) {
+  if (/permission denied|42501/.test(m) || code === "42501") {
     return "글 저장에 실패했습니다. DB 사용자에게 `water_stories` 테이블 쓰기 권한이 있는지 확인해 주세요.";
   }
   return "사진은 Storage에 올라갔을 수 있으나, 글(DB) 저장에 실패했습니다. DATABASE_URL·Supabase Database를 확인해 주세요.";

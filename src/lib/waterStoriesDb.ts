@@ -13,13 +13,22 @@ function supabasePoolerDatabaseUrl(raw: string): string {
   return u.includes("?") ? `${u}&pgbouncer=true` : `${u}?pgbouncer=true`;
 }
 
+/** Transaction pooler(6543)에서는 DDL(CREATE TABLE)이 막히는 경우가 많아, 테이블은 SQL Editor에서 미리 만들어야 함 */
+function skipRuntimeSchemaDdl(): boolean {
+  const u = process.env.DATABASE_URL?.trim() ?? "";
+  return /pooler\.supabase\.com:6543/i.test(u);
+}
+
 export function getStoriesSql(): ReturnType<typeof postgres> | null {
   const url = process.env.DATABASE_URL?.trim();
   if (!url) return null;
   if (!globalForSql.waterStoriesSql) {
-    globalForSql.waterStoriesSql = postgres(supabasePoolerDatabaseUrl(url), {
+    const resolved = supabasePoolerDatabaseUrl(url);
+    const isSupabase = /supabase\.co|pooler\.supabase\.com/i.test(resolved);
+    globalForSql.waterStoriesSql = postgres(resolved, {
       max: 1,
       prepare: false,
+      ...(isSupabase ? { ssl: "require" as const } : {}),
     });
   }
   return globalForSql.waterStoriesSql;
@@ -29,6 +38,10 @@ let schemaPromise: Promise<void> | null = null;
 
 function ensureWaterStoriesSchema(sql: ReturnType<typeof postgres>) {
   if (!schemaPromise) {
+    if (skipRuntimeSchemaDdl()) {
+      schemaPromise = Promise.resolve();
+      return schemaPromise;
+    }
     schemaPromise = (async () => {
       await sql`
         CREATE TABLE IF NOT EXISTS water_stories (
