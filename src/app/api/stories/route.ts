@@ -70,8 +70,19 @@ function insertStoryDbUserMessage(err: unknown): string {
   if (code === "42883" || /gen_random_uuid|function .* does not exist/i.test(m)) {
     return "글 저장에 실패했습니다. Supabase SQL Editor에서 `CREATE EXTENSION IF NOT EXISTS pgcrypto;` 를 실행한 뒤 다시 시도해 주세요.";
   }
-  if (/password authentication failed|28p01|tenant or user not found|invalid.*password/i.test(m) || code === "28P01") {
-    return "글 저장에 실패했습니다. DATABASE_URL의 **DB 비밀번호**와 **사용자 이름**(pooler는 `postgres.[프로젝트ref]` 형식)이 Supabase에 표시된 값과 같은지 확인해 주세요.";
+  if (
+    c === "28P01" ||
+    /password authentication failed|28p01|tenant or user not found|invalid.*password|authentication failed/i.test(m)
+  ) {
+    return [
+      "글 저장에 실패했습니다. **DB 로그인(비밀번호·사용자명)**이 틀렸습니다.",
+      "① Supabase 프로젝트 → **Connect**(또는 Settings → Database) → Connection string → **Transaction pooler** → **URI** 복사",
+      "② URI 안의 `[YOUR-PASSWORD]`만 **Database password**로 바꾸기(모르면 Database 화면에서 **Reset password** 후 새 비밀번호로 Vercel도 같이 수정)",
+      "③ 사용자명은 URI에 적힌 대로 **`postgres.프로젝트ref`**(점 뒤 ref는 URL의 `project/뒤의문자열`과 동일) 유지",
+      "④ 비밀번호에 `@ # % & / +` 등이 있으면 **URL 인코딩** 후 넣기(그대로 넣으면 인증 실패가 납니다)",
+      "⑤ Vercel **Environment Variables → DATABASE_URL** 저장 후 **Redeploy**",
+      "⑥ `NEXT_PUBLIC_SUPABASE_URL`의 프로젝트(ref)와 **같은 Supabase 프로젝트**의 URI인지 확인",
+    ].join(" ");
   }
   if (/econnrefused|etimedout|getaddrinfo|connect|closed the connection|connection terminated|connect_timeout/i.test(m)) {
     return [
