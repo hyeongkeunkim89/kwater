@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReservationForm } from "@/components/ReservationForm";
+import { isReservationsLive } from "@/lib/reservationsConfig";
 
 export const metadata = {
   title: "가이드 투어 예약 | 물문화관",
@@ -10,6 +11,7 @@ type Props = { searchParams: Promise<{ center?: string }> };
 
 export default async function ReservePage({ searchParams }: Props) {
   const { center } = await searchParams;
+  const reservationsLive = isReservationsLive();
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -51,7 +53,7 @@ export default async function ReservePage({ searchParams }: Props) {
 
       {/* 폼 */}
       <main className="mx-auto max-w-5xl px-6 py-14 sm:px-10">
-        <ReservationForm defaultCenterId={center} />
+        <ReservationForm defaultCenterId={center} reservationsLive={reservationsLive} />
       </main>
 
       <footer className="border-t border-slate-100 bg-[#0b111e] py-10">

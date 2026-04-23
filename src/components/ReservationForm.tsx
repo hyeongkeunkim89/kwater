@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { getCenterById, waterCenters } from "@/data/centers";
 import { formatCenterRegionLine } from "@/lib/center-display";
@@ -90,7 +90,13 @@ function initialCenterId(defaultId?: string) {
 }
 
 // ─── 메인 컴포넌트 ───────────────────────────────────────────
-export function ReservationForm({ defaultCenterId }: { defaultCenterId?: string }) {
+export function ReservationForm({
+  defaultCenterId,
+  reservationsLive = false,
+}: {
+  defaultCenterId?: string;
+  reservationsLive?: boolean;
+}) {
   const [step, setStep] = useState<StepIndex>(0);
   const [done, setDone] = useState<Reservation | null>(null);
 
@@ -111,22 +117,116 @@ export function ReservationForm({ defaultCenterId }: { defaultCenterId?: string 
     [centerId],
   );
 
-  // 슬롯별 잔여 인원 (날짜 선택 후 계산)
-  const slotAvailability = useMemo(() => {
+  const localSlotAvailability = useMemo(() => {
     if (!date) return {} as Record<string, number>;
     return Object.fromEntries(
       TOUR_SLOTS.map((t) => [t, getAvailableCount(centerId, date, t)]),
     );
   }, [centerId, date]);
 
+  const [serverAvailMap, setServerAvailMap] = useState<Record<string, number> | null>(null);
+  const [availLoading, setAvailLoading] = useState(false);
+  const [availError, setAvailError] = useState<string | null>(null);
+  const [availRetry, setAvailRetry] = useState(0);
+
+  useEffect(() => {
+    if (!reservationsLive || !date) {
+      setServerAvailMap(null);
+      setAvailError(null);
+      setAvailLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setAvailLoading(true);
+    setAvailError(null);
+    setServerAvailMap(null);
+    const q = new URLSearchParams({ centerId, date });
+    void fetch(`/api/reservations/availability?${q}`)
+      .then(async (res) => {
+        const j = (await res.json().catch(() => ({}))) as {
+          availability?: Record<string, number>;
+          error?: string;
+        };
+        if (!res.ok) {
+          throw new Error(j.error ?? "잔여 인원을 불러오지 못했습니다.");
+        }
+        if (!j.availability || typeof j.availability !== "object") {
+          throw new Error("응답 형식이 올바르지 않습니다.");
+        }
+        return j.availability;
+      })
+      .then((map) => {
+        if (!cancelled) setServerAvailMap(map);
+      })
+      .catch((e: unknown) => {
+        if (!cancelled) {
+          setAvailError(e instanceof Error ? e.message : "잔여 인원을 불러오지 못했습니다.");
+          setServerAvailMap(null);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setAvailLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [reservationsLive, centerId, date, availRetry]);
+
+  const slotAvailability = reservationsLive ? (serverAvailMap ?? {}) : localSlotAvailability;
+
+  const loadingSlots =
+    reservationsLive && Boolean(date) && (availLoading || serverAvailMap === null) && !availError;
+
   const step0Valid = centerId && date && time;
+  const maxForSelectedTime = reservationsLive
+    ? (serverAvailMap?.[time] ?? 0)
+    : (slotAvailability[time] ?? MAX_PER_SLOT);
+
   const step1Valid =
     name.trim().length >= 2 &&
     /^[0-9-]{9,13}$/.test(phone.replace(/\s/g, "")) &&
     partySize >= 1 &&
-    partySize <= (slotAvailability[time] ?? MAX_PER_SLOT);
+    partySize <= maxForSelectedTime &&
+    (!reservationsLive || Boolean(serverAvailMap));
 
-  const handleSubmit = useCallback(() => {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const handleSubmit = useCallback(async () => {
+    setSubmitError(null);
+    if (reservationsLive) {
+      setSubmitting(true);
+      try {
+        const res = await fetch("/api/reservations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            centerId,
+            centerName: selectedCenter.name,
+            date,
+            time,
+            name: name.trim(),
+            phone: phone.trim(),
+            partySize,
+            purpose,
+            requests: requests.trim(),
+          }),
+        });
+        const data = (await res.json().catch(() => ({}))) as Reservation | { error?: string };
+        if (!res.ok) {
+          setSubmitError(
+            typeof (data as { error?: string }).error === "string"
+              ? (data as { error: string }).error
+              : "예약 접수에 실패했습니다.",
+          );
+          return;
+        }
+        setDone(data as Reservation);
+      } finally {
+        setSubmitting(false);
+      }
+      return;
+    }
     const r = addReservation({
       centerId,
       centerName: selectedCenter.name,
@@ -139,7 +239,18 @@ export function ReservationForm({ defaultCenterId }: { defaultCenterId?: string 
       requests: requests.trim(),
     });
     setDone(r);
-  }, [centerId, date, time, name, phone, partySize, purpose, requests, selectedCenter]);
+  }, [
+    reservationsLive,
+    centerId,
+    date,
+    time,
+    name,
+    phone,
+    partySize,
+    purpose,
+    requests,
+    selectedCenter,
+  ]);
 
   // ── 완료 화면 ──────────────────────────────────────────────
   if (done) {
@@ -273,18 +384,34 @@ export function ReservationForm({ defaultCenterId }: { defaultCenterId?: string 
               <p className="text-xs text-slate-500">
                 슬롯당 최대 {MAX_PER_SLOT}명 · 소요 약 60분
               </p>
+              {availError && (
+                <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+                  <p>{availError}</p>
+                  <button
+                    type="button"
+                    onClick={() => setAvailRetry((n) => n + 1)}
+                    className="mt-2 font-semibold text-amber-800 underline decoration-amber-600/60 hover:text-amber-950"
+                  >
+                    다시 시도
+                  </button>
+                </div>
+              )}
               <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
                 {TOUR_SLOTS.map((t) => {
-                  const avail = slotAvailability[t] ?? MAX_PER_SLOT;
-                  const full = avail <= 0;
+                  const avail = reservationsLive
+                    ? (serverAvailMap?.[t] ?? 0)
+                    : (slotAvailability[t] ?? MAX_PER_SLOT);
+                  const full = !loadingSlots && !availError && avail <= 0;
+                  const disabled = loadingSlots || Boolean(availError) || full;
                   return (
                     <button
                       key={t}
-                      disabled={full}
+                      type="button"
+                      disabled={disabled}
                       onClick={() => setTime(t)}
                       className={[
-                        "flex flex-col items-center rounded-xl border py-3 text-sm font-semibold transition focus:outline-none",
-                        full
+                        "flex min-h-[44px] flex-col items-center justify-center rounded-xl border py-3 text-sm font-semibold transition focus:outline-none",
+                        disabled
                           ? "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-300"
                           : time === t
                             ? "border-sky-500 bg-sky-600 text-white shadow"
@@ -295,14 +422,20 @@ export function ReservationForm({ defaultCenterId }: { defaultCenterId?: string 
                       <span
                         className={[
                           "mt-0.5 text-[10px]",
-                          full
+                          disabled
                             ? "text-slate-300"
                             : time === t
                               ? "text-sky-100"
                               : "text-slate-400",
                         ].join(" ")}
                       >
-                        {full ? "마감" : `잔여 ${avail}명`}
+                        {loadingSlots
+                          ? "확인 중"
+                          : availError
+                            ? "—"
+                            : full
+                              ? "마감"
+                              : `잔여 ${avail}명`}
                       </span>
                     </button>
                   );
@@ -390,7 +523,7 @@ export function ReservationForm({ defaultCenterId }: { defaultCenterId?: string 
                   type="button"
                   onClick={() =>
                     setPartySize((n) =>
-                      Math.min(slotAvailability[time] ?? MAX_PER_SLOT, n + 1),
+                      Math.min(maxForSelectedTime || MAX_PER_SLOT, n + 1),
                     )
                   }
                   className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 text-lg font-bold text-slate-600 hover:border-sky-400 hover:text-sky-700"
@@ -398,7 +531,7 @@ export function ReservationForm({ defaultCenterId }: { defaultCenterId?: string 
                   +
                 </button>
                 <span className="text-xs text-slate-400">
-                  (최대 {slotAvailability[time] ?? MAX_PER_SLOT}명)
+                  (최대 {maxForSelectedTime || MAX_PER_SLOT}명)
                 </span>
               </div>
             </div>
@@ -490,18 +623,26 @@ export function ReservationForm({ defaultCenterId }: { defaultCenterId?: string 
             예약 현황 페이지에서 직접 취소하거나 해당 문화관으로 연락하세요.
           </p>
 
+          {submitError && (
+            <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+              {submitError}
+            </p>
+          )}
+
           <div className="flex justify-between pt-2">
             <button
               onClick={() => setStep(1)}
-              className="rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-sky-400 hover:text-sky-800"
+              disabled={submitting}
+              className="rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-sky-400 hover:text-sky-800 disabled:opacity-50"
             >
               ← 이전
             </button>
             <button
-              onClick={handleSubmit}
-              className="rounded-xl bg-sky-600 px-8 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700"
+              onClick={() => void handleSubmit()}
+              disabled={submitting}
+              className="rounded-xl bg-sky-600 px-8 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 disabled:opacity-50"
             >
-              예약 신청 완료
+              {submitting ? "접수 중…" : "예약 신청 완료"}
             </button>
           </div>
         </section>

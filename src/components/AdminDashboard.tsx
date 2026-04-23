@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import type { Reservation, ReservationStatus } from "@/types/reservation";
 import {
@@ -10,6 +10,8 @@ import {
 } from "@/lib/reservations";
 import { waterCenters } from "@/data/centers";
 import { AdminWaterStoriesPanel } from "@/components/AdminWaterStoriesPanel";
+
+const ADMIN_KEY = "kwm_stories_admin_secret";
 
 const STATUS_STYLES: Record<ReservationStatus, string> = {
   대기: "bg-amber-50 text-amber-800 ring-amber-300/60",
@@ -23,19 +25,79 @@ function formatDateKo(dateStr: string) {
   return `${y}.${m}.${d}(${dow})`;
 }
 
-export function AdminDashboard({ storiesLive = false }: { storiesLive?: boolean }) {
+export function AdminDashboard({
+  storiesLive = false,
+  reservationsLive = false,
+  adminSecretConfigured = false,
+}: {
+  storiesLive?: boolean;
+  reservationsLive?: boolean;
+  adminSecretConfigured?: boolean;
+}) {
   const [list, setList] = useState<Reservation[]>([]);
   const [filterCenter, setFilterCenter] = useState("전체");
   const [filterStatus, setFilterStatus] = useState<ReservationStatus | "전체">("전체");
   const [filterDate, setFilterDate] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
-
-  const reload = () => setList(getAllReservations());
+  const [adminSecret, setAdminSecret] = useState("");
+  const [listLoadError, setListLoadError] = useState<string | null>(null);
 
   useEffect(() => {
-    const t = window.setTimeout(() => reload(), 0);
-    return () => clearTimeout(t);
+    if (typeof window !== "undefined") {
+      setAdminSecret(sessionStorage.getItem(ADMIN_KEY) ?? "");
+    }
   }, []);
+
+  const persistAdminSecret = (value: string) => {
+    setAdminSecret(value);
+    if (typeof window !== "undefined") {
+      const t = value.trim();
+      if (t) sessionStorage.setItem(ADMIN_KEY, t);
+      else sessionStorage.removeItem(ADMIN_KEY);
+    }
+  };
+
+  const reload = useCallback(async () => {
+    if (reservationsLive) {
+      setListLoadError(null);
+      if (!adminSecretConfigured) {
+        setList([]);
+        return;
+      }
+      const secret = adminSecret.trim();
+      if (!secret) {
+        setList([]);
+        return;
+      }
+      try {
+        const res = await fetch("/api/reservations", {
+          headers: { "x-admin-secret": secret },
+        });
+        if (res.status === 401) {
+          setListLoadError("관리자 비밀번호가 올바르지 않습니다.");
+          setList([]);
+          return;
+        }
+        if (!res.ok) {
+          const j = (await res.json().catch(() => ({}))) as { error?: string };
+          setListLoadError(j.error ?? "목록을 불러오지 못했습니다.");
+          setList([]);
+          return;
+        }
+        const data = (await res.json()) as Reservation[];
+        setList(Array.isArray(data) ? data : []);
+      } catch {
+        setListLoadError("목록을 불러오지 못했습니다.");
+        setList([]);
+      }
+      return;
+    }
+    setList(getAllReservations());
+  }, [reservationsLive, adminSecretConfigured, adminSecret]);
+
+  useEffect(() => {
+    void reload();
+  }, [reload]);
 
   const filtered = useMemo(() => {
     return list.filter((r) => {
@@ -57,19 +119,84 @@ export function AdminDashboard({ storiesLive = false }: { storiesLive?: boolean 
     [list],
   );
 
-  const handleStatus = (id: string, s: ReservationStatus) => {
-    updateStatus(id, s);
-    reload();
+  const authHeaders = (): HeadersInit => ({
+    "x-admin-secret": adminSecret.trim(),
+    "Content-Type": "application/json",
+  });
+
+  const handleStatus = async (id: string, s: ReservationStatus) => {
+    if (reservationsLive) {
+      const res = await fetch(`/api/reservations/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        headers: authHeaders(),
+        body: JSON.stringify({ status: s }),
+      });
+      if (!res.ok) {
+        const j = (await res.json().catch(() => ({}))) as { error?: string };
+        setListLoadError(j.error ?? "상태 변경에 실패했습니다.");
+        return;
+      }
+    } else {
+      updateStatus(id, s);
+    }
+    await reload();
   };
 
-  const handleDelete = (id: string) => {
-    deleteReservation(id);
+  const handleDelete = async (id: string) => {
+    if (reservationsLive) {
+      const res = await fetch(`/api/reservations/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: { "x-admin-secret": adminSecret.trim() },
+      });
+      if (!res.ok) {
+        const j = (await res.json().catch(() => ({}))) as { error?: string };
+        setListLoadError(j.error ?? "삭제에 실패했습니다.");
+        return;
+      }
+    } else {
+      deleteReservation(id);
+    }
     setConfirmDelete(null);
-    reload();
+    await reload();
   };
 
   return (
     <div className="space-y-6">
+      {reservationsLive && !adminSecretConfigured && (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+          서버 예약 목록을 쓰려면 배포 환경에{" "}
+          <code className="rounded bg-amber-100/80 px-1 py-0.5 text-xs">WATER_STORIES_ADMIN_SECRET</code>를
+          설정해 주세요. (물 이야기 관리와 동일한 키입니다.)
+        </div>
+      )}
+
+      {reservationsLive && adminSecretConfigured && (
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <p className="text-sm font-semibold text-slate-800">관리자 비밀번호</p>
+          <p className="mt-1 text-xs text-slate-500">
+            서버에 저장된 예약을 불러오고 상태를 변경하려면 키를 입력하세요. 브라우저에만 잠시 저장됩니다.
+          </p>
+          <div className="mt-3 flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
+            <input
+              type="password"
+              autoComplete="off"
+              value={adminSecret}
+              onChange={(e) => persistAdminSecret(e.target.value)}
+              placeholder="관리자 비밀번호"
+              className="min-h-[44px] min-w-0 flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
+            />
+            <button
+              type="button"
+              onClick={() => void reload()}
+              className="min-h-[44px] shrink-0 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+            >
+              목록 새로고침
+            </button>
+          </div>
+          {listLoadError && <p className="mt-2 text-sm text-rose-600">{listLoadError}</p>}
+        </div>
+      )}
+
       {/* 요약 카드 */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
@@ -144,13 +271,21 @@ export function AdminDashboard({ storiesLive = false }: { storiesLive?: boolean 
       {/* 예약 없을 때 */}
       {list.length === 0 && (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white py-16 text-center">
-          <p className="text-slate-400">아직 접수된 예약이 없습니다.</p>
-          <Link
-            href="/reserve"
-            className="mt-4 inline-flex items-center rounded-xl bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700"
-          >
-            예약 신청하러 가기
-          </Link>
+          {reservationsLive && adminSecretConfigured && !adminSecret.trim() ? (
+            <p className="text-slate-500">관리자 비밀번호를 입력한 뒤 &quot;목록 새로고침&quot;을 누르면 서버 예약이 표시됩니다.</p>
+          ) : reservationsLive && !adminSecretConfigured ? (
+            <p className="text-slate-500">서버 예약 API를 사용할 수 없습니다. 안내 배너를 확인해 주세요.</p>
+          ) : (
+            <>
+              <p className="text-slate-400">아직 접수된 예약이 없습니다.</p>
+              <Link
+                href="/reserve"
+                className="mt-4 inline-flex min-h-[44px] items-center justify-center rounded-xl bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700"
+              >
+                예약 신청하러 가기
+              </Link>
+            </>
+          )}
         </div>
       )}
 
@@ -214,23 +349,26 @@ export function AdminDashboard({ storiesLive = false }: { storiesLive?: boolean 
                       <div className="flex gap-1.5">
                         {r.status !== "확정" && r.status !== "취소" && (
                           <button
-                            onClick={() => handleStatus(r.id, "확정")}
-                            className="rounded-lg bg-emerald-50 px-2.5 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100"
+                            type="button"
+                            onClick={() => void handleStatus(r.id, "확정")}
+                            className="min-h-[36px] rounded-lg bg-emerald-50 px-2.5 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100"
                           >
                             확정
                           </button>
                         )}
                         {r.status !== "취소" && (
                           <button
-                            onClick={() => handleStatus(r.id, "취소")}
-                            className="rounded-lg bg-amber-50 px-2.5 py-1.5 text-xs font-semibold text-amber-700 hover:bg-amber-100"
+                            type="button"
+                            onClick={() => void handleStatus(r.id, "취소")}
+                            className="min-h-[36px] rounded-lg bg-amber-50 px-2.5 py-1.5 text-xs font-semibold text-amber-700 hover:bg-amber-100"
                           >
                             취소
                           </button>
                         )}
                         <button
+                          type="button"
                           onClick={() => setConfirmDelete(r.id)}
-                          className="rounded-lg bg-rose-50 px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-100"
+                          className="min-h-[36px] rounded-lg bg-rose-50 px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-100"
                         >
                           삭제
                         </button>
@@ -264,7 +402,8 @@ export function AdminDashboard({ storiesLive = false }: { storiesLive?: boolean 
                 취소
               </button>
               <button
-                onClick={() => handleDelete(confirmDelete)}
+                type="button"
+                onClick={() => void handleDelete(confirmDelete)}
                 className="rounded-xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-700"
               >
                 삭제

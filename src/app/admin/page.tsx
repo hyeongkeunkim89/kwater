@@ -1,5 +1,7 @@
 import { AdminDashboard } from "@/components/AdminDashboard";
+import { isReservationsLive } from "@/lib/reservationsConfig";
 import { isWaterStoriesLive } from "@/lib/storiesConfig";
+import { adminStoriesConfigured } from "@/lib/waterStoriesAdminAuth";
 import Link from "next/link";
 
 export const metadata = {
@@ -8,6 +10,8 @@ export const metadata = {
 
 export default function AdminPage() {
   const storiesLive = isWaterStoriesLive();
+  const reservationsLive = isReservationsLive();
+  const adminSecretConfigured = adminStoriesConfigured();
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
@@ -51,7 +55,11 @@ export default function AdminPage() {
       </div>
 
       <main className="mx-auto max-w-7xl px-6 py-10 sm:px-10">
-        <AdminDashboard storiesLive={storiesLive} />
+        <AdminDashboard
+          storiesLive={storiesLive}
+          reservationsLive={reservationsLive}
+          adminSecretConfigured={adminSecretConfigured}
+        />
       </main>
 
       <footer className="mt-8 border-t border-slate-200 bg-[#0b111e] py-10">
