@@ -19,6 +19,25 @@ function normalizeDatabaseUrlEnv(raw: string | undefined): string {
   return u.replace(/\r\n/g, "").replace(/\n/g, "");
 }
 
+/**
+ * Vercel 등에서 URI에 비밀번호를 넣으면 `+`·`#` 등이 깨져 28P01이 나는 경우가 있어,
+ * `DATABASE_PASSWORD`(평문, 서버 전용)가 있으면 Node `URL`로 비밀번호만 안전히 붙입니다.
+ */
+function getResolvedDatabaseUrl(): string | null {
+  const base = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
+  if (!base) return null;
+  const plain = process.env.DATABASE_PASSWORD?.trim();
+  if (!plain) return base;
+  try {
+    const u = new URL(base);
+    u.password = plain;
+    return u.href;
+  } catch {
+    console.error("DATABASE_URL + DATABASE_PASSWORD 병합 실패(Invalid URL)");
+    return base;
+  }
+}
+
 /** Supabase 호스트인데 sslmode가 없으면 URI에만 붙임(라이브러리 ssl 옵션과 이중 적용 시 연결 실패할 수 있음) */
 function ensureSupabaseSslQuery(raw: string): string {
   const u = raw.trim();
@@ -37,14 +56,14 @@ function supabasePoolerDatabaseUrl(raw: string): string {
 
 /** Transaction pooler(6543)에서는 DDL(CREATE TABLE)이 막히는 경우가 많아, 테이블은 SQL Editor에서 미리 만들어야 함 */
 function skipRuntimeSchemaDdl(): boolean {
-  const u = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
+  const u = getResolvedDatabaseUrl() ?? "";
   return /pooler\.supabase\.com:6543/i.test(u);
 }
 
 let schemaPromise: Promise<void> | null = null;
 
 export function getStoriesSql(): ReturnType<typeof postgres> | null {
-  const url = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
+  const url = getResolvedDatabaseUrl();
   if (!url) return null;
   if (!globalForSql.waterStoriesSql) {
     const resolved = supabasePoolerDatabaseUrl(ensureSupabaseSslQuery(url));

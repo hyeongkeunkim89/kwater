@@ -86,12 +86,10 @@ function insertStoryDbUserMessage(err: unknown): string {
   ) {
     return [
       "글 저장에 실패했습니다. **DB 로그인(비밀번호·사용자명)**이 틀렸습니다.",
-      "① Supabase 프로젝트 → **Connect**(또는 Settings → Database) → Connection string → **Transaction pooler** → **URI** 복사",
-      "② URI 안의 `[YOUR-PASSWORD]`만 **Database password**로 바꾸기(모르면 Database 화면에서 **Reset password** 후 새 비밀번호로 Vercel도 같이 수정)",
-      "③ 사용자명은 URI에 적힌 대로 **`postgres.프로젝트ref`**(점 뒤 ref는 URL의 `project/뒤의문자열`과 동일) 유지",
-      "④ 비밀번호에 `@ # % & / +` 등이 있으면 **URL 인코딩** 후 넣기(그대로 넣으면 인증 실패가 납니다)",
-      "⑤ Vercel **Environment Variables → DATABASE_URL** 저장 후 **Redeploy**",
-      "⑥ `NEXT_PUBLIC_SUPABASE_URL`의 프로젝트(ref)와 **같은 Supabase 프로젝트**의 URI인지 확인",
+      "① Supabase **Connect → Transaction pooler → URI**에서 **비밀번호 구간을 비운** 문자열을 준비합니다. (예: `postgresql://postgres.프로젝트ref@호스트:6543/postgres` — `:`와 `@` 사이에 비밀번호 없음)",
+      "② Vercel에 **`DATABASE_PASSWORD`** 를 추가하고, 값에 **DB 비밀번호 평문**(리셋한 값 그대로)만 넣습니다. **특수문자·+ 도 인코딩하지 않아도 됩니다.**",
+      "③ **`DATABASE_URL`**에는 ①의 URI **한 줄만** 넣습니다. (Vercel이 URI 안의 `+`·`#` 등을 망가뜨려 28P01이 나는 경우가 있어 이 방식을 권장합니다.)",
+      "④ `NEXT_PUBLIC_SUPABASE_URL`의 ref와 `postgres.ref`가 같은지 확인 후 **Redeploy**",
     ].join(" ");
   }
   if (/econnrefused|etimedout|getaddrinfo|connect|closed the connection|connection terminated|connect_timeout/i.test(m)) {
