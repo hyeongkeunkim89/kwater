@@ -36,6 +36,25 @@ function safeSegment(s: string) {
   return s.replace(/[^a-zA-Z0-9_-]/g, "");
 }
 
+/** INSERT 단계 예외 → 사용자 안내 (이미지는 이미 Storage에 있을 수 있음) */
+function insertStoryDbUserMessage(err: unknown): string {
+  const msg = err instanceof Error ? err.message : String(err);
+  const m = msg.toLowerCase();
+  if (/econnrefused|etimedout|getaddrinfo|connect/.test(m)) {
+    return "글 저장에 실패했습니다. DATABASE_URL 호스트·포트·비밀번호를 확인해 주세요.";
+  }
+  if (/ssl|certificate|tls/.test(m)) {
+    return "글 저장에 실패했습니다. DB 연결 문자열에 sslmode=require 등 SSL 옵션이 맞는지 확인해 주세요.";
+  }
+  if (/prepared statement|26000|42p01|syntax error.*prepare|pgbouncer/.test(m)) {
+    return "글 저장에 실패했습니다. Supabase **Transaction pooler** URI를 쓰는 경우, 문자열 끝에 `?pgbouncer=true`(없다면)를 붙여 주세요.";
+  }
+  if (/permission denied|42501/.test(m)) {
+    return "글 저장에 실패했습니다. DB 사용자에게 `water_stories` 테이블 쓰기 권한이 있는지 확인해 주세요.";
+  }
+  return "사진은 Storage에 올라갔을 수 있으나, 글(DB) 저장에 실패했습니다. DATABASE_URL·Supabase Database를 확인해 주세요.";
+}
+
 export async function GET(req: NextRequest) {
   if (!isWaterStoriesLive()) {
     return NextResponse.json([]);
@@ -108,15 +127,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: uploaded.error }, { status: 500 });
     }
 
-    const story = await insertWaterStoryDb({
-      centerId: safeId,
-      centerName: center.name,
-      imageUrl: uploaded.publicUrl,
-      nickname,
-      caption,
-    });
-
-    return NextResponse.json(story);
+    try {
+      const story = await insertWaterStoryDb({
+        centerId: safeId,
+        centerName: center.name,
+        imageUrl: uploaded.publicUrl,
+        nickname,
+        caption,
+      });
+      return NextResponse.json(story);
+    } catch (dbErr) {
+      console.error("insertWaterStoryDb:", dbErr);
+      return NextResponse.json({ error: insertStoryDbUserMessage(dbErr) }, { status: 500 });
+    }
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: "등록 처리 중 오류가 났습니다." }, { status: 500 });

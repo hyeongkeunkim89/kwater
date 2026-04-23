@@ -5,11 +5,22 @@ const globalForSql = globalThis as unknown as {
   waterStoriesSql: ReturnType<typeof postgres> | undefined;
 };
 
+/** Supabase Transaction pooler(6543 등) + postgres.js 는 `prepare: false` 와 함께 `pgbouncer=true` 권장 */
+function supabasePoolerDatabaseUrl(raw: string): string {
+  const u = raw.trim();
+  if (!/pooler\.supabase\.com/i.test(u)) return u;
+  if (/[?&]pgbouncer=true/i.test(u)) return u;
+  return u.includes("?") ? `${u}&pgbouncer=true` : `${u}?pgbouncer=true`;
+}
+
 export function getStoriesSql(): ReturnType<typeof postgres> | null {
   const url = process.env.DATABASE_URL?.trim();
   if (!url) return null;
   if (!globalForSql.waterStoriesSql) {
-    globalForSql.waterStoriesSql = postgres(url, { max: 1, prepare: false });
+    globalForSql.waterStoriesSql = postgres(supabasePoolerDatabaseUrl(url), {
+      max: 1,
+      prepare: false,
+    });
   }
   return globalForSql.waterStoriesSql;
 }
