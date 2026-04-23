@@ -27,6 +27,8 @@ function skipRuntimeSchemaDdl(): boolean {
   return /pooler\.supabase\.com:6543/i.test(u);
 }
 
+let schemaPromise: Promise<void> | null = null;
+
 export function getStoriesSql(): ReturnType<typeof postgres> | null {
   const url = process.env.DATABASE_URL?.trim();
   if (!url) return null;
@@ -35,14 +37,43 @@ export function getStoriesSql(): ReturnType<typeof postgres> | null {
     globalForSql.waterStoriesSql = postgres(resolved, {
       max: 1,
       prepare: false,
-      connect_timeout: 30,
-      idle_timeout: 30,
+      connect_timeout: 90,
+      idle_timeout: 60,
+      keep_alive: 30,
     });
   }
   return globalForSql.waterStoriesSql;
 }
 
-let schemaPromise: Promise<void> | null = null;
+async function disposeWaterStoriesSql(): Promise<void> {
+  const c = globalForSql.waterStoriesSql;
+  globalForSql.waterStoriesSql = undefined;
+  schemaPromise = null;
+  if (c) {
+    try {
+      await c.end({ timeout: 5 });
+    } catch {
+      /* 연결 끊김 시 무시 */
+    }
+  }
+}
+
+function isTransientConnectionFailure(err: unknown): boolean {
+  const code =
+    err && typeof err === "object" && "code" in err
+      ? String((err as { code?: string }).code ?? "").toUpperCase()
+      : "";
+  const msg = (err instanceof Error ? err.message : String(err)).toUpperCase();
+  return (
+    code === "ETIMEDOUT" ||
+    code === "ECONNRESET" ||
+    code === "EPIPE" ||
+    code === "ENOTFOUND" ||
+    /ETIMEDOUT|ECONNRESET|EPIPE|ENOTFOUND|SOCKET HANG UP|CONNECT_TIMEOUT|UND_ERR_CONNECT_TIMEOUT/i.test(
+      msg + code,
+    )
+  );
+}
 
 function ensureWaterStoriesSchema(sql: ReturnType<typeof postgres>) {
   if (!schemaPromise) {
@@ -148,33 +179,48 @@ export async function insertWaterStoryDb(input: {
   nickname: string;
   caption: string;
 }): Promise<WaterStory> {
-  const sql = getStoriesSql();
-  if (!sql) throw new Error("DATABASE_URL 없음");
-  await ensureWaterStoriesSchema(sql);
-  const [row] = await sql<
-    {
-      id: string;
-      center_id: string;
-      center_name: string;
-      image_url: string;
-      nickname: string;
-      caption: string;
-      created_at: Date;
-      is_photo_of_month: boolean;
-    }[]
-  >`
-    INSERT INTO water_stories (center_id, center_name, image_url, nickname, caption)
-    VALUES (
-      ${input.centerId},
-      ${input.centerName},
-      ${input.imageUrl},
-      ${input.nickname},
-      ${input.caption}
-    )
-    RETURNING id, center_id, center_name, image_url, nickname, caption, created_at, is_photo_of_month
-  `;
-  if (!row) throw new Error("INSERT 실패");
-  return rowToStory(row);
+  let lastErr: unknown;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const sql = getStoriesSql();
+      if (!sql) throw new Error("DATABASE_URL 없음");
+      await ensureWaterStoriesSchema(sql);
+      const [row] = await sql<
+        {
+          id: string;
+          center_id: string;
+          center_name: string;
+          image_url: string;
+          nickname: string;
+          caption: string;
+          created_at: Date;
+          is_photo_of_month: boolean;
+        }[]
+      >`
+        INSERT INTO water_stories (center_id, center_name, image_url, nickname, caption)
+        VALUES (
+          ${input.centerId},
+          ${input.centerName},
+          ${input.imageUrl},
+          ${input.nickname},
+          ${input.caption}
+        )
+        RETURNING id, center_id, center_name, image_url, nickname, caption, created_at, is_photo_of_month
+      `;
+      if (!row) throw new Error("INSERT 실패");
+      return rowToStory(row);
+    } catch (e) {
+      lastErr = e;
+      if (attempt < 2 && isTransientConnectionFailure(e)) {
+        console.warn("insertWaterStoryDb: 연결 실패, 재시도", attempt + 1, e);
+        await disposeWaterStoriesSql();
+        await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw lastErr;
 }
 
 export async function getWaterStoryImageUrl(id: string): Promise<string | null> {

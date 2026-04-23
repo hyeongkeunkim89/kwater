@@ -49,7 +49,17 @@ function postgresErrMeta(err: unknown): { msg: string; code: string; detail: str
 function insertStoryDbUserMessage(err: unknown): string {
   const { msg, code, detail } = postgresErrMeta(err);
   const m = msg.toLowerCase();
-  const d = detail.toLowerCase();
+  const c = code.toUpperCase();
+
+  if (c === "ETIMEDOUT" || c === "ECONNRESET" || /etimedout|econnreset|connect_timeout|und_err_connect_timeout/i.test(m)) {
+    return [
+      "글 저장에 실패했습니다. Vercel → Supabase **DB 연결이 시간 초과**입니다.",
+      "① Vercel 프로젝트 **Settings → General → Region** 과 Supabase 프로젝트 **리전**을 가깝게 맞추기(예: 둘 다 서울권)",
+      "② 회사망이면 **아웃바운드**가 `*.pooler.supabase.com`(6543)·`*.supabase.co`(5432)를 막지 않는지 확인",
+      "③ Supabase **Database → Connection string → Transaction pooler** URI를 다시 복사해 `DATABASE_URL`에 넣고 Redeploy",
+      "④ 잠시 뒤 다시 시도(일시적 네트워크 지연). 앱은 같은 요청에서 짧게 몇 번 재시도합니다.",
+    ].join(" ");
+  }
 
   if (code === "42P01" || /relation .*does not exist/i.test(msg)) {
     return "글 저장에 실패했습니다. Supabase **SQL Editor**에서 저장소의 `db/water-stories.sql`을 실행해 `water_stories` 테이블을 만든 뒤 다시 시도해 주세요. (Transaction pooler 6543에서는 앱이 자동으로 테이블을 만들지 않습니다.)";
