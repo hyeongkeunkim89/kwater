@@ -5,6 +5,14 @@ const globalForSql = globalThis as unknown as {
   waterStoriesSql: ReturnType<typeof postgres> | undefined;
 };
 
+/** Supabase 호스트인데 sslmode가 없으면 URI에만 붙임(라이브러리 ssl 옵션과 이중 적용 시 연결 실패할 수 있음) */
+function ensureSupabaseSslQuery(raw: string): string {
+  const u = raw.trim();
+  if (!/supabase\.co|pooler\.supabase\.com/i.test(u)) return u;
+  if (/[?&]sslmode=/i.test(u)) return u;
+  return u.includes("?") ? `${u}&sslmode=require` : `${u}?sslmode=require`;
+}
+
 /** Supabase Transaction pooler(6543 등) + postgres.js 는 `prepare: false` 와 함께 `pgbouncer=true` 권장 */
 function supabasePoolerDatabaseUrl(raw: string): string {
   const u = raw.trim();
@@ -23,14 +31,12 @@ export function getStoriesSql(): ReturnType<typeof postgres> | null {
   const url = process.env.DATABASE_URL?.trim();
   if (!url) return null;
   if (!globalForSql.waterStoriesSql) {
-    const resolved = supabasePoolerDatabaseUrl(url);
-    const isSupabase = /supabase\.co|pooler\.supabase\.com/i.test(resolved);
+    const resolved = supabasePoolerDatabaseUrl(ensureSupabaseSslQuery(url));
     globalForSql.waterStoriesSql = postgres(resolved, {
       max: 1,
       prepare: false,
-      connect_timeout: 15,
-      idle_timeout: 20,
-      ...(isSupabase ? { ssl: "require" as const } : {}),
+      connect_timeout: 30,
+      idle_timeout: 30,
     });
   }
   return globalForSql.waterStoriesSql;

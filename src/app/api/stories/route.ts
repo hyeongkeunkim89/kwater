@@ -64,7 +64,14 @@ function insertStoryDbUserMessage(err: unknown): string {
     return "글 저장에 실패했습니다. DATABASE_URL의 **DB 비밀번호**와 **사용자 이름**(pooler는 `postgres.[프로젝트ref]` 형식)이 Supabase에 표시된 값과 같은지 확인해 주세요.";
   }
   if (/econnrefused|etimedout|getaddrinfo|connect|closed the connection|connection terminated|connect_timeout/i.test(m)) {
-    return "글 저장에 실패했습니다. DATABASE_URL 호스트·포트·비밀번호를 확인해 주세요.";
+    return [
+      "글 저장에 실패했습니다. DB에 **TCP 연결 자체가 안 되는** 상태입니다.",
+      "① Supabase 대시보드 → Project Settings → **Database** → Connection string → **URI**를 다시 복사해 Vercel `DATABASE_URL`에 넣기",
+      "② 서버리스(Vercel)는 **Transaction pooler**(호스트에 `pooler.supabase.com`, 포트 **6543**) 권장",
+      "③ 비밀번호에 `@ # /` 등이 있으면 **URL 인코딩**된 값이 들어가야 합니다",
+      "④ Supabase 프로젝트가 **일시중지(Paused)** 아닌지 확인",
+      "⑤ 회사망이면 DB 호스트로의 **아웃바운드 6543/5432** 차단 여부 확인",
+    ].join(" ");
   }
   if (/ssl|certificate|tls|self signed/i.test(m)) {
     return "글 저장에 실패했습니다. DB 연결 문자열에 sslmode=require 등 SSL 옵션이 맞는지 확인해 주세요.";
