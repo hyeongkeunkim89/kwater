@@ -40,6 +40,12 @@ yarn-error.log*
 # 물 이야기 로컬 업로드(프로덕션은 Blob)
 /public/stories/
 
+# 층별 사진 일괄 등록 — 원본 이미지·작업 manifest·결과 CSV (예시·README는 커밋)
+/bulk-floor-photos/images/**
+!/bulk-floor-photos/images/.gitkeep
+/bulk-floor-photos/manifest.csv
+/bulk-floor-photos/import-result-*.csv
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

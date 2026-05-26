@@ -6,7 +6,11 @@
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "import:floor-photos": "node scripts/import-floor-photos.mjs",
+    "import:floor-photos:dry": "node scripts/import-floor-photos.mjs --dry-run",
+    "import:floor-photos:force": "node scripts/import-floor-photos.mjs --force",
+    "import:floor-photos:list": "node scripts/import-floor-photos.mjs --list-centers"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",
