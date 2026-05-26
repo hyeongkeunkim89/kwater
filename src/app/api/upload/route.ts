@@ -10,6 +10,17 @@ function safeSegment(s: string) {
 }
 
 export async function POST(req: NextRequest) {
+  /** Vercel 서버리스 파일 시스템은 보통 쓰기 불가 → public/ 저장은 실패하고 "서버 오류"만 보이기 쉬움 */
+  if (process.env.VERCEL) {
+    return NextResponse.json(
+      {
+        error:
+          "Vercel에서는 이 방식으로 파일을 저장할 수 없습니다. Supabase를 쓰려면 Vercel에 DATABASE_URL·NEXT_PUBLIC_SUPABASE_URL·SUPABASE_SERVICE_ROLE_KEY를 넣고 다시 배포하세요. 그러면 층별 사진은 Storage·DB 경로로 올라갑니다.",
+      },
+      { status: 503 },
+    );
+  }
+
   try {
     const data = await req.formData();
     const file = data.get("file") as File | null;
@@ -46,6 +57,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ src });
   } catch (e) {
     console.error(e);
+    const msg = e instanceof Error ? e.message : String(e);
+    if (/EROFS|read-only file system|EPERM/i.test(msg)) {
+      return NextResponse.json(
+        {
+          error:
+            "서버 디스크에 파일을 쓸 수 없습니다. 로컬 개발 서버(pnpm dev)에서 시도하거나, 배포 환경에서는 Supabase 연동을 사용해 주세요.",
+        },
+        { status: 503 },
+      );
+    }
     return NextResponse.json({ error: "서버 오류" }, { status: 500 });
   }
 }

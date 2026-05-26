@@ -75,32 +75,32 @@ export type WaterCenter = WaterCenterBase &
     coordinates: readonly [number, number];
   };
 
-/** 시설 id별 테마(첫 번째가 「전체」목록에서의 그룹 기준) */
+/** 시설 id별 테마(문화관 현황·필터용, 시설당 2개. 첫 번째가 「전체」목록에서의 그룹 기준) */
 const centerThemesById: Record<string, readonly CenterTheme[]> = {
-  sihwa: ["기술", "생태", "체험·교육"],
-  chungju: ["기술", "체험·교육", "역사"],
+  sihwa: ["기술", "체험·교육"],
+  chungju: ["기술", "체험·교육"],
   daecheong: ["역사", "생태"],
   buan: ["생태", "역사"],
   soyang: ["생태", "기술"],
   hantan: ["기술", "체험·교육"],
   hapcheon: ["기술", "생태"],
-  "worldwater-forum": ["역사", "체험·교육", "기술"],
+  "worldwater-forum": ["역사", "체험·교육"],
   juam: ["기술", "생태"],
   jangheung: ["체험·교육", "생태"],
   yeongju: ["생태", "체험·교육"],
   seomjin: ["기술", "생태"],
   imha: ["기술", "생태"],
-  gimcheon: ["기술", "생태", "체험·교육"],
+  gimcheon: ["기술", "생태"],
   yongdam: ["생태", "체험·교육"],
   "hangang-yeoju": ["역사", "기술"],
   namgang: ["생태", "역사"],
   miryang: ["기술", "생태"],
   hoengseong: ["체험·교육", "역사"],
   "peace-dam": ["역사", "기술"],
-  geumgang: ["역사", "건축·조망", "생태"],
-  yeongsangang: ["역사", "생태", "체험·교육"],
-  diarc: ["건축·조망", "역사", "기술"],
-  nakdonggang: ["체험·교육", "기술", "생태"],
+  geumgang: ["역사", "건축·조망"],
+  yeongsangang: ["역사", "생태"],
+  diarc: ["건축·조망", "역사"],
+  nakdonggang: ["체험·교육", "기술"],
 };
 
 const waterCenterBaseList: WaterCenterBase[] = [

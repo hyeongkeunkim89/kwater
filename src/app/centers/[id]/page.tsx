@@ -14,6 +14,9 @@ import { naverMapSearchHref } from "@/lib/mapLinks";
 
 type Props = { params: Promise<{ id: string }> };
 
+/** 빌드 타임에 `isWaterStoriesLive()`가 고정되면 층별 사진이 항상 디스크 업로드로 남아 Vercel에서 실패함 → 런타임 env 반영 */
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return waterCenters.map((c) => ({ id: c.id }));
 }

@@ -60,6 +60,11 @@ function skipRuntimeSchemaDdl(): boolean {
   return /pooler\.supabase\.com:6543/i.test(u);
 }
 
+/** 다른 서버 DB 모듈에서 동일 판별용 */
+export function skipDatabaseRuntimeSchemaDdl(): boolean {
+  return skipRuntimeSchemaDdl();
+}
+
 let schemaPromise: Promise<void> | null = null;
 
 export function getStoriesSql(): ReturnType<typeof postgres> | null {

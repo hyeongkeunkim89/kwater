@@ -1,5 +1,6 @@
 -- Supabase → SQL Editor에서 실행 (또는 Dashboard → Storage에서 water-stories public 버킷 생성)
 -- 버킷 ID/이름은 src/lib/supabaseAdmin.ts 의 STORIES_STORAGE_BUCKET 과 일치해야 합니다.
+-- 문화관 층별 사진용 버킷은 db/supabase-center-floor-bucket.sql 을 별도 실행합니다.
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (

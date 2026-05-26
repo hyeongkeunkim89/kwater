@@ -2,44 +2,63 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+type FloorImage = { id: string; imageUrl: string };
+
 interface Props {
   centerId: string;
   floorKey: string; // e.g. "floor-0", "floor-1"
   floorLabel: string;
 }
 
+async function parseJsonResponse<T>(res: Response): Promise<T> {
+  const raw = await res.text();
+  const ct = res.headers.get("content-type") ?? "";
+  if (!raw.trim()) throw new Error(`빈 응답 HTTP ${res.status}`);
+  if (!ct.includes("application/json")) throw new Error(raw.trim().slice(0, 200));
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    throw new Error(`JSON 파싱 실패 HTTP ${res.status}`);
+  }
+}
+
 export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<FloorImage[]>([]);
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<FloorImage | null>(null);
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [lightboxIdx, setLightboxIdx] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchImages = useCallback(async () => {
-    const res = await fetch(
-      `/api/center-images?centerId=${centerId}&subDir=${floorKey}`
-    );
-    const list: string[] = await res.json();
-    setImages(list);
+    try {
+      const res = await fetch(
+        `/api/center-floor-photos?centerId=${encodeURIComponent(centerId)}&floorKey=${encodeURIComponent(floorKey)}`,
+        { credentials: "same-origin", cache: "no-store" },
+      );
+      const data = await parseJsonResponse<FloorImage[]>(res);
+      setImages(Array.isArray(data) ? data : []);
+    } catch {
+      setImages([]);
+    }
   }, [centerId, floorKey]);
 
   useEffect(() => {
-    const t = window.setTimeout(() => {
-      void fetchImages();
-    }, 0);
-    return () => clearTimeout(t);
+    const t = window.setTimeout(() => void fetchImages(), 0);
+    return () => window.clearTimeout(t);
   }, [fetchImages]);
 
-  const openByIdx = useCallback((idx: number) => {
-    const clamped = Math.max(0, Math.min(images.length - 1, idx));
-    setLightboxIdx(clamped);
-    setLightbox(images[clamped] ?? null);
-  }, [images]);
+  const openByIdx = useCallback(
+    (idx: number) => {
+      const clamped = Math.max(0, Math.min(images.length - 1, idx));
+      setLightboxIdx(clamped);
+      setLightbox(images[clamped]?.imageUrl ?? null);
+    },
+    [images],
+  );
 
-  /* 키보드 네비게이션 */
   useEffect(() => {
     if (!lightbox) return;
     const handler = (e: KeyboardEvent) => {
@@ -58,50 +77,75 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
 
     for (const file of Array.from(files)) {
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", file, file.name || "photo.jpg");
       fd.append("centerId", centerId);
-      fd.append("subDir", floorKey);
-      const res = await fetch("/api/upload", { method: "POST", body: fd });
-      if (!res.ok) {
-        const { error } = await res.json();
-        setUploadError(error ?? "업로드 실패");
+      fd.append("floorKey", floorKey);
+      try {
+        const res = await fetch("/api/center-floor-photos", {
+          method: "POST",
+          body: fd,
+          credentials: "same-origin",
+        });
+        const data = await parseJsonResponse<{ error?: string }>(res);
+        if (!res.ok) {
+          setUploadError(data.error ?? "업로드 실패");
+          break;
+        }
+      } catch (e) {
+        setUploadError(e instanceof Error ? e.message : "네트워크 오류");
         break;
       }
     }
 
     setUploading(false);
-    fetchImages();
+    void fetchImages();
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    handleFiles(e.dataTransfer.files);
+    void handleFiles(e.dataTransfer.files);
   };
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
-    const filename = deleteTarget.split("/").pop()!;
-    await fetch("/api/upload", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ centerId, filename, subDir: floorKey }),
-    });
-    if (lightbox === deleteTarget) setLightbox(null);
+    try {
+      const res = await fetch(
+        `/api/center-floor-photos?id=${encodeURIComponent(deleteTarget.id)}`,
+        { method: "DELETE", credentials: "same-origin" },
+      );
+      if (!res.ok) {
+        const data = await parseJsonResponse<{ error?: string }>(res).catch(() => ({ error: undefined }));
+        setUploadError(data.error ?? "삭제에 실패했습니다.");
+        setDeleteTarget(null);
+        return;
+      }
+    } catch (e) {
+      setUploadError(e instanceof Error ? e.message : "네트워크 오류");
+      setDeleteTarget(null);
+      return;
+    }
+    if (lightbox === deleteTarget.imageUrl) setLightbox(null);
     setDeleteTarget(null);
-    fetchImages();
+    void fetchImages();
   };
 
   return (
     <div className="mt-3">
       {/* 토글 버튼 */}
       <button
+        type="button"
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-600 transition hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700"
         aria-expanded={open}
       >
         <span className="text-sm">📷</span>
         {images.length > 0 ? (
-          <>층 사진 <span className="rounded-full bg-sky-100 px-1.5 py-0.5 text-sky-700">{images.length}</span></>
+          <>
+            층 사진{" "}
+            <span className="rounded-full bg-sky-100 px-1.5 py-0.5 text-sky-700">
+              {images.length}
+            </span>
+          </>
         ) : (
           "층 사진 추가"
         )}
@@ -126,9 +170,7 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
             <p className="text-xs font-bold text-slate-600">
               {uploading ? "업로드 중…" : "클릭하거나 사진을 드래그하세요"}
             </p>
-            <p className="text-[10px] text-slate-400">
-              JPG · PNG · WebP · 최대 20 MB · 여러 장 가능
-            </p>
+            <p className="text-[10px] text-slate-400">JPG · PNG · WebP · 최대 20 MB · 여러 장 가능</p>
             {uploadError && (
               <p className="mt-1 text-[11px] font-bold text-red-500">{uploadError}</p>
             )}
@@ -140,28 +182,34 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
             accept="image/jpeg,image/png,image/webp,image/gif"
             multiple
             className="hidden"
-            onChange={(e) => handleFiles(e.target.files)}
+            onChange={(e) => void handleFiles(e.target.files)}
           />
 
           {/* 썸네일 그리드 */}
           {images.length > 0 && (
             <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-5">
-              {images.map((src, i) => (
+              {images.map((img, i) => (
                 <div
-                  key={src}
+                  key={img.id}
                   className="group relative aspect-square overflow-hidden rounded-xl bg-slate-200"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={src}
+                    src={img.imageUrl}
                     alt=""
                     loading="lazy"
                     className="h-full w-full cursor-pointer object-cover transition duration-300 group-hover:scale-105"
-                    onClick={() => { setLightboxIdx(i); setLightbox(src); }}
+                    onClick={() => {
+                      setLightboxIdx(i);
+                      setLightbox(img.imageUrl);
+                    }}
                   />
-                  {/* 삭제 버튼 오버레이 */}
                   <button
-                    onClick={(e) => { e.stopPropagation(); setDeleteTarget(src); }}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeleteTarget(img);
+                    }}
                     className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500/80 text-[10px] font-bold text-white opacity-0 transition group-hover:opacity-100 hover:bg-red-600"
                     aria-label="사진 삭제"
                     title="삭제"
@@ -180,9 +228,11 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
           onClick={() => setLightbox(null)}
+          role="presentation"
         >
           {lightboxIdx > 0 && (
             <button
+              type="button"
               onClick={(e) => { e.stopPropagation(); openByIdx(lightboxIdx - 1); }}
               className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-xl text-white hover:bg-white/25"
               aria-label="이전 사진"
@@ -199,6 +249,7 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
           />
           {lightboxIdx < images.length - 1 && (
             <button
+              type="button"
               onClick={(e) => { e.stopPropagation(); openByIdx(lightboxIdx + 1); }}
               className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-xl text-white hover:bg-white/25"
               aria-label="다음 사진"
@@ -207,6 +258,7 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
             </button>
           )}
           <button
+            type="button"
             onClick={() => setLightbox(null)}
             className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
             aria-label="닫기"
@@ -223,24 +275,24 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
       {deleteTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
           <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
-            <p className="mb-4 text-sm font-bold text-slate-900">
-              이 사진을 삭제하시겠습니까?
-            </p>
+            <p className="mb-4 text-sm font-bold text-slate-900">이 사진을 삭제하시겠습니까?</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={deleteTarget}
+              src={deleteTarget.imageUrl}
               alt=""
               className="mb-4 h-32 w-full rounded-xl object-cover"
             />
             <div className="flex gap-3">
               <button
+                type="button"
                 onClick={() => setDeleteTarget(null)}
                 className="flex-1 rounded-xl border border-slate-200 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50"
               >
                 취소
               </button>
               <button
-                onClick={handleDelete}
+                type="button"
+                onClick={() => void handleDelete()}
                 className="flex-1 rounded-xl bg-red-500 py-2 text-sm font-bold text-white hover:bg-red-600"
               >
                 삭제
