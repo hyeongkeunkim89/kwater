@@ -4,8 +4,8 @@
   --background: #ffffff;
   --foreground: #0f172a;
   --surface: #ffffff;
-  --accent: #0ea5e9;
-  --accent-muted: #e0f2fe;
+  --accent: #0066B3;
+  --accent-muted: #e6f0fa;
   --dark-bg: #0b111e;
   --dark-surface: #111827;
 }
@@ -13,6 +13,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-kwater: #0066B3;
+  --color-kwater-hover: #004b88;
+  --color-kwater-light: #e6f0fa;
   --font-sans: var(--font-noto-sans-kr);
 }
 

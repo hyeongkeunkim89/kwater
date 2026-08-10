@@ -5,8 +5,8 @@ import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
 type ActiveNav = "status" | "stories" | "none";
 
 const navInactive =
-  "link-underline text-white/70 transition hover:text-white";
-const navActive = "text-white font-semibold border-b border-sky-400 pb-0.5";
+  "link-underline text-slate-700 font-medium transition hover:text-[#0066B3]";
+const navActive = "text-[#0066B3] font-bold border-b-2 border-[#0066B3] pb-0.5";
 
 export function WaterHubHeader({
   activeNav = "none",
@@ -20,7 +20,7 @@ export function WaterHubHeader({
   showStaffConsoleLink?: boolean;
 }) {
   return (
-    <header className="sticky top-0 z-40 shrink-0 border-b border-white/10 bg-[#152035]/98 backdrop-blur-md supports-[backdrop-filter]:bg-[#152035]/92">
+    <header className="sticky top-0 z-40 shrink-0 border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-xs supports-[backdrop-filter]:bg-white/90">
       <div
         className={[
           "mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 md:gap-6",
@@ -29,18 +29,18 @@ export function WaterHubHeader({
       >
         <Link
           href="/"
-          className="group flex min-w-0 max-w-full shrink-0 items-center gap-2 sm:gap-3"
+          className="group flex min-w-0 max-w-full shrink-0 items-center gap-2.5 sm:gap-3.5"
         >
           <Image
             src="/kwater-logo.svg"
             alt="K-water 한국수자원공사"
-            width={110}
-            height={20}
-            className="h-4 w-auto shrink-0 brightness-0 invert opacity-90 transition-opacity group-hover:opacity-100 sm:h-5"
+            width={130}
+            height={24}
+            className="h-5 w-auto shrink-0 transition-opacity group-hover:opacity-90 sm:h-6"
             priority
           />
-          <div className="hidden h-4 w-px bg-white/20 sm:block sm:h-5" aria-hidden />
-          <span className="min-w-0 truncate text-xs font-bold tracking-tight text-white/85 transition-colors group-hover:text-white sm:text-sm">
+          <div className="hidden h-4 w-px bg-slate-300 sm:block sm:h-5" aria-hidden />
+          <span className="min-w-0 truncate text-xs font-bold tracking-tight text-slate-800 transition-colors group-hover:text-[#0066B3] sm:text-sm">
             물문화관 홍보 허브
           </span>
         </Link>
@@ -67,7 +67,7 @@ export function WaterHubHeader({
             href="https://www.kwater.or.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="whitespace-nowrap rounded-full border border-white/30 px-3 py-1.5 text-white/80 transition hover:border-white hover:text-white sm:px-4"
+            className="whitespace-nowrap rounded-full border border-[#0066B3] bg-white px-3.5 py-1 text-xs font-semibold text-[#0066B3] transition hover:bg-[#0066B3] hover:text-white sm:px-4 sm:py-1.5 sm:text-sm"
             aria-label="K-water 공식 홈페이지"
           >
             <span className="sm:hidden">홈페이지</span>
@@ -76,7 +76,7 @@ export function WaterHubHeader({
           {showStaffConsoleLink ? (
             <Link
               href={STAFF_CONSOLE_HREF}
-              className="inline-flex min-h-10 min-w-0 items-center whitespace-nowrap text-white/55 transition hover:text-white"
+              className="inline-flex min-h-10 min-w-0 items-center whitespace-nowrap text-xs text-slate-500 transition hover:text-[#0066B3] sm:text-sm"
             >
               관리자 페이지
             </Link>

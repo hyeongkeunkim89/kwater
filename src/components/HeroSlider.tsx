@@ -187,7 +187,7 @@ export function HeroSlider() {
           <div className="mt-5 flex flex-wrap gap-2 sm:mt-7 sm:gap-3">
             <Link
               href="/status"
-              className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-sky-500/30 transition hover:bg-sky-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b111e] sm:px-6 sm:py-3 sm:text-sm"
+              className="inline-flex items-center gap-2 rounded-full bg-[#0066B3] px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#0066B3]/30 transition hover:bg-[#004b88] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b111e] sm:px-6 sm:py-3 sm:text-sm"
             >
               전체 문화관 보기
             </Link>
@@ -207,21 +207,21 @@ export function HeroSlider() {
         </div>
 
         {/* 오른쪽: 물문화관 개요 — 오른쪽 끝 고정 */}
-        <div className="absolute bottom-14 right-6 hidden max-w-[220px] flex-col justify-end border-l border-white/15 pl-6 pb-0 sm:flex md:max-w-xs md:right-12 lg:right-16 lg:pl-8">
-          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-sky-400/80 sm:text-[10px]">
+        <div className="absolute bottom-14 right-6 hidden max-w-[260px] flex-col justify-end border-l-2 border-[#0066B3]/70 pl-6 pb-0 sm:flex md:max-w-sm md:right-12 lg:right-16 lg:pl-8">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-sky-300 drop-shadow-sm sm:text-xs">
             K-water Water Culture Center
           </p>
-          <h3 className="mt-2 text-xl font-black leading-snug tracking-tight text-white sm:mt-3 sm:text-2xl xl:text-3xl">
+          <h3 className="mt-2 text-2xl font-black leading-snug tracking-tight text-white sm:mt-3 sm:text-3xl xl:text-4xl drop-shadow-md">
             물은 흐르고,<br />
-            <span className="bg-gradient-to-r from-sky-400 to-blue-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-sky-300 via-blue-200 to-white bg-clip-text text-transparent">
               기억은 남는다
             </span>
           </h3>
-          <div className="mt-3 space-y-2 text-[11px] leading-relaxed text-white/55 sm:mt-4 sm:space-y-2.5 sm:text-[12px] md:text-[13px]">
+          <div className="mt-3.5 space-y-3 text-xs leading-relaxed text-slate-100 sm:mt-4 sm:space-y-3.5 sm:text-sm md:text-[14px] md:leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
             <p>
               댐은 단순한 구조물이 아닙니다. 강의 흐름을 바꾸고, 마을을 품으며,
               수백만의 삶을 지탱해 온 거대한 역사입니다.
-              <strong className="text-white/75"> 물문화관은 그 역사 위에 서 있습니다.</strong>
+              <strong className="font-bold text-white underline decoration-sky-400/60 underline-offset-4"> 물문화관은 그 역사 위에 서 있습니다.</strong>
             </p>
             <p>
               전국 {waterCenters.length}곳의 물문화관에는 각각의 강이 흐르고,
@@ -259,16 +259,20 @@ export function HeroSlider() {
       <button
         onClick={goPrev}
         aria-label="이전 슬라이드"
-        className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white/80 transition hover:bg-black/60 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:left-6"
+        className="absolute left-4 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/50 text-white shadow-lg backdrop-blur-md transition-all duration-200 hover:scale-110 hover:bg-[#0066B3] hover:border-[#0066B3] hover:shadow-[#0066B3]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:left-6 sm:h-12 sm:w-12"
       >
-        ‹
+        <svg className="h-6 w-6 stroke-white" fill="none" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+        </svg>
       </button>
       <button
         onClick={goNext}
         aria-label="다음 슬라이드"
-        className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white/80 transition hover:bg-black/60 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:right-6"
+        className="absolute right-4 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/50 text-white shadow-lg backdrop-blur-md transition-all duration-200 hover:scale-110 hover:bg-[#0066B3] hover:border-[#0066B3] hover:shadow-[#0066B3]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:right-6 sm:h-12 sm:w-12"
       >
-        ›
+        <svg className="h-6 w-6 stroke-white" fill="none" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+        </svg>
       </button>
 
       {/* ── 슬라이드 카운터 ── */}

@@ -16,7 +16,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
           <div className="flex items-center gap-3">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-xs font-black text-white">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0066B3] text-xs font-black text-white">
               K
             </span>
             <p className="text-sm font-medium text-white/60" suppressHydrationWarning>
@@ -37,7 +37,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
         </div>
         <a
           href="https://www.kwater.or.kr"
-          className="min-h-9 text-sm font-medium text-sky-400 transition hover:text-sky-300 link-underline"
+          className="min-h-9 text-sm font-medium text-[#38bdf8] transition hover:text-white link-underline"
           target="_blank"
           rel="noopener noreferrer"
         >
