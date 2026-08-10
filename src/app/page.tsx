@@ -40,10 +40,12 @@ export default function Home() {
 
       <div className="shrink-0 border-t border-white/10 bg-[#101a2e]">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-3.5">
-          <p className="min-w-0 text-[11px] leading-snug text-white/65 sm:text-sm">
-            <span className="font-bold text-sky-300/95">물 이야기</span> — 산책로·풍경 사진을 올리고 이달의
-            사진 이벤트와 연동해 보세요.
-          </p>
+          <div className="flex items-center gap-3">
+            <img src="/test-scenic.jpg" alt="테스트 풍경 사진" className="h-10 w-16 rounded-md object-cover border border-white/20 shadow-sm" />
+            <p className="min-w-0 text-[11px] leading-snug text-white/65 sm:text-sm">
+              <span className="font-bold text-sky-300/95">물 이야기</span> — 아름다운 풍경 사진을 확인해보세요.
+            </p>
+          </div>
           <Link
             href="/mul-iyagi"
             className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full border border-sky-400/50 bg-sky-500/15 px-4 py-2 text-xs font-bold text-sky-200 transition hover:border-sky-300 hover:bg-sky-500/25 sm:text-sm"
