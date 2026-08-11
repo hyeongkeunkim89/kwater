@@ -1,15 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
-
-const notoSansKr = Noto_Sans_KR({
-  variable: "--font-noto-sans-kr",
-  subsets: ["latin"],
-  /** 로딩 분량 축소 — 자주 쓰는 굵기만 유지 */
-  weight: ["400", "500", "600", "700", "900"],
-  display: "swap",
-  preload: true,
-});
 
 export const metadata: Metadata = {
   title: "K-water 물문화관 | 전국 거점 안내",
@@ -30,7 +20,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={notoSansKr.variable}>
+    <html lang="ko">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-screen min-w-0 overflow-x-hidden font-sans antialiased">
         {children}
       </body>

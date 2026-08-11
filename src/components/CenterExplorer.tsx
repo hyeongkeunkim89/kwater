@@ -47,7 +47,7 @@ type TabView = "map" | "list";
 type ThemeFilter = "전체" | CenterTheme;
 
 export function CenterExplorer() {
-  const [view, setView] = useState<TabView>("list");
+  const [view, setView] = useState<TabView>("map");
   const [sido, setSido] = useState<string>(centerExplorerUi.allSido);
   const [themeFilter, setThemeFilter] = useState<ThemeFilter>("전체");
   const [query, setQuery] = useState<string>("");
@@ -100,16 +100,16 @@ export function CenterExplorer() {
         className="relative inline-flex w-full max-w-md rounded-2xl border border-slate-200/90 bg-gradient-to-b from-slate-50 via-white to-slate-100/90 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_1px_2px_rgba(15,23,42,0.04)] sm:w-auto sm:max-w-none"
       >
         <TabBtn
-          active={view === "list"}
-          onClick={() => setView("list")}
-          mode="list"
-          label={centerExplorerUi.listTab}
-        />
-        <TabBtn
           active={view === "map"}
           onClick={() => setView("map")}
           mode="map"
           label={centerExplorerUi.mapTab}
+        />
+        <TabBtn
+          active={view === "list"}
+          onClick={() => setView("list")}
+          mode="list"
+          label={centerExplorerUi.listTab}
         />
       </div>
 

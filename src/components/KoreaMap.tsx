@@ -23,7 +23,7 @@ import { naverMapSearchHref } from "@/lib/mapLinks";
 const PROVINCES_URL = "/korea-provinces.json";
 
 const PIN_COLORS: Record<DisplayStatus, string> = {
-  ["\uC6B4\uC601\uC911"]: "#0ea5e9",
+  ["\uC6B4\uC601\uC911"]: "#0066B3",
   ["\uC624\uB298 \uD734\uAD00"]: "#7c3aed",
   ["\uC784\uC2DC\uD734\uAD00"]: "#ef4444",
 };
@@ -94,45 +94,40 @@ function BangulPin({
   color: string;
   selected: boolean;
 }) {
-  if (selected) {
-    return (
-      <g transform="translate(-17, -42)" style={{ cursor: "pointer" }}>
-        <ellipse cx="17" cy="42" rx="10" ry="5" fill={color} opacity="0.22" />
-        <path
-          d="M17 2 C8 2, 1.5 9, 1.5 17 C1.5 25, 7.5 31.5, 13 37.5 L17 42 L21 37.5 C26.5 31.5, 32.5 25, 32.5 17 C32.5 9, 26 2, 17 2 Z"
-          fill={color}
-          stroke="white"
-          strokeWidth="2"
-          strokeLinejoin="round"
-        />
-        <ellipse cx="22" cy="10" rx="5" ry="3" fill="white" opacity="0.28" transform="rotate(-30, 22, 10)" />
-        <circle cx="12" cy="17" r="3.2" fill="white" />
-        <circle cx="13" cy="17.8" r="1.6" fill="#0f172a" />
-        <circle cx="12.3" cy="17" r="0.6" fill="white" opacity="0.8" />
-        <circle cx="22" cy="17" r="3.2" fill="white" />
-        <circle cx="23" cy="17.8" r="1.6" fill="#0f172a" />
-        <circle cx="22.3" cy="17" r="0.6" fill="white" opacity="0.8" />
-        <path d="M12 23 Q17 27.5 22 23" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />
-      </g>
-    );
-  }
+  const size = selected ? 36 : 26;
+  const offset = selected ? -18 : -13;
+  const padding = selected ? 4 : 3;
+  const imgSize = size - padding * 2;
+
   return (
-    <g transform="translate(-11, -28)" style={{ cursor: "pointer" }}>
-      <path
-        d="M11 1.5 C5.5 1.5, 1 7, 1 12.5 C1 18.5, 5 23.5, 8.5 26 L11 28 L13.5 26 C17 23.5, 21 18.5, 21 12.5 C21 7, 16.5 1.5, 11 1.5 Z"
-        fill={color}
-        stroke="white"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
+    <g transform={`translate(${offset}, ${offset})`} style={{ cursor: "pointer" }}>
+      {/* 선택 시 그림자 효과 */}
+      {selected && (
+        <circle cx={size / 2} cy={size / 2} r={size / 2 + 3} fill={color} opacity="0.25" />
+      )}
+      {/* 바깥 링 (운영 현황 색상 표시) */}
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={size / 2 - 1.5}
+        fill="white"
+        stroke={color}
+        strokeWidth={selected ? 3.5 : 2.5}
+        className="transition-all duration-200"
       />
-      <ellipse cx="14.5" cy="7" rx="3.2" ry="2" fill="white" opacity="0.3" transform="rotate(-30, 14.5, 7)" />
-      <circle cx="7.5" cy="13" r="2" fill="white" />
-      <circle cx="8.2" cy="13.6" r="1" fill="#0f172a" />
-      <circle cx="7.8" cy="12.9" r="0.4" fill="white" opacity="0.8" />
-      <circle cx="14.5" cy="13" r="2" fill="white" />
-      <circle cx="15.2" cy="13.6" r="1" fill="#0f172a" />
-      <circle cx="14.8" cy="12.9" r="0.4" fill="white" opacity="0.8" />
-      <path d="M7.5 17 Q11 20 14.5 17" stroke="white" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+      {/* 캐릭터 사진 (public/character.png) */}
+      <image
+        href="/character.png"
+        x={padding}
+        y={padding}
+        width={imgSize}
+        height={imgSize}
+        preserveAspectRatio="xMidYMid meet"
+        onError={(e) => {
+          // 이미지 미존재 시 기본 아이콘 표출
+          (e.currentTarget as SVGElement).style.display = "none";
+        }}
+      />
     </g>
   );
 }
@@ -215,15 +210,12 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
           </span>
           {LEGEND_ITEMS.map(([label, color]) => (
             <span key={label} className="flex items-center gap-1.5">
-              <svg width="12" height="16" viewBox="0 0 22 28" fill="none" aria-hidden="true">
-                <path
-                  d="M11 1.5 C5.5 1.5, 1 7, 1 12.5 C1 18.5, 5 23.5, 8.5 26 L11 28 L13.5 26 C17 23.5, 21 18.5, 21 12.5 C21 7, 16.5 1.5, 11 1.5 Z"
-                  fill={color} stroke="white" strokeWidth="1"
-                />
-                <circle cx="7.5" cy="12" r="1.8" fill="white" />
-                <circle cx="14.5" cy="12" r="1.8" fill="white" />
-                <path d="M7.5 16.5 Q11 19 14.5 16.5" stroke="white" strokeWidth="1.1" fill="none" strokeLinecap="round" />
-              </svg>
+              <span
+                className="relative inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white ring-2 p-0.5"
+                style={{ boxShadow: `0 0 0 1.5px ${color}` }}
+              >
+                <img src="/character.png" alt="" className="h-full w-full object-contain" />
+              </span>
               <span className="text-xs text-slate-700">{label}</span>
             </span>
           ))}
@@ -261,17 +253,9 @@ function EmptyPanel() {
   return (
     <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white lg:min-h-[540px]">
       <div className="space-y-4 p-8 text-center">
-        <svg width="56" height="72" viewBox="0 0 22 28" fill="none" aria-hidden="true" className="mx-auto">
-          <path d="M11 1.5 C5.5 1.5, 1 7, 1 12.5 C1 18.5, 5 23.5, 8.5 26 L11 28 L13.5 26 C17 23.5, 21 18.5, 21 12.5 C21 7, 16.5 1.5, 11 1.5 Z" fill="#0ea5e9" stroke="#7dd3fc" strokeWidth="0.5" />
-          <ellipse cx="14.5" cy="7" rx="3.2" ry="2" fill="white" opacity="0.3" transform="rotate(-30, 14.5, 7)" />
-          <circle cx="7.5" cy="13" r="2" fill="white" />
-          <circle cx="8.2" cy="13.6" r="1" fill="#0f172a" />
-          <circle cx="7.8" cy="12.9" r="0.4" fill="white" opacity="0.8" />
-          <circle cx="14.5" cy="13" r="2" fill="white" />
-          <circle cx="15.2" cy="13.6" r="1" fill="#0f172a" />
-          <circle cx="14.8" cy="12.9" r="0.4" fill="white" opacity="0.8" />
-          <path d="M7.5 17 Q11 20 14.5 17" stroke="white" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-        </svg>
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-md ring-4 ring-sky-300/80">
+          <img src="/character.png" alt="방울이 캐릭터" className="h-full w-full object-contain" />
+        </div>
         <div>
           <p className="font-bold text-slate-800">
             {koreaMapUi.emptyTitle}

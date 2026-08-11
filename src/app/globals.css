@@ -4,16 +4,33 @@
   --background: #ffffff;
   --foreground: #0f172a;
   --surface: #ffffff;
-  --accent: #0ea5e9;
-  --accent-muted: #e0f2fe;
+  --accent: #00A3E0;
+  --accent-orange: #FF9E1B;
+  --accent-muted: #e5f6fd;
   --dark-bg: #0b111e;
   --dark-surface: #111827;
+  --font-noto-sans-kr: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-waterblue: #00A3E0;
+  --color-pointorange: #FF9E1B;
+  --color-kwater: #00A3E0;
+  --color-kwater-orange: #FF9E1B;
+  --color-kwater-hover: #0088BD;
+  --color-kwater-light: #e5f6fd;
   --font-sans: var(--font-noto-sans-kr);
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2.5s infinite ease-in-out;
 }
 
 body {

@@ -1,0 +1,3 @@
+center_id,floor_key,floor_name,floor_map_url,description,rooms,amenities,sort_order
+daecheong,2F,2층,,전망 라운지와 체험 교육을 위한 아카이브실이 마련되어 있는 층입니다.,"[ {""name"": ""아카이브 집"", ""link"": ""/centers/daecheong/archive""}, {""name"": ""전망 라운지"", ""link"": null} ]","[ {""label"": ""화장실"", ""icon"": ""toilet""}, {""label"": ""엘리베이터"", ""icon"": ""elevator""} ]",2
+daecheong,1F,1층,,다목적 기획전시실과 휴게 로비가 있는 중심 층입니다.,"[ {""name"": ""기획전시실"", ""link"": null}, {""name"": ""체험학습관"", ""link"": null} ]","[ {""label"": ""화장실"", ""icon"": ""toilet""}, {""label"": ""유아휴게실"", ""icon"": ""baby""} ]",1

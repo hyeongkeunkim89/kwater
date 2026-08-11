@@ -1,5 +1,4 @@
 import { CenterExplorer } from "@/components/CenterExplorer";
-import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 
 export const metadata = {
@@ -34,8 +33,6 @@ export default function StatusPage() {
       <main className="mx-auto max-w-7xl w-full px-6 py-10 sm:px-8 flex-1">
         <CenterExplorer />
       </main>
-
-      <WaterHubFooter />
     </div>
   );
 }

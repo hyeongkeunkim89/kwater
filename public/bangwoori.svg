@@ -1,0 +1,44 @@
+<svg width="120" height="130" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bangwooriGrad" x1="60" y1="10" x2="60" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="45%" stop-color="#0080FF"/>
+      <stop offset="100%" stop-color="#0055C8"/>
+    </linearGradient>
+    <linearGradient id="glossGrad" x1="45" y1="25" x2="35" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="white" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0.0"/>
+    </linearGradient>
+    <radialGradient id="cheekGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF6B95" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FF6B95" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="60" cy="115" rx="36" ry="7" fill="#003B80" opacity="0.25" />
+  <path d="M60 12 C60 12 10 70 10 90 C10 106.569 32.3858 120 60 120 C87.6142 120 110 106.569 110 90 C110 70 60 12 60 12 Z" 
+        fill="url(#bangwooriGrad)" 
+        stroke="#0040A8" 
+        stroke-width="2.5" 
+        stroke-linejoin="round"/>
+  <path d="M60 18 C60 18 20 70 20 86 C20 95 32 104 50 107 C32 102 24 90 24 82 C24 68 60 25 60 25 Z" 
+        fill="url(#glossGrad)"/>
+  <g>
+    <ellipse cx="44" cy="74" rx="7.5" ry="9" fill="#0F172A"/>
+    <circle cx="46.5" cy="70.5" r="3.2" fill="white"/>
+    <circle cx="42" cy="77" r="1.4" fill="white"/>
+  </g>
+  <g>
+    <ellipse cx="76" cy="74" rx="7.5" ry="9" fill="#0F172A"/>
+    <circle cx="78.5" cy="70.5" r="3.2" fill="white"/>
+    <circle cx="74" cy="77" r="1.4" fill="white"/>
+  </g>
+  <path d="M38 61 Q44 57 50 61" stroke="#003B80" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <path d="M70 61 Q76 57 82 61" stroke="#003B80" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <ellipse cx="33" cy="81" rx="7" ry="4" fill="url(#cheekGlow)"/>
+  <ellipse cx="87" cy="81" rx="7" ry="4" fill="url(#cheekGlow)"/>
+  <path d="M52 81 C52 89 68 89 68 81 Z" fill="#D97706" stroke="#0F172A" stroke-width="1.8"/>
+  <path d="M56 84 C58 87 62 87 64 84" stroke="#EF4444" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M102 38 Q105 32 108 38 Q114 41 108 44 Q105 50 102 44 Q96 41 102 38 Z" fill="#7DD3FC" opacity="0.9"/>
+  <circle cx="16" cy="46" r="3" fill="#BAE6FD"/>
+  <circle cx="98" cy="62" r="2" fill="#BAE6FD"/>
+</svg>

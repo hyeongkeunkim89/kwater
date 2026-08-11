@@ -38,7 +38,6 @@ export default async function ReservePage({ searchParams }: Props) {
         </div>
       </div>
 
-      {/* 폼 */}
       <main className="mx-auto max-w-5xl w-full px-6 py-10 sm:px-10 flex-1">
         <ReservationForm defaultCenterId={center} reservationsLive={reservationsLive} />
       </main>

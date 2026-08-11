@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterStoriesClient } from "@/components/WaterStoriesClient";
 import { editorialPhotoOfMonth } from "@/data/water-stories-spotlight";
@@ -116,8 +115,6 @@ export default async function MulIyagiPage({ searchParams }: Props) {
           initialStories={initialStories}
         />
       </main>
-
-      <WaterHubFooter />
     </div>
   );
 }
