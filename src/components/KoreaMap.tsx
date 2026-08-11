@@ -94,9 +94,9 @@ function BangulPin({
   color: string;
   selected: boolean;
 }) {
-  const size = selected ? 44 : 34;
-  const offset = selected ? -22 : -17;
-  const padding = selected ? 5 : 4;
+  const size = selected ? 36 : 26;
+  const offset = selected ? -18 : -13;
+  const padding = selected ? 4 : 3;
   const imgSize = size - padding * 2;
 
   return (
