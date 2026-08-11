@@ -1,3 +1,8 @@
+/**
+ * 가이드 투어 예약 — Postgres `tour_reservations` 테이블 CRUD
+ * 스키마: db/tour-reservations.sql · 연결: reservationsPostgres.ts
+ * 슬롯 정원(MAX_PER_SLOT)은 pg_advisory_xact_lock + SUM(party_size)로 동시 예약 방지
+ */
 import {
   disposeReservationsSqlClient,
   getReservationsSql,
@@ -91,6 +96,7 @@ function rowToReservation(r: TourReservationRow): Reservation {
   };
 }
 
+/** center|date|time 문자열 → pg_advisory_xact_lock용 (int, int) 해시 */
 function advisoryPair(slotKey: string): [number, number] {
   let h1 = 5381;
   let h2 = 52711;
@@ -102,6 +108,7 @@ function advisoryPair(slotKey: string): [number, number] {
   return [h1 | 0, h2 | 0];
 }
 
+/** pooler 6543이 아니면 tour_reservations 테이블·인덱스 자동 생성 */
 function ensureTourReservationsSchema(sql: ReservationsSql) {
   if (!globalForSchema.tourReservationsSchemaPromise) {
     if (reservationsSkipRuntimeSchemaDdl()) {
@@ -141,6 +148,7 @@ function ensureTourReservationsSchema(sql: ReservationsSql) {
   return globalForSchema.tourReservationsSchemaPromise;
 }
 
+/** 관리자용 전체 예약 목록 (최신순) */
 export async function listTourReservationsFromDb(): Promise<Reservation[]> {
   const sql = getReservationsSql();
   if (!sql) return [];
@@ -178,6 +186,7 @@ async function getSlotBookedCountsOnce(
   return out;
 }
 
+/** 날짜·문화관별 TOUR_SLOTS 키당 예약 인원 합 (취소 제외, 연결 실패 시 재시도) */
 export async function getSlotBookedCounts(
   centerId: string,
   visitDate: string,
@@ -200,6 +209,7 @@ export async function getSlotBookedCounts(
   throw lastErr;
 }
 
+/** insertTourReservationDb: 슬롯 정원 초과 시 throw */
 export class TourReservationSlotFullError extends Error {
   constructor() {
     super("SLOT_FULL");
@@ -207,6 +217,7 @@ export class TourReservationSlotFullError extends Error {
   }
 }
 
+/** 트랜잭션 + advisory lock으로 정원 확인 후 INSERT (status=대기) */
 export async function insertTourReservationDb(
   input: Omit<Reservation, "id" | "createdAt" | "status">,
 ): Promise<Reservation> {
@@ -257,6 +268,7 @@ export async function insertTourReservationDb(
   });
 }
 
+/** 관리자: 대기/확정/취소 상태 변경 */
 export async function updateTourReservationStatusDb(
   id: string,
   status: ReservationStatus,

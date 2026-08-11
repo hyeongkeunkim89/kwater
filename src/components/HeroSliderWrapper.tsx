@@ -7,14 +7,14 @@ const HeroSlider = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-full min-h-0 w-full bg-[#0b111e]" />
+      <div className="h-full min-h-0 w-full bg-slate-50" />
     ),
   },
 );
 
 export function HeroSliderWrapper() {
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="h-full w-full flex flex-col">
       <HeroSlider />
     </div>
   );
