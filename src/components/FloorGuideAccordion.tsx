@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { CenterFloor } from "@/types/database";
 
 const getPhotoTitle = (photoUrl: string) => {
@@ -18,6 +18,108 @@ const getPhotoTitle = (photoUrl: string) => {
 
 interface FloorGuideAccordionProps {
   floors: CenterFloor[];
+}
+
+function ZoomableMap({ mapUrl, floorName, floorKey }: { mapUrl: string; floorName: string; floorKey: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
+  const dragStart = useRef({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setIsDragging(false);
+    setPanOffset({ x: 0, y: 0 });
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+    dragStart.current = {
+      x: e.clientX - panOffset.x,
+      y: e.clientY - panOffset.y,
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    const newX = e.clientX - dragStart.current.x;
+    const newY = e.clientY - dragStart.current.y;
+    
+    // 드래그 제한 범위
+    const limit = 220;
+    const boundedX = Math.max(-limit, Math.min(limit, newX));
+    const boundedY = Math.max(-limit, Math.min(limit, newY));
+    
+    setPanOffset({ x: boundedX, y: boundedY });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // 모바일 터치 지원
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      setIsHovered(true);
+      setIsDragging(true);
+      const touch = e.touches[0];
+      dragStart.current = {
+        x: touch.clientX - panOffset.x,
+        y: touch.clientY - panOffset.y,
+      };
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    const newX = touch.clientX - dragStart.current.x;
+    const newY = touch.clientY - dragStart.current.y;
+    
+    const limit = 220;
+    const boundedX = Math.max(-limit, Math.min(limit, newX));
+    const boundedY = Math.max(-limit, Math.min(limit, newY));
+    
+    setPanOffset({ x: boundedX, y: boundedY });
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleMouseUp}
+      className="relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50/50 p-2 select-none"
+      style={{
+        cursor: isDragging ? "grabbing" : isHovered ? "grab" : "zoom-in",
+      }}
+    >
+      <img
+        src={mapUrl}
+        alt={`${floorName} 도면`}
+        className="max-h-[300px] w-full object-contain rounded-lg pointer-events-none"
+        style={{
+          transform: isHovered
+            ? `scale(1.8) translate(${panOffset.x / 1.8}px, ${panOffset.y / 1.8}px)`
+            : "scale(1) translate(0px, 0px)",
+          transformOrigin:
+            floorKey === "문화공간"
+              ? "25% 45%"
+              : floorKey === "상설전시"
+              ? "75% 65%"
+              : "center center",
+          transition: isDragging ? "none" : "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      />
+    </div>
+  );
 }
 
 // 아이콘 매핑 헬퍼
@@ -211,21 +313,13 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                     )}
                   </div>
 
-                  {/* 오른쪽: 도면 이미지 (마우스 호버 시 강조 영역 줌인 기능 추가) */}
+                  {/* 오른쪽: 도면 이미지 (마우스 호버 시 줌인 및 마우스/터치 드래그 이동 기능 추가) */}
                   {f.floor_map_url ? (
-                    <div className="group relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50/50 p-2 cursor-zoom-in">
-                      <img
-                        src={f.floor_map_url}
-                        alt={`${f.floor_name} 도면`}
-                        className={`max-h-[300px] w-full object-contain rounded-lg transition-all duration-500 ease-out group-hover:scale-[1.8] ${
-                          f.floor_key === "문화공간"
-                            ? "origin-[25%_45%]"
-                            : f.floor_key === "상설전시"
-                            ? "origin-[75%_65%]"
-                            : "origin-center"
-                        }`}
-                      />
-                    </div>
+                    <ZoomableMap
+                      mapUrl={f.floor_map_url}
+                      floorName={f.floor_name}
+                      floorKey={f.floor_key}
+                    />
                   ) : (
                     <div className="flex min-h-[160px] items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-400">
                       도면 이미지가 등록되지 않았습니다.
