@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { CenterExplorer } from "@/components/CenterExplorer";
-import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 
 export const metadata = {
@@ -46,8 +45,6 @@ export default function StatusPage() {
 
         <CenterExplorer />
       </main>
-
-      <WaterHubFooter />
     </div>
   );
 }

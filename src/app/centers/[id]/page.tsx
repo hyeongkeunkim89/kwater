@@ -285,18 +285,6 @@ export default async function CenterDetailPage({ params }: Props) {
           </div>
         </section>
       </main>
-
-      {/* 푸터 */}
-      <footer className="mt-16 border-t border-slate-100 bg-[#0b111e] py-10">
-        <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-10">
-          <p className="text-white/40">
-            © {new Date().getFullYear()} K-water 물문화관
-          </p>
-          <Link href="/" className="text-sky-400 transition hover:text-sky-300">
-            ← 전체 문화관 보기
-          </Link>
-        </div>
-      </footer>
     </div>
   );
 }

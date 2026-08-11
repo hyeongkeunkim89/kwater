@@ -57,12 +57,6 @@ export default function YunyeongConsolePage() {
           adminSecretConfigured={adminSecretConfigured}
         />
       </main>
-
-      <footer className="mt-8 border-t border-slate-200 bg-[#0b111e] py-10">
-        <p className="text-center text-xs text-white/30">
-          © {new Date().getFullYear()} K-water 물문화관 · 관리자 페이지
-        </p>
-      </footer>
     </div>
   );
 }

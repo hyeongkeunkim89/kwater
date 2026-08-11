@@ -48,16 +48,9 @@ export default async function ReservePage({ searchParams }: Props) {
         </div>
       </div>
 
-      {/* 폼 */}
       <main className="mx-auto max-w-5xl px-6 py-14 sm:px-10">
         <ReservationForm defaultCenterId={center} reservationsLive={reservationsLive} />
       </main>
-
-      <footer className="border-t border-slate-100 bg-[#0b111e] py-10">
-        <p className="text-center text-xs text-white/30">
-          © {new Date().getFullYear()} K-water 물문화관 · 문의는 해당 시설 담당자에게 연락하세요.
-        </p>
-      </footer>
     </div>
   );
 }
