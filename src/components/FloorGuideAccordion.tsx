@@ -56,14 +56,14 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
               className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left outline-none hover:bg-slate-50 focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-sky-500"
             >
               <div className="flex min-w-0 flex-1 items-center gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-sm font-extrabold text-white sm:text-base">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-base font-extrabold text-white sm:text-lg">
                   {f.floor_key.toLowerCase().startsWith("floor-") 
                     ? `${f.sort_order + 1}F` 
                     : f.floor_key}
                 </span>
                 <div className="min-w-0 flex-1">
                   {/* 주요 전시실/시설 목록 요약 */}
-                  <p className="truncate text-sm font-bold text-slate-800 sm:text-[15px]">
+                  <p className="truncate text-base font-bold text-slate-900 sm:text-[17px]">
                     {f.rooms && f.rooms.length > 0
                       ? f.rooms.map((r) => r.name).join(" · ")
                       : "주요 시설 정보 없음"}
@@ -105,7 +105,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                   <div className="flex flex-col justify-between space-y-5">
                     <div className="space-y-4">
                       {f.description && (
-                        <p className="text-sm leading-relaxed text-slate-600">
+                        <p className="text-[15px] sm:text-base leading-relaxed text-slate-600">
                           {f.description}
                         </p>
                       )}
@@ -113,7 +113,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                       {/* 주요 시설 및 링크 */}
                       {f.rooms && f.rooms.length > 0 && (
                         <div className="space-y-2">
-                          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400">
+                          <h4 className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-slate-400">
                             주요 시설 / 전시실
                           </h4>
                           <div className="flex flex-wrap gap-2">
@@ -122,7 +122,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                 <a
                                   key={idx}
                                   href={room.link}
-                                  className="inline-flex items-center gap-1 rounded-xl border border-sky-200 bg-sky-50/50 px-3 py-1.5 text-xs font-semibold text-sky-800 hover:bg-sky-50 transition"
+                                  className="inline-flex items-center gap-1.5 rounded-xl border border-sky-200 bg-sky-50/50 px-3 py-1.5 text-sm font-semibold text-sky-800 hover:bg-sky-50 transition"
                                 >
                                   <span>{room.name}</span>
                                   <span className="text-[10px]" aria-hidden>↗</span>
@@ -130,7 +130,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                               ) : (
                                 <span
                                   key={idx}
-                                  className="inline-block rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700"
+                                  className="inline-block rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700"
                                 >
                                   {room.name}
                                 </span>
@@ -144,14 +144,14 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                     {/* 편의시설 아이콘 뱃지 */}
                     {f.amenities && f.amenities.length > 0 && (
                       <div className="space-y-2 pt-2">
-                        <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400">
+                        <h4 className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-slate-400">
                           제공 편의시설
                         </h4>
                         <div className="flex flex-wrap gap-1.5">
                           {f.amenities.map((item, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700"
+                              className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700"
                             >
                               <span aria-hidden>
                                 {AMENITY_ICONS[item.icon] || "📍"}
