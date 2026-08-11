@@ -212,7 +212,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             <span key={label} className="flex items-center gap-1.5">
               <span
                 className="relative inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white ring-2 p-0.5"
-                style={{ ringColor: color, boxShadow: `0 0 0 1.5px ${color}` }}
+                style={{ boxShadow: `0 0 0 1.5px ${color}` }}
               >
                 <img src="/character.png" alt="" className="h-full w-full object-contain" />
               </span>

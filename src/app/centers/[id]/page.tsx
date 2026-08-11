@@ -11,6 +11,10 @@ import {
 import { formatCenterRegionLine } from "@/lib/center-display";
 import { centerThemeBadgeClass } from "@/lib/centerExplorerUi";
 import { naverMapSearchHref } from "@/lib/mapLinks";
+import { createClient } from "@/utils/supabase/server";
+import { FloorGuideAccordion } from "@/components/FloorGuideAccordion";
+import { FacilityTabs } from "@/components/FacilityTabs";
+import type { CenterFloor, CenterFacility } from "@/types/database";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -35,6 +39,46 @@ export default async function CenterDetailPage({ params }: Props) {
   const { id } = await params;
   const center = getCenterById(id);
   if (!center) notFound();
+
+  let dbFloors: CenterFloor[] = [];
+  let dbFacilities: CenterFacility[] = [];
+
+  try {
+    const supabase = await createClient();
+    const [floorsRes, facilitiesRes] = await Promise.all([
+      supabase
+        .from("center_floors")
+        .select("*")
+        .eq("center_id", id)
+        .order("sort_order", { ascending: true }),
+      supabase
+        .from("center_facilities")
+        .select("*")
+        .eq("center_id", id)
+        .order("sort_order", { ascending: true }),
+    ]);
+
+    if (floorsRes.data) dbFloors = floorsRes.data;
+    if (facilitiesRes.data) dbFacilities = facilitiesRes.data;
+  } catch (err) {
+    console.error("Supabase fetch error for center details:", err);
+  }
+
+  // 데이터가 없을 경우 정적 데이터를 기반으로 폴백
+  const floors: CenterFloor[] = dbFloors && dbFloors.length > 0
+    ? dbFloors
+    : center.floors.map((f, i) => ({
+        id: `static-floor-${i}`,
+        center_id: id,
+        floor_key: `${i + 1}F`,
+        floor_name: f.floorLabel,
+        floor_map_url: null,
+        description: null,
+        rooms: f.highlights.map(h => ({ name: h, link: null })),
+        amenities: [],
+        sort_order: i,
+        created_at: "",
+      }));
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -203,39 +247,28 @@ export default async function CenterDetailPage({ params }: Props) {
           <h2 className="mb-6 text-2xl font-black tracking-tight text-slate-900">
             층별 주요 시설
           </h2>
-          <ol className="space-y-4">
-            {center.floors.map((f, i) => (
-              <li
-                key={`${f.floorLabel}-${i}`}
-                className="rounded-2xl border border-slate-200 bg-white p-5"
-              >
-                <div className="flex gap-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-xs font-black text-white">
-                    {i + 1}F
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-sm font-bold text-slate-900">{f.floorLabel}</h3>
-                    <ul className="mt-2 flex flex-wrap gap-2">
-                      {f.highlights.map((h) => (
-                        <li
-                          key={h}
-                          className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700"
-                        >
-                          {h}
-                        </li>
-                      ))}
-                    </ul>
-                    <FloorPhotoUpload
-                      centerId={center.id}
-                      floorKey={`floor-${i}`}
-                      floorLabel={f.floorLabel}
-                    />
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <FloorGuideAccordion floors={floors} />
         </section>
+
+        {/* 부대 및 편의시설 (간송 스타일 탭) */}
+        {dbFacilities && dbFacilities.length > 0 && (
+          <section className="mt-16" aria-labelledby="facilities">
+            <div className="mb-6 flex items-center gap-4">
+              <div className="h-px flex-1 bg-slate-100" />
+              <h2
+                id="facilities"
+                className="text-xs font-bold uppercase tracking-widest text-slate-400"
+              >
+                Facilities
+              </h2>
+              <div className="h-px flex-1 bg-slate-100" />
+            </div>
+            <h2 className="mb-6 text-2xl font-black tracking-tight text-slate-900">
+              부대 · 편의시설
+            </h2>
+            <FacilityTabs facilities={dbFacilities} />
+          </section>
+        )}
 
         {/* 시설 사진 갤러리 */}
         <CenterPhotoGallery centerId={center.id} />
