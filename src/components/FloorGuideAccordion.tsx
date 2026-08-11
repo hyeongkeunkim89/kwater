@@ -56,7 +56,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
               className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left outline-none hover:bg-slate-50 focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-sky-500"
             >
               <div className="flex min-w-0 flex-1 items-center gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-base font-extrabold text-white sm:text-lg">
+                <span className="flex h-11 min-w-[4.2rem] px-4 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-sm font-black text-white sm:text-base">
                   {f.floor_key.toLowerCase().startsWith("floor-") 
                     ? `${f.sort_order + 1}F` 
                     : f.floor_key}
