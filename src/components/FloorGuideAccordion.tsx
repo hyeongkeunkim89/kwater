@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import type { CenterFloor } from "@/types/database";
-import { FloorPhotoUpload } from "./FloorPhotoUpload";
 
 interface FloorGuideAccordionProps {
   floors: CenterFloor[];
@@ -27,6 +26,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
   const [openFloorId, setOpenFloorId] = useState<string | null>(
     floors.length > 0 ? floors[0].id : null
   );
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
   const toggleFloor = (id: string) => {
     setOpenFloorId(openFloorId === id ? null : id);
@@ -163,14 +163,30 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                       </div>
                     )}
 
-                    {/* 층별 실제 방문자/관리자 추가 사진 업로드 */}
-                    <div className="pt-2">
-                      <FloorPhotoUpload
-                        centerId={f.center_id}
-                        floorKey={f.floor_key.toLowerCase().startsWith("floor") ? f.floor_key : `floor-${f.sort_order}`}
-                        floorLabel={f.floor_name}
-                      />
-                    </div>
+                    {/* 내부 사진 갤러리 */}
+                    {f.internal_photos && f.internal_photos.length > 0 && (
+                      <div className="space-y-3 pt-3 border-t border-slate-100">
+                        <h4 className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-slate-400">
+                          내부 전경 사진 ({f.internal_photos.length})
+                        </h4>
+                        <div className="grid grid-cols-3 gap-2">
+                          {f.internal_photos.map((photo, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => setLightbox(photo)}
+                              className="group relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300"
+                            >
+                              <img
+                                src={photo}
+                                alt={`내부 전경 ${idx + 1}`}
+                                className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                              />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* 오른쪽: 도면 이미지 */}
@@ -193,6 +209,29 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
           </div>
         );
       })}
+
+      {/* 라이트박스 */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 cursor-pointer"
+          onClick={() => setLightbox(null)}
+          role="presentation"
+        >
+          <img
+            src={lightbox}
+            alt="내부 사진 크게 보기"
+            className="max-h-[90vh] max-w-full rounded-xl object-contain shadow-2xl"
+          />
+          <button
+            type="button"
+            onClick={() => setLightbox(null)}
+            className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
+            aria-label="닫기"
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </div>
   );
 }

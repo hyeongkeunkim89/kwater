@@ -19,6 +19,7 @@ export interface CenterFloor {
   amenities: FloorAmenity[];
   sort_order: number;
   created_at: string;
+  internal_photos?: string[];
 }
 
 export interface CenterFacility {

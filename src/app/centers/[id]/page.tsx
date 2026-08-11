@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import fs from "fs";
+import path from "path";
 import { CenterDetailLiveStatus } from "@/components/CenterDetailLiveStatus";
 import { CenterPhotoGallery } from "@/components/CenterPhotoGallery";
 import { FloorPhotoUpload } from "@/components/FloorPhotoUpload";
@@ -79,6 +81,26 @@ export default async function CenterDetailPage({ params }: Props) {
         sort_order: i,
         created_at: "",
       }));
+
+  // 로컬 이미지 스캔 후 각 층에 매핑
+  const floorsWithPhotos: CenterFloor[] = floors.map((f) => {
+    let internal_photos: string[] = [];
+    try {
+      const dirPath = path.join(process.cwd(), "public", "images", "floors", id, f.floor_key);
+      if (fs.existsSync(dirPath)) {
+        const files = fs.readdirSync(dirPath);
+        internal_photos = files
+          .filter((file) => /\.(png|jpe?g|webp|gif)$/i.test(file))
+          .map((file) => `/images/floors/${id}/${f.floor_key}/${file}`);
+      }
+    } catch (e) {
+      console.error("Failed to read local photos for floor:", e);
+    }
+    return {
+      ...f,
+      internal_photos,
+    };
+  });
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -247,7 +269,7 @@ export default async function CenterDetailPage({ params }: Props) {
           <h2 className="mb-6 text-2xl font-black tracking-tight text-slate-900">
             층별 주요 시설
           </h2>
-          <FloorGuideAccordion floors={floors} />
+          <FloorGuideAccordion floors={floorsWithPhotos} />
         </section>
 
         {/* 부대 및 편의시설 (간송 스타일 탭) */}
