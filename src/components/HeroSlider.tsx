@@ -237,7 +237,7 @@ export function HeroSlider() {
                 </span>
               </div>
               <h3 className="mt-1 text-base font-black text-white sm:text-lg">
-                "물은 흐르고, 기억은 남는다"
+                &quot;물은 흐르고, 기억은 남는다&quot;
               </h3>
             </div>
           </div>
