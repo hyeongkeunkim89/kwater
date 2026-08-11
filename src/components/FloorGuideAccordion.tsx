@@ -56,19 +56,14 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
               className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left outline-none hover:bg-slate-50 focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-sky-500"
             >
               <div className="flex min-w-0 flex-1 items-center gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-xs font-black text-white">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-sm font-extrabold text-white sm:text-base">
                   {f.floor_key.toLowerCase().startsWith("floor-") 
                     ? `${f.sort_order + 1}F` 
                     : f.floor_key}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-base font-extrabold text-slate-900">
-                      {f.floor_name}
-                    </h3>
-                  </div>
                   {/* 주요 전시실/시설 목록 요약 */}
-                  <p className="mt-1 truncate text-xs text-slate-500">
+                  <p className="truncate text-sm font-bold text-slate-800 sm:text-[15px]">
                     {f.rooms && f.rooms.length > 0
                       ? f.rooms.map((r) => r.name).join(" · ")
                       : "주요 시설 정보 없음"}
