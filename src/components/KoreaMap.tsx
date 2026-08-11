@@ -210,15 +210,12 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
           </span>
           {LEGEND_ITEMS.map(([label, color]) => (
             <span key={label} className="flex items-center gap-1.5">
-              <svg width="12" height="16" viewBox="0 0 22 28" fill="none" aria-hidden="true">
-                <path
-                  d="M11 1.5 C5.5 1.5, 1 7, 1 12.5 C1 18.5, 5 23.5, 8.5 26 L11 28 L13.5 26 C17 23.5, 21 18.5, 21 12.5 C21 7, 16.5 1.5, 11 1.5 Z"
-                  fill={color} stroke="white" strokeWidth="1"
-                />
-                <circle cx="7.5" cy="12" r="1.8" fill="white" />
-                <circle cx="14.5" cy="12" r="1.8" fill="white" />
-                <path d="M7.5 16.5 Q11 19 14.5 16.5" stroke="white" strokeWidth="1.1" fill="none" strokeLinecap="round" />
-              </svg>
+              <span
+                className="relative inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white ring-2 p-0.5"
+                style={{ ringColor: color, boxShadow: `0 0 0 1.5px ${color}` }}
+              >
+                <img src="/character.png" alt="" className="h-full w-full object-contain" />
+              </span>
               <span className="text-xs text-slate-700">{label}</span>
             </span>
           ))}
@@ -256,17 +253,9 @@ function EmptyPanel() {
   return (
     <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white lg:min-h-[540px]">
       <div className="space-y-4 p-8 text-center">
-        <svg width="56" height="72" viewBox="0 0 22 28" fill="none" aria-hidden="true" className="mx-auto">
-          <path d="M11 1.5 C5.5 1.5, 1 7, 1 12.5 C1 18.5, 5 23.5, 8.5 26 L11 28 L13.5 26 C17 23.5, 21 18.5, 21 12.5 C21 7, 16.5 1.5, 11 1.5 Z" fill="#0ea5e9" stroke="#7dd3fc" strokeWidth="0.5" />
-          <ellipse cx="14.5" cy="7" rx="3.2" ry="2" fill="white" opacity="0.3" transform="rotate(-30, 14.5, 7)" />
-          <circle cx="7.5" cy="13" r="2" fill="white" />
-          <circle cx="8.2" cy="13.6" r="1" fill="#0f172a" />
-          <circle cx="7.8" cy="12.9" r="0.4" fill="white" opacity="0.8" />
-          <circle cx="14.5" cy="13" r="2" fill="white" />
-          <circle cx="15.2" cy="13.6" r="1" fill="#0f172a" />
-          <circle cx="14.8" cy="12.9" r="0.4" fill="white" opacity="0.8" />
-          <path d="M7.5 17 Q11 20 14.5 17" stroke="white" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-        </svg>
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-md ring-4 ring-sky-300/80">
+          <img src="/character.png" alt="방울이 캐릭터" className="h-full w-full object-contain" />
+        </div>
         <div>
           <p className="font-bold text-slate-800">
             {koreaMapUi.emptyTitle}
