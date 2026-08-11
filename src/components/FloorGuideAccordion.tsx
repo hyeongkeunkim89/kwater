@@ -211,13 +211,19 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                     )}
                   </div>
 
-                  {/* 오른쪽: 도면 이미지 */}
+                  {/* 오른쪽: 도면 이미지 (마우스 호버 시 강조 영역 줌인 기능 추가) */}
                   {f.floor_map_url ? (
-                    <div className="relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50/50 p-2">
+                    <div className="group relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50/50 p-2 cursor-zoom-in">
                       <img
                         src={f.floor_map_url}
                         alt={`${f.floor_name} 도면`}
-                        className="max-h-[300px] w-full object-contain rounded-lg transition-transform duration-300 hover:scale-102"
+                        className={`max-h-[300px] w-full object-contain rounded-lg transition-all duration-500 ease-out group-hover:scale-[1.8] ${
+                          f.floor_key === "문화공간"
+                            ? "origin-[25%_45%]"
+                            : f.floor_key === "상설전시"
+                            ? "origin-[75%_65%]"
+                            : "origin-center"
+                        }`}
                       />
                     </div>
                   ) : (
