@@ -12,7 +12,7 @@ VALUES (
   '문화공간동 (좌측동)', 
   '/daecheong-left-wing.jpg', -- 좌측동 전용 도면 적용
   '기획전시실과 넓고 쾌적한 전시홀, 수유실 및 편안한 발코니 휴게전망공간이 마련되어 있는 좌측 문화공간동입니다.', 
-  '[{"name": "기획전시실", "link": null}, {"name": "전시홀 1", "link": null}, {"name": "수유실", "link": null}, {"name": "발코니", "link": null}, {"name": "휴게전망공간", "link": null}]'::jsonb, 
+  '[{"name": "기획전시실", "link": null}, {"name": "전시홀 2", "link": null}, {"name": "수유실", "link": null}, {"name": "발코니", "link": null}, {"name": "휴게전망공간", "link": null}]'::jsonb, 
   '[{"label": "수유실", "icon": "baby"}]'::jsonb, 
   1
 );
