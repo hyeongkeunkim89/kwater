@@ -25,7 +25,7 @@ VALUES (
   '상설전시동 (우측동)', 
   '/daecheong-right-wing.jpg', -- 우측동 전용 도면 적용
   '대청댐의 상설전시실 1호 및 넓은 전시홀, 야외 데크와 엘리베이터, 편리한 위생시설을 갖추고 있는 우측 상설전시동입니다.', 
-  '[{"name": "상설전시실 1", "link": null}, {"name": "전시홀 1", "link": null}, {"name": "데크", "link": null}]'::jsonb, 
+  '[{"name": "상설전시실 1", "link": null}, {"name": "전시홀 1", "link": null}, {"name": "상상마루 (반원 전시관)", "link": null}, {"name": "데크", "link": null}]'::jsonb, 
   '[{"label": "화장실", "icon": "toilet"}, {"label": "엘리베이터", "icon": "elevator"}]'::jsonb, 
   2
 );
