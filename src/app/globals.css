@@ -9,6 +9,7 @@
   --accent-muted: #e5f6fd;
   --dark-bg: #0b111e;
   --dark-surface: #111827;
+  --font-noto-sans-kr: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @theme inline {
