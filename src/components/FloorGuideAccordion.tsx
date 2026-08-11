@@ -3,6 +3,19 @@
 import { useState } from "react";
 import type { CenterFloor } from "@/types/database";
 
+const getPhotoTitle = (photoUrl: string) => {
+  try {
+    const decodedUrl = decodeURIComponent(photoUrl);
+    const parts = decodedUrl.split("/");
+    const fileNameWithExt = parts[parts.length - 1];
+    const lastDotIdx = fileNameWithExt.lastIndexOf(".");
+    if (lastDotIdx === -1) return fileNameWithExt;
+    return fileNameWithExt.substring(0, lastDotIdx);
+  } catch (e) {
+    return "";
+  }
+};
+
 interface FloorGuideAccordionProps {
   floors: CenterFloor[];
 }
@@ -169,21 +182,30 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                         <h4 className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-slate-400">
                           내부 전경 사진 ({f.internal_photos.length})
                         </h4>
-                        <div className="grid grid-cols-3 gap-2">
-                          {f.internal_photos.map((photo, idx) => (
-                            <button
-                              key={idx}
-                              type="button"
-                              onClick={() => setLightbox(photo)}
-                              className="group relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300"
-                            >
-                              <img
-                                src={photo}
-                                alt={`내부 전경 ${idx + 1}`}
-                                className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                              />
-                            </button>
-                          ))}
+                        <div className="grid grid-cols-3 gap-3">
+                          {f.internal_photos.map((photo, idx) => {
+                            const title = getPhotoTitle(photo);
+                            return (
+                              <div key={idx} className="flex flex-col items-center gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => setLightbox(photo)}
+                                  className="group relative aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300"
+                                >
+                                  <img
+                                    src={photo}
+                                    alt={title || `내부 전경 ${idx + 1}`}
+                                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                                  />
+                                </button>
+                                {title && (
+                                  <span className="text-[10px] sm:text-xs font-bold text-slate-500 truncate max-w-full text-center">
+                                    &lt;{title}&gt;
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
@@ -213,15 +235,22 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
       {/* 라이트박스 */}
       {lightbox && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 cursor-pointer"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 p-4 cursor-pointer"
           onClick={() => setLightbox(null)}
           role="presentation"
         >
-          <img
-            src={lightbox}
-            alt="내부 사진 크게 보기"
-            className="max-h-[90vh] max-w-full rounded-xl object-contain shadow-2xl"
-          />
+          <div className="relative flex flex-col items-center gap-3.5" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={lightbox}
+              alt="내부 사진 크게 보기"
+              className="max-h-[80vh] max-w-full rounded-xl object-contain shadow-2xl"
+            />
+            {getPhotoTitle(lightbox) && (
+              <span className="text-sm sm:text-base font-extrabold text-white bg-black/55 px-4 py-1.5 rounded-full select-none">
+                &lt;{getPhotoTitle(lightbox)}&gt;
+              </span>
+            )}
+          </div>
           <button
             type="button"
             onClick={() => setLightbox(null)}
