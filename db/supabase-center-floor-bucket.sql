@@ -1,12 +1,17 @@
--- Supabase → SQL Editor에서 실행 (Dashboard → Storage에서 동일 이름 public 버킷을 만들어도 됨)
--- 버킷 ID는 src/lib/supabaseAdmin.ts 의 CENTER_FLOOR_STORAGE_BUCKET 과 일치해야 합니다.
+-- =============================================================================
+-- Supabase Storage: 문화관 층별 시설 사진 버킷 `center-floor-photos`
+-- =============================================================================
+-- 실행: Supabase → SQL Editor (Dashboard → Storage에서 동일 이름 public 버킷 생성 가능)
+-- 버킷 ID는 src/lib/supabaseAdmin.ts 의 CENTER_FLOOR_STORAGE_BUCKET 과 일치해야 함
+-- 메타데이터 테이블: db/center-floor-photos.sql
+-- =============================================================================
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
   'center-floor-photos',
   'center-floor-photos',
   true,
-  20971520,
+  20971520,  -- 20 MiB (20 * 1024 * 1024)
   array['image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png', 'image/webp', 'image/gif']::text[]
 )
 on conflict (id) do update set

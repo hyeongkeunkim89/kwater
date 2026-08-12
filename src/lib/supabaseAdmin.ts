@@ -1,3 +1,8 @@
+/**
+ * Supabase Storage 서버 클라이언트 (service_role)
+ * 물 이야기·층별 사진 업로드/삭제 — Postgres 메타는 *Db.ts 모듈
+ * 버킷 설정 SQL: db/supabase-bucket.sql, db/supabase-center-floor-bucket.sql
+ */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 /** Storage 버킷 이름 — Supabase 대시보드에서 동일 이름으로 public 버킷 생성 */

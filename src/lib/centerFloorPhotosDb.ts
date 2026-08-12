@@ -1,3 +1,8 @@
+/**
+ * 문화관 층별 시설 사진 — Postgres `center_floor_photos` 테이블 CRUD
+ * 스키마: db/center-floor-photos.sql · Storage: db/supabase-center-floor-bucket.sql
+ * DATABASE_URL(waterStoriesDb와 동일 연결) 사용
+ */
 import { getStoriesSql, skipDatabaseRuntimeSchemaDdl } from "@/lib/waterStoriesDb";
 
 export type CenterFloorPhoto = {
@@ -7,6 +12,7 @@ export type CenterFloorPhoto = {
 
 let centerFloorPhotosSchemaPromise: Promise<void> | null = null;
 
+/** pooler 6543이 아니면 앱 기동 시 테이블·인덱스 자동 생성 (1회만) */
 function ensureCenterFloorPhotosSchema(sql: NonNullable<ReturnType<typeof getStoriesSql>>) {
   if (!centerFloorPhotosSchemaPromise) {
     if (skipDatabaseRuntimeSchemaDdl()) {
@@ -35,6 +41,7 @@ function ensureCenterFloorPhotosSchema(sql: NonNullable<ReturnType<typeof getSto
   return centerFloorPhotosSchemaPromise;
 }
 
+/** 문화관·층별 사진 목록 (sort_order → created_at 순) */
 export async function listCenterFloorPhotosFromDb(
   centerId: string,
   floorKey: string,
@@ -52,6 +59,7 @@ export async function listCenterFloorPhotosFromDb(
   return rows.map((r) => ({ id: String(r.id), imageUrl: r.image_url }));
 }
 
+/** 새 사진 INSERT — 같은 층의 MAX(sort_order)+1 로 순서 부여 */
 export async function insertCenterFloorPhotoDb(input: {
   centerId: string;
   floorKey: string;
@@ -76,6 +84,7 @@ export async function insertCenterFloorPhotoDb(input: {
   return { id: String(row.id), imageUrl: row.image_url };
 }
 
+/** 삭제 전 Storage 경로 확인 등에 사용 — UUID 형식만 허용 */
 export async function getCenterFloorPhotoRowById(id: string): Promise<{
   id: string;
   center_id: string;
@@ -101,6 +110,7 @@ export async function getCenterFloorPhotoRowById(id: string): Promise<{
   };
 }
 
+/** 행 삭제 후 image_url 반환 (Storage 객체 삭제용) */
 export async function deleteCenterFloorPhotoDbById(id: string): Promise<string | null> {
   const sql = getStoriesSql();
   if (!sql || !/^[0-9a-f-]{36}$/i.test(id)) return null;

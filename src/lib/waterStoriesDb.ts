@@ -1,3 +1,8 @@
+/**
+ * 물 이야기 게시글 — Postgres `water_stories` 테이블 CRUD
+ * 스키마: db/water-stories.sql · 연결: DATABASE_URL (+ DATABASE_PASSWORD)
+ * Transaction pooler(6543)면 DDL 생략 → SQL Editor에서 테이블 미리 생성
+ */
 import postgres from "postgres";
 import type { WaterStory } from "@/types/waterStory";
 
@@ -67,6 +72,7 @@ export function skipDatabaseRuntimeSchemaDdl(): boolean {
 
 let schemaPromise: Promise<void> | null = null;
 
+/** 싱글톤 postgres.js 클라이언트 (HMR·serverless 재사용) */
 export function getStoriesSql(): ReturnType<typeof postgres> | null {
   const url = getResolvedDatabaseUrl();
   if (!url) return null;
@@ -113,6 +119,7 @@ function isTransientConnectionFailure(err: unknown): boolean {
   );
 }
 
+/** pooler 6543이 아니면 water_stories 테이블·인덱스 자동 생성 */
 function ensureWaterStoriesSchema(sql: ReturnType<typeof postgres>) {
   if (!schemaPromise) {
     if (skipRuntimeSchemaDdl()) {
@@ -168,6 +175,7 @@ function rowToStory(r: {
   };
 }
 
+/** 전체 또는 centerId 필터 목록 (최신순) */
 export async function listWaterStoriesFromDb(centerId?: string): Promise<WaterStory[]> {
   const sql = getStoriesSql();
   if (!sql) return [];
@@ -210,6 +218,7 @@ export async function listWaterStoriesFromDb(centerId?: string): Promise<WaterSt
   return rows.map(rowToStory);
 }
 
+/** 새 게시글 INSERT — 일시적 연결 오류 시 최대 3회 재시도 */
 export async function insertWaterStoryDb(input: {
   centerId: string;
   centerName: string;
@@ -261,6 +270,7 @@ export async function insertWaterStoryDb(input: {
   throw lastErr;
 }
 
+/** Storage 삭제 전 image_url 조회 */
 export async function getWaterStoryImageUrl(id: string): Promise<string | null> {
   const sql = getStoriesSql();
   if (!sql) return null;
@@ -278,6 +288,7 @@ export async function deleteWaterStoryDb(id: string): Promise<void> {
   await sql`DELETE FROM water_stories WHERE id = ${id}::uuid`;
 }
 
+/** 이달의 사진 지정 — 기존 true 전부 해제 후 대상 1건만 true */
 export async function setPhotoOfMonthDb(id: string): Promise<void> {
   const sql = getStoriesSql();
   if (!sql) throw new Error("DATABASE_URL 없음");
@@ -288,6 +299,7 @@ export async function setPhotoOfMonthDb(id: string): Promise<void> {
   });
 }
 
+/** 이달의 사진 플래그 전체 해제 */
 export async function clearPhotoOfMonthDb(): Promise<void> {
   const sql = getStoriesSql();
   if (!sql) throw new Error("DATABASE_URL 없음");

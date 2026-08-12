@@ -1,3 +1,9 @@
+/**
+ * 투어 예약 Postgres 연결 (postgres.js)
+ * URL: RESERVATIONS_DATABASE_URL → 없으면 DATABASE_URL
+ * 비밀번호: RESERVATIONS_DATABASE_PASSWORD → 없으면 DATABASE_PASSWORD(같은 Supabase 프로젝트)
+ * 테이블 DDL: db/tour-reservations.sql · CRUD: reservationsDb.ts
+ */
 import postgres from "postgres";
 
 const globalForSql = globalThis as unknown as {
@@ -75,7 +81,7 @@ function getResolvedReservationsDatabaseUrl(): string | null {
   const rawChosen = rawRes || rawMain;
   if (!rawChosen) return null;
 
-  let base = stripBrokenPasswordInUri(rawChosen);
+  const base = stripBrokenPasswordInUri(rawChosen);
   const mainStripped = rawMain ? stripBrokenPasswordInUri(rawMain) : "";
 
   const resPwd = process.env.RESERVATIONS_DATABASE_PASSWORD?.trim() ?? "";
@@ -120,6 +126,7 @@ export function reservationsSkipRuntimeSchemaDdl(): boolean {
   return /pooler\.supabase\.com:6543/i.test(u);
 }
 
+/** 싱글톤 예약 DB 클라이언트 */
 export function getReservationsSql(): ReturnType<typeof postgres> | null {
   const url = getResolvedReservationsDatabaseUrl();
   if (!url) return null;
