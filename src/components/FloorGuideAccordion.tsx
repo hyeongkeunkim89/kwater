@@ -220,15 +220,15 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                   <div className="flex flex-col justify-between space-y-5">
                     <div className="space-y-4">
                       {f.description && (
-                        <p className="text-[15px] sm:text-base leading-relaxed text-slate-600">
+                        <p className="text-base sm:text-[17.5px] leading-relaxed text-slate-700 font-semibold">
                           {f.description}
                         </p>
                       )}
 
                       {/* 주요 시설 및 링크 */}
                       {f.rooms && f.rooms.length > 0 && (
-                        <div className="space-y-2">
-                          <h4 className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-slate-400">
+                        <div className="space-y-2.5">
+                          <h4 className="text-xs sm:text-[13px] font-black uppercase tracking-widest text-slate-500">
                             주요 시설 / 전시실
                           </h4>
                           <div className="flex flex-wrap gap-2">
@@ -237,15 +237,15 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                 <a
                                   key={idx}
                                   href={room.link}
-                                  className="inline-flex items-center gap-1.5 rounded-xl border border-sky-200 bg-sky-50/50 px-3 py-1.5 text-sm font-semibold text-sky-800 hover:bg-sky-50 transition"
+                                  className="inline-flex items-center gap-2 rounded-xl border border-sky-200 bg-sky-50 px-4 py-2.5 text-base font-extrabold text-sky-900 hover:bg-sky-100/70 transition shadow-sm"
                                 >
                                   <span>{room.name}</span>
-                                  <span className="text-[10px]" aria-hidden>↗</span>
+                                  <span className="text-xs" aria-hidden>↗</span>
                                 </a>
                               ) : (
                                 <span
                                   key={idx}
-                                  className="inline-block rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700"
+                                  className="inline-block rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-base font-extrabold text-slate-800 shadow-sm"
                                 >
                                   {room.name}
                                 </span>
@@ -258,17 +258,17 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
 
                     {/* 편의시설 아이콘 뱃지 */}
                     {f.amenities && f.amenities.length > 0 && (
-                      <div className="space-y-2 pt-2">
-                        <h4 className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-slate-400">
+                      <div className="space-y-2.5 pt-2">
+                        <h4 className="text-xs sm:text-[13px] font-black uppercase tracking-widest text-slate-500">
                           제공 편의시설
                         </h4>
-                        <div className="flex flex-wrap gap-1.5">
+                        <div className="flex flex-wrap gap-2">
                           {f.amenities.map((item, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700"
+                              className="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-4 py-2 text-base font-extrabold text-slate-800 shadow-sm"
                             >
-                              <span aria-hidden>
+                              <span aria-hidden className="text-lg">
                                 {AMENITY_ICONS[item.icon] || "📍"}
                               </span>
                               <span>{item.label}</span>
@@ -280,19 +280,19 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
 
                     {/* 내부 사진 갤러리 */}
                     {f.internal_photos && f.internal_photos.length > 0 && (
-                      <div className="space-y-3 pt-3 border-t border-slate-100">
-                        <h4 className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-slate-400">
+                      <div className="space-y-3.5 pt-3 border-t border-slate-100">
+                        <h4 className="text-xs sm:text-[13px] font-black uppercase tracking-widest text-slate-500">
                           내부 전경 사진 ({f.internal_photos.length})
                         </h4>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-3 gap-3.5">
                           {f.internal_photos.map((photo, idx) => {
                             const title = getPhotoTitle(photo);
                             return (
-                              <div key={idx} className="flex flex-col items-center gap-1.5">
+                              <div key={idx} className="flex flex-col items-center gap-2">
                                 <button
                                   type="button"
                                   onClick={() => setLightbox(photo)}
-                                  className="group relative aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300"
+                                  className="group relative aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 shadow-sm"
                                 >
                                   <img
                                     src={photo}
@@ -301,7 +301,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                   />
                                 </button>
                                 {title && (
-                                  <span className="text-[10px] sm:text-xs font-bold text-slate-500 truncate max-w-full text-center">
+                                  <span className="text-xs sm:text-[13px] font-bold text-slate-600 truncate max-w-full text-center">
                                     &lt;{title}&gt;
                                   </span>
                                 )}
