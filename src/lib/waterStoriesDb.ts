@@ -59,10 +59,14 @@ function supabasePoolerDatabaseUrl(raw: string): string {
   return u.includes("?") ? `${u}&pgbouncer=true` : `${u}?pgbouncer=true`;
 }
 
-/** Transaction pooler(6543)에서는 DDL(CREATE TABLE)이 막히는 경우가 많아, 테이블은 SQL Editor에서 미리 만들어야 함 */
+/** Vercel 환경이거나 Supabase 클라우드 데이터베이스를 연결한 경우 DDL 검사를 항상 건너뛰어 랜딩 성능 극대화 */
 function skipRuntimeSchemaDdl(): boolean {
+  if (process.env.VERCEL || process.env.NODE_ENV === "production") {
+    return true;
+  }
   const u = getResolvedDatabaseUrl() ?? "";
-  return /pooler\.supabase\.com:6543/i.test(u);
+  // 로컬 PostgreSQL이 아닌 클라우드 Supabase DB 연결(supabase.co)이면 항상 스키마 생성을 스킵합니다.
+  return /supabase\.co|pooler\.supabase\.com/i.test(u);
 }
 
 /** 다른 서버 DB 모듈에서 동일 판별용 */

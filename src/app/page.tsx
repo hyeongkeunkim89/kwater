@@ -9,7 +9,7 @@ import { listFeedbacksFromDb } from "@/lib/feedbacksDb";
 import { listWaterStoriesFromDb } from "@/lib/waterStoriesDb";
 import { HomeTabbedBoard } from "@/components/HomeTabbedBoard";
 
-export const revalidate = 0; // ensure fresh data on GNB-style landing page
+export const revalidate = 10; // 10-second revalidation (Edge caching) to maximize landing speed
 
 export default async function Home() {
   let newsList: { id: string; title: string; date: string; centerName?: string }[] = [];
@@ -25,43 +25,34 @@ export default async function Home() {
   };
 
   try {
-    const rawNews = await listNewsFromDb();
+    const [rawNews, rawEvents, rawFeedbacks, rawStories] = await Promise.all([
+      listNewsFromDb().catch(e => { console.error("Failed to load news", e); return []; }),
+      listEventsFromDb().catch(e => { console.error("Failed to load events", e); return []; }),
+      listFeedbacksFromDb().catch(e => { console.error("Failed to load feedbacks", e); return []; }),
+      listWaterStoriesFromDb().catch(e => { console.error("Failed to load stories", e); return []; }),
+    ]);
+
     newsList = rawNews.map((n) => ({
       id: n.id,
       title: n.title,
       date: formatDate(n.createdAt),
       centerName: n.centerName,
     }));
-  } catch (e) {
-    console.error("Failed to load news", e);
-  }
 
-  try {
-    const rawEvents = await listEventsFromDb();
     eventsList = rawEvents.map((ev) => ({
       id: ev.id,
       title: ev.title,
       date: `${formatDate(ev.startDate)} ~ ${formatDate(ev.endDate)}`,
       centerName: ev.centerName,
     }));
-  } catch (e) {
-    console.error("Failed to load events", e);
-  }
 
-  try {
-    const rawFeedbacks = await listFeedbacksFromDb();
     feedbacksList = rawFeedbacks.map((f) => ({
       id: f.id,
       title: f.title + (f.isPrivate ? " 🔒" : ""),
       date: formatDate(f.createdAt),
       centerName: f.centerName,
     }));
-  } catch (e) {
-    console.error("Failed to load feedbacks", e);
-  }
 
-  try {
-    const rawStories = await listWaterStoriesFromDb();
     storiesList = rawStories.map((s) => ({
       id: s.id,
       imageSrc: s.imageSrc,
@@ -70,7 +61,7 @@ export default async function Home() {
       centerName: s.centerName,
     }));
   } catch (e) {
-    console.error("Failed to load stories", e);
+    console.error("Critical error loading homepage data", e);
   }
 
   return (
