@@ -10,7 +10,7 @@ VALUES (
   'peace-dam', 
   '전시실', 
   '다목적 전시실', 
-  null, -- 도면 이미지가 있을 경우 경로 입력 (예: '/images/floors/peace-dam/exhibit-hall.jpg')
+  '/peace-dam-exhibit.jpg', -- 다목적 전시실 하이라이트 도면
   '평화의댐의 건설 역사와 안보/평화 메시지, 물의 소중함을 주제로 한 다목적 전시 공간입니다.', 
   '[{"name": "역사전시구역", "link": null}, {"name": "안보체험존", "link": null}, {"name": "평화의 메시지관", "link": null}]'::jsonb, 
   '[]'::jsonb, 
@@ -23,7 +23,7 @@ VALUES (
   'peace-dam', 
   '기타공간', 
   '기타공간', 
-  null, -- 도면 이미지가 있을 경우 경로 입력
+  '/peace-dam-others.jpg', -- 기타공간 하이라이트 도면
   '안내데스크, 로비 및 방문객 편의를 위한 위생시설이 마련되어 있는 기타 공간입니다.', 
   '[{"name": "로비 및 안내데스크", "link": null}, {"name": "휴게 라운지", "link": null}]'::jsonb, 
   '[{"label": "화장실", "icon": "toilet"}]'::jsonb, 
