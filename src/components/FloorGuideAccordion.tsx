@@ -143,6 +143,14 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
   );
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [lightboxPhotos, setLightboxPhotos] = useState<string[]>([]);
+  const [expandedFloorPhotos, setExpandedFloorPhotos] = useState<Record<string, boolean>>({});
+
+  const toggleExpandPhotos = (floorId: string) => {
+    setExpandedFloorPhotos((prev) => ({
+      ...prev,
+      [floorId]: !prev[floorId],
+    }));
+  };
 
   const handlePrevPhoto = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -314,34 +322,79 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                         <h4 className="text-[14.5px] sm:text-[16.5px] font-black uppercase tracking-wide text-slate-800">
                           내부 전경 사진 ({f.internal_photos.length})
                         </h4>
-                        <div className="grid grid-cols-3 gap-3.5">
-                          {f.internal_photos.map((photo, idx) => {
-                            const title = getPhotoTitle(photo);
-                            return (
-                              <div key={idx} className="flex flex-col items-center gap-2">
+                        {(() => {
+                          const photos = f.internal_photos || [];
+                          const isExpanded = !!expandedFloorPhotos[f.id];
+                          const hasMoreThanThree = photos.length > 3;
+                          const displayedPhotos = isExpanded 
+                            ? photos 
+                            : photos.slice(0, 3);
+
+                          return (
+                            <div className="space-y-3">
+                              <div className="grid grid-cols-3 gap-3.5">
+                                {displayedPhotos.map((photo, idx) => {
+                                  const title = getPhotoTitle(photo);
+                                  const isLastItemAndCollapsed = !isExpanded && hasMoreThanThree && idx === 2;
+
+                                  return (
+                                    <div key={idx} className="flex flex-col items-center gap-2">
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          if (isLastItemAndCollapsed) {
+                                            toggleExpandPhotos(f.id);
+                                          } else {
+                                            setLightbox(photo);
+                                            setLightboxPhotos(photos);
+                                          }
+                                        }}
+                                        className="group relative aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 shadow-sm"
+                                      >
+                                        <img
+                                          src={photo}
+                                          alt={title || `내부 전경 ${idx + 1}`}
+                                          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                                        />
+                                        
+                                        {/* 더보기 딤 오버레이 */}
+                                        {isLastItemAndCollapsed && (
+                                          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-[2px] transition hover:bg-black/50 text-white gap-1 select-none">
+                                            <span className="text-[20px] sm:text-[24px] font-black">
+                                              +{photos.length - 2}
+                                            </span>
+                                            <span className="text-[10px] sm:text-xs font-black tracking-wider uppercase">
+                                              더보기
+                                            </span>
+                                          </div>
+                                        )}
+                                      </button>
+                                      {title && (
+                                        <span className="text-sm sm:text-base font-extrabold text-slate-700 truncate max-w-full text-center mt-1">
+                                          &lt;{title}&gt;
+                                        </span>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+
+                              {/* 사진 접기 버튼 (확장 상태에서만 표시) */}
+                              {isExpanded && hasMoreThanThree && (
                                 <button
                                   type="button"
-                                  onClick={() => {
-                                    setLightbox(photo);
-                                    setLightboxPhotos(f.internal_photos || []);
-                                  }}
-                                  className="group relative aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 shadow-sm"
+                                  onClick={() => toggleExpandPhotos(f.id)}
+                                  className="mx-auto flex items-center justify-center gap-1 text-xs sm:text-sm font-bold text-sky-600 hover:text-sky-700 transition"
                                 >
-                                  <img
-                                    src={photo}
-                                    alt={title || `내부 전경 ${idx + 1}`}
-                                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                                  />
+                                  <span>사진 접기</span>
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-3.5 w-3.5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                  </svg>
                                 </button>
-                                {title && (
-                                  <span className="text-sm sm:text-base font-extrabold text-slate-700 truncate max-w-full text-center mt-1">
-                                    &lt;{title}&gt;
-                                  </span>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </div>
                     )}
                   </div>
