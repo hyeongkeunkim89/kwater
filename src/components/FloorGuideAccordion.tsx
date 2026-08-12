@@ -228,7 +228,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                       {/* 주요 시설 및 링크 */}
                       {f.rooms && f.rooms.length > 0 && (
                         <div className="space-y-2.5">
-                          <h4 className="text-xs sm:text-[13px] font-black uppercase tracking-widest text-slate-500">
+                          <h4 className="text-[14.5px] sm:text-[16.5px] font-black uppercase tracking-wide text-slate-800">
                             주요 시설 / 전시실
                           </h4>
                           <div className="flex flex-wrap gap-2">
@@ -259,7 +259,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                     {/* 편의시설 아이콘 뱃지 */}
                     {f.amenities && f.amenities.length > 0 && (
                       <div className="space-y-2.5 pt-2">
-                        <h4 className="text-xs sm:text-[13px] font-black uppercase tracking-widest text-slate-500">
+                        <h4 className="text-[14.5px] sm:text-[16.5px] font-black uppercase tracking-wide text-slate-800">
                           제공 편의시설
                         </h4>
                         <div className="flex flex-wrap gap-2">
@@ -281,7 +281,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                     {/* 내부 사진 갤러리 */}
                     {f.internal_photos && f.internal_photos.length > 0 && (
                       <div className="space-y-3.5 pt-3 border-t border-slate-100">
-                        <h4 className="text-xs sm:text-[13px] font-black uppercase tracking-widest text-slate-500">
+                        <h4 className="text-[14.5px] sm:text-[16.5px] font-black uppercase tracking-wide text-slate-800">
                           내부 전경 사진 ({f.internal_photos.length})
                         </h4>
                         <div className="grid grid-cols-3 gap-3.5">
