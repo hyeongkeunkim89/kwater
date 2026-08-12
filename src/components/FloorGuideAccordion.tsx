@@ -301,7 +301,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                   />
                                 </button>
                                 {title && (
-                                  <span className="text-xs sm:text-[13px] font-bold text-slate-600 truncate max-w-full text-center">
+                                  <span className="text-sm sm:text-base font-extrabold text-slate-700 truncate max-w-full text-center mt-1">
                                     &lt;{title}&gt;
                                   </span>
                                 )}
