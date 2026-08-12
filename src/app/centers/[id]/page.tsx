@@ -142,14 +142,14 @@ export default async function CenterDetailPage({ params }: Props) {
         <div className="relative mx-auto max-w-5xl px-6 py-14 sm:px-10 sm:py-20">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
+              <p className="text-sm font-bold uppercase tracking-widest text-sky-400">
                 {center.kind}
               </p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {center.themes.map((t) => (
                   <span
                     key={t}
-                    className={`inline-flex rounded-full px-2.5 py-0.5 text-[11px] font-bold ring-1 ring-inset ring-white/25 ${centerThemeBadgeClass[t]}`}
+                    className={`inline-flex rounded-full px-3 py-1 text-sm font-bold ring-1 ring-inset ring-white/25 ${centerThemeBadgeClass[t]}`}
                   >
                     {t}
                   </span>
@@ -180,7 +180,7 @@ export default async function CenterDetailPage({ params }: Props) {
             role="status"
             aria-live="polite"
           >
-            <p className="text-xs font-bold uppercase tracking-widest text-amber-800/90">
+            <p className="text-sm font-bold uppercase tracking-widest text-amber-800/90">
               방문 전 안내
             </p>
             <p className="mt-2 text-sm font-semibold leading-relaxed text-amber-950 sm:text-[15px]">
@@ -216,7 +216,7 @@ export default async function CenterDetailPage({ params }: Props) {
             <div className="h-px flex-1 bg-slate-100" />
             <h2
               id="facility-profile"
-              className="text-xs font-bold uppercase tracking-widest text-slate-400"
+              className="text-sm font-bold uppercase tracking-widest text-slate-400"
             >
               Facility Profile
             </h2>
@@ -242,7 +242,7 @@ export default async function CenterDetailPage({ params }: Props) {
                 key={row.label}
                 className="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-sky-300 hover:shadow-md hover:shadow-sky-50"
               >
-                <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-sky-600">
+                <dt className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sky-600">
                   <span className="h-1 w-4 rounded-full bg-sky-500" />
                   {row.label}
                 </dt>
@@ -260,7 +260,7 @@ export default async function CenterDetailPage({ params }: Props) {
             <div className="h-px flex-1 bg-slate-100" />
             <h2
               id="floors"
-              className="text-xs font-bold uppercase tracking-widest text-slate-400"
+              className="text-sm font-bold uppercase tracking-widest text-slate-400"
             >
               Floor Guide
             </h2>
@@ -279,7 +279,7 @@ export default async function CenterDetailPage({ params }: Props) {
               <div className="h-px flex-1 bg-slate-100" />
               <h2
                 id="facilities"
-                className="text-xs font-bold uppercase tracking-widest text-slate-400"
+                className="text-sm font-bold uppercase tracking-widest text-slate-400"
               >
                 Facilities
               </h2>

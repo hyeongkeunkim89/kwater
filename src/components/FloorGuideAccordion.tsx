@@ -226,7 +226,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
 
               {/* 내용 열기/닫기 화살표 버튼 */}
               <div className="flex items-center gap-2 shrink-0">
-                <span className="hidden text-xs font-semibold text-slate-400 sm:inline">
+                <span className="hidden text-sm font-semibold text-slate-400 sm:inline">
                   {isOpen ? "내용 닫기" : "내용 열기"}
                 </span>
                 <svg
@@ -363,7 +363,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                             <span className="text-[20px] sm:text-[24px] font-black">
                                               +{photos.length - 2}
                                             </span>
-                                            <span className="text-[10px] sm:text-xs font-black tracking-wider uppercase">
+                                            <span className="text-xs sm:text-sm font-black tracking-wider uppercase">
                                               더보기
                                             </span>
                                           </div>
@@ -384,7 +384,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                 <button
                                   type="button"
                                   onClick={() => toggleExpandPhotos(f.id)}
-                                  className="mx-auto flex items-center justify-center gap-1 text-xs sm:text-sm font-bold text-sky-600 hover:text-sky-700 transition"
+                                  className="mx-auto flex items-center justify-center gap-1 text-sm sm:text-base font-bold text-sky-600 hover:text-sky-700 transition"
                                 >
                                   <span>사진 접기</span>
                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-3.5 w-3.5">
@@ -407,7 +407,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                       floorKey={f.floor_key}
                     />
                   ) : (
-                    <div className="flex min-h-[160px] items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-400">
+                    <div className="flex min-h-[160px] items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-sm text-slate-400">
                       도면 이미지가 등록되지 않았습니다.
                     </div>
                   )}

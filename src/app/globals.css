@@ -22,6 +22,8 @@
   --color-kwater-hover: #0088BD;
   --color-kwater-light: #e5f6fd;
   --font-sans: var(--font-noto-sans-kr);
+  --font-size-xs: 0.875rem; /* 14px */
+  --font-size-sm: 0.875rem; /* 14px */
 }
 
 @keyframes bounce-subtle {
