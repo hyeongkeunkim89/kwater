@@ -9,7 +9,7 @@ import { listFeedbacksFromDb } from "@/lib/feedbacksDb";
 import { listWaterStoriesFromDb } from "@/lib/waterStoriesDb";
 import { HomeTabbedBoard } from "@/components/HomeTabbedBoard";
 
-export const revalidate = 10; // 10-second revalidation (Edge caching) to maximize landing speed
+export const revalidate = 300; // 5-minute revalidation (Edge caching) for instant CDN landing
 
 export default async function Home() {
   let newsList: { id: string; title: string; date: string; centerName?: string }[] = [];
