@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { CenterFloor } from "@/types/database";
 
 const getPhotoTitle = (photoUrl: string) => {
@@ -142,6 +142,36 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
     floors.length > 0 ? floors[0].id : null
   );
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightboxPhotos, setLightboxPhotos] = useState<string[]>([]);
+
+  const handlePrevPhoto = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (!lightbox || lightboxPhotos.length <= 1) return;
+    const currentIndex = lightboxPhotos.indexOf(lightbox);
+    if (currentIndex === -1) return;
+    const prevIndex = (currentIndex - 1 + lightboxPhotos.length) % lightboxPhotos.length;
+    setLightbox(lightboxPhotos[prevIndex]);
+  };
+
+  const handleNextPhoto = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (!lightbox || lightboxPhotos.length <= 1) return;
+    const currentIndex = lightboxPhotos.indexOf(lightbox);
+    if (currentIndex === -1) return;
+    const nextIndex = (currentIndex + 1) % lightboxPhotos.length;
+    setLightbox(lightboxPhotos[nextIndex]);
+  };
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") handlePrevPhoto();
+      if (e.key === "ArrowRight") handleNextPhoto();
+      if (e.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightbox, lightboxPhotos]);
 
   const toggleFloor = (id: string) => {
     setOpenFloorId(openFloorId === id ? null : id);
@@ -291,7 +321,10 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                               <div key={idx} className="flex flex-col items-center gap-2">
                                 <button
                                   type="button"
-                                  onClick={() => setLightbox(photo)}
+                                  onClick={() => {
+                                    setLightbox(photo);
+                                    setLightboxPhotos(f.internal_photos || []);
+                                  }}
                                   className="group relative aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 shadow-sm"
                                 >
                                   <img
@@ -335,26 +368,57 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
       {/* 라이트박스 */}
       {lightbox && (
         <div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 p-4 cursor-pointer"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 p-4 cursor-pointer select-none"
           onClick={() => setLightbox(null)}
           role="presentation"
         >
-          <div className="relative flex flex-col items-center gap-3.5" onClick={(e) => e.stopPropagation()}>
+          {/* 이전 버튼 */}
+          {lightboxPhotos.length > 1 && (
+            <button
+              type="button"
+              onClick={handlePrevPhoto}
+              className="absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/25 active:scale-95 sm:left-8 sm:h-14 sm:w-14"
+              aria-label="이전 사진"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-6 w-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+          )}
+
+          {/* 메인 콘텐츠 영역 */}
+          <div className="relative flex flex-col items-center gap-3.5 max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
             <img
               src={lightbox}
               alt="내부 사진 크게 보기"
-              className="max-h-[80vh] max-w-full rounded-xl object-contain shadow-2xl"
+              className="max-h-[80vh] max-w-full rounded-xl object-contain shadow-2xl transition-all duration-300"
             />
             {getPhotoTitle(lightbox) && (
-              <span className="text-sm sm:text-base font-extrabold text-white bg-black/55 px-4 py-1.5 rounded-full select-none">
+              <span className="text-sm sm:text-base font-extrabold text-white bg-black/55 px-4 py-1.5 rounded-full">
                 &lt;{getPhotoTitle(lightbox)}&gt;
               </span>
             )}
           </div>
+
+          {/* 다음 버튼 */}
+          {lightboxPhotos.length > 1 && (
+            <button
+              type="button"
+              onClick={handleNextPhoto}
+              className="absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/25 active:scale-95 sm:right-8 sm:h-14 sm:w-14"
+              aria-label="다음 사진"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-6 w-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          )}
+
+          {/* 닫기 버튼 */}
           <button
             type="button"
             onClick={() => setLightbox(null)}
-            className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
+            className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/25 text-lg"
             aria-label="닫기"
           >
             ✕
