@@ -314,18 +314,21 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                         <h4 className="text-[14.5px] sm:text-[16.5px] font-black uppercase tracking-wide text-slate-800">
                           내부 전경 사진 ({f.internal_photos.length})
                         </h4>
-                        <div className="grid grid-cols-3 gap-3.5">
+                        <div className="flex gap-4 overflow-x-auto pb-3.5 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent snap-x snap-mandatory">
                           {f.internal_photos.map((photo, idx) => {
                             const title = getPhotoTitle(photo);
                             return (
-                              <div key={idx} className="flex flex-col items-center gap-2">
+                              <div
+                                key={idx}
+                                className="flex w-[150px] sm:w-[190px] shrink-0 flex-col items-center gap-2 snap-start"
+                              >
                                 <button
                                   type="button"
                                   onClick={() => {
                                     setLightbox(photo);
                                     setLightboxPhotos(f.internal_photos || []);
                                   }}
-                                  className="group relative aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 shadow-sm"
+                                  className="group relative aspect-[3/2] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 hover:shadow-md shadow-sm"
                                 >
                                   <img
                                     src={photo}
@@ -334,7 +337,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                   />
                                 </button>
                                 {title && (
-                                  <span className="text-sm sm:text-base font-extrabold text-slate-700 truncate max-w-full text-center mt-1">
+                                  <span className="text-sm sm:text-base font-extrabold text-slate-700 truncate w-full text-center mt-1">
                                     &lt;{title}&gt;
                                   </span>
                                 )}
