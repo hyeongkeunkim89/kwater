@@ -12,7 +12,7 @@ VALUES (
   '다목적 전시실', 
   '/peace-dam-exhibit.jpg', -- 다목적 전시실 하이라이트 도면
   '평화의댐의 건설 역사와 안보/평화 메시지, 물의 소중함을 주제로 한 다목적 전시 공간입니다.', 
-  '[{"name": "역사전시구역", "link": null}, {"name": "안보체험존", "link": null}, {"name": "평화의 메시지관", "link": null}]'::jsonb, 
+  '[{"name": "역사전시구역", "link": null}, {"name": "평화의댐 배경", "link": null}, {"name": "안보체험구역", "link": null}, {"name": "평화의 메세지관", "link": null}]'::jsonb, 
   '[]'::jsonb, 
   1
 );
