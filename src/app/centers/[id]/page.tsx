@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 import { CenterDetailLiveStatus } from "@/components/CenterDetailLiveStatus";
 import { CenterPhotoGallery } from "@/components/CenterPhotoGallery";
+import { CenterSurroundingsGallery } from "@/components/CenterSurroundingsGallery";
 import { FloorPhotoUpload } from "@/components/FloorPhotoUpload";
 import {
   formatWeeklyClosureSentence,
@@ -102,6 +103,20 @@ export default async function CenterDetailPage({ params }: Props) {
     };
   });
 
+  // 주변 경관 및 주차 시설 로컬 이미지 스캔
+  let surroundingsPhotos: string[] = [];
+  try {
+    const surroundingsDir = path.join(process.cwd(), "public", "images", "surroundings", id);
+    if (fs.existsSync(surroundingsDir)) {
+      const files = fs.readdirSync(surroundingsDir);
+      surroundingsPhotos = files
+        .filter((file) => /\.(png|jpe?g|webp|gif)$/i.test(file))
+        .map((file) => `/images/surroundings/${id}/${file}`);
+    }
+  } catch (e) {
+    console.error("Failed to read surroundings photos:", e);
+  }
+
   return (
     <div className="min-h-screen bg-white text-slate-900">
 
@@ -197,18 +212,6 @@ export default async function CenterDetailPage({ params }: Props) {
           <CenterDetailLiveStatus center={center} />
         </div>
 
-        <aside className="mt-10 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50/90 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5">
-          <p className="min-w-0 text-sm leading-relaxed text-slate-700">
-            주변 산책로·전망 사진을 <strong className="text-slate-900">물 이야기</strong>에 올리면 다른
-            방문객의 동선 참고에도 도움이 됩니다.
-          </p>
-          <Link
-            href={`/mul-iyagi?center=${center.id}`}
-            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-800 transition hover:border-sky-300 hover:text-sky-800"
-          >
-            이 거점으로 사진 올리기
-          </Link>
-        </aside>
 
         {/* 시설현황 */}
         <section className="mt-12" aria-labelledby="facility-profile">
@@ -292,8 +295,8 @@ export default async function CenterDetailPage({ params }: Props) {
           </section>
         )}
 
-        {/* 시설 사진 갤러리 */}
-        <CenterPhotoGallery centerId={center.id} />
+        {/* 주변 경관 및 주차 시설 갤러리 */}
+        <CenterSurroundingsGallery images={surroundingsPhotos} />
 
         {/* 방문·위치 */}
         <section
