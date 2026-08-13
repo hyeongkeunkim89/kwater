@@ -349,7 +349,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                             setLightboxPhotos(photos);
                                           }
                                         }}
-                                        className="group relative aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 shadow-sm"
+                                        className="group relative aspect-video w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 shadow-sm"
                                       >
                                         <img
                                           src={photo}
