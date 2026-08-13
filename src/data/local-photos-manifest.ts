@@ -17,6 +17,10 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "1층": "/hoengseong-1f.PNG",
     "2층": "/hoengseong-2f.PNG",
   },
+  buan: {
+    "1층": "/buan-1f.PNG",
+    "2층": "/buan-2f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -74,6 +78,10 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/hoengseong/2층/계획전시.PNG",
     ],
   },
+  buan: {
+    "1층": [],
+    "2층": [],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -95,4 +103,5 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
     "/images/surroundings/hoengseong/광장.PNG",
     "/images/surroundings/hoengseong/주차장.PNG",
   ],
+  buan: [],
 };

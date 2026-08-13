@@ -89,13 +89,14 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "생태·역사 좋아하는 성인·가족, 사진·야외 조망 동선" },
     ],
     floors: [
-      { floorLabel: "지하 1층", highlights: ["영상실", "다목적 공간(시설별)"] },
       {
         floorLabel: "1층",
-        highlights: ["로비", "제1전시(물·생명)", "기획 코너"],
+        highlights: ["로비", "제1전시실(물과 생명)", "기획전시실"],
       },
-      { floorLabel: "2층", highlights: ["제2전시(댐·지역)", "전망 창측 해설"] },
-      { floorLabel: "3층", highlights: ["제3전시(삶과 문화)", "정리·감상 공간"] },
+      {
+        floorLabel: "2층",
+        highlights: ["제2전시실(부안댐 스토리)", "전망대"],
+      },
     ],
   },
   soyang: {
