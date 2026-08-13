@@ -4,10 +4,10 @@ import Image from "next/image";
 export default function GatewayLandingPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col md:flex-row overflow-x-hidden selection:bg-sky-500 selection:text-white">
-      {/* ── 컬럼 1 (맨 좌측): 슬림한 폭(약 20%) + 좌측 상단 방울이 마스코트 + 중앙 K-water 로고 및 타이틀 ── */}
-      <div className="w-full md:w-[21%] lg:w-[20%] shrink-0 bg-white border-b md:border-b-0 md:border-r border-slate-200 text-slate-900 p-6 sm:p-7 flex flex-col justify-between items-center text-center relative z-20 shadow-2xl">
+      {/* ── 컬럼 1 (맨 좌측): 우측 4개 섹션과 조화를 이루는 슬레이트-워터 그라데이션 ── */}
+      <div className="w-full md:w-[21%] lg:w-[20%] shrink-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border-b md:border-b-0 md:border-r border-white/10 text-white p-6 sm:p-7 flex flex-col justify-between items-center text-center relative z-20 shadow-2xl">
         
-        {/* 1. 좌측 상단: 방울이 캐릭터 아이콘 (테두리 상자 제거) */}
+        {/* 1. 좌측 상단: 방울이 캐릭터 아이콘 */}
         <div className="w-full flex justify-start items-center">
           <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-start group">
             <Image
@@ -15,35 +15,35 @@ export default function GatewayLandingPage() {
               alt="K-water 방울이 마스코트"
               width={72}
               height={72}
-              className="object-contain drop-shadow-sm group-hover:scale-105 transition duration-300"
+              className="object-contain drop-shadow-md group-hover:scale-105 transition duration-300"
               priority
             />
           </div>
         </div>
 
-        {/* 2. 가운데: K-water 로고 & 물문화관 타이틀 (영문 문구 간격 확대) */}
+        {/* 2. 가운데: K-water 로고 & 물문화관 타이틀 */}
         <div className="my-6 flex flex-col items-center">
           <Image
             src="/kwater-logo.svg"
             alt="K-water 한국수자원공사"
             width={130}
             height={26}
-            className="h-5 sm:h-6 w-auto"
+            className="h-5 sm:h-6 w-auto brightness-0 invert opacity-95"
             priority
           />
-          <h1 className="mt-3.5 text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          <h1 className="mt-3.5 text-2xl sm:text-3xl font-black text-white tracking-tight">
             물문화관
           </h1>
-          <p className="mt-3.5 text-[10px] sm:text-[11px] font-bold text-slate-400 tracking-widest uppercase">
+          <p className="mt-3.5 text-[10px] sm:text-[11px] font-bold text-sky-400 tracking-widest uppercase">
             WATER CULTURE CENTER PORTAL
           </p>
         </div>
 
         {/* 3. 하단: 메인 홈페이지 바로가기 버튼 */}
-        <div className="w-full pt-4 border-t border-slate-150">
+        <div className="w-full pt-4 border-t border-white/10">
           <Link
             href="/main"
-            className="w-full min-h-11 px-4 inline-flex items-center justify-center rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-black transition duration-200 shadow-md shadow-sky-600/20 group"
+            className="w-full min-h-11 px-4 inline-flex items-center justify-center rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs sm:text-sm font-black transition duration-200 shadow-lg shadow-sky-500/20 group"
           >
             <span>메인 홈페이지 바로가기</span>
             <span className="ml-1.5 transform group-hover:translate-x-1 transition duration-200">→</span>
