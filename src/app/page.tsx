@@ -7,21 +7,21 @@ export default function GatewayLandingPage() {
       {/* ── 컬럼 1 (맨 좌측): 슬림한 폭(약 20%) + 좌측 상단 방울이 마스코트 + 중앙 K-water 로고 및 타이틀 ── */}
       <div className="w-full md:w-[21%] lg:w-[20%] shrink-0 bg-white border-b md:border-b-0 md:border-r border-slate-200 text-slate-900 p-6 sm:p-7 flex flex-col justify-between items-center text-center relative z-20 shadow-2xl">
         
-        {/* 1. 좌측 상단: 방울이 캐릭터 아이콘 (이름 텍스트 제거) */}
+        {/* 1. 좌측 상단: 방울이 캐릭터 아이콘 (테두리 상자 제거) */}
         <div className="w-full flex justify-start items-center">
-          <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 p-1.5 shadow-inner group">
+          <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-start group">
             <Image
               src="/bangwoori.png"
               alt="K-water 방울이 마스코트"
               width={72}
               height={72}
-              className="object-contain drop-shadow group-hover:scale-105 transition duration-300"
+              className="object-contain drop-shadow-sm group-hover:scale-105 transition duration-300"
               priority
             />
           </div>
         </div>
 
-        {/* 2. 가운데: K-water 로고 & 물문화관 타이틀 */}
+        {/* 2. 가운데: K-water 로고 & 물문화관 타이틀 (영문 문구 간격 확대) */}
         <div className="my-6 flex flex-col items-center">
           <Image
             src="/kwater-logo.svg"
@@ -34,13 +34,13 @@ export default function GatewayLandingPage() {
           <h1 className="mt-3.5 text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             물문화관
           </h1>
-          <p className="mt-1 text-[10px] sm:text-[11px] font-bold text-slate-400 tracking-widest uppercase">
+          <p className="mt-3.5 text-[10px] sm:text-[11px] font-bold text-slate-400 tracking-widest uppercase">
             WATER CULTURE CENTER PORTAL
           </p>
         </div>
 
-        {/* 3. 하단: 메인 홈페이지 바로가기 버튼 & 관람 안내 */}
-        <div className="w-full pt-4 border-t border-slate-150 space-y-3">
+        {/* 3. 하단: 메인 홈페이지 바로가기 버튼 */}
+        <div className="w-full pt-4 border-t border-slate-150">
           <Link
             href="/main"
             className="w-full min-h-11 px-4 inline-flex items-center justify-center rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-black transition duration-200 shadow-md shadow-sky-600/20 group"
@@ -48,10 +48,6 @@ export default function GatewayLandingPage() {
             <span>메인 홈페이지 바로가기</span>
             <span className="ml-1.5 transform group-hover:translate-x-1 transition duration-200">→</span>
           </Link>
-
-          <p className="text-[10px] text-slate-400 font-semibold">
-            09:00 ~ 18:00 (무료)
-          </p>
         </div>
       </div>
 
