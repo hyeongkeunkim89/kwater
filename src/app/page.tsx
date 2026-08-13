@@ -146,11 +146,11 @@ export default function GatewayLandingPage() {
           href="/main"
           className="group relative flex-1 min-h-[220px] md:min-h-screen overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
-          {/* 배경 대표 배경 이미지 (평화의댐 안보체험 전경) & 시네마틱 오버레이 */}
+          {/* 배경 대표 배경 이미지 (평화의댐 안보체험 전시장 전경) & 시네마틱 오버레이 */}
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
             style={{
-              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Peace_Dam_2022.jpg/960px-Peace_Dam_2022.jpg')`,
+              backgroundImage: `url('/peace-dam-trench.jpg')`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20 group-hover:from-slate-950/95 transition duration-300" />
