@@ -455,48 +455,28 @@ const CenterCard = memo(function CenterCard({
           ))}
         </ul>
 
-          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1.5 gap-y-1.5 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-600">
-            <span className="shrink-0 font-bold text-slate-800 leading-snug">
-              📍 오시는길
-            </span>
-            <div className="flex flex-wrap items-center gap-1.5">
-              <a
-                href={naverHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="네이버지도에서 오시는길 바로보기"
-                className="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-2 py-0.5 text-[11px] font-extrabold text-white transition hover:bg-emerald-700 shadow-sm"
-              >
-                네이버지도 ↗
-              </a>
-              <a
-                href={`https://map.kakao.com/link/search/${encodeURIComponent(c.mapSearchQuery || c.address)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="카카오맵에서 오시는길 바로보기"
-                className="inline-flex items-center gap-1 rounded-md bg-amber-400 px-2 py-0.5 text-[11px] font-extrabold text-slate-950 transition hover:bg-amber-300 shadow-sm"
-              >
-                카카오맵 ↗
-              </a>
-              <span className="inline-flex items-center rounded-md bg-slate-200 px-1.5 py-0.5 text-[10px] font-bold text-slate-700">
-                🅿️ 주차 무료
-              </span>
-            </div>
+        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1.5 gap-y-1.5 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-600">
+          <span className="shrink-0 font-bold text-slate-800 leading-snug">
+            {centerExplorerUi.location}
+          </span>
+          <a
+            href={naverHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="네이버지도에서 해당 위치 보기 (새 창)"
+            className="min-w-0 leading-snug font-bold text-sky-700 hover:text-sky-900 hover:underline hover:underline-offset-2 transition flex items-center gap-1 group/loc"
+          >
+            <span>{c.address}</span>
+            <span className="text-[10px] text-sky-500 group-hover/loc:translate-x-0.5 transition">🗺️ ↗</span>
+          </a>
 
-            <span className="shrink-0 font-bold text-slate-800 leading-snug">
-              {centerExplorerUi.location}
-            </span>
-            <span className="min-w-0 leading-snug text-slate-600">
-              {c.address}
-            </span>
-
-            <span className="shrink-0 font-bold text-slate-800 leading-snug">
-              {centerExplorerUi.weeklyClosed}
-            </span>
-            <span className="min-w-0 leading-snug font-semibold text-slate-700">
-              {formatWeeklyClosureSentence(c.weeklyClosedDays)} (09:00~18:00)
-            </span>
-          </div>
+          <span className="shrink-0 font-bold text-slate-800 leading-snug">
+            {centerExplorerUi.weeklyClosed}
+          </span>
+          <span className="min-w-0 leading-snug font-semibold text-slate-700">
+            {formatWeeklyClosureSentence(c.weeklyClosedDays)} (09:00~18:00)
+          </span>
+        </div>
         </div>
       </article>
     );
