@@ -18,6 +18,11 @@ import { createClient } from "@/utils/supabase/server";
 import { FloorGuideAccordion } from "@/components/FloorGuideAccordion";
 import { FacilityTabs } from "@/components/FacilityTabs";
 import type { CenterFloor, CenterFacility } from "@/types/database";
+import {
+  LOCAL_FLOOR_MAPS,
+  LOCAL_FLOOR_PHOTOS_MANIFEST,
+  LOCAL_SURROUNDINGS_MANIFEST,
+} from "@/data/local-photos-manifest";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -68,19 +73,21 @@ export default async function CenterDetailPage({ params }: Props) {
   }
 
   // 데이터가 없을 경우 정적 데이터를 기반으로 폴백
-  const floors: CenterFloor[] = dbFloors && dbFloors.length > 0
+  const rawFloors: CenterFloor[] = dbFloors && dbFloors.length > 0
     ? dbFloors
     : center.floors.map((f, i) => {
-        let fallbackMapUrl: string | null = null;
-        const fnPngUpper = `${id}-${i + 1}f.PNG`;
-        const fnPngLower = `${id}-${i + 1}f.png`;
-        const fnJpg = `${id}-${i + 1}f.jpg`;
-        if (fs.existsSync(path.join(process.cwd(), "public", fnPngUpper))) {
-          fallbackMapUrl = `/${fnPngUpper}`;
-        } else if (fs.existsSync(path.join(process.cwd(), "public", fnPngLower))) {
-          fallbackMapUrl = `/${fnPngLower}`;
-        } else if (fs.existsSync(path.join(process.cwd(), "public", fnJpg))) {
-          fallbackMapUrl = `/${fnJpg}`;
+        let fallbackMapUrl: string | null = LOCAL_FLOOR_MAPS[id]?.[f.floorLabel] || null;
+        if (!fallbackMapUrl) {
+          const fnPngUpper = `${id}-${i + 1}f.PNG`;
+          const fnPngLower = `${id}-${i + 1}f.png`;
+          const fnJpg = `${id}-${i + 1}f.jpg`;
+          if (fs.existsSync(path.join(process.cwd(), "public", fnPngUpper))) {
+            fallbackMapUrl = `/${fnPngUpper}`;
+          } else if (fs.existsSync(path.join(process.cwd(), "public", fnPngLower))) {
+            fallbackMapUrl = `/${fnPngLower}`;
+          } else if (fs.existsSync(path.join(process.cwd(), "public", fnJpg))) {
+            fallbackMapUrl = `/${fnJpg}`;
+          }
         }
 
         return {
@@ -97,38 +104,52 @@ export default async function CenterDetailPage({ params }: Props) {
         };
       });
 
-  // 로컬 이미지 스캔 후 각 층에 매핑
-  const floorsWithPhotos: CenterFloor[] = floors.map((f) => {
-    let internal_photos: string[] = [];
-    try {
-      const dirPath = path.join(process.cwd(), "public", "images", "floors", id, f.floor_key);
-      if (fs.existsSync(dirPath)) {
-        const files = fs.readdirSync(dirPath);
-        internal_photos = files
-          .filter((file) => /\.(png|jpe?g|webp|gif)$/i.test(file))
-          .map((file) => `/images/floors/${id}/${f.floor_key}/${file}`);
-      }
-    } catch (e) {
-      console.error("Failed to read local photos for floor:", e);
+  // DB에 층 정보가 일부 있더라도 floor_map_url이 누락되었으면 매니페스트에서 보완
+  const floors: CenterFloor[] = rawFloors.map((f) => {
+    if (!f.floor_map_url && LOCAL_FLOOR_MAPS[id]?.[f.floor_key]) {
+      return { ...f, floor_map_url: LOCAL_FLOOR_MAPS[id][f.floor_key] };
     }
+    return f;
+  });
+
+  // 정적 매니페스트 + 로컬 이미지 스캔 후 각 층에 매핑
+  const floorsWithPhotos: CenterFloor[] = floors.map((f) => {
+    let internal_photos: string[] = LOCAL_FLOOR_PHOTOS_MANIFEST[id]?.[f.floor_key] || [];
+    
+    if (internal_photos.length === 0) {
+      try {
+        const dirPath = path.join(process.cwd(), "public", "images", "floors", id, f.floor_key);
+        if (fs.existsSync(dirPath)) {
+          const files = fs.readdirSync(dirPath);
+          internal_photos = files
+            .filter((file) => /\.(png|jpe?g|webp|gif)$/i.test(file))
+            .map((file) => `/images/floors/${id}/${f.floor_key}/${file}`);
+        }
+      } catch (e) {
+        console.error("Failed to read local photos for floor:", e);
+      }
+    }
+
     return {
       ...f,
       internal_photos,
     };
   });
 
-  // 주변 경관 및 주차 시설 로컬 이미지 스캔
-  let surroundingsPhotos: string[] = [];
-  try {
-    const surroundingsDir = path.join(process.cwd(), "public", "images", "surroundings", id);
-    if (fs.existsSync(surroundingsDir)) {
-      const files = fs.readdirSync(surroundingsDir);
-      surroundingsPhotos = files
-        .filter((file) => /\.(png|jpe?g|webp|gif)$/i.test(file))
-        .map((file) => `/images/surroundings/${id}/${file}`);
+  // 주변 경관 및 주차 시설 로컬 이미지 스캔 (매니페스트 우선 + fs 보완)
+  let surroundingsPhotos: string[] = LOCAL_SURROUNDINGS_MANIFEST[id] || [];
+  if (surroundingsPhotos.length === 0) {
+    try {
+      const surroundingsDir = path.join(process.cwd(), "public", "images", "surroundings", id);
+      if (fs.existsSync(surroundingsDir)) {
+        const files = fs.readdirSync(surroundingsDir);
+        surroundingsPhotos = files
+          .filter((file) => /\.(png|jpe?g|webp|gif)$/i.test(file))
+          .map((file) => `/images/surroundings/${id}/${file}`);
+      }
+    } catch (e) {
+      console.error("Failed to read surroundings photos:", e);
     }
-  } catch (e) {
-    console.error("Failed to read surroundings photos:", e);
   }
 
   return (
