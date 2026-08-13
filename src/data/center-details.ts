@@ -312,16 +312,12 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
     floors: [
       {
-        floorLabel: "주제관",
-        highlights: [
-          "물의 소중함·물 순환 전시",
-          "댐의 역할 해설",
-          "영상 상영(약 15분)",
-        ],
+        floorLabel: "1층",
+        highlights: ["주제관", "물 순환 전시", "영상상영관"],
       },
       {
-        floorLabel: "체험관",
-        highlights: ["물의 물리적 성질 체험", "어린이·가족 참여형 코너"],
+        floorLabel: "2층",
+        highlights: ["체험관", "어린이 참여형 코너", "화성의 옛터 전시관"],
       },
       {
         floorLabel: "옥외·연계",

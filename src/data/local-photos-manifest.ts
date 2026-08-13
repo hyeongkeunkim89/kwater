@@ -13,6 +13,10 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "전시실": "/peace-dam-exhibit.jpg",
     "기타공간": "/peace-dam-others.jpg",
   },
+  hoengseong: {
+    "1층": "/hoengseong-1f.PNG",
+    "2층": "/hoengseong-2f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -58,6 +62,10 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/peace-dam/기타공간/휴게공간.PNG",
     ],
   },
+  hoengseong: {
+    "1층": [],
+    "2층": [],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -74,4 +82,5 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
     "/images/surroundings/peace-dam/스카이워크.PNG",
     "/images/surroundings/peace-dam/주차장.PNG",
   ],
+  hoengseong: [],
 };
