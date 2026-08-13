@@ -61,12 +61,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithSocial = (provider: "kakao" | "naver") => {
+    if (provider === "kakao") {
+      // 실제 카카오 OAuth 2.0 인증 동선으로 연결
+      window.location.href = "/api/auth/kakao?next=/mypage";
+      return;
+    }
+
     const mockUser: UserProfile = {
       id: `user_${Date.now()}`,
-      name: provider === "kakao" ? "카카오 사용자" : "네이버 사용자",
-      email: `${provider}_user@kwater.or.kr`,
+      name: "네이버 사용자",
+      email: "naver_user@kwater.or.kr",
       phone: "010-1234-5678",
-      provider,
+      provider: "naver",
       role: "user",
       favoriteCenter: "daecheong",
     };
