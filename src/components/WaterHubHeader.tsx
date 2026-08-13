@@ -93,19 +93,39 @@ export function WaterHubHeader({
         <div className="hidden lg:flex items-center gap-x-3">
           {user ? (
             <div className="flex items-center gap-x-2.5">
-              <Link
-                href="/mypage"
-                className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1.5 text-xs font-black text-sky-800 border border-sky-200 transition hover:bg-sky-100"
-              >
-                <span>👤</span>
-                <span>{user.name} 님</span>
-              </Link>
-              <Link
-                href="/mypage"
-                className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs font-black text-white hover:bg-slate-800 transition"
-              >
-                마이페이지
-              </Link>
+              {user.role === "admin" ? (
+                <>
+                  <Link
+                    href="/yunyeong"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-black text-amber-900 border border-amber-300 transition hover:bg-amber-100"
+                  >
+                    <span>🏛️</span>
+                    <span>{user.name}</span>
+                  </Link>
+                  <Link
+                    href="/yunyeong"
+                    className="rounded-full bg-amber-600 px-3.5 py-1.5 text-xs font-black text-white hover:bg-amber-500 transition shadow-sm shadow-amber-600/20"
+                  >
+                    관리자 콘솔
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/mypage"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1.5 text-xs font-black text-sky-800 border border-sky-200 transition hover:bg-sky-100"
+                  >
+                    <span>👤</span>
+                    <span>{user.name} 님</span>
+                  </Link>
+                  <Link
+                    href="/mypage"
+                    className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs font-black text-white hover:bg-slate-800 transition"
+                  >
+                    마이페이지
+                  </Link>
+                </>
+              )}
               <button
                 onClick={logout}
                 className="text-xs font-semibold text-slate-500 hover:text-slate-900 transition px-1"
@@ -133,12 +153,12 @@ export function WaterHubHeader({
           <div className="h-4 w-px bg-slate-200 mx-1" aria-hidden />
 
           {showStaffConsoleLink && (
-            <Link
-              href={STAFF_CONSOLE_HREF}
+            <button
+              onClick={() => openAuthModal("staff")}
               className="inline-flex min-h-10 items-center whitespace-nowrap text-xs font-semibold text-slate-400 transition hover:text-slate-700"
             >
-              관리자
-            </Link>
+              담당자 로그인
+            </button>
           )}
         </div>
 

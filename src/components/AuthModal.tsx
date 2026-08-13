@@ -5,13 +5,17 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 export function AuthModal() {
-  const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail } = useAuth();
-  const [tab, setTab] = useState<"login" | "signup" | "guest">(authTab);
+  const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail, loginAsStaff } = useAuth();
+  const [tab, setTab] = useState<"login" | "staff" | "signup" | "guest">(authTab === "guest" ? "guest" : "login");
   const router = useRouter();
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPass, setLoginPass] = useState("");
+
+  // Staff login state
+  const [staffPass, setStaffPass] = useState("");
+  const [staffCenter, setStaffCenter] = useState("all");
 
   // Signup form state
   const [signUpName, setSignUpName] = useState("");
@@ -40,6 +44,20 @@ export function AuthModal() {
     router.push("/mypage");
   };
 
+  const handleStaffLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!staffPass) {
+      alert("담당자 관리 암호를 입력해주세요.");
+      return;
+    }
+    const success = await loginAsStaff(staffPass, staffCenter);
+    if (success) {
+      router.push("/yunyeong");
+    } else {
+      alert("담당자 관리 암호가 올바르지 않습니다.");
+    }
+  };
+
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!signUpName || !signUpEmail || !signUpPass) {
@@ -61,7 +79,7 @@ export function AuthModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/20 bg-white p-6 shadow-2xl sm:p-8">
         {/* 닫기 버튼 */}
         <button
@@ -72,68 +90,81 @@ export function AuthModal() {
           ✕
         </button>
 
-        {/* 상단 탭 헤더 */}
-        <div className="flex border-b border-slate-200 pb-3 mb-6">
+        {/* 상단 탭 구분 (관람객 vs 문화관 담당자) */}
+        <div className="grid grid-cols-4 border-b border-slate-200 pb-3 mb-6 gap-1 text-center">
           <button
             onClick={() => setTab("login")}
-            className={`flex-1 py-2 text-center text-sm font-black transition border-b-2 ${
+            className={`py-2 text-xs font-black transition border-b-2 ${
               tab === "login"
-                ? "border-sky-500 text-sky-600"
+                ? "border-sky-600 text-sky-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
             }`}
           >
-            로그인
+            👥 관람객
+          </button>
+          <button
+            onClick={() => setTab("staff")}
+            className={`py-2 text-xs font-black transition border-b-2 ${
+              tab === "staff"
+                ? "border-amber-500 text-amber-600 font-extrabold"
+                : "border-transparent text-slate-400 hover:text-slate-700"
+            }`}
+          >
+            🏛️ 담당자
           </button>
           <button
             onClick={() => setTab("signup")}
-            className={`flex-1 py-2 text-center text-sm font-black transition border-b-2 ${
+            className={`py-2 text-xs font-black transition border-b-2 ${
               tab === "signup"
-                ? "border-sky-500 text-sky-600"
+                ? "border-sky-600 text-sky-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
             }`}
           >
-            회원가입
+            📝 회원가입
           </button>
           <button
             onClick={() => setTab("guest")}
-            className={`flex-1 py-2 text-center text-sm font-black transition border-b-2 ${
+            className={`py-2 text-xs font-black transition border-b-2 ${
               tab === "guest"
-                ? "border-sky-500 text-sky-600"
+                ? "border-emerald-600 text-emerald-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
             }`}
           >
-            비회원 조회
+            🎟️ 비회원
           </button>
         </div>
 
-        {/* 1. 로그인 탭 */}
+        {/* 1. 관람객 로그인 탭 */}
         {tab === "login" && (
           <div className="space-y-5">
             <div className="text-center">
-              <h2 className="text-xl font-black text-slate-900">K-water 물문화관 로그인</h2>
+              <span className="inline-block rounded-full bg-sky-100 px-3 py-0.5 text-[11px] font-black text-sky-800 mb-1">
+                일반 관람객 전용
+              </span>
+              <h2 className="text-xl font-black text-slate-900">관람객 로그인</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
-                소셜 계정 또는 이메일로 빠르게 로그인하세요.
+                카카오, 네이버, 이메일로 1초 만에 로그인하세요.
               </p>
             </div>
 
             {/* 소셜 로그인 버튼 그룹 */}
-            <div className="space-y-2 pt-2">
+            <div className="space-y-2 pt-1">
               <button
                 onClick={() => handleSocialClick("kakao")}
                 className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-black text-[#191919] transition hover:bg-[#FDD800] shadow-sm"
               >
-                <span>💬 카카오 1초 간편 로그인</span>
+                <span>💬 카카오 1초 로그인</span>
               </button>
 
               <button
                 onClick={() => handleSocialClick("naver")}
                 className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-black text-white transition hover:bg-[#02B351] shadow-sm"
               >
-                <span>N 네이버 1초 간편 로그인</span>
+                <span>N 네이버 1초 로그인</span>
               </button>
             </div>
 
-            <div className="relative flex items-center justify-center my-4">
+            <div className="relative flex items-center justify-center my-3">
               <div className="w-full border-t border-slate-200" />
               <span className="absolute bg-white px-3 text-xs text-slate-400 font-bold">또는 이메일 로그인</span>
             </div>
@@ -146,7 +177,7 @@ export function AuthModal() {
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   placeholder="example@kwater.or.kr"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
+                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
                 />
               </div>
 
@@ -157,7 +188,7 @@ export function AuthModal() {
                   value={loginPass}
                   onChange={(e) => setLoginPass(e.target.value)}
                   placeholder="비밀번호 입력"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
+                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
                 />
               </div>
 
@@ -165,23 +196,73 @@ export function AuthModal() {
                 type="submit"
                 className="w-full rounded-xl bg-slate-900 py-3 text-sm font-black text-white hover:bg-slate-800 transition shadow-md"
               >
-                이메일 로그인
+                관람객 로그인
               </button>
             </form>
           </div>
         )}
 
-        {/* 2. 회원가입 탭 */}
-        {tab === "signup" && (
+        {/* 2. 문화관 담당자 / 해설사 로그인 탭 */}
+        {tab === "staff" && (
           <div className="space-y-4">
             <div className="text-center">
-              <h2 className="text-xl font-black text-slate-900">신규 회원가입</h2>
+              <span className="inline-block rounded-full bg-amber-100 px-3 py-0.5 text-[11px] font-black text-amber-800 mb-1">
+                K-water 문화관 직원/해설사 전용
+              </span>
+              <h2 className="text-xl font-black text-slate-900">문화관 담당자 로그인</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
-                회원가입 후 간편하게 투어 예약과 소통 게시판을 이용해보세요.
+                투어 예약 승인 및 게시판 관리를 위해 관리 암호를 입력하세요.
               </p>
             </div>
 
-            <form onSubmit={handleSignUpSubmit} className="space-y-3 pt-2">
+            <form onSubmit={handleStaffLoginSubmit} className="space-y-3 pt-2">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">소속 문화관 선택</label>
+                <select
+                  value={staffCenter}
+                  onChange={(e) => setStaffCenter(e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-amber-500"
+                >
+                  <option value="all">전국 통합 관리자</option>
+                  <option value="soyanggang">소양강댐 물문화관</option>
+                  <option value="chungju">충주댐 물문화관</option>
+                  <option value="daecheong">대청댐 물문화관</option>
+                  <option value="andong">안동댐 물문화관</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">담당자 비밀번호</label>
+                <input
+                  type="password"
+                  value={staffPass}
+                  onChange={(e) => setStaffPass(e.target.value)}
+                  placeholder="관리 암호 입력"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-xl bg-amber-600 py-3 text-sm font-black text-white hover:bg-amber-500 transition shadow-md shadow-amber-600/20"
+              >
+                🏛️ 담당자 전용 콘솔 접속
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* 3. 회원가입 탭 */}
+        {tab === "signup" && (
+          <div className="space-y-4">
+            <div className="text-center">
+              <h2 className="text-xl font-black text-slate-900">신규 관람객 회원가입</h2>
+              <p className="mt-1 text-xs text-slate-500 font-semibold">
+                가입 후 투어 예약과 마이페이지를 이용해보세요.
+              </p>
+            </div>
+
+            <form onSubmit={handleSignUpSubmit} className="space-y-3 pt-1">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">이름</label>
                 <input
@@ -230,13 +311,13 @@ export function AuthModal() {
                 type="submit"
                 className="w-full rounded-xl bg-sky-600 py-3 text-sm font-black text-white hover:bg-sky-500 transition shadow-md shadow-sky-600/20"
               >
-                회원가입 완료
+                관람객 회원가입 완료
               </button>
             </form>
           </div>
         )}
 
-        {/* 3. 비회원 예약조회 탭 */}
+        {/* 4. 비회원 예약조회 탭 */}
         {tab === "guest" && (
           <div className="space-y-4">
             <div className="text-center">
