@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
+import { KakaoLoginButton } from "@/components/KakaoLoginButton";
 
 export function LoginForm() {
   const searchParams = useSearchParams();
@@ -69,8 +70,19 @@ export function LoginForm() {
             disabled={loading || !password.trim()}
             className="min-h-[48px] w-full rounded-xl bg-sky-600 py-3 text-sm font-bold text-white hover:bg-sky-500 disabled:opacity-40"
           >
-            {loading ? "확인 중…" : "들어가기"}
+            {loading ? "확인 중…" : "비밀번호로 로그인"}
           </button>
+
+          {/* 구분선 */}
+          <div className="relative my-6 flex items-center justify-center">
+            <div className="w-full border-t border-white/10" />
+            <span className="absolute bg-[#111827] px-3 text-xs text-white/40 font-bold uppercase">
+              또는
+            </span>
+          </div>
+
+          {/* 카카오톡 아이디 연동 로그인 버튼 */}
+          <KakaoLoginButton redirectPath={nextPath} buttonText="카카오톡으로 로그인" />
         </form>
 
         <p className="mt-8 text-center text-xs text-white/35">
