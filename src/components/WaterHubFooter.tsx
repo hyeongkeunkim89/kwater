@@ -4,9 +4,6 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
   const familySites = [
     { name: "K-water 공식 홈페이지", url: "https://www.kwater.or.kr" },
     { name: "MyWater 물정보포털", url: "https://www.water.or.kr" },
-    { name: "환경부 홈페이지", url: "https://www.me.go.kr" },
-    { name: "국립생태원", url: "https://www.nie.re.kr" },
-    { name: "국립중앙과학관", url: "https://www.science.go.kr" },
   ];
 
   if (compact) {
