@@ -55,7 +55,7 @@ export function WaterHubHeader({
       >
         {/* 로고 영역 */}
         <Link
-          href="/"
+          href="/main"
           className="group flex min-w-0 max-w-full shrink-0 items-center gap-2 sm:gap-3"
         >
           <Image
