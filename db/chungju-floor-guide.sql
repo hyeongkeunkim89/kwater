@@ -1,4 +1,4 @@
--- 충주다목적댐 층별 주요시설 SQL 데이터 (1층 / 2층 2개 층 구성)
+-- 충주다목적댐 층별 주요시설 SQL 데이터 (1층 / 2층 업로드 이미지 매핑 반영)
 -- Supabase SQL Editor에서 실행하시면 충주댐 데이터가 즉시 주입됩니다.
 
 -- 1. 기존 충주댐 데이터 삭제 (중복 생성 방지)
@@ -9,10 +9,10 @@ INSERT INTO center_floors (center_id, floor_key, floor_name, floor_map_url, desc
 VALUES (
   'chungju', 
   '1층', 
-  '1층 (상설전시 & 입체영상관)', 
-  '/chungju-1f.jpg', -- 💡 1층 도면 이미지를 public/chungju-1f.jpg 에 넣을 경우 연동
-  '충주댐의 수계 관리 및 역사를 소개하는 상설전시실과 입체영상관이 위치한 1층 공간입니다.', 
-  '[{"name": "상설전시실", "link": null}, {"name": "입체영상관", "link": null}, {"name": "안내데스크", "link": null}]'::jsonb, 
+  '1층 (다목적전시실 & 휴게공간)', 
+  '/chungju-1f.PNG', 
+  '충주댐의 역사를 만나는 다목적전시실과 편안한 휴게공간이 마련되어 있는 1층입니다.', 
+  '[{"name": "다목적전시실", "link": null}, {"name": "휴게공간", "link": null}]'::jsonb, 
   '[{"label": "화장실", "icon": "toilet"}, {"label": "엘리베이터", "icon": "elevator"}, {"label": "수유실", "icon": "baby"}]'::jsonb, 
   1
 );
@@ -22,10 +22,10 @@ INSERT INTO center_floors (center_id, floor_key, floor_name, floor_map_url, desc
 VALUES (
   'chungju', 
   '2층', 
-  '2층 (체험존 & 전망 라운지)', 
-  '/chungju-2f.jpg', -- 💡 2층 도면 이미지를 public/chungju-2f.jpg 에 넣을 경우 연동
-  '체험형 전시존과 충주호의 수려한 경관을 한눈에 감상할 수 있는 전망대가 마련된 2층 공간입니다.', 
-  '[{"name": "체험전시존", "link": null}, {"name": "전망 라운지", "link": null}, {"name": "휴게공간", "link": null}]'::jsonb, 
+  '2층 (물전시관 & 기획전시 & 편의시설)', 
+  '/chungju-2f.PNG', 
+  '물전시관, 로비 기획전시, 동요동시 체험공간 및 매점과 안내데스크가 조성된 2층 공간입니다.', 
+  '[{"name": "물전시관", "link": null}, {"name": "로비 기획전시", "link": null}, {"name": "로비 동요동시 체험", "link": null}, {"name": "안내데스크", "link": null}, {"name": "매점", "link": null}]'::jsonb, 
   '[{"label": "화장실", "icon": "toilet"}, {"label": "엘리베이터", "icon": "elevator"}]'::jsonb, 
   2
 );
