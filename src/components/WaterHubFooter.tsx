@@ -4,6 +4,8 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
   const familySites = [
     { name: "K-water 공식 홈페이지", url: "https://www.kwater.or.kr" },
     { name: "MyWater 물정보포털", url: "https://www.water.or.kr" },
+    { name: "우리강이용도우미", url: "https://www.riverguide.go.kr/kor/index.do" },
+    { name: "시화조력발전소", url: "https://www.kwater.or.kr/website/tlight.do" },
   ];
 
   if (compact) {
@@ -106,7 +108,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
           {/* 패밀리 사이트 */}
           <div className="md:col-span-2 lg:col-span-2">
             <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              관련 사이트 링크 (패밀리 사이트)
+              패밀리사이트
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
               {familySites.map((site) => (
