@@ -58,5 +58,13 @@ export async function POST(req: NextRequest) {
 export async function DELETE() {
   const res = NextResponse.json({ ok: true });
   res.headers.append("Set-Cookie", buildStaffGateClearCookieHeader());
+  res.headers.append(
+    "Set-Cookie",
+    "staff_console_auth=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax"
+  );
+  res.headers.append(
+    "Set-Cookie",
+    "kakao_user_session=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax"
+  );
   return res;
 }
