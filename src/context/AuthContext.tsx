@@ -36,14 +36,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authTab, setAuthTab] = useState<"login" | "signup" | "guest">("login");
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        setUser(JSON.parse(saved));
+    async function loadSession() {
+      try {
+        // 1. 서버 쿠키 세션 확인 (/api/auth/me)
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.user) {
+            setUser(data.user);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data.user));
+            return;
+          }
+        }
+      } catch (e) {
+        console.error("Failed to fetch auth session", e);
       }
-    } catch (e) {
-      console.error("Failed to load user session", e);
+
+      // 2. localStorage 세션 확인
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          setUser(JSON.parse(saved));
+        }
+      } catch (e) {
+        console.error("Failed to load user session", e);
+      }
     }
+
+    void loadSession();
   }, []);
 
   const openAuthModal = (tab: "login" | "signup" | "guest" = "login") => {
@@ -116,6 +136,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem(STORAGE_KEY);
+    void fetch("/api/staff-console/session", { method: "DELETE" });
   };
 
   return (
