@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 
   if (error || !code) {
     console.error("Kakao OAuth login error or canceled by user:", error);
-    return NextResponse.redirect(`${origin}/yunyeong/login?error=kakao_canceled`);
+    return NextResponse.redirect(`${origin}/mypage?notice=kakao_canceled`);
   }
 
   const kakaoClientId =
@@ -100,25 +100,12 @@ export async function GET(request: Request) {
       path: "/",
     });
 
-    // 관리자 페이지(/yunyeong) 로그인 동선일 때만 관리자용 세션 플래그 쿠키를 발행
-    if (nextPath.startsWith("/yunyeong")) {
-      cookieStore.set({
-        name: "staff_console_auth",
-        value: "true",
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 7,
-        path: "/",
-      });
-    }
-
     // 5. 로그인 완료 후 대상 페이지로 리다이렉트 (login=success 전달하여 안내 메시지 노출)
     const targetUrl = new URL(`${origin}${nextPath}`);
     targetUrl.searchParams.set("login", "success");
     return NextResponse.redirect(targetUrl.toString());
   } catch (err) {
     console.error("Kakao Callback Exception:", err);
-    return NextResponse.redirect(`${origin}/yunyeong/login?error=kakao_exception`);
+    return NextResponse.redirect(`${origin}/mypage?notice=kakao_exception`);
   }
 }

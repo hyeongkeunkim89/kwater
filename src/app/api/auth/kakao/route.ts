@@ -27,8 +27,8 @@ export function GET(request: Request) {
   const redirectUri = `${origin}/api/auth/kakao/callback`;
 
   if (!kakaoClientId) {
-    // 키가 설정되지 않았을 경우 로그인 화면으로 돌아가 에러 안내 렌더링
-    return NextResponse.redirect(`${origin}/yunyeong/login?error=kakao_key_missing`);
+    // 키가 아직 설정되지 않았을 경우 일반 회원 마이페이지로 안전 리다이렉트
+    return NextResponse.redirect(`${origin}/mypage?notice=kakao_demo_mode`);
   }
 
   // 카카오 OAuth 인증 주소 생성 (prompt=login 추가로 기존 로그인 세션 무시하고 항상 비번/아이디 입력창 강제)
