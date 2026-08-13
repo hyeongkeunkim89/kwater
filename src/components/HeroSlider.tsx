@@ -140,31 +140,31 @@ export function HeroSlider() {
       {/* ── 텍스트 콘텐츠 ── */}
       <div className="relative z-10 flex h-full min-h-0 items-end px-5 pb-12 pt-4 sm:px-12 sm:pb-16 lg:px-20 lg:pb-16">
 
-        {/* 왼쪽: 슬라이드 정보 (water.or.kr 스타일 고대비 선명한 흰색 텍스트 & 다크 글래스 카드) */}
-        <div key={current} className="hero-caption-animate max-w-lg bg-slate-900/60 backdrop-blur-md rounded-2xl sm:rounded-[24px] p-6 sm:p-7 border border-white/20 shadow-2xl">
-          <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-sky-300 bg-sky-500/25 px-3 py-1 rounded-full border border-sky-400/30 tracking-wide">
+        {/* 왼쪽: 슬라이드 정보 (네모 테두리 없이 깔끔하게 조화된 시네마틱 타이포그래피) */}
+        <div key={current} className="hero-caption-animate max-w-lg space-y-2 sm:space-y-3">
+          <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-sky-300 bg-sky-500/25 px-3 py-1 rounded-full border border-sky-400/30 tracking-wide backdrop-blur-sm">
             📍 {SLIDES[current].location}
           </span>
-          <h2 className="mt-3 text-xl sm:text-3xl font-black leading-tight tracking-tight text-white drop-shadow-md">
+          <h2 className="text-2xl sm:text-4xl font-black leading-tight tracking-tight text-white drop-shadow-lg">
             {SLIDES[current].centerName}
           </h2>
-          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-200 font-semibold break-keep">
+          <p className="text-xs sm:text-base leading-relaxed text-slate-100 font-semibold drop-shadow-md break-keep">
             {SLIDES[current].caption}
           </p>
         </div>
 
-        {/* 오른쪽: 물문화관 개요 (water.or.kr 스타일 다크 다이내믹 패널) */}
-        <div className="absolute bottom-14 right-6 hidden max-w-[260px] flex-col justify-end bg-slate-900/65 backdrop-blur-md rounded-[28px] p-6 border border-white/20 shadow-2xl sm:flex md:max-w-xs md:right-12 lg:right-16 text-white">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-400">
+        {/* 오른쪽: 물문화관 개요 (네모 테두리 제거된 시네마틱 텍스트) */}
+        <div className="absolute bottom-14 right-6 hidden max-w-[280px] flex-col justify-end p-2 sm:flex md:max-w-sm md:right-12 lg:right-16 text-white">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-400 drop-shadow">
             K-water Water Culture Center
           </p>
-          <h3 className="mt-2 text-xl font-black leading-snug tracking-tight text-white sm:mt-3 sm:text-2xl">
+          <h3 className="mt-2 text-xl font-black leading-snug tracking-tight text-white sm:mt-3 sm:text-2xl drop-shadow-md">
             물은 흐르고,<br />
-            <span className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-sky-400 via-cyan-300 to-sky-200 bg-clip-text text-transparent">
               기억은 남는다
             </span>
           </h3>
-          <div className="mt-3 space-y-2 text-[11px] leading-relaxed text-slate-300 sm:mt-4 font-medium">
+          <div className="mt-3 space-y-2 text-[11px] sm:text-xs leading-relaxed text-slate-200 sm:mt-4 font-medium drop-shadow-sm">
             <p>
               댐은 단순한 구조물이 아닙니다. 강의 흐름을 바꾸고, 마을을 품으며,
               수백만의 삶을 지탱해 온 거대한 역사입니다.
