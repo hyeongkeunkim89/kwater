@@ -54,7 +54,9 @@ export async function GET(request: Request) {
     const tokenData = await tokenRes.json();
     if (!tokenRes.ok || !tokenData.access_token) {
       console.error("Kakao Token Error:", tokenData);
-      return NextResponse.redirect(`${origin}/yunyeong/login?error=kakao_token_failed`);
+      const errMsg = encodeURIComponent(tokenData.error_description || tokenData.error || "token_failed");
+      const errTarget = nextPath.startsWith("/yunyeong") ? "/yunyeong/login" : nextPath;
+      return NextResponse.redirect(`${origin}${errTarget}?error=kakao_token_failed&msg=${errMsg}`);
     }
 
     // 2. 카카오 사용자 프로필 정보 조회
@@ -68,7 +70,9 @@ export async function GET(request: Request) {
     const userData = await userRes.json();
     if (!userRes.ok) {
       console.error("Kakao User Info Error:", userData);
-      return NextResponse.redirect(`${origin}/yunyeong/login?error=kakao_user_failed`);
+      const errMsg = encodeURIComponent(userData.msg || userData.code || "user_failed");
+      const errTarget = nextPath.startsWith("/yunyeong") ? "/yunyeong/login" : nextPath;
+      return NextResponse.redirect(`${origin}${errTarget}?error=kakao_user_failed&msg=${errMsg}`);
     }
 
     // 3. 사용자 정보 추출 (닉네임, 프로필 사진, 이메일 등)
