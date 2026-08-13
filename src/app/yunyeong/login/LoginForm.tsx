@@ -14,8 +14,22 @@ export function LoginForm() {
       ? nextRaw
       : STAFF_CONSOLE_HREF;
 
+  const errorParam = searchParams.get("error");
+  const getInitialError = () => {
+    if (errorParam === "kakao_key_missing") {
+      return "카카오 REST API 키가 .env.local에 설정되지 않았습니다. Kakao Developers에서 키를 등록해 주세요.";
+    }
+    if (errorParam === "kakao_canceled") {
+      return "카카오 로그인 인증이 취소되었습니다.";
+    }
+    if (errorParam === "kakao_token_failed" || errorParam === "kakao_user_failed") {
+      return "카카오 사용자 인증에 실패했습니다. 다시 시도해 주세요.";
+    }
+    return null;
+  };
+
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(getInitialError());
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
