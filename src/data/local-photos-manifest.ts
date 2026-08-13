@@ -63,8 +63,16 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
     ],
   },
   hoengseong: {
-    "1층": [],
-    "2층": [],
+    "1층": [
+      "/images/floors/hoengseong/1층/주제관.PNG",
+      "/images/floors/hoengseong/1층/체험관.PNG",
+      "/images/floors/hoengseong/1층/안내데스크.PNG",
+      "/images/floors/hoengseong/1층/휴게실.PNG",
+    ],
+    "2층": [
+      "/images/floors/hoengseong/2층/영상실.PNG",
+      "/images/floors/hoengseong/2층/계획전시.PNG",
+    ],
   },
 };
 
@@ -82,5 +90,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
     "/images/surroundings/peace-dam/스카이워크.PNG",
     "/images/surroundings/peace-dam/주차장.PNG",
   ],
-  hoengseong: [],
+  hoengseong: [
+    "/images/surroundings/hoengseong/공원.PNG",
+    "/images/surroundings/hoengseong/광장.PNG",
+    "/images/surroundings/hoengseong/주차장.PNG",
+  ],
 };

@@ -1,4 +1,4 @@
--- 횡성다목적댐 층별 주요시설 SQL 데이터 (1층 / 2층 2개 층 구성)
+-- 횡성다목적댐 층별 주요시설 SQL 데이터 (1층 / 2층 업로드 이미지 매핑 반영)
 -- Supabase SQL Editor에서 실행하시면 횡성댐 데이터가 즉시 주입됩니다.
 
 -- 1. 기존 횡성댐 데이터 삭제 (중복 생성 방지)
@@ -9,10 +9,10 @@ INSERT INTO center_floors (center_id, floor_key, floor_name, floor_map_url, desc
 VALUES (
   'hoengseong', 
   '1층', 
-  '1층 (주제관 & 영상상영관)', 
+  '1층 (주제관 & 체험관 & 편의시설)', 
   '/hoengseong-1f.PNG', 
-  '물의 소중함과 순환 과정, 댐의 역할을 주제관과 영상상영관을 통해 소개하는 1층 공간입니다.', 
-  '[{"name": "주제관", "link": null}, {"name": "물 순환 전시실", "link": null}, {"name": "영상상영관", "link": null}]'::jsonb, 
+  '물의 소중함과 순환 과정을 다룬 주제관, 어린이 체험관, 안내데스크 및 휴게실이 위치한 1층입니다.', 
+  '[{"name": "주제관", "link": null}, {"name": "체험관", "link": null}, {"name": "안내데스크", "link": null}, {"name": "휴게실", "link": null}]'::jsonb, 
   '[{"label": "화장실", "icon": "toilet"}, {"label": "엘리베이터", "icon": "elevator"}, {"label": "수유실", "icon": "baby"}]'::jsonb, 
   1
 );
@@ -22,10 +22,10 @@ INSERT INTO center_floors (center_id, floor_key, floor_name, floor_map_url, desc
 VALUES (
   'hoengseong', 
   '2층', 
-  '2층 (체험관 & 화성의 옛터)', 
+  '2층 (영상실 & 계획전시)', 
   '/hoengseong-2f.PNG', 
-  '어린이와 가족을 위한 체험관과 횡성댐 수몰 지역의 역사를 간직한 화성의 옛터 전시관이 위치한 2층 공간입니다.', 
-  '[{"name": "체험관", "link": null}, {"name": "화성의 옛터 전시관", "link": null}, {"name": "휴게공간", "link": null}]'::jsonb, 
+  '홍보 영상물 상영이 이루어지는 영상실과 다양한 기획전시가 펼쳐지는 2층 공간입니다.', 
+  '[{"name": "영상실", "link": null}, {"name": "계획전시", "link": null}]'::jsonb, 
   '[{"label": "화장실", "icon": "toilet"}, {"label": "엘리베이터", "icon": "elevator"}]'::jsonb, 
   2
 );
