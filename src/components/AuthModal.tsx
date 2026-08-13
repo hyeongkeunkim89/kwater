@@ -25,6 +25,11 @@ export function AuthModal() {
 
   if (!isAuthOpen) return null;
 
+  const handleSocialClick = (provider: "kakao" | "naver") => {
+    loginWithSocial(provider);
+    router.push("/mypage");
+  };
+
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginEmail || !loginPass) {
@@ -32,6 +37,7 @@ export function AuthModal() {
       return;
     }
     await loginWithEmail(loginEmail, loginPass);
+    router.push("/mypage");
   };
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
@@ -41,6 +47,7 @@ export function AuthModal() {
       return;
     }
     await signupWithEmail(signUpName, signUpEmail, signUpPass, signUpPhone);
+    router.push("/mypage");
   };
 
   const handleGuestLookup = (e: React.FormEvent) => {
@@ -112,14 +119,14 @@ export function AuthModal() {
             {/* 소셜 로그인 버튼 그룹 */}
             <div className="space-y-2 pt-2">
               <button
-                onClick={() => loginWithSocial("kakao")}
+                onClick={() => handleSocialClick("kakao")}
                 className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-black text-[#191919] transition hover:bg-[#FDD800] shadow-sm"
               >
                 <span>💬 카카오 1초 간편 로그인</span>
               </button>
 
               <button
-                onClick={() => loginWithSocial("naver")}
+                onClick={() => handleSocialClick("naver")}
                 className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-black text-white transition hover:bg-[#02B351] shadow-sm"
               >
                 <span>N 네이버 1초 간편 로그인</span>
