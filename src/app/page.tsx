@@ -4,56 +4,53 @@ import Image from "next/image";
 export default function GatewayLandingPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col md:flex-row overflow-x-hidden selection:bg-sky-500 selection:text-white">
-      {/* ── 컬럼 1 (맨 좌측): 화이트 배경 + 상단 방울이 마스코트 + 중앙 로고 및 물문화관 이름 ── */}
-      <div className="w-full md:w-[28%] lg:w-[26%] shrink-0 bg-white border-b md:border-b-0 md:border-r border-slate-200 text-slate-900 p-8 sm:p-10 flex flex-col justify-between items-center text-center relative z-20 shadow-2xl">
+      {/* ── 컬럼 1 (맨 좌측): 슬림한 폭(약 20%) + 좌측 상단 방울이 마스코트 + 중앙 K-water 로고 및 타이틀 ── */}
+      <div className="w-full md:w-[21%] lg:w-[20%] shrink-0 bg-white border-b md:border-b-0 md:border-r border-slate-200 text-slate-900 p-6 sm:p-7 flex flex-col justify-between items-center text-center relative z-20 shadow-2xl">
         
-        {/* 1. 맨 위: 방울이 캐릭터 아이콘 */}
-        <div className="flex flex-col items-center pt-2">
-          <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center rounded-3xl bg-slate-50 border border-slate-100 p-2 shadow-inner group">
+        {/* 1. 좌측 상단: 방울이 캐릭터 아이콘 (이름 텍스트 제거) */}
+        <div className="w-full flex justify-start items-center">
+          <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 p-1.5 shadow-inner group">
             <Image
               src="/bangwoori.png"
               alt="K-water 방울이 마스코트"
-              width={100}
-              height={100}
-              className="object-contain drop-shadow-md group-hover:scale-105 transition duration-300"
+              width={72}
+              height={72}
+              className="object-contain drop-shadow group-hover:scale-105 transition duration-300"
               priority
             />
           </div>
-          <span className="mt-2.5 text-[11px] font-black text-sky-600 tracking-wider uppercase bg-sky-50 px-3 py-0.5 rounded-full border border-sky-100">
-            방울이 · BANGWOORI
-          </span>
         </div>
 
-        {/* 2. 가운데: K-water 로고 & 물문화관 타이틀 (불필요한 멘트 없이 깔끔하게) */}
-        <div className="my-8 flex flex-col items-center">
+        {/* 2. 가운데: K-water 로고 & 물문화관 타이틀 */}
+        <div className="my-6 flex flex-col items-center">
           <Image
             src="/kwater-logo.svg"
             alt="K-water 한국수자원공사"
-            width={140}
-            height={28}
-            className="h-6 sm:h-7 w-auto"
+            width={130}
+            height={26}
+            className="h-5 sm:h-6 w-auto"
             priority
           />
-          <h1 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+          <h1 className="mt-3.5 text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             물문화관
           </h1>
-          <p className="mt-1 text-[11px] sm:text-xs font-bold text-slate-400 tracking-widest uppercase">
+          <p className="mt-1 text-[10px] sm:text-[11px] font-bold text-slate-400 tracking-widest uppercase">
             WATER CULTURE CENTER PORTAL
           </p>
         </div>
 
         {/* 3. 하단: 메인 홈페이지 바로가기 버튼 & 관람 안내 */}
-        <div className="w-full pt-4 border-t border-slate-150 space-y-4">
+        <div className="w-full pt-4 border-t border-slate-150 space-y-3">
           <Link
             href="/main"
-            className="w-full min-h-12 px-5 inline-flex items-center justify-center rounded-2xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-black transition duration-200 shadow-lg shadow-sky-600/20 group"
+            className="w-full min-h-11 px-4 inline-flex items-center justify-center rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-black transition duration-200 shadow-md shadow-sky-600/20 group"
           >
             <span>메인 홈페이지 바로가기</span>
-            <span className="ml-2 transform group-hover:translate-x-1 transition duration-200">→</span>
+            <span className="ml-1.5 transform group-hover:translate-x-1 transition duration-200">→</span>
           </Link>
 
-          <p className="text-[11px] text-slate-400 font-semibold">
-            관람시간 09:00 ~ 18:00 | 입장료 무료
+          <p className="text-[10px] text-slate-400 font-semibold">
+            09:00 ~ 18:00 (무료)
           </p>
         </div>
       </div>
