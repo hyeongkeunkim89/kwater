@@ -79,13 +79,13 @@ export function CenterSurroundingsGallery({ images }: Props) {
                 onClick={() => openLightbox(src)}
                 className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:border-sky-300 hover:shadow-lg hover:shadow-sky-50"
               >
-                <div className="relative aspect-video w-full overflow-hidden bg-slate-150">
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-150">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={src}
                     alt={caption}
                     loading="lazy"
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/10 opacity-0 transition duration-300 group-hover:opacity-100" />
                 </div>

@@ -338,37 +338,39 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                   const isLastItemAndCollapsed = !isExpanded && hasMoreThanThree && idx === 2;
 
                                   return (
-                                    <div key={idx} className="flex flex-col items-center gap-2">
-                                      <button
-                                        type="button"
-                                        onClick={() => {
-                                          if (isLastItemAndCollapsed) {
-                                            toggleExpandPhotos(f.id);
-                                          } else {
-                                            setLightbox(photo);
-                                            setLightboxPhotos(photos);
-                                          }
-                                        }}
-                                        className="group relative aspect-video w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition hover:border-sky-300 shadow-sm"
-                                      >
-                                        <img
-                                          src={photo}
-                                          alt={title || `내부 전경 ${idx + 1}`}
-                                          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                                        />
-                                        
-                                        {/* 더보기 딤 오버레이 */}
-                                        {isLastItemAndCollapsed && (
-                                          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-[2px] transition hover:bg-black/50 text-white gap-1 select-none">
-                                            <span className="text-[20px] sm:text-[24px] font-black">
-                                              +{photos.length - 2}
-                                            </span>
-                                            <span className="text-xs sm:text-sm font-black tracking-wider uppercase">
-                                              더보기
-                                            </span>
-                                          </div>
-                                        )}
-                                      </button>
+                                    <div key={idx} className="flex flex-col items-center gap-2 w-full">
+                                      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm">
+                                        <button
+                                          type="button"
+                                          onClick={() => {
+                                            if (isLastItemAndCollapsed) {
+                                              toggleExpandPhotos(f.id);
+                                            } else {
+                                              setLightbox(photo);
+                                              setLightboxPhotos(photos);
+                                            }
+                                          }}
+                                          className="group absolute inset-0 h-full w-full"
+                                        >
+                                          <img
+                                            src={photo}
+                                            alt={title || `내부 전경 ${idx + 1}`}
+                                            className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                                          />
+                                          
+                                          {/* 더보기 딤 오버레이 */}
+                                          {isLastItemAndCollapsed && (
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-[2px] transition hover:bg-black/50 text-white gap-1 select-none">
+                                              <span className="text-[20px] sm:text-[24px] font-black">
+                                                +{photos.length - 2}
+                                              </span>
+                                              <span className="text-xs sm:text-sm font-black tracking-wider uppercase">
+                                                더보기
+                                              </span>
+                                            </div>
+                                          )}
+                                        </button>
+                                      </div>
                                       {title && (
                                         <span className="text-sm sm:text-base font-extrabold text-slate-700 truncate max-w-full text-center mt-1">
                                           &lt;{title}&gt;
