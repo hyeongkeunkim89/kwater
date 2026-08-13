@@ -20,16 +20,16 @@ export default function GatewayLandingPage() {
           </div>
 
           <div className="mt-8">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-black text-sky-400 bg-sky-950/80 px-3 py-1 rounded-full border border-sky-500/30 tracking-widest uppercase">
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-black text-slate-100 bg-white/10 px-3 py-1 rounded-full border border-white/20 tracking-widest uppercase">
               PORTAL GATEWAY
             </span>
             <h1 className="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-tight text-white">
               K-water<br />
-              <span className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">
+              <span className="text-white">
                 물문화관 포털
               </span>
             </h1>
-            <p className="mt-4 text-xs sm:text-sm text-slate-300 font-medium leading-relaxed break-keep">
+            <p className="mt-4 text-xs sm:text-sm text-slate-200 font-medium leading-relaxed break-keep">
               자연과 사람, 물의 이야기가 숨쉬는 전국 15대 댐 물문화관 관문 포털에 오신 것을 환영합니다.
             </p>
           </div>
@@ -39,13 +39,13 @@ export default function GatewayLandingPage() {
         <div className="mt-8 pt-6 border-t border-white/10 space-y-4">
           <Link
             href="/main"
-            className="w-full min-h-13 px-5 inline-flex items-center justify-center rounded-2xl bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs sm:text-sm font-black transition duration-200 shadow-xl shadow-sky-500/25 group"
+            className="w-full min-h-13 px-5 inline-flex items-center justify-center rounded-2xl bg-white hover:bg-slate-100 text-slate-950 text-xs sm:text-sm font-black transition duration-200 shadow-xl shadow-white/10 group"
           >
             <span>물문화관 메인 홈페이지 진입</span>
             <span className="ml-2 transform group-hover:translate-x-1 transition duration-200">→</span>
           </Link>
 
-          <div className="text-[11px] text-slate-400 font-medium space-y-1">
+          <div className="text-[11px] text-slate-300 font-medium space-y-1">
             <p>· 관람시간: 09:00 ~ 18:00 (무료)</p>
             <p>· 각 테마 섹션을 누르면 메인으로 이동합니다.</p>
           </div>
@@ -64,7 +64,7 @@ export default function GatewayLandingPage() {
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
             style={{
-              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Chungju_Lake.jpg/1280px-Chungju_Lake.jpg')`,
+              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg/1280px-Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg')`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20 group-hover:from-slate-950/95 transition duration-300" />
@@ -122,7 +122,7 @@ export default function GatewayLandingPage() {
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
             style={{
-              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg/1280px-Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg')`,
+              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Chungju_Lake.jpg/1280px-Chungju_Lake.jpg')`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20 group-hover:from-slate-950/95 transition duration-300" />
