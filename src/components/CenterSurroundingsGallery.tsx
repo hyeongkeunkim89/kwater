@@ -90,8 +90,8 @@ export function CenterSurroundingsGallery({ images }: Props) {
                   <div className="absolute inset-0 bg-black/10 opacity-0 transition duration-300 group-hover:opacity-100" />
                 </div>
                 {caption && (
-                  <div className="border-t border-slate-100 px-5 py-4">
-                    <p className="text-sm font-bold leading-snug text-slate-800 transition group-hover:text-sky-600">
+                  <div className="border-t border-slate-100 px-5 py-4 text-center">
+                    <p className="text-base sm:text-lg font-extrabold leading-snug text-slate-800 transition group-hover:text-sky-600">
                       {caption}
                     </p>
                   </div>
