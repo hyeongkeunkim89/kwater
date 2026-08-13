@@ -27,19 +27,6 @@ import {
 } from "@/lib/centerExplorerUi";
 import { naverMapSearchHref } from "@/lib/mapLinks";
 
-import {
-  CENTER_AMENITIES_BY_ID,
-  CENTER_WEATHER_BY_ID,
-  type CenterAmenity,
-} from "@/lib/center-amenities-weather";
-
-const ALL_AMENITIES: CenterAmenity[] = [
-  "☕ 전망카페",
-  "🔭 전망대",
-  "🍼 수유실",
-  "♿ 엘리베이터(배리어프리)",
-];
-
 const KoreaMap = dynamic(
   () => import("@/components/KoreaMap").then((m) => m.KoreaMap),
   {
@@ -63,7 +50,6 @@ export function CenterExplorer() {
   const [view, setView] = useState<TabView>("map");
   const [sido, setSido] = useState<string>(centerExplorerUi.allSido);
   const [themeFilter, setThemeFilter] = useState<ThemeFilter>("전체");
-  const [amenityFilter, setAmenityFilter] = useState<string>("전체");
   const [query, setQuery] = useState<string>("");
 
   const [todaySeoul, setTodaySeoul] = useState<WeekdayHan>(HYDRATION_WEEKDAY_PLACEHOLDER);
@@ -81,11 +67,6 @@ export function CenterExplorer() {
       const mapQ = c.mapSearchQuery?.toLowerCase() ?? "";
       const matchTheme =
         themeFilter === "전체" || c.themes.includes(themeFilter);
-
-      const amenities = CENTER_AMENITIES_BY_ID[c.id] || ["🔭 전망대", "♿ 엘리베이터(배리어프리)"];
-      const matchAmenity =
-        amenityFilter === "전체" || (amenities as string[]).includes(amenityFilter);
-
       const matchQuery =
         q === "" ||
         c.name.toLowerCase().includes(q) ||
@@ -94,17 +75,17 @@ export function CenterExplorer() {
         c.address.toLowerCase().includes(q) ||
         mapQ.includes(q) ||
         c.themes.some((t) => t.toLowerCase().includes(q));
-      return matchSido && matchQuery && matchTheme && matchAmenity;
+      return matchSido && matchQuery && matchTheme;
     });
-  }, [sido, query, themeFilter, amenityFilter]);
+  }, [sido, query, themeFilter]);
 
   const listSections = useMemo(() => {
-    if (themeFilter !== "전체" || amenityFilter !== "전체") return null;
+    if (themeFilter !== "전체") return null;
     return CENTER_THEME_ORDER.map((themeKey) => ({
       theme: themeKey,
       centers: baseFiltered.filter((c) => c.themes[0] === themeKey),
     })).filter((s) => s.centers.length > 0);
-  }, [baseFiltered, themeFilter, amenityFilter]);
+  }, [baseFiltered, themeFilter]);
 
   const stats = useMemo(
     () => countByResolvedStatus(waterCenters, todaySeoul),
@@ -199,30 +180,6 @@ export function CenterExplorer() {
             </span>
           </div>
 
-          {/* 제안 2: 편의시설 1초 필터 (Smart Facility Quick Filter) */}
-          <div className="flex flex-col gap-2 rounded-2xl border border-sky-100 bg-gradient-to-r from-sky-50/70 to-indigo-50/50 px-5 py-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-sky-700">
-              ✨ 방문 목적별 편의시설 1초 퀵 필터
-            </span>
-            <div className="flex flex-wrap gap-2">
-              <ThemeChip
-                active={amenityFilter === "전체"}
-                onClick={() => setAmenityFilter("전체")}
-              >
-                전체 보기
-              </ThemeChip>
-              {ALL_AMENITIES.map((a) => (
-                <ThemeChip
-                  key={a}
-                  active={amenityFilter === a}
-                  onClick={() => setAmenityFilter(a)}
-                >
-                  {a}
-                </ThemeChip>
-              ))}
-            </div>
-          </div>
-
           <div className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-4">
             <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
               {centerExplorerUi.themeLabel}
@@ -246,7 +203,7 @@ export function CenterExplorer() {
             </div>
           </div>
 
-          {themeFilter === "전체" && amenityFilter === "전체" && listSections ? (
+          {themeFilter === "전체" && listSections ? (
             <div className="space-y-12">
               {listSections.map(({ theme, centers }) => (
                 <section
@@ -295,12 +252,9 @@ export function CenterExplorer() {
                   ? centerExplorerUi.emptyWithQuery(query)
                   : centerExplorerUi.emptyNoQuery}
               </p>
-              {(query || amenityFilter !== "전체") && (
+              {query && (
                 <button
-                  onClick={() => {
-                    setQuery("");
-                    setAmenityFilter("전체");
-                  }}
+                  onClick={() => setQuery("")}
                   className="mt-1 text-xs text-sky-600 underline underline-offset-2 hover:text-sky-800"
                 >
                   {centerExplorerUi.resetSearch}
@@ -428,13 +382,6 @@ const CenterCard = memo(function CenterCard({
   const profilePreview = c.facilityProfile.slice(0, 3);
   const detailHref = `/centers/${c.id}`;
   const naverHref = naverMapSearchHref(c);
-  const weather = CENTER_WEATHER_BY_ID[c.id] || {
-    temp: "23°C",
-    condition: "맑음",
-    icon: "☀️",
-    trailStatus: "수변 둘레길 산책 쾌적 🌿",
-  };
-  const amenities = CENTER_AMENITIES_BY_ID[c.id] || ["🔭 전망대", "♿ 엘리베이터(배리어프리)"];
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-lg hover:shadow-sky-100">
@@ -450,15 +397,6 @@ const CenterCard = memo(function CenterCard({
               {display}
             </span>
           </div>
-
-          {/* 제안 1: 실시간 수변 기상 & 둘레길 산책 가이드 뱃지 */}
-          <div className="mt-1 inline-flex items-center gap-1.5 rounded-lg bg-sky-50 px-2 py-0.5 text-[11px] font-extrabold text-sky-900 border border-sky-200/80">
-            <span>{weather.icon}</span>
-            <span>{weather.temp} {weather.condition}</span>
-            <span className="text-sky-300">|</span>
-            <span className="text-sky-700">{weather.trailStatus}</span>
-          </div>
-
           <div className="mt-1.5 flex flex-wrap gap-1">
             {c.themes.map((t) => (
               <span
@@ -466,14 +404,6 @@ const CenterCard = memo(function CenterCard({
                 className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ring-inset ${centerThemeBadgeClass[t]}`}
               >
                 {t}
-              </span>
-            ))}
-            {amenities.map((a) => (
-              <span
-                key={a}
-                className="inline-flex rounded-full bg-slate-100 text-slate-700 px-2 py-0.5 text-[10px] font-bold border border-slate-200"
-              >
-                {a}
               </span>
             ))}
           </div>
