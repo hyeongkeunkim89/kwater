@@ -79,8 +79,15 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
     ],
   },
   buan: {
-    "1층": [],
-    "2층": [],
+    "1층": [
+      "/images/floors/buan/1층/제1전시실.PNG",
+      "/images/floors/buan/1층/기획전시.PNG",
+    ],
+    "2층": [
+      "/images/floors/buan/2층/제2전시실.PNG",
+      "/images/floors/buan/2층/제3전시실.PNG",
+      "/images/floors/buan/2층/영상실.PNG",
+    ],
   },
 };
 
@@ -103,5 +110,8 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
     "/images/surroundings/hoengseong/광장.PNG",
     "/images/surroundings/hoengseong/주차장.PNG",
   ],
-  buan: [],
+  buan: [
+    "/images/surroundings/buan/공원.PNG",
+    "/images/surroundings/buan/주차장.PNG",
+  ],
 };
