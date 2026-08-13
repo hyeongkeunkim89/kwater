@@ -54,15 +54,11 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     floors: [
       {
         floorLabel: "1층",
-        highlights: ["안내·매표", "댐 기본 구조·역할 소개", "어린이 체험"],
+        highlights: ["다목적전시실", "휴게공간"],
       },
       {
         floorLabel: "2층",
-        highlights: ["디지털 전시", "안전·모니터링 스토리", "지역 상생 사례"],
-      },
-      {
-        floorLabel: "3층·전망",
-        highlights: ["전망 공간(시설별)", "기획전·갤러리"],
+        highlights: ["물전시관", "로비 기획전시", "로비 동요동시 체험", "안내데스크", "매점"],
       },
     ],
   },

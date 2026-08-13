@@ -70,18 +70,32 @@ export default async function CenterDetailPage({ params }: Props) {
   // 데이터가 없을 경우 정적 데이터를 기반으로 폴백
   const floors: CenterFloor[] = dbFloors && dbFloors.length > 0
     ? dbFloors
-    : center.floors.map((f, i) => ({
-        id: `static-floor-${i}`,
-        center_id: id,
-        floor_key: `${i + 1}F`,
-        floor_name: f.floorLabel,
-        floor_map_url: null,
-        description: null,
-        rooms: f.highlights.map(h => ({ name: h, link: null })),
-        amenities: [],
-        sort_order: i,
-        created_at: "",
-      }));
+    : center.floors.map((f, i) => {
+        let fallbackMapUrl: string | null = null;
+        const fnPngUpper = `${id}-${i + 1}f.PNG`;
+        const fnPngLower = `${id}-${i + 1}f.png`;
+        const fnJpg = `${id}-${i + 1}f.jpg`;
+        if (fs.existsSync(path.join(process.cwd(), "public", fnPngUpper))) {
+          fallbackMapUrl = `/${fnPngUpper}`;
+        } else if (fs.existsSync(path.join(process.cwd(), "public", fnPngLower))) {
+          fallbackMapUrl = `/${fnPngLower}`;
+        } else if (fs.existsSync(path.join(process.cwd(), "public", fnJpg))) {
+          fallbackMapUrl = `/${fnJpg}`;
+        }
+
+        return {
+          id: `static-floor-${i}`,
+          center_id: id,
+          floor_key: f.floorLabel,
+          floor_name: f.floorLabel,
+          floor_map_url: fallbackMapUrl,
+          description: null,
+          rooms: f.highlights.map(h => ({ name: h, link: null })),
+          amenities: [],
+          sort_order: i,
+          created_at: "",
+        };
+      });
 
   // 로컬 이미지 스캔 후 각 층에 매핑
   const floorsWithPhotos: CenterFloor[] = floors.map((f) => {
