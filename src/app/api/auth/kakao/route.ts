@@ -18,11 +18,12 @@ export function GET(request: Request) {
     return NextResponse.redirect(`${origin}/yunyeong/login?error=kakao_key_missing`);
   }
 
-  // 카카오 OAuth 인증 주소 생성
+  // 카카오 OAuth 인증 주소 생성 (prompt=login 추가로 기존 로그인 세션 무시하고 항상 비번/아이디 입력창 강제)
   const kakaoAuthUrl = new URL("https://kauth.kakao.com/oauth/authorize");
   kakaoAuthUrl.searchParams.set("client_id", kakaoClientId);
   kakaoAuthUrl.searchParams.set("redirect_uri", redirectUri);
   kakaoAuthUrl.searchParams.set("response_type", "code");
+  kakaoAuthUrl.searchParams.set("prompt", "login");
   kakaoAuthUrl.searchParams.set("state", next);
 
   return NextResponse.redirect(kakaoAuthUrl.toString());
