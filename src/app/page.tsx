@@ -4,51 +4,57 @@ import Image from "next/image";
 export default function GatewayLandingPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col md:flex-row overflow-x-hidden selection:bg-sky-500 selection:text-white">
-      {/* ── 컬럼 1 (맨 좌측): 로고 & 포털 브랜드 & 메인 진입 안내 ── */}
-      <div className="w-full md:w-[28%] lg:w-[26%] shrink-0 border-b md:border-b-0 md:border-r border-white/15 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 p-6 sm:p-8 flex flex-col justify-between relative z-20 shadow-2xl">
-        {/* 상단 로고 */}
-        <div>
-          <div className="flex items-center gap-3">
+      {/* ── 컬럼 1 (맨 좌측): 화이트 배경 + 상단 방울이 마스코트 + 중앙 로고 및 물문화관 이름 ── */}
+      <div className="w-full md:w-[28%] lg:w-[26%] shrink-0 bg-white border-b md:border-b-0 md:border-r border-slate-200 text-slate-900 p-8 sm:p-10 flex flex-col justify-between items-center text-center relative z-20 shadow-2xl">
+        
+        {/* 1. 맨 위: 방울이 캐릭터 아이콘 */}
+        <div className="flex flex-col items-center pt-2">
+          <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center rounded-3xl bg-slate-50 border border-slate-100 p-2 shadow-inner group">
             <Image
-              src="/kwater-logo.svg"
-              alt="K-water 한국수자원공사"
-              width={120}
-              height={22}
-              className="h-5.5 w-auto brightness-0 invert opacity-95"
+              src="/bangwoori.png"
+              alt="K-water 방울이 마스코트"
+              width={100}
+              height={100}
+              className="object-contain drop-shadow-md group-hover:scale-105 transition duration-300"
               priority
             />
           </div>
-
-          <div className="mt-8">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-black text-slate-100 bg-white/10 px-3 py-1 rounded-full border border-white/20 tracking-widest uppercase">
-              PORTAL GATEWAY
-            </span>
-            <h1 className="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-tight text-white">
-              K-water<br />
-              <span className="text-white">
-                물문화관 포털
-              </span>
-            </h1>
-            <p className="mt-4 text-xs sm:text-sm text-slate-200 font-medium leading-relaxed break-keep">
-              자연과 사람, 물의 이야기가 숨쉬는 전국 15대 댐 물문화관 관문 포털에 오신 것을 환영합니다.
-            </p>
-          </div>
+          <span className="mt-2.5 text-[11px] font-black text-sky-600 tracking-wider uppercase bg-sky-50 px-3 py-0.5 rounded-full border border-sky-100">
+            방울이 · BANGWOORI
+          </span>
         </div>
 
-        {/* 하단 메인 홈페이지진입 버튼 & 안내 */}
-        <div className="mt-8 pt-6 border-t border-white/10 space-y-4">
+        {/* 2. 가운데: K-water 로고 & 물문화관 타이틀 (불필요한 멘트 없이 깔끔하게) */}
+        <div className="my-8 flex flex-col items-center">
+          <Image
+            src="/kwater-logo.svg"
+            alt="K-water 한국수자원공사"
+            width={140}
+            height={28}
+            className="h-6 sm:h-7 w-auto"
+            priority
+          />
+          <h1 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+            물문화관
+          </h1>
+          <p className="mt-1 text-[11px] sm:text-xs font-bold text-slate-400 tracking-widest uppercase">
+            WATER CULTURE CENTER PORTAL
+          </p>
+        </div>
+
+        {/* 3. 하단: 메인 홈페이지 바로가기 버튼 & 관람 안내 */}
+        <div className="w-full pt-4 border-t border-slate-150 space-y-4">
           <Link
             href="/main"
-            className="w-full min-h-13 px-5 inline-flex items-center justify-center rounded-2xl bg-white hover:bg-slate-100 text-slate-950 text-xs sm:text-sm font-black transition duration-200 shadow-xl shadow-white/10 group"
+            className="w-full min-h-12 px-5 inline-flex items-center justify-center rounded-2xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-black transition duration-200 shadow-lg shadow-sky-600/20 group"
           >
-            <span>물문화관 메인 홈페이지 진입</span>
+            <span>메인 홈페이지 바로가기</span>
             <span className="ml-2 transform group-hover:translate-x-1 transition duration-200">→</span>
           </Link>
 
-          <div className="text-[11px] text-slate-300 font-medium space-y-1">
-            <p>· 관람시간: 09:00 ~ 18:00 (무료)</p>
-            <p>· 각 테마 섹션을 누르면 메인으로 이동합니다.</p>
-          </div>
+          <p className="text-[11px] text-slate-400 font-semibold">
+            관람시간 09:00 ~ 18:00 | 입장료 무료
+          </p>
         </div>
       </div>
 
