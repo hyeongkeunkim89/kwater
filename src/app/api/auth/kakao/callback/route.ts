@@ -1,8 +1,17 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
+function getOrigin(request: Request): string {
+  const url = new URL(request.url);
+  const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || url.host;
+  const proto = request.headers.get("x-forwarded-proto") || (url.protocol ? url.protocol.replace(":", "") : "https");
+  const finalProto = host.includes("localhost") || host.includes("127.0.0.1") ? proto : "https";
+  return `${finalProto}://${host}`;
+}
+
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const origin = getOrigin(request);
+  const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const nextPath = searchParams.get("state") || "/yunyeong";
   const error = searchParams.get("error");
