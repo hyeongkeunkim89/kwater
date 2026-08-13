@@ -30,6 +30,8 @@ function formatDateKo(dateStr: string) {
   return `${y}년 ${parseInt(m)}월 ${parseInt(d)}일 (${dow})`;
 }
 
+import { useAuth } from "@/context/AuthContext";
+
 // 오늘부터 90일간 선택 가능
 const TODAY = toDateStr(new Date());
 const MAX_DATE = toDateStr(addDays(new Date(), 90));
@@ -96,6 +98,7 @@ export function ReservationForm({
   defaultCenterId?: string;
   reservationsLive?: boolean;
 }) {
+  const { user } = useAuth();
   const [step, setStep] = useState<StepIndex>(0);
   const [done, setDone] = useState<Reservation | null>(null);
 
@@ -105,11 +108,18 @@ export function ReservationForm({
   const [time, setTime] = useState("");
 
   // Step 1
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState(user?.name || "");
+  const [phone, setPhone] = useState(user?.phone || "");
   const [partySize, setPartySize] = useState(2);
   const [purpose, setPurpose] = useState<VisitPurpose>("개인·가족 관람");
   const [requests, setRequests] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      if (!name) setName(user.name);
+      if (!phone && user.phone) setPhone(user.phone);
+    }
+  }, [user]);
 
   const selectedCenter = useMemo(
     () => waterCenters.find((c) => c.id === centerId)!,

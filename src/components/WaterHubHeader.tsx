@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
 
+import { useAuth } from "@/context/AuthContext";
+
 export type ActiveNav =
   | "intro"
   | "status"
@@ -35,6 +37,7 @@ export function WaterHubHeader({
   showStaffConsoleLink?: boolean;
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, openAuthModal, logout } = useAuth();
 
   const menuItems = [
     { href: "/intro", key: "intro", label: "문화관 소개", icon: "🏛️" },
@@ -86,23 +89,55 @@ export function WaterHubHeader({
           ))}
         </nav>
 
-        {/* 우측 공통 링크 버튼 (데스크톱) */}
-        <div className="hidden lg:flex items-center gap-x-4">
-          <a
-            href="https://www.kwater.or.kr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-350 hover:bg-slate-50 hover:text-slate-950"
-            aria-label="K-water 공식 홈페이지"
-          >
-            공식 홈페이지
-          </a>
+        {/* 우측 회원/로그인 & 공통 링크 버튼 (데스크톱) */}
+        <div className="hidden lg:flex items-center gap-x-3">
+          {user ? (
+            <div className="flex items-center gap-x-2.5">
+              <Link
+                href="/mypage"
+                className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1.5 text-xs font-black text-sky-800 border border-sky-200 transition hover:bg-sky-100"
+              >
+                <span>👤</span>
+                <span>{user.name} 님</span>
+              </Link>
+              <Link
+                href="/mypage"
+                className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs font-black text-white hover:bg-slate-800 transition"
+              >
+                마이페이지
+              </Link>
+              <button
+                onClick={logout}
+                className="text-xs font-semibold text-slate-500 hover:text-slate-900 transition px-1"
+              >
+                로그아웃
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-x-2">
+              <button
+                onClick={() => openAuthModal("guest")}
+                className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+              >
+                🎟️ 비회원 예약조회
+              </button>
+              <button
+                onClick={() => openAuthModal("login")}
+                className="rounded-full bg-sky-600 px-4 py-1.5 text-xs font-black text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20"
+              >
+                로그인 / 회원가입
+              </button>
+            </div>
+          )}
+
+          <div className="h-4 w-px bg-slate-200 mx-1" aria-hidden />
+
           {showStaffConsoleLink && (
             <Link
               href={STAFF_CONSOLE_HREF}
-              className="inline-flex min-h-10 items-center whitespace-nowrap text-xs font-semibold text-slate-400 transition hover:text-slate-655 hover:text-slate-750"
+              className="inline-flex min-h-10 items-center whitespace-nowrap text-xs font-semibold text-slate-400 transition hover:text-slate-700"
             >
-              관리자 페이지
+              관리자
             </Link>
           )}
         </div>

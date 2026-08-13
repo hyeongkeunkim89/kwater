@@ -14,6 +14,8 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+import { Providers } from "@/components/Providers";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,7 +36,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen min-w-0 overflow-x-hidden font-sans antialiased">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
