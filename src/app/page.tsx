@@ -2,6 +2,10 @@ import Link from "next/link";
 import { HeroSliderWrapper } from "@/components/HeroSliderWrapper";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
+import { QuickCenterFinder } from "@/components/QuickCenterFinder";
+import { QuickFAQAccordion } from "@/components/QuickFAQAccordion";
+import { sidoList, waterCenters } from "@/data/centers";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between">
@@ -84,7 +88,17 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. 전국 거점 현황 요약 및 바로가기 바 */}
+        {/* 3. 1-터치 실시간 관람 정보 & 퀵 검색 */}
+        <section aria-label="실시간 관람 정보 및 퀵 검색">
+          <QuickCenterFinder />
+        </section>
+
+        {/* 4. 방문 전 필수 체크 FAQ */}
+        <section aria-label="자주 묻는 질문 FAQ">
+          <QuickFAQAccordion />
+        </section>
+
+        {/* 5. 전국 거점 현황 요약 및 바로가기 바 */}
         <section
           aria-label="물문화관 전국 현황 현황판"
           className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6"
@@ -129,4 +143,5 @@ export default function Home() {
     </div>
   );
 }
+
 
