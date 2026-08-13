@@ -19,30 +19,22 @@ type StoryItem = {
 };
 
 type Props = {
-  news: BoardItem[];
-  events: BoardItem[];
   feedbacks: BoardItem[];
   stories: StoryItem[];
 };
 
-type TabType = "news" | "events" | "feedback" | "stories";
+type TabType = "feedback" | "stories";
 
-export function HomeTabbedBoard({ news, events, feedbacks, stories }: Props) {
-  const [activeTab, setActiveTab] = useState<TabType>("news");
+export function HomeTabbedBoard({ feedbacks, stories }: Props) {
+  const [activeTab, setActiveTab] = useState<TabType>("feedback");
 
   const tabs = [
-    { key: "news", label: "물문화관 소식", path: "/news" },
-    { key: "events", label: "참여형 이벤트", path: "/events" },
     { key: "feedback", label: "소통창구 질의", path: "/feedback" },
     { key: "stories", label: "물 이야기 갤러리", path: "/mul-iyagi" },
   ] as const;
 
   const getActiveList = () => {
     switch (activeTab) {
-      case "news":
-        return news;
-      case "events":
-        return events;
       case "feedback":
         return feedbacks;
       default:

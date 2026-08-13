@@ -418,11 +418,11 @@ export function AdminDashboard({
         )}
 
         {activeTab === "news" && (
-          <AdminNewsPanel adminSecret={adminSecret} />
+          <AdminNewsPanel adminSecret={adminSecret} storiesLive={storiesLive} />
         )}
 
         {activeTab === "events" && (
-          <AdminEventsPanel adminSecret={adminSecret} />
+          <AdminEventsPanel adminSecret={adminSecret} storiesLive={storiesLive} />
         )}
 
         {activeTab === "feedbacks" && (

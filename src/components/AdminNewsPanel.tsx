@@ -4,7 +4,13 @@ import { useState, useEffect } from "react";
 import type { News } from "@/types/news";
 import { waterCenters } from "@/data/centers";
 
-export function AdminNewsPanel({ adminSecret }: { adminSecret: string }) {
+export function AdminNewsPanel({
+  adminSecret,
+  storiesLive = false,
+}: {
+  adminSecret: string;
+  storiesLive?: boolean;
+}) {
   const [newsList, setNewsList] = useState<News[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -153,6 +159,12 @@ export function AdminNewsPanel({ adminSecret }: { adminSecret: string }) {
           <h3 className="text-sm font-bold text-slate-800 border-b border-slate-100 pb-3">
             {editingId ? "소식 수정하기" : "새 소식 작성하기"}
           </h3>
+
+          {!storiesLive && (
+            <div className="rounded-xl bg-amber-50 border border-amber-200 p-3.5 text-xs font-semibold text-amber-800 leading-normal">
+              ⚠️ <strong>주의:</strong> 현재 데이터베이스(DATABASE_URL)가 설정되지 않아 임시 로컬 파일에 데이터를 저장 중입니다. 이 상태에서는 서버가 재시작되거나 사이트가 재배포되면 작성한 글이 휘발되어 삭제됩니다. 실 서비스 운영 시에는 반드시 데이터베이스를 연결해 주세요.
+            </div>
+          )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">

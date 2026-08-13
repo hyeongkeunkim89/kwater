@@ -10,7 +10,8 @@
     "import:floor-photos": "node scripts/import-floor-photos.mjs",
     "import:floor-photos:dry": "node scripts/import-floor-photos.mjs --dry-run",
     "import:floor-photos:force": "node scripts/import-floor-photos.mjs --force",
-    "import:floor-photos:list": "node scripts/import-floor-photos.mjs --list-centers"
+    "import:floor-photos:list": "node scripts/import-floor-photos.mjs --list-centers",
+    "db:migrate-news": "node scripts/migrate-news-to-supabase.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",

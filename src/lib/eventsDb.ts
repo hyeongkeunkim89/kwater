@@ -104,33 +104,62 @@ function writeLocalEvents(list: EventRow[]) {
   }
 }
 
+// ── 메모리 캐싱 레이어 (성능 극대화 및 외부 스크립트 호환용) ──
+interface CacheEntry<T> {
+  timestamp: number;
+  data: T;
+}
+
+let eventsListCache: Record<string, CacheEntry<Event[]>> = {};
+const CACHE_TTL = 10000; // 10초 캐시 유지
+
+export function clearEventsCache() {
+  eventsListCache = {};
+}
+
 export async function listEventsFromDb(centerId?: string): Promise<Event[]> {
+  const cacheKey = centerId || "all";
+  const now = Date.now();
+  const cached = eventsListCache[cacheKey];
+
+  if (cached && now - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+
   const sql = getStoriesSql();
+  let result: Event[];
   if (!sql) {
     const rows = readLocalEvents();
     const filtered = centerId && centerId !== "all"
       ? rows.filter((r) => r.center_id === centerId || r.is_headquarters)
       : rows;
     const sorted = [...filtered].sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
-    return sorted.map(rowToEvent);
+    result = sorted.map(rowToEvent);
+  } else {
+    await ensureEventsSchema(sql);
+
+    const rows = centerId && centerId !== "all"
+      ? await sql<EventRow[]>`
+          SELECT id, center_id, center_name, title, content, start_date, end_date, is_headquarters, image_url, created_at
+          FROM events
+          WHERE center_id = ${centerId} OR is_headquarters = true
+          ORDER BY created_at DESC
+        `
+      : await sql<EventRow[]>`
+          SELECT id, center_id, center_name, title, content, start_date, end_date, is_headquarters, image_url, created_at
+          FROM events
+          ORDER BY created_at DESC
+        `;
+
+    result = rows.map(rowToEvent);
   }
 
-  await ensureEventsSchema(sql);
+  eventsListCache[cacheKey] = {
+    timestamp: now,
+    data: result,
+  };
 
-  const rows = centerId && centerId !== "all"
-    ? await sql<EventRow[]>`
-        SELECT id, center_id, center_name, title, content, start_date, end_date, is_headquarters, image_url, created_at
-        FROM events
-        WHERE center_id = ${centerId} OR is_headquarters = true
-        ORDER BY created_at DESC
-      `
-    : await sql<EventRow[]>`
-        SELECT id, center_id, center_name, title, content, start_date, end_date, is_headquarters, image_url, created_at
-        FROM events
-        ORDER BY created_at DESC
-      `;
-
-  return rows.map(rowToEvent);
+  return result;
 }
 
 export async function getEventDetailFromDb(id: string): Promise<Event | null> {
@@ -162,6 +191,7 @@ export async function insertEventDb(input: {
   isHeadquarters: boolean;
   imageUrl?: string;
 }): Promise<Event> {
+  clearEventsCache();
   const sql = getStoriesSql();
   if (!sql) {
     const rows = readLocalEvents();
@@ -216,6 +246,7 @@ export async function updateEventDb(
     imageUrl?: string;
   }
 ): Promise<Event> {
+  clearEventsCache();
   const sql = getStoriesSql();
   if (!sql) {
     const rows = readLocalEvents();
@@ -259,6 +290,7 @@ export async function updateEventDb(
 }
 
 export async function deleteEventDb(id: string): Promise<void> {
+  clearEventsCache();
   const sql = getStoriesSql();
   if (!sql) {
     const rows = readLocalEvents();

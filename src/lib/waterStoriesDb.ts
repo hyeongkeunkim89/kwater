@@ -3,6 +3,7 @@
  * 스키마: db/water-stories.sql · 연결: DATABASE_URL (+ DATABASE_PASSWORD)
  * Transaction pooler(6543)면 DDL 생략 → SQL Editor에서 테이블 미리 생성
  */
+import "./dnsPatch";
 import postgres from "postgres";
 import type { WaterStory } from "@/types/waterStory";
 
@@ -29,9 +30,10 @@ function normalizeDatabaseUrlEnv(raw: string | undefined): string {
  * `DATABASE_PASSWORD`(평문, 서버 전용)가 있으면 Node `URL`로 비밀번호만 안전히 붙입니다.
  */
 function getResolvedDatabaseUrl(): string | null {
-  const base = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
+  const url = process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL;
+  const base = normalizeDatabaseUrlEnv(url);
   if (!base) return null;
-  const plain = process.env.DATABASE_PASSWORD?.trim();
+  const plain = process.env.DATABASE_PASSWORD?.trim() || process.env.POSTGRES_PASSWORD?.trim();
   if (!plain) return base;
   try {
     const u = new URL(base);
@@ -179,8 +181,29 @@ function rowToStory(r: {
   };
 }
 
+// ── 메모리 캐싱 레이어 (성능 극대화 및 외부 스크립트 호환용) ──
+interface CacheEntry<T> {
+  timestamp: number;
+  data: T;
+}
+
+let storiesListCache: Record<string, CacheEntry<WaterStory[]>> = {};
+const CACHE_TTL = 10000; // 10초 캐시 유지
+
+export function clearStoriesCache() {
+  storiesListCache = {};
+}
+
 /** 전체 또는 centerId 필터 목록 (최신순) */
 export async function listWaterStoriesFromDb(centerId?: string): Promise<WaterStory[]> {
+  const cacheKey = centerId || "all";
+  const now = Date.now();
+  const cached = storiesListCache[cacheKey];
+
+  if (cached && now - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+
   const sql = getStoriesSql();
   if (!sql) return [];
   await ensureWaterStoriesSchema(sql);
@@ -219,7 +242,15 @@ export async function listWaterStoriesFromDb(centerId?: string): Promise<WaterSt
           FROM water_stories
           ORDER BY created_at DESC
         `;
-  return rows.map(rowToStory);
+  
+  const result = rows.map(rowToStory);
+  
+  storiesListCache[cacheKey] = {
+    timestamp: now,
+    data: result,
+  };
+
+  return result;
 }
 
 /** 새 게시글 INSERT — 일시적 연결 오류 시 최대 3회 재시도 */
@@ -230,6 +261,7 @@ export async function insertWaterStoryDb(input: {
   nickname: string;
   caption: string;
 }): Promise<WaterStory> {
+  clearStoriesCache();
   let lastErr: unknown;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
@@ -286,6 +318,7 @@ export async function getWaterStoryImageUrl(id: string): Promise<string | null> 
 }
 
 export async function deleteWaterStoryDb(id: string): Promise<void> {
+  clearStoriesCache();
   const sql = getStoriesSql();
   if (!sql) throw new Error("DATABASE_URL 없음");
   await ensureWaterStoriesSchema(sql);
@@ -294,6 +327,7 @@ export async function deleteWaterStoryDb(id: string): Promise<void> {
 
 /** 이달의 사진 지정 — 기존 true 전부 해제 후 대상 1건만 true */
 export async function setPhotoOfMonthDb(id: string): Promise<void> {
+  clearStoriesCache();
   const sql = getStoriesSql();
   if (!sql) throw new Error("DATABASE_URL 없음");
   await ensureWaterStoriesSchema(sql);
@@ -305,6 +339,7 @@ export async function setPhotoOfMonthDb(id: string): Promise<void> {
 
 /** 이달의 사진 플래그 전체 해제 */
 export async function clearPhotoOfMonthDb(): Promise<void> {
+  clearStoriesCache();
   const sql = getStoriesSql();
   if (!sql) throw new Error("DATABASE_URL 없음");
   await ensureWaterStoriesSchema(sql);

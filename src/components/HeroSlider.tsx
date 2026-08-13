@@ -139,44 +139,17 @@ export function HeroSlider() {
       {/* ── 텍스트 콘텐츠 ── */}
       <div className="relative z-10 flex h-full min-h-0 items-end px-4 pb-12 pt-4 sm:px-12 sm:pb-16 lg:px-20 lg:pb-16">
 
-        {/* 왼쪽: 슬라이드 정보 (테두리를 배제하고 렌즈 블러 효과를 약하게 주어 댐 풍경과 자연스럽게 융합) */}
-        <div key={current} className="hero-caption-animate max-w-lg bg-white/[0.05] backdrop-blur-md rounded-[32px] p-6 sm:p-8">
-          <div className="mb-2 flex items-center gap-2 sm:mb-3 sm:gap-3">
-            <span className="h-px w-8 bg-sky-500" />
-            <span className="text-xs font-black uppercase tracking-widest text-sky-600">
-              {SLIDES[current].kind}
-            </span>
-          </div>
-          <h2 className="text-2xl font-black leading-tight tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-            {SLIDES[current].centerName}
-          </h2>
-          <p className="mt-2 text-xs font-bold text-slate-700 sm:mt-2.5 sm:text-sm">
+        {/* 왼쪽: 슬라이드 정보 (투명도를 높여 전경 이미지와 조화를 이루는 고급스러운 반투명 프로스테드 글래스 효과 적용) */}
+        <div key={current} className="hero-caption-animate max-w-md bg-white/30 sm:bg-white/45 backdrop-blur-xl rounded-2xl sm:rounded-[24px] p-5 sm:p-6 border border-white/20 shadow-xl">
+          <p className="text-[11px] sm:text-xs font-bold text-sky-800 tracking-wide">
             {SLIDES[current].location}
           </p>
-          <p className="mt-3 text-xs leading-relaxed text-slate-500 sm:mt-4 font-semibold">
+          <h2 className="mt-1.5 text-lg sm:text-2xl font-black leading-tight tracking-tight text-slate-900">
+            {SLIDES[current].centerName}
+          </h2>
+          <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-700 font-extrabold break-keep">
             {SLIDES[current].caption}
           </p>
-
-          <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
-            <Link
-              href="/status"
-              className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-sky-500/10 transition hover:bg-sky-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-            >
-              전체 문화관 보기
-            </Link>
-            <Link
-              href="/reserve"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 shadow-sm"
-            >
-              투어 예약하기
-            </Link>
-            <Link
-              href="/mul-iyagi"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100/80 px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
-            >
-              물 이야기
-            </Link>
-          </div>
         </div>
 
         {/* 오른쪽: 물문화관 개요 — 댐 풍경은 투명하게 비치고, 텍스트 부분만 부드러운 안개블러로 처리 */}

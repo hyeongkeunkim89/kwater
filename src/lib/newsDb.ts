@@ -95,36 +95,74 @@ function writeLocalNews(list: NewsRow[]) {
   }
 }
 
+// ── 메모리 캐싱 레이어 (성능 극대화 및 외부 스크립트 호환용) ──
+interface CacheEntry<T> {
+  timestamp: number;
+  data: T;
+}
+
+let newsListCache: Record<string, CacheEntry<News[]>> = {};
+const CACHE_TTL = 10000; // 10초 캐시 유지
+
+export function clearNewsCache() {
+  newsListCache = {};
+}
+
 export async function listNewsFromDb(centerId?: string): Promise<News[]> {
+  const cacheKey = centerId || "all";
+  const now = Date.now();
+  const cached = newsListCache[cacheKey];
+  
+  if (cached && now - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+
   const sql = getStoriesSql();
+  let result: News[];
   if (!sql) {
     const rows = readLocalNews();
-    const filtered = centerId && centerId !== "all"
+    const filtered = centerId === "headquarters"
+      ? rows.filter((r) => r.center_id === "all")
+      : centerId && centerId !== "all"
       ? rows.filter((r) => r.center_id === centerId)
       : rows;
     const sorted = [...filtered].sort((a, b) => {
       if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1;
       return b.created_at.getTime() - a.created_at.getTime();
     });
-    return sorted.map(rowToNews);
+    result = sorted.map(rowToNews);
+  } else {
+    await ensureNewsSchema(sql);
+
+    const rows = centerId === "headquarters"
+      ? await sql<NewsRow[]>`
+          SELECT id, center_id, center_name, title, content, views, is_pinned, image_url, created_at
+          FROM news
+          WHERE center_id = 'all'
+          ORDER BY is_pinned DESC, created_at DESC
+        `
+      : centerId && centerId !== "all"
+      ? await sql<NewsRow[]>`
+          SELECT id, center_id, center_name, title, content, views, is_pinned, image_url, created_at
+          FROM news
+          WHERE center_id = ${centerId}
+          ORDER BY is_pinned DESC, created_at DESC
+        `
+      : await sql<NewsRow[]>`
+          SELECT id, center_id, center_name, title, content, views, is_pinned, image_url, created_at
+          FROM news
+          ORDER BY is_pinned DESC, created_at DESC
+        `;
+
+    result = rows.map(rowToNews);
   }
 
-  await ensureNewsSchema(sql);
+  newsListCache[cacheKey] = {
+    timestamp: now,
+    data: result,
+  };
 
-  const rows = centerId && centerId !== "all"
-    ? await sql<NewsRow[]>`
-        SELECT id, center_id, center_name, title, content, views, is_pinned, image_url, created_at
-        FROM news
-        WHERE center_id = ${centerId}
-        ORDER BY is_pinned DESC, created_at DESC
-      `
-    : await sql<NewsRow[]>`
-        SELECT id, center_id, center_name, title, content, views, is_pinned, image_url, created_at
-        FROM news
-        ORDER BY is_pinned DESC, created_at DESC
-      `;
-
-  return rows.map(rowToNews);
+  return result;
 }
 
 export async function getNewsDetailFromDb(id: string): Promise<News | null> {
@@ -169,6 +207,7 @@ export async function insertNewsDb(input: {
   isPinned: boolean;
   imageUrl?: string;
 }): Promise<News> {
+  clearNewsCache();
   const sql = getStoriesSql();
   if (!sql) {
     const rows = readLocalNews();
@@ -218,6 +257,7 @@ export async function updateNewsDb(
     imageUrl?: string;
   }
 ): Promise<News> {
+  clearNewsCache();
   const sql = getStoriesSql();
   if (!sql) {
     const rows = readLocalNews();
@@ -257,6 +297,7 @@ export async function updateNewsDb(
 }
 
 export async function deleteNewsDb(id: string): Promise<void> {
+  clearNewsCache();
   const sql = getStoriesSql();
   if (!sql) {
     const rows = readLocalNews();

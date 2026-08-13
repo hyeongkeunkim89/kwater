@@ -2,68 +2,7 @@ import Link from "next/link";
 import { HeroSliderWrapper } from "@/components/HeroSliderWrapper";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
-import { sidoList, waterCenters } from "@/data/centers";
-import { listNewsFromDb } from "@/lib/newsDb";
-import { listEventsFromDb } from "@/lib/eventsDb";
-import { listFeedbacksFromDb } from "@/lib/feedbacksDb";
-import { listWaterStoriesFromDb } from "@/lib/waterStoriesDb";
-import { HomeTabbedBoard } from "@/components/HomeTabbedBoard";
-
-export const revalidate = 300; // 5-minute revalidation (Edge caching) for instant CDN landing
-
-export default async function Home() {
-  let newsList: { id: string; title: string; date: string; centerName?: string }[] = [];
-  let eventsList: { id: string; title: string; date: string; centerName?: string }[] = [];
-  let feedbacksList: { id: string; title: string; date: string; centerName?: string }[] = [];
-  let storiesList: { id: string; imageSrc: string; caption: string; nickname: string; centerName: string }[] = [];
-
-  const formatDate = (dateStr: string) => {
-    const d = new Date(dateStr);
-    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(
-      d.getDate()
-    ).padStart(2, "0")}`;
-  };
-
-  try {
-    const [rawNews, rawEvents, rawFeedbacks, rawStories] = await Promise.all([
-      listNewsFromDb().catch(e => { console.error("Failed to load news", e); return []; }),
-      listEventsFromDb().catch(e => { console.error("Failed to load events", e); return []; }),
-      listFeedbacksFromDb().catch(e => { console.error("Failed to load feedbacks", e); return []; }),
-      listWaterStoriesFromDb().catch(e => { console.error("Failed to load stories", e); return []; }),
-    ]);
-
-    newsList = rawNews.map((n) => ({
-      id: n.id,
-      title: n.title,
-      date: formatDate(n.createdAt),
-      centerName: n.centerName,
-    }));
-
-    eventsList = rawEvents.map((ev) => ({
-      id: ev.id,
-      title: ev.title,
-      date: `${formatDate(ev.startDate)} ~ ${formatDate(ev.endDate)}`,
-      centerName: ev.centerName,
-    }));
-
-    feedbacksList = rawFeedbacks.map((f) => ({
-      id: f.id,
-      title: f.title + (f.isPrivate ? " 🔒" : ""),
-      date: formatDate(f.createdAt),
-      centerName: f.centerName,
-    }));
-
-    storiesList = rawStories.map((s) => ({
-      id: s.id,
-      imageSrc: s.imageSrc,
-      caption: s.caption,
-      nickname: s.nickname,
-      centerName: s.centerName,
-    }));
-  } catch (e) {
-    console.error("Critical error loading homepage data", e);
-  }
-
+export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between">
       <WaterHubHeader showStaffConsoleLink />
@@ -79,7 +18,7 @@ export default async function Home() {
       {/* 메인 내용 영역 */}
       <main className="mx-auto max-w-7xl w-full px-6 py-6 sm:py-8 space-y-8 sm:space-y-10 flex-1">
         
-        {/* 2. 퀵 메뉴 예약 카드 (핵심 행동 유도 3단 둥근 카드 그리드) */}
+        {/* 2. 퀵 메뉴 예약 및 서비스 카드 */}
         <section aria-label="빠른 메뉴 및 예약 서비스">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
@@ -93,20 +32,20 @@ export default async function Home() {
                 btnBg: "bg-sky-500 hover:bg-sky-400 text-white",
               },
               {
-                title: "새로운 문화행사 & 이벤트",
-                desc: "본사 주관 공통 이벤트 및 지점별로 열리는 다양한 생태 체험 프로그램에 참여해 보세요.",
-                btnLabel: "진행중인 이벤트 보기",
-                icon: "🎈",
-                path: "/events",
+                title: "전국 물문화관 현황",
+                desc: "전국 15개 거점 물문화관의 상세 정보, 운영 시간 및 위치를 대화형 지도에서 확인해 보세요.",
+                btnLabel: "현황 지도 바로가기",
+                icon: "🗺️",
+                path: "/status",
                 bg: "from-teal-500/10 to-sky-500/5 hover:from-teal-500/15 hover:to-sky-500/10 border-teal-100",
                 btnBg: "bg-teal-600 hover:bg-teal-500 text-white",
               },
               {
-                title: "이달의 사진전 (물 이야기)",
-                desc: "아름다운 댐 산책로와 자연 경관을 걷고 찍은 소중한 사진들을 방문자 갤러리에 공유해 보세요.",
-                btnLabel: "사진 올리고 참여하기",
-                icon: "📷",
-                path: "/mul-iyagi",
+                title: "시설 및 층별 안내",
+                desc: "물문화관 층별 전시 공간과 편의시설 안내, 실내 도면 및 대표 전경을 한눈에 살펴보세요.",
+                btnLabel: "시설 안내 보기",
+                icon: "🏛️",
+                path: "/yunyeong",
                 bg: "from-amber-500/10 to-orange-500/5 hover:from-amber-500/15 hover:to-orange-500/10 border-amber-100",
                 btnBg: "bg-amber-500 hover:bg-amber-400 text-white",
               },
@@ -145,45 +84,38 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* 3. 통합 탭형 소식 게시판 (공지/소식/소통창구 통합 보드) */}
-        <section aria-label="물문화관 주요 소식 및 소통창구">
-          <HomeTabbedBoard
-            news={newsList}
-            events={eventsList}
-            feedbacks={feedbacksList}
-            stories={storiesList}
-          />
-        </section>
-
-        {/* 4. 전국 거점 현황 요약 및 바로가기 바 */}
+        {/* 3. 전국 거점 현황 요약 및 바로가기 바 */}
         <section
           aria-label="물문화관 전국 현황 현황판"
           className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6"
         >
           <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-            <span className="text-3xl" role="img" aria-label="지도">🗺️</span>
+            <span className="text-3xl shrink-0" role="img" aria-label="지도">🗺️</span>
             <div>
-              <h4 className="text-base font-black text-slate-800">
+              <h4 className="text-base font-black text-slate-800 break-keep">
                 전국 15대 댐 물문화관 현황지도
               </h4>
-              <p className="text-xs text-slate-500 mt-1 font-semibold">
+              <p className="text-xs text-slate-500 mt-1 font-semibold break-keep">
                 전국 곳곳의 댐 수역에 아름답게 개설된 15개의 물문화관 운영 정보와 관람 상태를 바로 확인해 보세요.
               </p>
             </div>
           </div>
-          <div className="shrink-0 flex items-center gap-6 divide-x divide-slate-100">
-            <div className="px-4 text-center">
-              <span className="text-lg font-black text-sky-500 tabular-nums">{waterCenters.length}개소</span>
-              <span className="text-[10px] text-slate-400 font-semibold block mt-0.5">물문화관 수</span>
+          <div className="w-full md:w-auto shrink-0 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 sm:divide-x sm:divide-slate-100">
+            <div className="flex w-full items-center justify-center gap-8 sm:gap-6 sm:justify-start">
+              <div className="sm:px-4 text-center">
+                <span className="text-lg font-black text-sky-500 tabular-nums">{waterCenters.length}개소</span>
+                <span className="text-[10px] text-slate-400 font-semibold block mt-0.5 whitespace-nowrap">물문화관 수</span>
+              </div>
+              <div className="h-8 w-px bg-slate-100 sm:hidden" />
+              <div className="sm:px-4 text-center">
+                <span className="text-lg font-black text-sky-500 tabular-nums">{sidoList.length}개</span>
+                <span className="text-[10px] text-slate-400 font-semibold block mt-0.5 whitespace-nowrap">광역 시·도 거점</span>
+              </div>
             </div>
-            <div className="px-4 text-center">
-              <span className="text-lg font-black text-sky-500 tabular-nums">{sidoList.length}개</span>
-              <span className="text-[10px] text-slate-400 font-semibold block mt-0.5">광역 시·도 거점</span>
-            </div>
-            <div className="pl-6">
+            <div className="w-full sm:w-auto sm:pl-6">
               <Link
                 href="/status"
-                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-bold text-white px-5 transition"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-bold text-white px-5 transition w-full text-center whitespace-nowrap"
               >
                 현황지도 바로보기 →
               </Link>
@@ -197,3 +129,4 @@ export default async function Home() {
     </div>
   );
 }
+
