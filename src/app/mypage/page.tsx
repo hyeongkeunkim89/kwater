@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 
 type MockReservation = {
   id: string;
@@ -16,7 +17,30 @@ type MockReservation = {
   type: "회원예약" | "비회원예약";
 };
 
+function LoginAlertHandler() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (searchParams.get("login") === "success") {
+      alert("로그인 되었습니다.");
+      router.replace("/mypage");
+    }
+  }, [searchParams, router]);
+
+  return null;
+}
+
 export default function MyPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginAlertHandler />
+      <MyPageContent />
+    </Suspense>
+  );
+}
+
+function MyPageContent() {
   const { user, openAuthModal, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<"reservations" | "qna" | "profile">("reservations");
 

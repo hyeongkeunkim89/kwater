@@ -73,6 +73,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     saveUserSession(mockUser);
     closeAuthModal();
+    alert("로그인 되었습니다.");
+    window.location.href = "/mypage";
   };
 
   const loginWithEmail = async (email: string): Promise<boolean> => {
@@ -86,6 +88,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     saveUserSession(mockUser);
     closeAuthModal();
+    alert("로그인 되었습니다.");
+    window.location.href = "/mypage";
     return true;
   };
 
@@ -105,6 +109,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     saveUserSession(mockUser);
     closeAuthModal();
+    alert("회원가입 및 로그인이 완료되었습니다.");
+    window.location.href = "/mypage";
     return true;
   };
 

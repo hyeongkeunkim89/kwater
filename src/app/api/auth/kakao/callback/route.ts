@@ -109,8 +109,10 @@ export async function GET(request: Request) {
       });
     }
 
-    // 5. 로그인 완료 후 대상 페이지로 리다이렉트
-    return NextResponse.redirect(`${origin}${nextPath}`);
+    // 5. 로그인 완료 후 대상 페이지로 리다이렉트 (login=success 전달하여 안내 메시지 노출)
+    const targetUrl = new URL(`${origin}${nextPath}`);
+    targetUrl.searchParams.set("login", "success");
+    return NextResponse.redirect(targetUrl.toString());
   } catch (err) {
     console.error("Kakao Callback Exception:", err);
     return NextResponse.redirect(`${origin}/yunyeong/login?error=kakao_exception`);
