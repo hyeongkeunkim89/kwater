@@ -106,8 +106,8 @@ export function HeroSlider() {
   );
 
   return (
-    <div className="relative h-full min-h-0 w-full flex-1 overflow-hidden bg-slate-50">
-      {/* ── 슬라이드 이미지 레이어(전체) + Ken Burns(감속 시 비활성) ── */}
+    <div className="relative h-full min-h-0 w-full flex-1 overflow-hidden bg-slate-950">
+      {/* ── 슬라이드 이미지 레이어 + 시네마틱 오버레이 (water.or.kr 스타일) ── */}
       {SLIDES.map((slide, i) => {
         const isActive = i === current;
         const isPrev = i === prev;
@@ -130,47 +130,48 @@ export function HeroSlider() {
                 transition: kenBurnsOn ? "transform 6000ms ease-out" : "none",
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-white/15 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-transparent" />
+            {/* water.or.kr 스타일의 어두운 시네마틱 그라데이션 오버레이 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/45 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-slate-950/30" />
           </div>
         );
       })}
 
       {/* ── 텍스트 콘텐츠 ── */}
-      <div className="relative z-10 flex h-full min-h-0 items-end px-4 pb-12 pt-4 sm:px-12 sm:pb-16 lg:px-20 lg:pb-16">
+      <div className="relative z-10 flex h-full min-h-0 items-end px-5 pb-12 pt-4 sm:px-12 sm:pb-16 lg:px-20 lg:pb-16">
 
-        {/* 왼쪽: 슬라이드 정보 (투명도를 높여 전경 이미지와 조화를 이루는 고급스러운 반투명 프로스테드 글래스 효과 적용) */}
-        <div key={current} className="hero-caption-animate max-w-md bg-white/30 sm:bg-white/45 backdrop-blur-xl rounded-2xl sm:rounded-[24px] p-5 sm:p-6 border border-white/20 shadow-xl">
-          <p className="text-[11px] sm:text-xs font-bold text-sky-800 tracking-wide">
-            {SLIDES[current].location}
-          </p>
-          <h2 className="mt-1.5 text-lg sm:text-2xl font-black leading-tight tracking-tight text-slate-900">
+        {/* 왼쪽: 슬라이드 정보 (water.or.kr 스타일 고대비 선명한 흰색 텍스트 & 다크 글래스 카드) */}
+        <div key={current} className="hero-caption-animate max-w-lg bg-slate-900/60 backdrop-blur-md rounded-2xl sm:rounded-[24px] p-6 sm:p-7 border border-white/20 shadow-2xl">
+          <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-sky-300 bg-sky-500/25 px-3 py-1 rounded-full border border-sky-400/30 tracking-wide">
+            📍 {SLIDES[current].location}
+          </span>
+          <h2 className="mt-3 text-xl sm:text-3xl font-black leading-tight tracking-tight text-white drop-shadow-md">
             {SLIDES[current].centerName}
           </h2>
-          <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-700 font-extrabold break-keep">
+          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-200 font-semibold break-keep">
             {SLIDES[current].caption}
           </p>
         </div>
 
-        {/* 오른쪽: 물문화관 개요 — 댐 풍경은 투명하게 비치고, 텍스트 부분만 부드러운 안개블러로 처리 */}
-        <div className="absolute bottom-14 right-6 hidden max-w-[240px] flex-col justify-end bg-white/[0.05] backdrop-blur-md rounded-[32px] p-5 shadow-sm sm:flex md:max-w-xs md:right-12 lg:right-16">
-          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-sky-600 sm:text-[10px]">
+        {/* 오른쪽: 물문화관 개요 (water.or.kr 스타일 다크 다이내믹 패널) */}
+        <div className="absolute bottom-14 right-6 hidden max-w-[260px] flex-col justify-end bg-slate-900/65 backdrop-blur-md rounded-[28px] p-6 border border-white/20 shadow-2xl sm:flex md:max-w-xs md:right-12 lg:right-16 text-white">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-400">
             K-water Water Culture Center
           </p>
-          <h3 className="mt-2 text-xl font-black leading-snug tracking-tight text-slate-800 sm:mt-3 sm:text-2xl">
+          <h3 className="mt-2 text-xl font-black leading-snug tracking-tight text-white sm:mt-3 sm:text-2xl">
             물은 흐르고,<br />
-            <span className="bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">
               기억은 남는다
             </span>
           </h3>
-          <div className="mt-3 space-y-2 text-[11px] leading-relaxed text-slate-500 sm:mt-4 font-semibold">
+          <div className="mt-3 space-y-2 text-[11px] leading-relaxed text-slate-300 sm:mt-4 font-medium">
             <p>
               댐은 단순한 구조물이 아닙니다. 강의 흐름을 바꾸고, 마을을 품으며,
               수백만의 삶을 지탱해 온 거대한 역사입니다.
-              <strong className="text-slate-850 font-extrabold text-slate-700"> 물문화관은 그 역사 위에 서 있습니다.</strong>
+              <strong className="text-sky-300 font-extrabold"> 물문화관은 그 역사 위에 서 있습니다.</strong>
             </p>
             <p>
-              전국 {waterCenters.length}곳 of 물문화관에는 각각의 강이 흐르고,
+              전국 {waterCenters.length}곳의 물문화관에는 각각의 강이 흐르고,
               수몰된 마을의 이야기가 남아 있으며,
               물과 함께 살아온 사람들의 기억이 새겨져 있습니다.
             </p>
@@ -186,15 +187,15 @@ export function HeroSlider() {
             key={i}
             onClick={() => goTo(i)}
             aria-label={`슬라이드 ${i + 1}`}
-            className="group relative flex h-2 overflow-hidden rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            className="group relative flex h-2 overflow-hidden rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             style={{ width: i === current ? "32px" : "8px" }}
           >
             <span
               className={[
                 "absolute inset-0 rounded-full transition-colors",
                 i === current
-                  ? "bg-sky-500"
-                  : "bg-slate-300 group-hover:bg-slate-400",
+                  ? "bg-sky-400"
+                  : "bg-white/40 group-hover:bg-white/70",
               ].join(" ")}
             />
           </button>
@@ -205,21 +206,21 @@ export function HeroSlider() {
       <button
         onClick={goPrev}
         aria-label="이전 슬라이드"
-        className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-600 transition hover:bg-white hover:text-slate-800 hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 sm:left-6"
+        className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-900/50 backdrop-blur-md text-white transition hover:bg-sky-500 hover:border-sky-500 shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:left-6"
       >
         ‹
       </button>
       <button
         onClick={goNext}
         aria-label="다음 슬라이드"
-        className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-600 transition hover:bg-white hover:text-slate-800 hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 sm:right-6"
+        className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-900/50 backdrop-blur-md text-white transition hover:bg-sky-500 hover:border-sky-500 shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:right-6"
       >
         ›
       </button>
 
       {/* ── 슬라이드 카운터 ── */}
-      <div className="absolute bottom-5 right-6 z-10 font-mono text-[10px] text-slate-400 sm:right-12 sm:text-xs">
-        {String(current + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
+      <div className="absolute bottom-5 right-6 z-10 font-mono text-[10px] text-slate-300 sm:right-12 sm:text-xs bg-slate-900/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+        <span className="text-sky-400 font-bold">{String(current + 1).padStart(2, "0")}</span> / {String(SLIDES.length).padStart(2, "0")}
       </div>
     </div>
   );
