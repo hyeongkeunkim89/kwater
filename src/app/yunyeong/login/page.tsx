@@ -10,10 +10,6 @@ export const metadata = {
 };
 
 export default function StaffConsoleLoginPage() {
-  if (!isStaffConsoleGateEnabled()) {
-    redirect(STAFF_CONSOLE_HREF);
-  }
-
   return (
     <Suspense
       fallback={

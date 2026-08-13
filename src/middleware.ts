@@ -19,7 +19,12 @@ export async function middleware(req: NextRequest) {
   }
 
   const token = req.cookies.get(STAFF_CONSOLE_GATE_COOKIE)?.value ?? "";
-  if (!token || !(await verifyStaffGateSessionToken(token))) {
+  const kakaoAuth = req.cookies.get("staff_console_auth")?.value ?? "";
+
+  const isGateTokenValid = token && (await verifyStaffGateSessionToken(token));
+  const isKakaoAuthValid = kakaoAuth === "true";
+
+  if (!isGateTokenValid && !isKakaoAuthValid) {
     const url = req.nextUrl.clone();
     url.pathname = "/yunyeong/login";
     url.searchParams.set("next", `${pathname}${req.nextUrl.search}`);
