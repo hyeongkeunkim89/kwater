@@ -455,30 +455,52 @@ const CenterCard = memo(function CenterCard({
           ))}
         </ul>
 
-        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1.5 gap-y-1 rounded-xl bg-slate-50 px-3 py-1.5 text-xs text-slate-600">
-          <span className="shrink-0 font-semibold text-slate-800 leading-snug">
-            {centerExplorerUi.location}
-          </span>
-          <a
-            href={naverHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="새 창에서 지도로 열기"
-            className="min-w-0 break-words leading-snug line-clamp-2 rounded-sm text-slate-600 outline-none transition hover:text-sky-800 hover:underline hover:decoration-sky-400/80 hover:underline-offset-2 focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2"
-          >
-            {c.address}
-          </a>
-          <span className="shrink-0 font-semibold text-slate-800 leading-snug">
-            {centerExplorerUi.weeklyClosed}
-          </span>
-          <span className="min-w-0 leading-snug">
-            {formatWeeklyClosureSentence(c.weeklyClosedDays)}
-          </span>
+          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1.5 gap-y-1.5 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-600">
+            <span className="shrink-0 font-bold text-slate-800 leading-snug">
+              📍 오시는길
+            </span>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <a
+                href={naverHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="네이버지도에서 오시는길 바로보기"
+                className="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-2 py-0.5 text-[11px] font-extrabold text-white transition hover:bg-emerald-700 shadow-sm"
+              >
+                네이버지도 ↗
+              </a>
+              <a
+                href={`https://map.kakao.com/link/search/${encodeURIComponent(c.mapSearchQuery || c.address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="카카오맵에서 오시는길 바로보기"
+                className="inline-flex items-center gap-1 rounded-md bg-amber-400 px-2 py-0.5 text-[11px] font-extrabold text-slate-950 transition hover:bg-amber-300 shadow-sm"
+              >
+                카카오맵 ↗
+              </a>
+              <span className="inline-flex items-center rounded-md bg-slate-200 px-1.5 py-0.5 text-[10px] font-bold text-slate-700">
+                🅿️ 주차 무료
+              </span>
+            </div>
+
+            <span className="shrink-0 font-bold text-slate-800 leading-snug">
+              {centerExplorerUi.location}
+            </span>
+            <span className="min-w-0 leading-snug text-slate-600">
+              {c.address}
+            </span>
+
+            <span className="shrink-0 font-bold text-slate-800 leading-snug">
+              {centerExplorerUi.weeklyClosed}
+            </span>
+            <span className="min-w-0 leading-snug font-semibold text-slate-700">
+              {formatWeeklyClosureSentence(c.weeklyClosedDays)} (09:00~18:00)
+            </span>
+          </div>
         </div>
-      </div>
-    </article>
-  );
-});
+      </article>
+    );
+  });
 
 function countByResolvedStatus(list: WaterCenter[], today: WeekdayHan) {
   const init = emptyDisplayStatusCounts();
