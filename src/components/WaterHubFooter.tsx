@@ -4,8 +4,8 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
   const familySites = [
     { name: "K-water 공식 홈페이지", url: "https://www.kwater.or.kr" },
     { name: "MyWater 물정보포털", url: "https://www.water.or.kr" },
-    { name: "우리강이용도우미", url: "https://www.riverguide.go.kr/kor/index.do" },
-    { name: "시화조력발전소", url: "https://www.kwater.or.kr/website/tlight.do" },
+    { name: "우리강이용도우미(4대강문화관)", url: "https://www.riverguide.go.kr/kor/index.do" },
+    { name: "시화조력발전소(문화관)", url: "https://www.kwater.or.kr/website/tlight.do" },
   ];
 
   if (compact) {
@@ -47,9 +47,9 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
   return (
     <footer className="shrink-0 border-t border-white/10 bg-[#0e1726] text-white/70 py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
           {/* 회사 소개 */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <div className="flex items-center gap-3">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-500 text-sm font-black text-white">
                 K
@@ -58,7 +58,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
                 K-water 한국수자원공사
               </span>
             </div>
-            <p className="mt-4 text-sm text-white/50 leading-relaxed max-w-sm">
+            <p className="mt-4 text-sm text-white/50 leading-relaxed max-w-md">
               물, 자연, 그리고 사람이 하나되는 행복을 만듭니다. 전국 물문화관에서 깨끗한 환경과 미래의 물 문화를 체험해 보세요.
             </p>
             <p className="mt-6 text-xs text-white/35">
@@ -66,51 +66,12 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
             </p>
           </div>
 
-          {/* 내부 사이트맵 */}
-          <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              사이트 맵
-            </h3>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/intro" className="hover:text-white transition">
-                  문화관 소개
-                </Link>
-              </li>
-              <li>
-                <Link href="/status" className="hover:text-white transition">
-                  문화관 현황
-                </Link>
-              </li>
-              <li>
-                <Link href="/news" className="hover:text-white transition">
-                  공지 및 소식
-                </Link>
-              </li>
-              <li>
-                <Link href="/events" className="hover:text-white transition">
-                  체험 이벤트
-                </Link>
-              </li>
-              <li>
-                <Link href="/reserve" className="hover:text-white transition">
-                  투어 예약
-                </Link>
-              </li>
-              <li>
-                <Link href="/feedback" className="hover:text-white transition">
-                  소통과 의견
-                </Link>
-              </li>
-            </ul>
-          </div>
-
           {/* 패밀리 사이트 */}
-          <div className="md:col-span-2 lg:col-span-2">
+          <div className="md:col-span-2">
             <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
               패밀리사이트
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5">
               {familySites.map((site) => (
                 <a
                   key={site.name}
@@ -120,7 +81,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
                   className="inline-flex items-center text-sm hover:text-sky-400 transition py-1"
                 >
                   <svg
-                    className="mr-1.5 h-3.5 w-3.5 text-white/30"
+                    className="mr-1.5 h-3.5 w-3.5 text-white/30 shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -132,7 +93,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
                       d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                     />
                   </svg>
-                  {site.name}
+                  <span className="break-keep">{site.name}</span>
                 </a>
               ))}
             </div>
