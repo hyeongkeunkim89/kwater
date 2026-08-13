@@ -81,9 +81,6 @@ export default function GatewayLandingPage() {
             <p className="mt-1.5 text-xs text-slate-300 font-semibold leading-relaxed line-clamp-2 sm:line-clamp-3">
               스마트 수자원 관리, 댐 엔지니어링, 친환경 수력발전 기술 안내
             </p>
-            <div className="mt-4 inline-flex items-center text-xs font-black text-cyan-400 group-hover:translate-x-1 transition duration-200">
-              메인 홈페이지 보기 →
-            </div>
           </div>
         </Link>
 
@@ -113,9 +110,6 @@ export default function GatewayLandingPage() {
             <p className="mt-1.5 text-xs text-slate-300 font-semibold leading-relaxed line-clamp-2 sm:line-clamp-3">
               강과 호수, 수변 동식물 생태계, 아름다운 수변 둘레길 산책 안내
             </p>
-            <div className="mt-4 inline-flex items-center text-xs font-black text-emerald-400 group-hover:translate-x-1 transition duration-200">
-              메인 홈페이지 보기 →
-            </div>
           </div>
         </Link>
 
@@ -145,9 +139,6 @@ export default function GatewayLandingPage() {
             <p className="mt-1.5 text-xs text-slate-300 font-semibold leading-relaxed line-clamp-2 sm:line-clamp-3">
               대한민국 치수 발자취, 수몰 마을 사람들의 생활 사료와 추억 기록
             </p>
-            <div className="mt-4 inline-flex items-center text-xs font-black text-amber-400 group-hover:translate-x-1 transition duration-200">
-              메인 홈페이지 보기 →
-            </div>
           </div>
         </Link>
 
@@ -156,11 +147,11 @@ export default function GatewayLandingPage() {
           href="/main"
           className="group relative flex-1 min-h-[220px] md:min-h-screen overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
-          {/* 배경 대표 배경 이미지 & 시네마틱 오버레이 */}
+          {/* 배경 대표 배경 이미지 (평화의댐 안보체험 전경) & 시네마틱 오버레이 */}
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
             style={{
-              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Chungju_Lake.jpg/1280px-Chungju_Lake.jpg')`,
+              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Peace_Dam_2022.jpg/960px-Peace_Dam_2022.jpg')`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20 group-hover:from-slate-950/95 transition duration-300" />
@@ -175,11 +166,8 @@ export default function GatewayLandingPage() {
               🎓 교육
             </h2>
             <p className="mt-1.5 text-xs text-slate-300 font-semibold leading-relaxed line-clamp-2 sm:line-clamp-3">
-              어린이 친환경 물 체험관, 전문 해설사 가이드 투어 예약 서비스
+              어린이 친환경 물 체험관, 안보체험 및 전문 해설사 가이드 투어 예약 서비스
             </p>
-            <div className="mt-4 inline-flex items-center text-xs font-black text-sky-400 group-hover:translate-x-1 transition duration-200">
-              메인 홈페이지 보기 →
-            </div>
           </div>
         </Link>
 
