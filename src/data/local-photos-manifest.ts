@@ -61,12 +61,13 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
-  chungju: [],
-  daecheong: [
-    "/images/surroundings/daecheong/맑음전망대.PNG",
-    "/images/surroundings/daecheong/숲놀이터.PNG",
-    "/images/surroundings/daecheong/어린이쉼터.PNG",
+  chungju: [
+    "/images/surroundings/chungju/맑음전망대.PNG",
+    "/images/surroundings/chungju/숲놀이터.PNG",
+    "/images/surroundings/chungju/어린이쉼터.PNG",
+    "/images/surroundings/chungju/주차장.PNG",
   ],
+  daecheong: [],
   "peace-dam": [
     "/images/surroundings/peace-dam/댐벽화.PNG",
     "/images/surroundings/peace-dam/세계평화의 종.PNG",
