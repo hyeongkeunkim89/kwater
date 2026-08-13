@@ -16,7 +16,7 @@ export async function GET(request: Request) {
   const origin = getOrigin(request);
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
-  const nextPath = searchParams.get("state") || "/yunyeong";
+  const nextPath = searchParams.get("state") || "/mypage";
   const error = searchParams.get("error");
 
   if (error || !code) {
@@ -96,16 +96,18 @@ export async function GET(request: Request) {
       path: "/",
     });
 
-    // 관리자 페이지 진입용 세션 플래그 쿠키도 함께 발행
-    cookieStore.set({
-      name: "staff_console_auth",
-      value: "true",
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-    });
+    // 관리자 페이지(/yunyeong) 로그인 동선일 때만 관리자용 세션 플래그 쿠키를 발행
+    if (nextPath.startsWith("/yunyeong")) {
+      cookieStore.set({
+        name: "staff_console_auth",
+        value: "true",
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 7,
+        path: "/",
+      });
+    }
 
     // 5. 로그인 완료 후 대상 페이지로 리다이렉트
     return NextResponse.redirect(`${origin}${nextPath}`);

@@ -14,7 +14,8 @@ function getOrigin(request: Request): string {
 export function GET(request: Request) {
   const origin = getOrigin(request);
   const { searchParams } = new URL(request.url);
-  const next = searchParams.get("next") || "/yunyeong";
+  // 일반 사용자 기본 리다이렉트 목적지는 /mypage (마이페이지)
+  const next = searchParams.get("next") || "/mypage";
 
   // 카카오 REST API 키 (환경변수가 없을 경우 안내 메시지와 함께 작동)
   const kakaoClientId =
