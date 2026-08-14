@@ -78,13 +78,15 @@ function stripBrokenPasswordInUri(raw: string): string {
 function getResolvedReservationsDatabaseUrl(): string | null {
   const rawRes = normalizeDatabaseUrlEnv(process.env.RESERVATIONS_DATABASE_URL);
   const rawMain = normalizeDatabaseUrlEnv(process.env.DATABASE_URL);
-  const rawChosen = rawRes || rawMain;
+  const rawPg = normalizeDatabaseUrlEnv(process.env.POSTGRES_URL);
+  const rawPgNonPool = normalizeDatabaseUrlEnv(process.env.POSTGRES_URL_NON_POOLING);
+  const rawChosen = rawRes || rawMain || rawPg || rawPgNonPool;
   if (!rawChosen) return null;
 
   const base = stripBrokenPasswordInUri(rawChosen);
   const mainStripped = rawMain ? stripBrokenPasswordInUri(rawMain) : "";
 
-  const resPwd = process.env.RESERVATIONS_DATABASE_PASSWORD?.trim() ?? "";
+  const resPwd = process.env.RESERVATIONS_DATABASE_PASSWORD?.trim() ?? process.env.POSTGRES_PASSWORD?.trim() ?? "";
   const mainPwd = process.env.DATABASE_PASSWORD?.trim() ?? "";
   const useMainPwdFallback =
     !resPwd &&
