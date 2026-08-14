@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { waterCenters } from "@/data/centers";
 
 export function AuthModal() {
   const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail, loginAsStaff } = useAuth();
@@ -230,11 +231,12 @@ export function AuthModal() {
                   onChange={(e) => setStaffCenter(e.target.value)}
                   className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-amber-500"
                 >
-                  <option value="all">전국 통합 관리자</option>
-                  <option value="soyanggang">소양강댐 물문화관</option>
-                  <option value="chungju">충주댐 물문화관</option>
-                  <option value="daecheong">대청댐 물문화관</option>
-                  <option value="andong">안동댐 물문화관</option>
+                  <option value="all">🌐 전국 전체 문화관 (최고 관리자)</option>
+                  {waterCenters.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      🏛️ {c.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
