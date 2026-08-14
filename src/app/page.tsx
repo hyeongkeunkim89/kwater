@@ -77,7 +77,7 @@ export default function GatewayLandingPage() {
             <h2 className="mt-3 text-xl sm:text-2xl lg:text-3xl font-black text-white group-hover:text-cyan-300 transition drop-shadow-md">
               ⚙️ 기술
             </h2>
-            <p className="mt-1.5 text-xs text-slate-200 font-semibold leading-relaxed line-clamp-2 sm:line-clamp-3 drop-shadow">
+            <p className="mt-1.5 text-xs text-slate-200 font-medium leading-snug tracking-[-0.03em] break-keep line-clamp-2 drop-shadow">
               스마트 수자원 관리, 댐 엔지니어링, 친환경 수력발전 기술 안내
             </p>
           </div>
@@ -106,7 +106,7 @@ export default function GatewayLandingPage() {
             <h2 className="mt-3 text-xl sm:text-2xl lg:text-3xl font-black text-white group-hover:text-emerald-300 transition drop-shadow-md">
               🌿 생태
             </h2>
-            <p className="mt-1.5 text-xs text-slate-200 font-semibold leading-relaxed line-clamp-2 sm:line-clamp-3 drop-shadow">
+            <p className="mt-1.5 text-xs text-slate-200 font-medium leading-snug tracking-[-0.03em] break-keep line-clamp-2 drop-shadow">
               강과 호수, 수변 동식물 생태계, 아름다운 수변 둘레길 산책 안내
             </p>
           </div>
@@ -135,7 +135,7 @@ export default function GatewayLandingPage() {
             <h2 className="mt-3 text-xl sm:text-2xl lg:text-3xl font-black text-white group-hover:text-amber-300 transition drop-shadow-md">
               🏛️ 역사
             </h2>
-            <p className="mt-1.5 text-xs text-slate-200 font-semibold leading-relaxed line-clamp-2 sm:line-clamp-3 drop-shadow">
+            <p className="mt-1.5 text-xs text-slate-200 font-medium leading-snug tracking-[-0.03em] break-keep line-clamp-2 drop-shadow">
               대한민국 치수 발자취, 수몰 마을 사람들의 생활 사료와 추억 기록
             </p>
           </div>
@@ -164,8 +164,8 @@ export default function GatewayLandingPage() {
             <h2 className="mt-3 text-xl sm:text-2xl lg:text-3xl font-black text-white group-hover:text-sky-300 transition drop-shadow-md">
               🎓 교육
             </h2>
-            <p className="mt-1.5 text-xs text-slate-200 font-semibold leading-relaxed line-clamp-2 sm:line-clamp-3 drop-shadow">
-              어린이 친환경 물 체험관, 안보체험 및 전문 해설사 가이드 투어 예약 서비스
+            <p className="mt-1.5 text-xs text-slate-200 font-medium leading-snug tracking-[-0.03em] break-keep line-clamp-2 drop-shadow">
+              어린이 친환경 물 체험관, 안보체험 및 전문 해설사 가이드 투어 안내
             </p>
           </div>
         </Link>
