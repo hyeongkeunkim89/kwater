@@ -45,6 +45,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch (e) {
       console.error("Failed to load user session", e);
     }
+
+    // 서버 쿠키 세션 (/api/auth/me)과 자동 동기화 (네이버/카카오 OAuth 로그인)
+    void fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.user) {
+          saveUserSession(data.user);
+        }
+      })
+      .catch((e) => {
+        console.error("Failed to fetch /api/auth/me", e);
+      });
   }, []);
 
   const openAuthModal = (tab: "login" | "signup" | "guest" | "staff" = "login") => {
