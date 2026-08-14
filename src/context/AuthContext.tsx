@@ -16,6 +16,7 @@ export type UserProfile = {
 
 type AuthContextType = {
   user: UserProfile | null;
+  isLoading: boolean;
   isAuthOpen: boolean;
   authTab: "login" | "signup" | "guest" | "staff";
   openAuthModal: (tab?: "login" | "signup" | "guest" | "staff") => void;
@@ -33,6 +34,7 @@ const STORAGE_KEY = "kwater_portal_user";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const [authTab, setAuthTab] = useState<"login" | "signup" | "guest" | "staff">("login");
 
@@ -47,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     // 서버 쿠키 세션 (/api/auth/me)과 자동 동기화 (네이버/카카오 OAuth 로그인)
-    void fetch("/api/auth/me")
+    fetch("/api/auth/me", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data && data.user) {
@@ -56,6 +58,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       })
       .catch((e) => {
         console.error("Failed to fetch /api/auth/me", e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -74,48 +79,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithSocial = (provider: "kakao" | "naver") => {
-    if (provider === "kakao" && typeof window !== "undefined" && window.Kakao) {
-      if (!window.Kakao.isInitialized()) {
-        const key = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "72d7c263c7937e92cc7b2dd2861b3cab";
-        window.Kakao.init(key);
-      }
-      if (window.Kakao.isInitialized()) {
-        window.Kakao.Auth.login({
-          throughTalk: false,
-          prompts: "login",
-          success: function (_authObj: any) {
-            window.Kakao.API.request({
-              url: "/v2/user/me",
-              success: function (res: any) {
-                const kakaoAccount = res.kakao_account || {};
-                const profile = kakaoAccount.profile || {};
-                const user: UserProfile = {
-                  id: String(res.id),
-                  name: profile.nickname || "카카오 회원",
-                  email: kakaoAccount.email || `${res.id}@kakao.user`,
-                  phone: "010-1234-5678",
-                  provider: "kakao",
-                  role: "user",
-                  favoriteCenter: "daecheong",
-                };
-                saveUserSession(user);
-                closeAuthModal();
-                alert("로그인 되었습니다.");
-                window.location.href = "/mypage";
-              },
-              fail: function (err: any) {
-                console.error("Kakao me error:", err);
-                window.location.href = "/api/auth/kakao?next=/mypage";
-              },
-            });
-          },
-          fail: function (err: any) {
-            console.error("Kakao auth login error:", err);
-            window.location.href = "/api/auth/kakao?next=/mypage";
-          },
-        });
-        return;
-      }
+    if (provider === "naver") {
+      window.location.href = "/api/auth/naver";
+      return;
+    }
+    if (provider === "kakao") {
+      window.location.href = "/api/auth/kakao";
+      return;
     }
 
     const mockUser: UserProfile = {
@@ -187,12 +157,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem(STORAGE_KEY);
+    void fetch("/api/auth/logout", { method: "POST" });
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        isLoading,
         isAuthOpen,
         authTab,
         openAuthModal,

@@ -41,7 +41,7 @@ export default function MyPage() {
 }
 
 function MyPageContent() {
-  const { user, openAuthModal, logout } = useAuth();
+  const { user, isLoading, openAuthModal, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<"reservations" | "qna" | "profile">("reservations");
 
   const [reservations, setReservations] = useState<MockReservation[]>([
@@ -72,6 +72,21 @@ function MyPageContent() {
       );
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+        <WaterHubHeader activeNav="none" />
+        <main className="mx-auto max-w-xl w-full px-6 py-20 text-center">
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 shadow-xl space-y-4">
+            <div className="animate-spin text-3xl mx-auto w-fit">🌀</div>
+            <p className="text-sm font-bold text-slate-600">로그인 세션 확인 중입니다...</p>
+          </div>
+        </main>
+        <WaterHubFooter />
+      </div>
+    );
+  }
 
   if (!user) {
     return (
