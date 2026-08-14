@@ -69,6 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       if (window.Kakao.isInitialized()) {
         window.Kakao.Auth.login({
+          throughTalk: false,
           prompts: "login",
           success: function (_authObj: any) {
             window.Kakao.API.request({
