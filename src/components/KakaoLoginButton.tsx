@@ -26,6 +26,7 @@ export function KakaoLoginButton({
 
       if (window.Kakao.isInitialized()) {
         window.Kakao.Auth.login({
+          prompts: "login",
           success: function (authObj: any) {
             window.Kakao.API.request({
               url: "/v2/user/me",

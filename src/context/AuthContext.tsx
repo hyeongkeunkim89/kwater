@@ -62,6 +62,49 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithSocial = (provider: "kakao" | "naver") => {
+    if (provider === "kakao" && typeof window !== "undefined" && window.Kakao) {
+      if (!window.Kakao.isInitialized()) {
+        const key = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "72d7c263c7937e92cc7b2dd2861b3cab";
+        window.Kakao.init(key);
+      }
+      if (window.Kakao.isInitialized()) {
+        window.Kakao.Auth.login({
+          prompts: "login",
+          success: function (_authObj: any) {
+            window.Kakao.API.request({
+              url: "/v2/user/me",
+              success: function (res: any) {
+                const kakaoAccount = res.kakao_account || {};
+                const profile = kakaoAccount.profile || {};
+                const user: UserProfile = {
+                  id: String(res.id),
+                  name: profile.nickname || "카카오 회원",
+                  email: kakaoAccount.email || `${res.id}@kakao.user`,
+                  phone: "010-1234-5678",
+                  provider: "kakao",
+                  role: "user",
+                  favoriteCenter: "daecheong",
+                };
+                saveUserSession(user);
+                closeAuthModal();
+                alert("로그인 되었습니다.");
+                window.location.href = "/mypage";
+              },
+              fail: function (err: any) {
+                console.error("Kakao me error:", err);
+                window.location.href = "/api/auth/kakao?next=/mypage";
+              },
+            });
+          },
+          fail: function (err: any) {
+            console.error("Kakao auth login error:", err);
+            window.location.href = "/api/auth/kakao?next=/mypage";
+          },
+        });
+        return;
+      }
+    }
+
     const mockUser: UserProfile = {
       id: `user_${Date.now()}`,
       name: provider === "kakao" ? "카카오 회원" : "네이버 회원",
