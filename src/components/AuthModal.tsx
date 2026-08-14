@@ -30,6 +30,14 @@ export function AuthModal() {
   if (!isAuthOpen) return null;
 
   const handleSocialClick = (provider: "kakao" | "naver") => {
+    if (provider === "naver") {
+      window.location.href = "/api/auth/naver";
+      return;
+    }
+    if (provider === "kakao") {
+      window.location.href = "/api/auth/kakao";
+      return;
+    }
     loginWithSocial(provider);
     router.push("/mypage");
   };
