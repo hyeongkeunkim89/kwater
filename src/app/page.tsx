@@ -165,7 +165,7 @@ export default function GatewayLandingPage() {
               🎓 교육
             </h2>
             <p className="mt-1.5 text-xs text-slate-200 font-medium leading-snug tracking-[-0.03em] break-keep line-clamp-2 drop-shadow">
-              어린이 친환경 물 체험관, 안보체험 및 전문 해설사 가이드 투어 안내
+              어린이 친환경 물 체험관, 체험 및 전문 해설사 가이드 투어 안내
             </p>
           </div>
         </Link>
