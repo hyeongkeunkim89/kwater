@@ -17,6 +17,60 @@ export function KakaoLoginButton({
 
   const handleKakaoLogin = () => {
     setLoading(true);
+
+    if (typeof window !== "undefined" && window.Kakao) {
+      if (!window.Kakao.isInitialized()) {
+        const key = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "72d7c263c7937e92cc7b2dd2861b3cab";
+        window.Kakao.init(key);
+      }
+
+      if (window.Kakao.isInitialized()) {
+        window.Kakao.Auth.login({
+          success: function (authObj: any) {
+            window.Kakao.API.request({
+              url: "/v2/user/me",
+              success: function (res: any) {
+                const kakaoAccount = res.kakao_account || {};
+                const profile = kakaoAccount.profile || {};
+                const user = {
+                  id: String(res.id),
+                  name: profile.nickname || "카카오 회원",
+                  email: kakaoAccount.email || `${res.id}@kakao.user`,
+                  phone: "010-1234-5678",
+                  provider: "kakao",
+                  role: redirectPath.startsWith("/yunyeong") ? "admin" : "user",
+                };
+
+                // Save session in localStorage
+                localStorage.setItem("kwater_portal_user", JSON.stringify(user));
+
+                // Save cookie for backend API routes
+                document.cookie = `kakao_user_session=${encodeURIComponent(JSON.stringify(user))}; path=/; max-age=604800; SameSite=Lax`;
+                if (redirectPath.startsWith("/yunyeong")) {
+                  document.cookie = "staff_console_auth=true; path=/; max-age=604800; SameSite=Lax";
+                }
+
+                alert("로그인 되었습니다.");
+                window.location.href = redirectPath;
+              },
+              fail: function (err: any) {
+                console.error("Kakao User Info Error:", err);
+                setLoading(false);
+                window.location.href = `/api/auth/kakao?next=${encodeURIComponent(redirectPath)}`;
+              },
+            });
+          },
+          fail: function (err: any) {
+            console.error("Kakao Auth Login Error:", err);
+            setLoading(false);
+            window.location.href = `/api/auth/kakao?next=${encodeURIComponent(redirectPath)}`;
+          },
+        });
+        return;
+      }
+    }
+
+    // Fallback to REST API route
     const targetUrl = `/api/auth/kakao?next=${encodeURIComponent(redirectPath)}`;
     window.location.href = targetUrl;
   };
