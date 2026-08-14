@@ -38,7 +38,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const [authTab, setAuthTab] = useState<"login" | "signup" | "guest" | "staff">("login");
 
+  const saveUserSession = (u: UserProfile) => {
+    setUser(u);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
+    } catch (e) {
+      console.error("Failed to save to localStorage", e);
+    }
+  };
+
   useEffect(() => {
+    // 1. localStorage 우선 로드
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -48,8 +58,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error("Failed to load user session", e);
     }
 
-    // 서버 쿠키 세션 (/api/auth/me)과 자동 동기화 (네이버/카카오 OAuth 로그인)
-    fetch("/api/auth/me", { cache: "no-store" })
+    // 2. 브라우저 document.cookie 직접 파싱 (네이버/카카오 쿠키 백업 복구)
+    try {
+      if (typeof document !== "undefined" && document.cookie) {
+        const cookies = document.cookie.split("; ");
+        for (const c of cookies) {
+          if (c.startsWith("naver_user_session=") || c.startsWith("kakao_user_session=")) {
+            const rawVal = c.substring(c.indexOf("=") + 1);
+            const jsonStr = decodeURIComponent(rawVal);
+            const raw = JSON.parse(jsonStr);
+            if (raw && raw.id) {
+              const u: UserProfile = {
+                id: String(raw.id),
+                name: raw.name || raw.nickname || "소셜 회원",
+                email: raw.email || `${raw.id}@social.user`,
+                phone: raw.phone || "",
+                provider: raw.provider || (c.startsWith("naver") ? "naver" : "kakao"),
+                role: raw.role || "user",
+              };
+              saveUserSession(u);
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Failed to parse document.cookie", e);
+    }
+
+    // 3. 서버 쿠키 API (/api/auth/me)와 최종 동기화
+    fetch("/api/auth/me", { cache: "no-store", credentials: "same-origin" })
       .then((res) => res.json())
       .then((data) => {
         if (data && data.user) {
@@ -71,11 +108,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const closeAuthModal = () => {
     setIsAuthOpen(false);
-  };
-
-  const saveUserSession = (u: UserProfile) => {
-    setUser(u);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
   };
 
   const loginWithSocial = (provider: "kakao" | "naver") => {

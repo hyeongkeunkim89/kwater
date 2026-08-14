@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 function getOrigin(request: Request): string {
   if (process.env.NEXT_PUBLIC_SITE_URL?.trim()) {
@@ -66,30 +65,32 @@ export async function GET(request: Request) {
     const response = userData.response || {};
 
     const userInfo = {
-      id: response.id,
+      id: response.id || `naver_${Date.now()}`,
       name: response.name || response.nickname || "네이버 회원",
-      email: response.email || null,
-      phone: response.mobile || null,
+      email: response.email || `${response.id || Date.now()}@naver.user`,
+      phone: response.mobile || "",
       provider: "naver",
+      role: "user",
       loggedInAt: new Date().toISOString(),
     };
 
-    // 3. 로그인 세션 쿠키 세팅 (HttpOnly)
-    const cookieStore = await cookies();
-    cookieStore.set({
+    // 3. 관람객 마이페이지로 리다이렉트 (NextResponse.redirect 객체에 쿠키를 직접 설정)
+    const targetUrl = new URL(`${origin}${nextPath}`);
+    targetUrl.searchParams.set("login", "success");
+
+    const redirectRes = NextResponse.redirect(targetUrl.toString());
+
+    redirectRes.cookies.set({
       name: "naver_user_session",
       value: JSON.stringify(userInfo),
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
 
-    // 4. 관람객 마이페이지로 리다이렉트
-    const targetUrl = new URL(`${origin}${nextPath}`);
-    targetUrl.searchParams.set("login", "success");
-    return NextResponse.redirect(targetUrl.toString());
+    return redirectRes;
   } catch (err) {
     console.error("Naver Callback Exception:", err);
     return NextResponse.redirect(`${origin}/mypage?notice=naver_exception`);

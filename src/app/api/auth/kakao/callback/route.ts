@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 function getOrigin(request: Request): string {
   if (process.env.NEXT_PUBLIC_SITE_URL?.trim()) {
@@ -75,35 +74,37 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${origin}${errTarget}?error=kakao_user_failed&msg=${errMsg}`);
     }
 
-    // 3. 사용자 정보 추출 (닉네임, 프로필 사진, 이메일 등)
+    // 3. 사용자 정보 추출
     const kakaoAccount = userData.kakao_account || {};
     const profile = kakaoAccount.profile || {};
 
     const userInfo = {
-      id: userData.id,
-      nickname: profile.nickname || "카카오 회원",
-      profileImage: profile.profile_image_url || null,
-      email: kakaoAccount.email || null,
+      id: String(userData.id || `kakao_${Date.now()}`),
+      name: profile.nickname || "카카오 회원",
+      email: kakaoAccount.email || `${userData.id}@kakao.user`,
+      phone: "",
       provider: "kakao",
+      role: "user",
       loggedInAt: new Date().toISOString(),
     };
 
-    // 4. 로그인 세션 쿠키 세팅 (HttpOnly)
-    const cookieStore = await cookies();
-    cookieStore.set({
+    // 4. 로그인 완료 후 대상 페이지로 리다이렉트 (redirectRes에 직접 쿠키 세팅)
+    const targetUrl = new URL(`${origin}${nextPath}`);
+    targetUrl.searchParams.set("login", "success");
+
+    const redirectRes = NextResponse.redirect(targetUrl.toString());
+
+    redirectRes.cookies.set({
       name: "kakao_user_session",
       value: JSON.stringify(userInfo),
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 7일 유지
+      maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
 
-    // 5. 로그인 완료 후 대상 페이지로 리다이렉트 (login=success 전달하여 안내 메시지 노출)
-    const targetUrl = new URL(`${origin}${nextPath}`);
-    targetUrl.searchParams.set("login", "success");
-    return NextResponse.redirect(targetUrl.toString());
+    return redirectRes;
   } catch (err) {
     console.error("Kakao Callback Exception:", err);
     return NextResponse.redirect(`${origin}/mypage?notice=kakao_exception`);
