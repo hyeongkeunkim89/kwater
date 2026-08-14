@@ -48,44 +48,77 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    // 1. localStorage 우선 로드
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        setUser(JSON.parse(saved));
+    let resolvedUser: UserProfile | null = null;
+
+    // 1. URL 쿼리 파라미터 ?u=... 우선 수신 (소셜 로그인 콜백 페이로드)
+    if (typeof window !== "undefined") {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userParam = urlParams.get("u");
+        if (userParam) {
+          const raw = JSON.parse(decodeURIComponent(userParam));
+          if (raw && raw.id) {
+            resolvedUser = {
+              id: String(raw.id),
+              name: raw.name || raw.nickname || "소셜 회원",
+              email: raw.email || `${raw.id}@social.user`,
+              phone: raw.phone || "",
+              provider: raw.provider || "social",
+              role: raw.role || "user",
+            };
+            saveUserSession(resolvedUser);
+            setIsLoading(false);
+          }
+        }
+      } catch (e) {
+        console.error("Failed to parse URL session payload", e);
       }
-    } catch (e) {
-      console.error("Failed to load user session", e);
     }
 
-    // 2. 브라우저 document.cookie 직접 파싱 (네이버/카카오 쿠키 백업 복구)
-    try {
-      if (typeof document !== "undefined" && document.cookie) {
-        const cookies = document.cookie.split("; ");
-        for (const c of cookies) {
-          if (c.startsWith("naver_user_session=") || c.startsWith("kakao_user_session=")) {
-            const rawVal = c.substring(c.indexOf("=") + 1);
-            const jsonStr = decodeURIComponent(rawVal);
-            const raw = JSON.parse(jsonStr);
-            if (raw && raw.id) {
-              const u: UserProfile = {
-                id: String(raw.id),
-                name: raw.name || raw.nickname || "소셜 회원",
-                email: raw.email || `${raw.id}@social.user`,
-                phone: raw.phone || "",
-                provider: raw.provider || (c.startsWith("naver") ? "naver" : "kakao"),
-                role: raw.role || "user",
-              };
-              saveUserSession(u);
+    // 2. localStorage 세션 확인
+    if (!resolvedUser) {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          resolvedUser = JSON.parse(saved);
+          setUser(resolvedUser);
+        }
+      } catch (e) {
+        console.error("Failed to load user session from localStorage", e);
+      }
+    }
+
+    // 3. 브라우저 document.cookie 파싱
+    if (!resolvedUser) {
+      try {
+        if (typeof document !== "undefined" && document.cookie) {
+          const cookies = document.cookie.split("; ");
+          for (const c of cookies) {
+            if (c.startsWith("naver_user_session=") || c.startsWith("kakao_user_session=")) {
+              const rawVal = c.substring(c.indexOf("=") + 1);
+              const jsonStr = decodeURIComponent(rawVal);
+              const raw = JSON.parse(jsonStr);
+              if (raw && raw.id) {
+                resolvedUser = {
+                  id: String(raw.id),
+                  name: raw.name || raw.nickname || "소셜 회원",
+                  email: raw.email || `${raw.id}@social.user`,
+                  phone: raw.phone || "",
+                  provider: raw.provider || (c.startsWith("naver") ? "naver" : "kakao"),
+                  role: raw.role || "user",
+                };
+                saveUserSession(resolvedUser);
+                break;
+              }
             }
           }
         }
+      } catch (e) {
+        console.error("Failed to parse document.cookie", e);
       }
-    } catch (e) {
-      console.error("Failed to parse document.cookie", e);
     }
 
-    // 3. 서버 쿠키 API (/api/auth/me)와 최종 동기화
+    // 4. 서버 쿠키 API (/api/auth/me)와 최종 교차 검증
     fetch("/api/auth/me", { cache: "no-store", credentials: "same-origin" })
       .then((res) => res.json())
       .then((data) => {

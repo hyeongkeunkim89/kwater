@@ -74,9 +74,11 @@ export async function GET(request: Request) {
       loggedInAt: new Date().toISOString(),
     };
 
-    // 3. 관람객 마이페이지로 리다이렉트 (NextResponse.redirect 객체에 쿠키를 직접 설정)
+    // 3. 안전한 세션 동기화를 위해 URL 쿼리 파라미터와 쿠키에 동시 세팅
+    const sessionPayload = encodeURIComponent(JSON.stringify(userInfo));
     const targetUrl = new URL(`${origin}${nextPath}`);
     targetUrl.searchParams.set("login", "success");
+    targetUrl.searchParams.set("u", sessionPayload);
 
     const redirectRes = NextResponse.redirect(targetUrl.toString());
 

@@ -19,14 +19,15 @@ type MockReservation = {
 
 function LoginAlertHandler() {
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   React.useEffect(() => {
     if (searchParams.get("login") === "success") {
       alert("로그인 되었습니다.");
-      router.replace("/mypage");
+      if (typeof window !== "undefined") {
+        window.history.replaceState({}, "", "/mypage");
+      }
     }
-  }, [searchParams, router]);
+  }, [searchParams]);
 
   return null;
 }
