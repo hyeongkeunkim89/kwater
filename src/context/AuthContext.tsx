@@ -42,6 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(u);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
+      document.cookie = `kakao_user_session=${encodeURIComponent(JSON.stringify(u))}; path=/; max-age=604800; SameSite=Lax`;
     } catch (e) {
       console.error("Failed to save to localStorage", e);
     }
@@ -143,6 +144,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsAuthOpen(false);
   };
 
+<<<<<<< HEAD
+=======
+  const saveUserSession = (u: UserProfile) => {
+    setUser(u);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
+    document.cookie = `kakao_user_session=${encodeURIComponent(JSON.stringify(u))}; path=/; max-age=604800; SameSite=Lax`;
+  };
+
+>>>>>>> e2833d8 (fix: 소셜 로그인 클릭 시 비동기 인증 완료 전에 마이페이지로 즉시 리다이렉트되던 동기화 버그 수정)
   const loginWithSocial = (provider: "kakao" | "naver") => {
     if (provider === "naver") {
       window.location.href = "/api/auth/naver";

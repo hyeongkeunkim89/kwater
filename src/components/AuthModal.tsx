@@ -39,7 +39,6 @@ export function AuthModal() {
       return;
     }
     loginWithSocial(provider);
-    router.push("/mypage");
   };
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
