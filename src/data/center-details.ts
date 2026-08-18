@@ -295,9 +295,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
   },
   hoengseong: {
-    imageSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/2020-05-30_10.41.15_%ED%9A%A1%EC%84%B1%EA%B5%B0_%EB%B0%B1%EC%9A%B4%EC%95%94.jpg/960px-2020-05-30_10.41.15_%ED%9A%A1%EC%84%B1%EA%B5%B0_%EB%B0%B1%EC%9A%B4%EC%95%94.jpg",
-    imageAlt: "횡성댐 본체 및 횡성호 망향의 동산 전경",
+    imageSrc: "/centers/hoengseong.jpg",
+    imageAlt: "횡성댐 본체 및 횡성댐 물문화관 전경",
     profileIntro:
       "댐 축조로 수몰된 횡성군 5개 리(부동리, 중금리 등) 주민들의 옛 삶과 터전을 보존하는 망향의 동산 연계관입니다.\n\n수몰지 마을의 옛 사진, 생활 유물, 수몰민들의 아련한 이야기를 사료관에 기록해 두고 있습니다.\n\n횡성호수길 5구간 탐방과 함께 수몰 역사 사료를 되새기려는 방문객에게 뜻깊은 역사관입니다.",
     facilityProfile: [
