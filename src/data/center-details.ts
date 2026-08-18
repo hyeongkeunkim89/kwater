@@ -336,7 +336,7 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     profileIntro:
       "북한 금강산댐 대응으로 시작된 댐의 특수한 건립 배경, 세계평화의 종, 남북 분단/안보 역사를 담고 있습니다.\n\n전 세계 60여 개 분쟁 지역의 탄피를 모아 주조한 세계평화의 종과 평화 메시지 전시가 상징적입니다.\n\nDMZ 접경 지역의 남북 분단 및 평화 안보 역사를 탐방하려는 학생·성인 관람객에 최적입니다.",
     facilityProfile: [
-      { label: "테마", value: "남북 분단·안보 현대사 & 세계평화의 종" },
+      { label: "테마", value: "세계평화의 종, 남북 분단/안보 역사 중심" },
       { label: "대상", value: "DMZ 안보 역사 탐방 및 평화 안보 교육 방문객" },
     ],
     floors: [
@@ -352,6 +352,21 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
         floorLabel: "옥외·연계",
         highlights: ["세계종공원", "비목공원 산책로", "댐 마루 전망 동선"],
       },
+    ],
+  },
+  andong: {
+    imageSrc:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Andong_dam.JPG/960px-Andong_dam.JPG",
+    imageAlt: "안동댐 전경 및 수몰 문화재 보존 일대",
+    profileIntro:
+      "안동댐 축조 당시 수몰 위기에 처했던 수많은 전통 유교 문화재의 이전 및 보존 역사와 안동호 형성 과정의 사료를 전합니다.\n\n안동의 역사 문화적 유산과 수몰민들의 삶의 터전을 기록한 역사문화 전시관을 함께 다룹니다.\n\n안동의 유교 문화재 보존 및 수몰 역사를 다각도로 학습하고 감상하려는 방문객에게 대표 역사관 역할을 합니다.",
+    facilityProfile: [
+      { label: "테마", value: "안동 유교 문화재 보존 및 수몰 역사 중심" },
+      { label: "대상", value: "전통 역사·문화재 보존 및 안동의 역사적 가치를 탐방하는 방문객" },
+    ],
+    floors: [
+      { floorLabel: "1층", highlights: ["로비", "안동 수몰 문화재 보존관", "유교 역사 사료실"] },
+      { floorLabel: "2층", highlights: ["안동호 수계 전시관", "영상 상영실", "전망대"] },
     ],
   },
   geumgang: {

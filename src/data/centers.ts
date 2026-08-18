@@ -75,73 +75,27 @@ export type WaterCenter = WaterCenterBase &
     coordinates: readonly [number, number];
   };
 
-/** 시설 id별 테마(문화관 현황·필터용, 시설당 2개. 첫 번째가 「전체」목록에서의 그룹 기준) */
+/** 시설 id별 테마(문화관 현황·필터용, 첫 번째가 대표 테마) */
 const centerThemesById: Record<string, readonly CenterTheme[]> = {
-  chungju: ["기술", "문화"],
-  daecheong: ["생태", "역사"],
-  buan: ["생태", "역사"],
   soyang: ["역사", "기술"],
-  hantan: ["생태", "문화"],
-  juam: ["생태", "기술"],
-  jangheung: ["생태", "문화"],
-  yeongju: ["생태", "문화"],
-  seomjin: ["생태", "기술"],
-  gimcheon: ["문화", "기술"],
-  yongdam: ["생태", "문화"],
-  namgang: ["문화", "역사"],
-  miryang: ["문화", "생태"],
+  andong: ["역사", "문화"],
   hoengseong: ["역사", "문화"],
   "peace-dam": ["역사", "기술"],
+  chungju: ["기술", "문화"],
+  hapcheon: ["기술", "생태"],
+  daecheong: ["생태", "역사"],
+  yongdam: ["생태", "문화"],
+  juam: ["생태", "기술"],
+  jangheung: ["생태", "문화"],
+  buan: ["생태", "역사"],
+  hantan: ["생태", "문화"],
+  namgang: ["문화", "역사"],
+  miryang: ["문화", "생태"],
+  gimcheon: ["문화", "기술"],
 };
 
 const waterCenterBaseList: WaterCenterBase[] = [
-  {
-    id: "hantan",
-    name: "한탄강댐 물문화관",
-    kind: "댐 물문화관",
-    sido: "경기",
-    sigungu: "연천군",
-    address: "경기도 연천군 연천읍 고문리 902",
-    summary:
-      "UNESCO 세계지질공원으로 지정된 한탄강의 화산암 주상절리 협곡과 고유 수생태계의 보전 가치를 지키는 지질 생태관입니다.",
-    status: "운영중",
-    statusNote: "댐 구역·인접 군사지역 통행 제한이 있을 수 있음",
-    weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석, 법정공휴일·긴급 점검 시 휴관(현장 공지)",
-  },
-  {
-    id: "peace-dam",
-    name: "평화의댐 물문화관",
-    kind: "댐 물문화관",
-    sido: "강원",
-    sigungu: "화천군",
-    address: "강원특별자치도 화천군 화천읍 평화로 3481-18",
-    summary:
-      "금강산댐 대응 건립사, 세계평화의 종, 남북 분단과 안보 현대사의 비극적 역사를 평화 메시지로 전달하는 역사 안보관입니다.",
-    status: "운영중",
-    statusNote: "관람 시간 10:00~17:00, 입장 마감 확인",
-    weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석 연휴, 법정공휴일 휴관",
-  },
-  {
-    id: "daecheong",
-    name: "대청댐 물문화관",
-    kind: "댐 물문화관",
-    sido: "대전",
-    sigungu: "대덕구",
-    address: "대전광역시 대덕구 대청로 618-136",
-    summary:
-      "대청호 청정 수생태계 보전과 금강 유역에 서식하는 다양한 민물고기 생태 수족관 및 수변 둘레길 중심의 대표 생태관입니다.",
-    status: "점검·휴관",
-    statusNote: "그린리모델링·전시 리뉴얼 — 2026년 11월 말까지 임시 휴관 예정",
-    weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석 당일 등 명절·법정공휴일 휴관(연도별 공지 확인)",
-    visitorNotice:
-      "그린리모델링 공사 및 전시 리뉴얼로 현재 임시 휴관 중입니다. 휴관은 2026년 11월 말까지 예정되어 있으며, 재개 일정·변동 사항은 시설 현장 안내와 K-water 공식 공지를 확인해 주세요.",
-  },
+  // 🏛️ 역사 (History - 4개소)
   {
     id: "soyang",
     name: "소양강댐 물문화관",
@@ -150,12 +104,25 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "춘천시",
     address: "강원특별자치도 춘천시 신북읍 신샘밭로 1128",
     summary:
-      "동양 최대 사급댐 축조사 및 대한민국 근대 치수 역사를 조명하고, 수몰민의 옛 터전과 삶의 사료를 보존하는 대표 역사관입니다.",
+      "동양 최대 사급댐 건설사 및 수몰민 사료 중심의 근대 치수 역사관입니다.",
     status: "운영중",
     statusNote: "기상·시설 점검에 따라 일시 휴관 가능",
     weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석 연휴, 법정공휴일 등은 시설 공지 확인",
+    holidayClosureSummary: "설·추석 연휴, 법정공휴일 등은 시설 공지 확인",
+  },
+  {
+    id: "andong",
+    name: "안동댐 물문화관",
+    kind: "댐 물문화관",
+    sido: "경북",
+    sigungu: "안동시",
+    address: "경상북도 안동시 석주로 383",
+    summary:
+      "안동 유교 문화재 보존 및 수몰 역사를 중심으로 기록·전시하는 전통 역사관입니다.",
+    status: "운영중",
+    statusNote: "전망대·전시실 관람 시간 확인",
+    weeklyClosedDays: ["월"],
+    holidayClosureSummary: "설·추석 연휴, 법정공휴일 휴관",
   },
   {
     id: "hoengseong",
@@ -165,13 +132,28 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "횡성군",
     address: "강원특별자치도 횡성군 갑천면 태기로구방5길 40",
     summary:
-      "댐 축조로 수몰된 횡성군 5개 리 주민들의 옛 터전과 삶의 애환을 기록·보존하는 「망향의 동산」 연계 역사 사료관입니다.",
+      "5개 수몰 마을 망향의 동산 및 향수를 보존하는 연계 역사 사료관입니다.",
     status: "운영중",
     statusNote: "영상 상영 시간(11:00·14:00·16:00) 사전 확인 권장",
     weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석 연휴, 법정공휴일 휴관(현장 공지 확인)",
+    holidayClosureSummary: "설·추석 연휴, 법정공휴일 휴관(현장 공지 확인)",
   },
+  {
+    id: "peace-dam",
+    name: "평화의댐 물문화관",
+    kind: "댐 물문화관",
+    sido: "강원",
+    sigungu: "화천군",
+    address: "강원특별자치도 화천군 화천읍 평화로 3481-18",
+    summary:
+      "세계평화의 종, 남북 분단과 안보 역사의 기억을 전달하는 역사 안보관입니다.",
+    status: "운영중",
+    statusNote: "관람 시간 10:00~17:00, 입장 마감 확인",
+    weeklyClosedDays: ["월"],
+    holidayClosureSummary: "설·추석 연휴, 법정공휴일 휴관",
+  },
+
+  // 💡 기술 (Technology - 2개소)
   {
     id: "chungju",
     name: "충주다목적댐 물문화관",
@@ -180,27 +162,43 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "충주시",
     address: "충청북도 충주시 동량면 지등로 745",
     summary:
-      "K-water의 스마트 수자원 관리 공학, 댐 본체 미디어파사드 연출 및 3D 디지털 미디어 체험이 집약된 첨단 기술관입니다.",
+      "스마트 수자원 관리, 3D 및 미디어파사드 연출이 집약된 첨단 기술관입니다.",
     status: "운영중",
     statusNote: "입장 마감·주차 등은 시설 안내 확인",
     weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석 연휴, 법정공휴일 및 시설 점검일 휴관 가능",
+    holidayClosureSummary: "설·추석 연휴, 법정공휴일 및 시설 점검일 휴관 가능",
   },
   {
-    id: "buan",
-    name: "부안댐 물문화관",
+    id: "hapcheon",
+    name: "합천댐 물문화관",
     kind: "댐 물문화관",
-    sido: "전북",
-    sigungu: "부안군",
-    address: "전북특별자치도 부안군 변산면 부안댐로 290",
+    sido: "경남",
+    sigungu: "합천군",
+    address: "경상남도 합천군 대병면 회양리 14-1",
     summary:
-      "변산반도 국립공원의 청정 산림 자원과 부안호 자생 동식물 생태계 보호 및 자연 환경 가치를 홍보하는 국립공원 생태관입니다.",
+      "세계 최대 붕어모양 수상태양광과 친환경 신재생 물 에너지 기술을 조망하는 미래 기술관입니다.",
     status: "운영중",
-    statusNote: "점심시간(12:00~13:00) 휴게 등 시설 안내 확인",
+    statusNote: "시설 관람 및 주차 안내 확인",
     weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석 연휴, 법정공휴일·업체 사정에 따른 추가 휴무 가능",
+    holidayClosureSummary: "설·추석 연휴, 법정공휴일 휴관",
+  },
+
+  // 🍃 생태 (Ecology - 6개소)
+  {
+    id: "daecheong",
+    name: "대청댐 물문화관",
+    kind: "댐 물문화관",
+    sido: "대전",
+    sigungu: "대덕구",
+    address: "대전광역시 대덕구 대청로 618-136",
+    summary:
+      "대청호 수생태계 보전과 금강 유역 민물고기 수족관 교육 중심의 청정 생태관입니다.",
+    status: "점검·휴관",
+    statusNote: "그린리모델링·전시 리뉴얼 — 2026년 11월 말까지 임시 휴관 예정",
+    weeklyClosedDays: ["월"],
+    holidayClosureSummary: "설·추석 당일 등 명절·법정공휴일 휴관(연도별 공지 확인)",
+    visitorNotice:
+      "그린리모델링 공사 및 전시 리뉴얼로 현재 임시 휴관 중입니다. 휴관은 2026년 11월 말까지 예정되어 있으며, 재개 일정·변동 사항은 시설 현장 안내와 K-water 공식 공지를 확인해 주세요.",
   },
   {
     id: "yongdam",
@@ -210,72 +208,11 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "진안군",
     address: "전북특별자치도 진안군 안천면 안용로 747",
     summary:
-      "용담호 주변 습지 및 숲 생태 자원을 관찰할 수 있는 6개 테마 정원과 디지털 생태학습관 중심의 청정 생태관입니다.",
+      "용담호 습지 및 숲 생태를 직접 관찰하는 6대 테마 정원 중심의 생태관입니다.",
     status: "운영중",
     statusNote: "동절기 결빙·안개로 운영 시간 변동 가능",
     weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석 연휴, 법정공휴일·기상 악화 시 휴관 가능",
-  },
-  {
-    id: "yeongju",
-    name: "영주댐 물문화관",
-    kind: "댐 물문화관",
-    sido: "경북",
-    sigungu: "영주시",
-    address: "경상북도 영주시 평은면 용혈리 897-2",
-    summary:
-      "낙동강 상류 영주호 주변 생태숲 및 출렁다리와 연계하여 수생태계 보전과 자연 탐방을 지원하는 생태 문화관입니다.",
-    status: "운영중",
-    statusNote: "전망대·전시실 운영이 상이할 수 있음",
-    weeklyClosedDays: ["월", "화"],
-    holidayClosureSummary:
-      "법정공휴일, 설·추석 명절 연휴 휴관(공지 확인)",
-  },
-  {
-    id: "seomjin",
-    name: "섬진강댐 물문화관",
-    kind: "댐 물문화관",
-    sido: "전북",
-    sigungu: "임실군",
-    address: "전북특별자치도 임실군 운암면 강운로 1239",
-    summary:
-      "섬진강 청정 유역의 수생태계 보전과 수변 자연 환경 보호의 중요성을 교육하는 청정 생태관입니다.",
-    status: "운영중",
-    statusNote: "댐 주변 안전구역 통제 구간 준수",
-    weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석 당일, 1월 1일, 법정공휴일 휴관 등(공지)",
-  },
-  {
-    id: "gimcheon",
-    name: "김천부항댐 물문화관",
-    kind: "댐 물문화관",
-    sido: "경북",
-    sigungu: "김천시",
-    address: "경상북도 김천시 부항면 부항댐길 352",
-    summary:
-      "국내 최고 높이 짚와이어, 출렁다리, 스카이워크 등 수변 익스트림 스포츠와 활기찬 레저 문화를 선도하는 레저 문화 거점입니다.",
-    status: "운영중",
-    statusNote: "철새 도래기에는 주변 도로 통제 안내가 있을 수 있음",
-    weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석, 법정공휴일 및 시설 점검 시 휴관",
-  },
-  {
-    id: "jangheung",
-    name: "장흥댐 물문화관",
-    kind: "댐 물문화관",
-    sido: "전남",
-    sigungu: "장흥군",
-    address: "전라남도 장흥군 부산면 지천길 142",
-    summary:
-      "전남 청정 탐진강 상류 유역의 맑은 물과 수생생물, 민물고기, 습지 생태계를 생생하게 관찰하고 배우는 수생태관입니다.",
-    status: "운영중",
-    statusNote: "체험·단체 관람은 사전 예약 여부 확인",
-    weeklyClosedDays: ["월"],
-    holidayClosureSummary:
-      "설·추석, 법정공휴일 및 지자체·시설 사정에 따른 휴관",
+    holidayClosureSummary: "설·추석 연휴, 법정공휴일·기상 악화 시 휴관 가능",
   },
   {
     id: "juam",
@@ -285,13 +222,58 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "순천시",
     address: "전라남도 순천시 상사면 상사호길 555",
     summary:
-      "순천만 생태 도시 축과 연계하여 주암호의 청정 수질 보존과 호수 수생태계의 자연 보호 가치를 전하는 생태 교육관입니다.",
+      "순천만 생태축 연계 주암호 수질과 습지 생태계를 보전하는 교육관입니다.",
     status: "운영중",
     statusNote: "주중 공휴일 포함 휴관 규정은 공지 확인",
     weeklyClosedDays: ["월", "화"],
     holidayClosureSummary:
       "설·추석 연휴, 법정공휴일(안내에 따른 주중 공휴일 포함) 휴관 가능",
   },
+  {
+    id: "jangheung",
+    name: "장흥댐 물문화관",
+    kind: "댐 물문화관",
+    sido: "전남",
+    sigungu: "장흥군",
+    address: "전라남도 장흥군 부산면 지천길 142",
+    summary:
+      "탐진강 청정 유역 수생생물 관찰 및 습지 체험 중심의 수생태관입니다.",
+    status: "운영중",
+    statusNote: "체험·단체 관람은 사전 예약 여부 확인",
+    weeklyClosedDays: ["월"],
+    holidayClosureSummary: "설·추석, 법정공휴일 및 지자체·시설 사정에 따른 휴관",
+  },
+  {
+    id: "buan",
+    name: "부안댐 물문화관",
+    kind: "댐 물문화관",
+    sido: "전북",
+    sigungu: "부안군",
+    address: "전북특별자치도 부안군 변산면 부안댐로 290",
+    summary:
+      "변산반도 국립공원 청정 생태 보호 및 자연 환경 학습 중심의 국립공원 생태관입니다.",
+    status: "운영중",
+    statusNote: "점심시간(12:00~13:00) 휴게 등 시설 안내 확인",
+    weeklyClosedDays: ["월"],
+    holidayClosureSummary:
+      "설·추석 연휴, 법정공휴일·업체 사정에 따른 추가 휴무 가능",
+  },
+  {
+    id: "hantan",
+    name: "한탄강댐 물문화관",
+    kind: "댐 물문화관",
+    sido: "경기",
+    sigungu: "연천군",
+    address: "경기도 연천군 연천읍 고문리 902",
+    summary:
+      "UNESCO 세계지질공원 주상절리 및 지질 생태 가치를 지키는 지질 생태관입니다.",
+    status: "운영중",
+    statusNote: "댐 구역·인접 군사지역 통행 제한이 있을 수 있음",
+    weeklyClosedDays: ["월"],
+    holidayClosureSummary: "설·추석, 법정공휴일·긴급 점검 시 휴관(현장 공지)",
+  },
+
+  // 🎭 문화 (Culture - 3개소)
   {
     id: "namgang",
     name: "남강댐 물문화관",
@@ -300,12 +282,11 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "진주시",
     address: "경상남도 진주시 내동면 삼계로 455-46",
     summary:
-      "진주 대표 축제인 남강 유등 축제와 연계된 수변 기획 미술 전시, 북카페, 잔디광장이 결합된 복합 수변 문화 공간입니다.",
+      "진주 남강유등축제 연계 및 수변 미술 갤러리와 쉼터가 어우러진 복합 문화 공간입니다.",
     status: "운영중",
     statusNote: "장마·태풍 시 침수 구간 통제에 유의",
     weeklyClosedDays: ["일", "월"],
-    holidayClosureSummary:
-      "법정공휴일, 근로자의 날 등 안내에 따른 휴관",
+    holidayClosureSummary: "법정공휴일, 근로자의 날 등 안내에 따른 휴관",
   },
   {
     id: "miryang",
@@ -315,12 +296,25 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "밀양시",
     address: "경상남도 밀양시 단장면 고례2길 79-10",
     summary:
-      "밀양댐 수변공원 및 단장천 계곡과 연계하여 지역 시민과 방문객들에게 다양한 문화 행사와 여가 쉼터를 제공하는 문화 거점입니다.",
+      "밀양댐 수변공원 연계 주민 여가 문화공간 및 피크닉 쉼터를 제공합니다.",
     status: "운영중",
     statusNote: "밀양강·낙동강 수계 연계 프로그램은 시즌별 상이",
     weeklyClosedDays: ["일", "월"],
-    holidayClosureSummary:
-      "법정공휴일, 설·추석 연휴 휴관 등은 시설 공지 확인",
+    holidayClosureSummary: "법정공휴일, 설·추석 연휴 휴관 등은 시설 공지 확인",
+  },
+  {
+    id: "gimcheon",
+    name: "김천부항댐 물문화관",
+    kind: "댐 물문화관",
+    sido: "경북",
+    sigungu: "김천시",
+    address: "경상북도 김천시 부항면 부항댐길 352",
+    summary:
+      "국내 최고 짚와이어, 출렁다리, 스카이워크 수변 레저 문화를 선도하는 레저 문화 거점입니다.",
+    status: "운영중",
+    statusNote: "철새 도래기에는 주변 도로 통제 안내가 있을 수 있음",
+    weeklyClosedDays: ["월"],
+    holidayClosureSummary: "설·추석, 법정공휴일 및 시설 점검 시 휴관",
   },
 ];
 
