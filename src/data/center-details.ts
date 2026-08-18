@@ -245,8 +245,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "자연 습지 관찰 및 생태 힐링 탐방을 즐기는 관람객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["안내", "용담호·댐 소개"] },
-      { floorLabel: "2층", highlights: ["전시·체험", "겨울철 안전·기상"] },
+      { floorLabel: "1층", highlights: ["다목적 전시실", "기획전시", "영상실", "화장실"] },
+      { floorLabel: "2층", highlights: ["북카페", "키즈존", "휴식공간"] },
     ],
   },
   "hangang-yeoju": {
