@@ -22,10 +22,9 @@ export type OperatingStatus = "운영중" | "부분운영" | "점검·휴관" | 
 /** 문화관 현황·탐색용 콘텐츠 테마(전시 성격 기준, 순서 앞이 목록 그룹의 대표 테마) */
 export const CENTER_THEME_ORDER = [
   "역사",
-  "생태",
   "기술",
+  "생태",
   "문화",
-  "건축·조망",
 ] as const;
 
 export type CenterTheme = (typeof CENTER_THEME_ORDER)[number];

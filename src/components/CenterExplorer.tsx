@@ -66,7 +66,7 @@ export function CenterExplorer() {
       const matchSido = sido === centerExplorerUi.allSido || c.sido === sido;
       const mapQ = c.mapSearchQuery?.toLowerCase() ?? "";
       const matchTheme =
-        themeFilter === "전체" || c.themes.includes(themeFilter);
+        themeFilter === "전체" || c.themes[0] === themeFilter;
       const matchQuery =
         q === "" ||
         c.name.toLowerCase().includes(q) ||
