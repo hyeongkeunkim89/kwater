@@ -103,7 +103,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "연천군",
     address: "경기도 연천군 연천읍 고문리 902",
     summary:
-      "한탄강 홍수 조절댐과 함께 조성된 전시·교육 공간으로, 수계 관리와 재해 안전 메시지를 전합니다.",
+      "UNESCO 세계지질공원으로 지정된 한탄강의 화산암 주상절리 협곡과 고유 수생태계의 보전 가치를 지키는 지질 생태관입니다.",
     status: "운영중",
     statusNote: "댐 구역·인접 군사지역 통행 제한이 있을 수 있음",
     weeklyClosedDays: ["월"],
@@ -118,7 +118,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "화천군",
     address: "강원특별자치도 화천군 화천읍 평화로 3481-18",
     summary:
-      "1987년 안보 목적으로 건설된 평화의댐의 역사·배경과 물의 역할을 전시합니다. 세계종공원·비목공원 등 주변 안보 관광지와 연계됩니다.",
+      "금강산댐 대응 건립사, 세계평화의 종, 남북 분단과 안보 현대사의 비극적 역사를 평화 메시지로 전달하는 역사 안보관입니다.",
     status: "운영중",
     statusNote: "관람 시간 10:00~17:00, 입장 마감 확인",
     weeklyClosedDays: ["월"],
@@ -133,7 +133,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "대덕구",
     address: "대전광역시 대덕구 대청로 618-136",
     summary:
-      "금강 수계와 대청호의 역사·환경을 주제로, 댐이 지역과 함께 성장해 온 이야기를 전시합니다.",
+      "대청호 청정 수생태계 보전과 금강 유역에 서식하는 다양한 민물고기 생태 수족관 및 수변 둘레길 중심의 대표 생태관입니다.",
     status: "점검·휴관",
     statusNote: "그린리모델링·전시 리뉴얼 — 2026년 11월 말까지 임시 휴관 예정",
     weeklyClosedDays: ["월"],
@@ -150,7 +150,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "춘천시",
     address: "강원특별자치도 춘천시 신북읍 신샘밭로 1128",
     summary:
-      "소양호와 상수원 보호, 겨울 스포츠와 연계된 지역 물 문화를 함께 전합니다.",
+      "동양 최대 사급댐 축조사 및 대한민국 근대 치수 역사를 조명하고, 수몰민의 옛 터전과 삶의 사료를 보존하는 대표 역사관입니다.",
     status: "운영중",
     statusNote: "기상·시설 점검에 따라 일시 휴관 가능",
     weeklyClosedDays: ["월"],
@@ -165,7 +165,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "횡성군",
     address: "강원특별자치도 횡성군 갑천면 태기로구방5길 40",
     summary:
-      "물의 소중함을 일깨우는 주제관과 체험관으로 구성되며, 하루 3회 물 홍보 영상을 상영합니다. 수몰지역의 역사를 보존한 「화성의 옛터」 전시관도 인접해 있습니다.",
+      "댐 축조로 수몰된 횡성군 5개 리 주민들의 옛 터전과 삶의 애환을 기록·보존하는 「망향의 동산」 연계 역사 사료관입니다.",
     status: "운영중",
     statusNote: "영상 상영 시간(11:00·14:00·16:00) 사전 확인 권장",
     weeklyClosedDays: ["월"],
@@ -180,7 +180,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "충주시",
     address: "충청북도 충주시 동량면 지등로 745",
     summary:
-      "국내 대표 다목적댐의 역할과 안전, 홍수 조절·발전·상수원 기능을 한눈에 볼 수 있는 대형 전시·체험 공간입니다.",
+      "K-water의 스마트 수자원 관리 공학, 댐 본체 미디어파사드 연출 및 3D 디지털 미디어 체험이 집약된 첨단 기술관입니다.",
     status: "운영중",
     statusNote: "입장 마감·주차 등은 시설 안내 확인",
     weeklyClosedDays: ["월"],
@@ -195,7 +195,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "부안군",
     address: "전북특별자치도 부안군 변산면 부안댐로 290",
     summary:
-      "국립공원 인접 수계의 생태·생활 물 이야기를 전시실과 영상으로 소개합니다.",
+      "변산반도 국립공원의 청정 산림 자원과 부안호 자생 동식물 생태계 보호 및 자연 환경 가치를 홍보하는 국립공원 생태관입니다.",
     status: "운영중",
     statusNote: "점심시간(12:00~13:00) 휴게 등 시설 안내 확인",
     weeklyClosedDays: ["월"],
@@ -210,7 +210,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "진안군",
     address: "전북특별자치도 진안군 안천면 안용로 747",
     summary:
-      "금강 상류 댐군과 스키장·산악 관광과 연계한 겨울철 물·눈 테마 해설이 특징입니다.",
+      "용담호 주변 습지 및 숲 생태 자원을 관찰할 수 있는 6개 테마 정원과 디지털 생태학습관 중심의 청정 생태관입니다.",
     status: "운영중",
     statusNote: "동절기 결빙·안개로 운영 시간 변동 가능",
     weeklyClosedDays: ["월"],
@@ -225,7 +225,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "영주시",
     address: "경상북도 영주시 평은면 용혈리 897-2",
     summary:
-      "낙동강 상류 댐군과 생태숲·출렁다리 등 주변 관광과 연계한 물 해설 거점입니다.",
+      "낙동강 상류 영주호 주변 생태숲 및 출렁다리와 연계하여 수생태계 보전과 자연 탐방을 지원하는 생태 문화관입니다.",
     status: "운영중",
     statusNote: "전망대·전시실 운영이 상이할 수 있음",
     weeklyClosedDays: ["월", "화"],
@@ -240,7 +240,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "임실군",
     address: "전북특별자치도 임실군 운암면 강운로 1239",
     summary:
-      "섬진강 수계 보전과 취수·홍수 관리, 지역 농업과 연계한 물 이야기를 소개합니다.",
+      "섬진강 청정 유역의 수생태계 보전과 수변 자연 환경 보호의 중요성을 교육하는 청정 생태관입니다.",
     status: "운영중",
     statusNote: "댐 주변 안전구역 통제 구간 준수",
     weeklyClosedDays: ["월"],
@@ -255,7 +255,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "김천시",
     address: "경상북도 김천시 부항면 부항댐길 352",
     summary:
-      "낙동강 본류 항·댐 연계 운영과 농업용수, 하천 환경 복원 사례를 소개합니다.",
+      "국내 최고 높이 짚와이어, 출렁다리, 스카이워크 등 수변 익스트림 스포츠와 활기찬 레저 문화를 선도하는 레저 문화 거점입니다.",
     status: "운영중",
     statusNote: "철새 도래기에는 주변 도로 통제 안내가 있을 수 있음",
     weeklyClosedDays: ["월"],
@@ -270,7 +270,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "장흥군",
     address: "전라남도 장흥군 부산면 지천길 142",
     summary:
-      "담수호와 농업·상수원 연계, 지역 축제와 연계한 체험형 프로그램이 운영됩니다.",
+      "전남 청정 탐진강 상류 유역의 맑은 물과 수생생물, 민물고기, 습지 생태계를 생생하게 관찰하고 배우는 수생태관입니다.",
     status: "운영중",
     statusNote: "체험·단체 관람은 사전 예약 여부 확인",
     weeklyClosedDays: ["월"],
@@ -285,7 +285,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "순천시",
     address: "전라남도 순천시 상사면 상사호길 555",
     summary:
-      "주암호와 섬진강 상류 보전, 수력발전·용수 공급을 한자리에서 이해할 수 있는 전시·전망 시설입니다.",
+      "순천만 생태 도시 축과 연계하여 주암호의 청정 수질 보존과 호수 수생태계의 자연 보호 가치를 전하는 생태 교육관입니다.",
     status: "운영중",
     statusNote: "주중 공휴일 포함 휴관 규정은 공지 확인",
     weeklyClosedDays: ["월", "화"],
@@ -300,7 +300,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "진주시",
     address: "경상남도 진주시 내동면 삼계로 455-46",
     summary:
-      "남강 수계 취수와 농업용수, 지리산권 생활권 물 이용 스토리를 전시합니다.",
+      "진주 대표 축제인 남강 유등 축제와 연계된 수변 기획 미술 전시, 북카페, 잔디광장이 결합된 복합 수변 문화 공간입니다.",
     status: "운영중",
     statusNote: "장마·태풍 시 침수 구간 통제에 유의",
     weeklyClosedDays: ["일", "월"],
@@ -315,7 +315,7 @@ const waterCenterBaseList: WaterCenterBase[] = [
     sigungu: "밀양시",
     address: "경상남도 밀양시 단장면 고례2길 79-10",
     summary:
-      "낙동강 본류 홍수 조절과 하구둑·보와 연계한 광역 수계 관리를 소개합니다.",
+      "밀양댐 수변공원 및 단장천 계곡과 연계하여 지역 시민과 방문객들에게 다양한 문화 행사와 여가 쉼터를 제공하는 문화 거점입니다.",
     status: "운영중",
     statusNote: "밀양강·낙동강 수계 연계 프로그램은 시즌별 상이",
     weeklyClosedDays: ["일", "월"],

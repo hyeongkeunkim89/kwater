@@ -46,10 +46,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Chungju_Dam.JPG/960px-Chungju_Dam.JPG",
     imageAlt: "충주다목적댐 전경",
     profileIntro:
-      "충주다목적댐과 충주호를 중심으로, 홍수 조절·상수원·발전 등 한곳의 댐이 갖는 여러 기능을 전시와 모형으로 살펴볼 수 있습니다.\n\n디지털 전시와 안전·모니터링 스토리를 통해 댐과 수자원 관리가 우리 일상과 어떻게 닿는지 이해하기 쉽게 구성되어 있습니다.\n\n수학여행·가족 나들이 등 대형 댐과 수자원에 관심 있는 방문객에게 널리 알려진 대표 시설입니다.",
+      "충주다목적댐과 충주호를 중심으로, K-water의 첨단 스마트 수자원 관리 기술과 댐 본체 미디어파사드 연출을 관람할 수 있습니다.\n\n3D 디지털 전시와 모니터링 스토리를 통해 댐과 수자원 관리가 우리 일상과 어떻게 닿는지 이해하기 쉽게 구성되어 있습니다.\n\n어린이·청소년 및 가족 나들이객에게 첨단 미래 기술 체험을 전달하는 대표 과학·기술관입니다.",
     facilityProfile: [
-      { label: "테마", value: "충주호와 다목적댐의 살아 있는 역할" },
-      { label: "대상", value: "가족·수학여행급 단체, 대형댐·수자원 이해를 원하는 층" },
+      { label: "테마", value: "스마트 수자원 관리 & 첨단 미디어 기술" },
+      { label: "대상", value: "IT·과학 기술 체험을 희망하는 아동·청소년 및 가족" },
     ],
     floors: [
       {
@@ -67,10 +67,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Daecheong_Dam_Water_Culture_Center_-_%EB%8C%80%EC%B2%AD%EB%8C%90%EB%AC%BC%EB%AC%B8%ED%99%94%EA%B4%80.jpg/960px-Daecheong_Dam_Water_Culture_Center_-_%EB%8C%80%EC%B2%AD%EB%8C%90%EB%AC%BC%EB%AC%B8%ED%99%94%EA%B4%80.jpg",
     imageAlt: "대청댐 물문화관 건물 전경",
     profileIntro:
-      "금강 수계와 대청호를 아우르는 전시로, 댐과 호수가 지역과 함께 쌓아 온 시간과 환경·생활의 변화를 따라갑니다.\n\n상수원 보호와 홍수 관리 등 물이 갖는 공공적 역할을 전시와 영상으로 되새길 수 있습니다.\n\n그린리모델링·전시 리뉴얼로 휴관 기간이 있을 수 있으니, 관람 전 시설 공지와 K-water 안내를 꼭 확인해 주세요.",
+      "금강 수계와 대청호를 아우르는 수생태계 전시로, 대청호의 청정 자연 생태와 민물고기 수족관을 갖추고 있습니다.\n\n상수원 보호와 금강 유역 생물 다양성 등 물이 갖는 생태적 가치를 전시와 영상으로 배울 수 있습니다.\n\n그린리모델링·전시 리뉴얼로 휴관 기간이 있을 수 있으니, 관람 전 시설 공지와 K-water 안내를 꼭 확인해 주세요.",
     facilityProfile: [
-      { label: "테마", value: "금강·대청호, 삶과 환경을 잇는 물" },
-      { label: "대상", value: "가족·학습 방문, 금강·호수 환경·생활 물에 관심 있는 층" },
+      { label: "테마", value: "대청호 수생태계 & 금강 민물고기 생태" },
+      { label: "대상", value: "자연 생태 체험 및 생물 다양성 학습을 희망하는 어린이·가족" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["로비", "제1전시(입문)", "안내 데스크"] },
@@ -83,10 +83,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/%EB%B6%80%EC%95%88%EB%8C%90_%EC%A7%95%EA%B2%80%EB%8B%A4%EB%A6%AC.jpg/960px-%EB%B6%80%EC%95%88%EB%8C%90_%EC%A7%95%EA%B2%80%EB%8B%A4%EB%A6%AC.jpg",
     imageAlt: "부안댐 일대(징검다리·저수지)",
     profileIntro:
-      "국립공원과 맞닿은 수역을 품은 부안댐 일대의 생태·생활 물 이야기를 전시실과 영상으로 만납니다.\n\n댐 건설과 수몰, 지역과의 상생 등 강과 호수 곁에서 펼쳐진 역사와 오늘을 함께 다룹니다.\n\n야외 조망·사진 동선을 즐기려는 가족·성인 방문객에게 어울리는 생태·역사형 물문화관입니다.",
+      "변산반도 국립공원과 맞닿은 수역을 품은 부안댐 일대의 청정 산림 및 호수 생태계를 전시실과 영상으로 만납니다.\n\n변산반도 자생 동식물과 부안호 상수원 보호 등 강과 호수 곁의 자연 환경 보호 스토리를 다룹니다.\n\n변산반도 국립공원 숲과 호수를 즐기려는 가족·성인 방문객에게 어울리는 청정 생태관입니다.",
     facilityProfile: [
-      { label: "테마", value: "국립공원과 맞닿은 댐·생태·수몰의 물" },
-      { label: "대상", value: "생태·역사 좋아하는 성인·가족, 사진·야외 조망 동선" },
+      { label: "테마", value: "변산반도 국립공원 생태계 & 부안호 청정 환경" },
+      { label: "대상", value: "변산반도 국립공원 숲·호수 자연 생태 탐방객" },
     ],
     floors: [
       {
@@ -104,10 +104,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/960px-SoyangDam.JPG",
     imageAlt: "소양강댐 전경",
     profileIntro:
-      "사력댐 소양강댐과 소양호의 역할, 특히 상수원 보호와 겨울철 호수의 모습을 전시와 체험으로 전합니다.\n\n기상·수위·결빙 등 계절과 연계된 콘텐츠로 북한강 수계 물의 흐름을 가깝게 느낄 수 있습니다.\n\n춘천·인근 관광과 묶어 찾는 등산·레저 동반 가족에게 안내하기 좋은 전시·전망 공간입니다.",
+      "동양 최대 규모 사급댐 소양강댐의 축조 역사와 대한민국 근대 치수 사업의 발자취를 다룹니다.\n\n댐 건설로 인해 정든 터전을 떠나야 했던 수몰지 주민들의 삶과 옛 사료를 수몰전시관에 보존하고 있습니다.\n\n대한민국 산업화 및 치수 역사에 관심 있는 학생, 성인, 수몰민 가족에게 뜻깊은 대표 역사관입니다.",
     facilityProfile: [
-      { label: "테마", value: "사력댐 소양호, 상수원과 겨울 물의 얼굴" },
-      { label: "대상", value: "등산·겨울레저 동반 가족, 상수원·호수 설명이 필요한 관광객" },
+      { label: "테마", value: "대한민국 근대 치수 & 사급댐 축조 역사" },
+      { label: "대상", value: "근대사·치수 역사에 관심 있는 학생·성인 및 수몰민 가구" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["안내", "상설 전시", "호수·댐 해설"] },
@@ -120,10 +120,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Hantan_River_nearby_Goseokjeong.jpg/960px-Hantan_River_nearby_Goseokjeong.jpg",
     imageAlt: "한탄강 고석정 인근 현무암 협곡과 강",
     profileIntro:
-      "접경 지역 한탄강의 홍수 조절과 댐 안전, 재해 대비의 중요성을 전시·교육 형태로 전합니다.\n\n홍수 피해 예방과 수계 관리가 왜 필요한지 실감할 수 있는 코너를 갖추고 있습니다.\n\n학급 단체 안전교육이나 접경·홍수 이슈에 관심 있는 성인 방문에 맞춘 구성입니다.",
+      "UNESCO 세계지질공원으로 지정된 한탄강의 화산암 주상절리와 협곡 지질 생태계를 교육하는 지질 생태관입니다.\n\n화산 폭발로 형성된 독특한 주상절리 협곡과 한탄강 고유 수생태계의 보전 가치를 전달합니다.\n\n지질학적 가치와 이색 협곡 지형 생태를 학습하려는 학생 및 성인 탐방객에게 최적입니다.",
     facilityProfile: [
-      { label: "테마", value: "홍수·안전과 접경강 한탄의 물 이야기" },
-      { label: "대상", value: "학급·안전교육 단체, 접경·홍수 이슈에 관심 있는 성인" },
+      { label: "테마", value: "UNESCO 한탄강 세계지질공원 & 주상절리 생태" },
+      { label: "대상", value: "지질 생태 체험 및 화산암 협곡 지형을 학습하려는 탐방객" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["로비·안내", "홍수·댐 역할 입문"] },
@@ -136,10 +136,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/HapcheonDam.jpg/960px-HapcheonDam.jpg",
     imageAlt: "합천다목적댐 전경",
     profileIntro:
-      "낙동강 수계의 핵심 호수인 합천호와 합천댐을 중심으로 농업용수·홍수 조절·발전 역할을 한자리에서 소개합니다.\n\n호수 형성과 지역 농업·생활과 연결된 스토리를 전시와 영상으로 풀어 냅니다.\n\n드라이브·가족 여행과 연계하기 좋은 낙동강 물길 해설 거점입니다.",
+      "합천호 수면에 설치된 세계 최대 규모의 붕어모양 수상태양광과 친환경 신재생 물 에너지 기술을 조망합니다.\n\n수면을 활용한 친환경 태양광 발전 공학 메커니즘과 탄소중립 미래 기술의 성과를 전시합니다.\n\n친환경 신재생 에너지 기술과 차세대 물 기술에 관심 있는 학생·전문가에게 권장됩니다.",
     facilityProfile: [
-      { label: "테마", value: "합천호와 낙동강, 농업·홍수·발전의 물" },
-      { label: "대상", value: "가족·드라이브족, 농업·홍수 입문 설명이 필요한 일반 관광객" },
+      { label: "테마", value: "세계 최대 수상태양광 & 신재생 물 에너지 기술" },
+      { label: "대상", value: "친환경 에너지·탄소중립 기술에 관심 있는 학생·전문가·가족" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["안내", "호수 형성·역할 소개"] },
@@ -152,10 +152,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Korea_suncheon_riverside.JPG/960px-Korea_suncheon_riverside.JPG",
     imageAlt: "순천 시내 하천(주암댐·주암호가 있는 순천시)",
     profileIntro:
-      "주암호와 섬진강 상류 보전, 도수터널·수력발전·용수 공급이 어떻게 맞물리는지 전시와 체험으로 이해할 수 있습니다.\n\n발전 원리와 터널 체험 등 참여형 콘텐츠로 어린이·가족이 함께 보기 좋게 꾸며져 있습니다.\n\n학교·가족 단체와 전망·체험을 한 번에 계획하는 방문객에게 알맞습니다.",
+      "대한민국 대표 생태 도시 순천만 생태축과 연결되어 주암호의 청정 수질 보존과 수생태계를 보호합니다.\n\n광주·전남의 젖줄인 주암호 수질 환경과 습지 생태계의 소중함을 다채로운 교육으로 전달합니다.\n\n청정 물 환경 교육 및 호수 자연 생태 탐방을 희망하는 가족·학생 단체에 맞춘 생태관입니다.",
     facilityProfile: [
-      { label: "테마", value: "도수터널·발전이 잇는 주암호의 물" },
-      { label: "대상", value: "가족·학교 단체, 발전·터널 체험·전망에 관심 있는 층" },
+      { label: "테마", value: "주암호 수생태계 보전 & 순천만 생태축 연계" },
+      { label: "대상", value: "청정 물 환경 교육 및 호수 생태를 경험하고 싶은 학생·학부모" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["안내", "주암호·댐 개요"] },
@@ -168,10 +168,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Korea-Jangheung-Jeungsanji-01.jpg/960px-Korea-Jangheung-Jeungsanji-01.jpg",
     imageAlt: "장흥 증산지 일대(담수호·수몰 테마와 맞닿은 풍경)",
     profileIntro:
-      "담수호와 연계된 지역 역사·수몰 마을의 기억, 그리고 물·댐 과학 체험을 한 건물 안에서 이어 갑니다.\n\n역사문화실과 워터리움 등 층별로 감상과 체험의 균형을 맞춰 두었습니다.\n\n연령대가 넓은 가족과 지역 이야기에 관심 있는 방문객에게 추천할 만한 공간입니다.",
+      "전남 청정 탐진강 상류 유역의 맑은 물과 수생생물, 민물고기, 수변 식생 생태계를 전시합니다.\n\n탐진강과 장흥호 주변의 자연 습지 관찰 및 수생태계 보호 스토리관을 갖추고 있습니다.\n\n탐진강 생태 관찰 및 맑은 물 자연 교육을 원하는 유아·가족 관람객에게 추천됩니다.",
     facilityProfile: [
-      { label: "테마", value: "담수호에 잠긴 마을의 시간과 기억" },
-      { label: "대상", value: "연령 넓은 가족·지역 주민, 수몰·역사 스토리에 끌리는 방문객" },
+      { label: "테마", value: "탐진강 수생생물 & 장흥호 습지 생태" },
+      { label: "대상", value: "탐진강 생태 관찰 및 맑은 물 자연 교육을 희망하는 가족·유아" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["역사문화실", "지역 수몰·추억 스토리"] },
@@ -183,10 +183,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/%EC%98%81%EC%A3%BC%EB%8C%90_%EB%92%B7%EB%A9%B4.jpg/960px-%EC%98%81%EC%A3%BC%EB%8C%90_%EB%92%B7%EB%A9%B4.jpg",
     imageAlt: "영주다목적댐 전경",
     profileIntro:
-      "낙동강 상류 영주댐과 주변 생태숲·출렁다리 등 관광지와 짝을 이루는 댐·물 해설 시설입니다.\n\n상류 수계 보전과 댐 운영의 기본을 입문 단계에서 짚어 줍니다.\n\n등산·생태 여행 동선에 묶어 오기 좋은 소규모 전시·전망 거점입니다.",
+      "낙동강 상류 영주호 주변 생태숲 및 출렁다리와 연계되어 수생태계 보전과 자연 탐방을 지원합니다.\n\n영주호 청정 자연 환경과 낙동강 상류 생물 다양성을 해설하고 안내합니다.\n\n생태숲 산책 및 호수 수생태 탐방을 즐기려는 등산·가족 방문객에게 조율된 생태관입니다.",
     facilityProfile: [
-      { label: "테마", value: "낙동 상류 댐과 숲·다리가 잇는 물길" },
-      { label: "대상", value: "등산·생태 관광 동반 가족, 댐·호수 입문 설명이 필요한 층" },
+      { label: "테마", value: "영주호 생태숲 & 낙동 상류 수생태계 보전" },
+      { label: "대상", value: "생태숲 산책 및 자연 탐방을 즐기는 탐방객·가족" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["로비", "영주댐·낙동강 상류 소개"] },
@@ -198,10 +198,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/%EC%84%AC%EC%A7%84%EA%B0%95%EB%8C%90.jpg/960px-%EC%84%AC%EC%A7%84%EA%B0%95%EB%8C%90.jpg",
     imageAlt: "섬진강댐 전면 전경",
     profileIntro:
-      "섬진강 본류 댐으로서 취수·농업·홍수 관리가 한 수계 안에서 어떻게 조화를 이루는지 소개합니다.\n\n임실·전북권 농업과 생활 물 실태를 전시와 영상으로 연결합니다.\n\n가족·학교·시민단체의 수계 입문 교육에 활용하기 좋습니다.",
+      "섬진강 청정 유역의 수생태계 보정과 맑은 물 보전의 중요성을 교육하는 청정 생태관입니다.\n\n섬진강 수계의 동식물 보존과 자연 습지 환경 보호 스토리를 강조합니다.\n\n수생태계 환경 교육 및 청정 섬진강 자연을 탐방하고 싶은 학생·가족에게 적합합니다.",
     facilityProfile: [
-      { label: "테마", value: "섬진강 본류, 농업·취수를 품은 물" },
-      { label: "대상", value: "가족·학교·시민단체, 취수·농업·홍수 수계 입문에 적합" },
+      { label: "테마", value: "섬진강 청정 유역 & 수생태계 환경 보호" },
+      { label: "대상", value: "섬진강 수생태 관찰 및 환경 습지 교육 방문객" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["안내", "섬진강·댐 입문"] },
@@ -213,10 +213,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/0/0e/Korea-Andong-Imha_Dam-01.jpg",
     imageAlt: "임하다목적댐 전경",
     profileIntro:
-      "임하호는 광역 상수원으로서 낙동강 수계에서 차지하는 비중이 큰 호수입니다. 전시는 광역 상수원·생태·수몰·댐 운영을 아우릅니다.\n\n학습자와 성인 관람객이 수자원 정책을 이해하는 데 도움이 되는 자료를 갖추고 있습니다.\n\n안동·구미 등 인근 도시권과 연계한 방문에 적합합니다.",
+      "임하호는 광역 상수원으로서 낙동강 수계의 자연 생태 보전과 수질 환경을 조명합니다.\n\n임하호 청정 수생태계 및 상수원 보호의 중요성을 교육하는 생태 관람관입니다.\n\n낙동강 수계 자연 환경과 호수 생태에 관심 있는 관람객에게 추천됩니다.",
     facilityProfile: [
-      { label: "테마", value: "임하호, 광역 상수원과 낙동의 물" },
-      { label: "대상", value: "성인·학습자, 광역상수원·댐 역할·생태·수몰 전시 관심층" },
+      { label: "테마", value: "임하호 생태계 & 광역 상수원 자연 보전" },
+      { label: "대상", value: "낙동강 수생태 보전 및 자연 환경 교육 관심층" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["로비", "임하호 개요"] },
@@ -228,10 +228,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Nakdong_River_seen_from_Gumi_20260216.jpg/960px-Nakdong_River_seen_from_Gumi_20260216.jpg",
     imageAlt: "구미에서 본 낙동강(김천 부항댐·부항보가 있는 낙동 본류)",
     profileIntro:
-      "낙동강 본류의 부항댐·부항보가 항·댐으로 어떻게 엮여 운영되는지, 농업용수와 하천 환경 복원과의 연결을 다룹니다.\n\n전망대·아쿠아·비상 체험 등 볼거리와 체험이 층별로 나뉘어 있습니다.\n\n가족·청소년 나들이객에게 인기 있는 종합형 물문화관입니다.",
+      "국내 최고 높이(93m) 부항댐 짚와이어, 출렁다리, 스카이워크 등 수변 익스트림 스포츠를 갖추고 있습니다.\n\n부항호 위를 거니는 수변 산책 코스와 활기찬 수변 레저 문화를 제공하는 레저 관광 거점입니다.\n\n익스트림 수변 레저 및 동적인 관광 문화를 즐기는 청년, 가족 단위 방문객에게 인기가 높습니다.",
     facilityProfile: [
-      { label: "테마", value: "항·댐이 엮는 낙동 본류의 물" },
-      { label: "대상", value: "가족·청소년, 전망·아쿠아·비상체험을 즐기려는 나들이객" },
+      { label: "테마", value: "부항호 수변 짚와이어 & 액티비티 레저 문화" },
+      { label: "대상", value: "익스트림 수변 레저 및 동적인 관광 문화를 즐기는 청년·가족" },
     ],
     floors: [
       { floorLabel: "지하 1층", highlights: ["부대 공간(시설별)"] },
@@ -244,10 +244,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/%EC%9A%A9%EB%8B%B4%ED%98%B8.jpg/960px-%EC%9A%A9%EB%8B%B4%ED%98%B8.jpg",
     imageAlt: "용담댐과 용담호 전경",
     profileIntro:
-      "금강 상류 용담호·용담댐의 겨울 풍경과 물·눈·기상 이야기를 전시로 만납니다.\n\n산악·스키 등 겨울 레저와 연계한 물·눈 테마 해설이 돋보입니다.\n\n겨울철 금강 상류 여행 계획에 넣기 좋은 전시·전망 코스입니다.",
+      "용담호 주변 습지 및 숲 생태 자원을 관찰할 수 있는 6개 테마 정원과 디지털 생태학습관을 가집니다.\n\n숲, 계곡, 습지 등 용담호의 자연 동식물 생태계를 입체적인 디지털 콘텐츠로 안내합니다.\n\n자연 습지 관찰 및 호수 생태 힐링 탐방을 희망하는 가족·단체에 최적화되어 있습니다.",
     facilityProfile: [
-      { label: "테마", value: "금강 상류 산과 겨울, 물과 눈의 이야기" },
-      { label: "대상", value: "겨울 스키·산악 동반 가족, 금강 상류 물·눈 테마에 관심 있는 층" },
+      { label: "테마", value: "용담호 습지·숲 생태 & 디지털 생태 체험" },
+      { label: "대상", value: "자연 습지 관찰 및 생태 힐링 탐방을 즐기는 관람객" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["안내", "용담호·댐 소개"] },
@@ -259,10 +259,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Namhan_River_in_front_of_Yeoju_Library.jpg/960px-Namhan_River_in_front_of_Yeoju_Library.jpg",
     imageAlt: "여주 도서관 앞 남한강 전경",
     profileIntro:
-      "한강과 이포보·강천보 등 보·정비 사업, 수계 회복과 공존에 관한 정책을 전시·갤러리 형태로 소개합니다.\n\n수도권에서 당일 코스로 찾기 쉬운 위치에 전망타워와 기획전이 함께합니다.\n\n한강·수변 정책에 관심 있는 성인·가족에게 유익한 복합 문화관입니다.",
+      "남한강 수변 갤러리와 문화예술 프로그램, 전망타워가 결합된 수변 복합 문화 공간입니다.\n\n다양한 수변 기획 미술 전시와 지역 문화예술 연계 프로그램을 전면에 배치했습니다.\n\n수변 예술 감상과 휴식을 원하는 수도권 시민 및 가족 나들이객에게 적합합니다.",
     facilityProfile: [
-      { label: "테마", value: "한강과 보, 회복과 공존의 물 정책" },
-      { label: "대상", value: "수도권 가족 나들이, 한강·4대강 정책·전망에 관심 있는 성인" },
+      { label: "테마", value: "남한강 수변 갤러리 & 기획 문화예술" },
+      { label: "대상", value: "수변 예술 감상 및 기획 문화를 선호하는 주말 나들이객" },
     ],
     floors: [
       { floorLabel: "지하 1층", highlights: ["다목적·교육 공간(시설별)"] },
@@ -276,10 +276,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Jinu_Jinyang_lake.jpg/960px-Jinu_Jinyang_lake.jpg",
     imageAlt: "남강댐이 만든 진양호 전경",
     profileIntro:
-      "지리산에서 흘러온 남강 물이 모여 이룬 진양호와 남강댐 일대의 취수·농업 스토리를 전합니다.\n\n미디어·워터스크린 등 시각적 전시로 아이·청소년 동반 가족도 즐겁게 관람할 수 있습니다.\n\n진주·경남권 대표 댐 물문화관으로 꼭 한번 들러 보기 좋습니다.",
+      "진주 대표 축제인 남강 유등 축제와 연계된 수변 기획 미술 전시 및 갤러리, 북카페를 갖추고 있습니다.\n\n진주 남강의 수변 문화예술을 즐기고 주민들이 휴식할 수 있는 친수 소통 공간을 선사합니다.\n\n수변 문화예술 전시와 진주 남강 풍경을 감상하려는 지역 주민 및 관광객에게 적합합니다.",
     facilityProfile: [
-      { label: "테마", value: "지리산 발 물, 남강·진양호의 삶" },
-      { label: "대상", value: "가족·청소년, 미디어·워터스크린과 지역 취수 스토리에 적합" },
+      { label: "테마", value: "진주 남강 유등 축제 연계 & 수변 미술 전시" },
+      { label: "대상", value: "수변 문화예술 전시 및 여가를 즐기는 지역 주민·관광객" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["안내", "남강·취수 스토리"] },
@@ -291,10 +291,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Miryang_riverwalk.jpg/960px-Miryang_riverwalk.jpg",
     imageAlt: "밀양강 강변 전경",
     profileIntro:
-      "낙동강 본류 밀양강과 밀양댐, 하구둑·보와 연계한 광역 하천 관리를 한눈에 짚습니다.\n\n홍수와 보의 역할을 입문 수준에서 차분히 설명하는 전시 구성입니다.\n\n학습·가족 방문과 드라이브 코스에 넣기 좋습니다.",
+      "밀양댐 수변공원 및 단장천 계곡과 어우러져 지역 주민들과 방문객들에게 문화행사와 여가를 제공합니다.\n\n밀양 지역 문화예술단체 협력 전시 및 소소한 문화 이벤트가 수변 잔디광장에서 펼쳐집니다.\n\n수변 피크닉, 산책 및 문화 이벤트를 함께 즐기고 싶은 가족·연인 단위 방문객에게 좋습니다.",
     facilityProfile: [
-      { label: "테마", value: "낙동 본류 밀양강, 보와 광역 하천의 물" },
-      { label: "대상", value: "가족·학습 방문, 광역 하천·보·홍수 입문 설명이 필요한 층" },
+      { label: "테마", value: "밀양댐 수변공원 & 지역 소통 문화 쉼터" },
+      { label: "대상", value: "수변 공원 피크닉 및 소소한 문화 행사를 즐기는 가족·연인" },
     ],
     floors: [
       { floorLabel: "1층", highlights: ["로비", "밀양댐·호수 입문"] },
@@ -306,10 +306,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/2020-05-30_10.41.15_%ED%9A%A1%EC%84%B1%EA%B5%B0_%EB%B0%B1%EC%9A%B4%EC%95%94.jpg/960px-2020-05-30_10.41.15_%ED%9A%A1%EC%84%B1%EA%B5%B0_%EB%B0%B1%EC%9A%B4%EC%95%94.jpg",
     imageAlt: "횡성군 백운암 일대(섬강 상류·횡성호 수계 인근)",
     profileIntro:
-      "횡성호와 횡성댐을 중심으로 물의 소중함·순환·댐 역할을 주제관·체험관으로 나누어 안내합니다.\n\n정해진 시간대의 홍보 영상과 수몰 역사를 다룬 「화성의 옛터」 등 연계 시설이 강점입니다.\n\n어린이 동반 가족에게 특히 알맞은 체험 중심 물문화관입니다.",
+      "댐 축조로 수몰된 횡성군 5개 리(부동리, 중금리 등) 주민들의 옛 삶과 터전을 보존하는 망향의 동산 연계관입니다.\n\n수몰지 마을의 옛 사진, 생활 유물, 수몰민들의 아련한 이야기를 사료관에 기록해 두고 있습니다.\n\n횡성호수길 5구간 탐방과 함께 수몰 역사 사료를 되새기려는 방문객에게 뜻깊은 역사관입니다.",
     facilityProfile: [
-      { label: "테마", value: "섬강 상류, 물의 소중함을 체감하는 전시" },
-      { label: "대상", value: "어린이 동반 가족, 영상·체험·수몰역사 연계 동선에 적합" },
+      { label: "테마", value: "수몰지 5개 리 주민들의 옛 삶과 망향의 역사" },
+      { label: "대상", value: "수몰 역사 사료 관람 및 횡성호수길 망향 탐방객" },
     ],
     floors: [
       {
@@ -334,10 +334,10 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Peace_Dam_2022.jpg/960px-Peace_Dam_2022.jpg",
     imageAlt: "평화의댐 하류 방향 전경",
     profileIntro:
-      "1987년 이후 한반도 물 안보와 연결되어 온 평화의댐의 역사·배경을 전시로 만납니다.\n\n북한강 최상류 수계와 안보·역사 메시지를 함께 담았습니다.\n\nDMZ권·강원 북부 관광 동선과 맞물리는 성인·학급 방문에 적합합니다.",
+      "북한 금강산댐 대응으로 시작된 댐의 특수한 건립 배경, 세계평화의 종, 남북 분단/안보 역사를 담고 있습니다.\n\n전 세계 60여 개 분쟁 지역의 탄피를 모아 주조한 세계평화의 종과 평화 메시지 전시가 상징적입니다.\n\nDMZ 접경 지역의 남북 분단 및 평화 안보 역사를 탐방하려는 학생·성인 관람객에 최적입니다.",
     facilityProfile: [
-      { label: "테마", value: "안보·역사, 북한강 최상류의 물과 기억" },
-      { label: "대상", value: "학급·성인, 안보·역사·DMZ권 관광과 맞는 방문 동선" },
+      { label: "테마", value: "남북 분단·안보 현대사 & 세계평화의 종" },
+      { label: "대상", value: "DMZ 안보 역사 탐방 및 평화 안보 교육 방문객" },
     ],
     floors: [
       {
