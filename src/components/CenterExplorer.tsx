@@ -398,7 +398,7 @@ const CenterCard = memo(function CenterCard({
             </span>
           </div>
           <div className="mt-1.5 flex flex-wrap gap-1">
-            {c.themes.map((t) => (
+            {c.themes.slice(0, 1).map((t) => (
               <span
                 key={t}
                 className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ring-inset ${centerThemeBadgeClass[t]}`}

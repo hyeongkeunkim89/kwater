@@ -288,7 +288,7 @@ function CenterPanel({
         <div className="min-w-0">
           <p className="text-[11px] font-medium text-sky-700">{center.kind}</p>
           <div className="mt-1 flex flex-wrap gap-1">
-            {center.themes.map((t) => (
+            {center.themes.slice(0, 1).map((t) => (
               <span
                 key={t}
                 className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ring-inset ${centerThemeBadgeClass[t]}`}

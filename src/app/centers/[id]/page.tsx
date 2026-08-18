@@ -196,7 +196,7 @@ export default async function CenterDetailPage({ params }: Props) {
                 {center.kind}
               </p>
               <div className="mt-2 flex flex-wrap gap-1.5">
-                {center.themes.map((t) => (
+                {center.themes.slice(0, 1).map((t) => (
                   <span
                     key={t}
                     className={`inline-flex rounded-full px-3 py-1 text-sm font-bold ring-1 ring-inset ring-white/25 ${centerThemeBadgeClass[t]}`}
