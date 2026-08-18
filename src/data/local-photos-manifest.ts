@@ -25,6 +25,10 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "1층": "/yongdam-1f.PNG",
     "2층": "/yongdam-2f.PNG",
   },
+  juam: {
+    "1층": "/juam-1f.PNG",
+    "2층": "/juam-2f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -106,6 +110,20 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/yongdam/2층/키즈존.PNG",
     ],
   },
+  juam: {
+    "1층": [
+      "/images/floors/juam/1층/안내데스크.PNG",
+      "/images/floors/juam/1층/물전시관1.PNG",
+      "/images/floors/juam/1층/물전시관1_2.PNG",
+      "/images/floors/juam/1층/영상실.PNG",
+    ],
+    "2층": [
+      "/images/floors/juam/2층/물전시관2_1.PNG",
+      "/images/floors/juam/2층/물전시관2_2.PNG",
+      "/images/floors/juam/2층/기획전시.PNG",
+      "/images/floors/juam/2층/야외데크.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -134,5 +152,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
   yongdam: [
     "/images/surroundings/yongdam/공원 및 광장.PNG",
     "/images/surroundings/yongdam/주차장.PNG",
+  ],
+  juam: [
+    "/images/surroundings/juam/광장.PNG",
+    "/images/surroundings/juam/주차장.PNG",
   ],
 };

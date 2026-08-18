@@ -156,9 +156,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "청정 물 환경 교육 및 호수 생태를 경험하고 싶은 학생·학부모" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["안내", "주암호·댐 개요"] },
-      { floorLabel: "2층", highlights: ["발전·용수 전시", "체험 코너"] },
-      { floorLabel: "기획·옥외", highlights: ["기획전시실", "야외 전망대"] },
+      { floorLabel: "1층", highlights: ["안내데스크", "물전시관1", "영상실"] },
+      { floorLabel: "2층", highlights: ["물전시관2", "기획전시실", "야외데크"] },
     ],
   },
   jangheung: {
