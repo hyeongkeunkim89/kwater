@@ -60,7 +60,7 @@ export const centerThemeBadgeClass: Record<CenterTheme, string> = {
   역사: "bg-amber-50 text-amber-900 ring-amber-200/90",
   생태: "bg-emerald-50 text-emerald-900 ring-emerald-200/90",
   기술: "bg-sky-50 text-sky-900 ring-sky-200/90",
-  "체험·교육": "bg-violet-50 text-violet-900 ring-violet-200/90",
+  문화: "bg-purple-50 text-purple-900 ring-purple-200/90",
   "건축·조망": "bg-slate-100 text-slate-800 ring-slate-300/90",
 };
 
@@ -68,6 +68,6 @@ export const centerThemeSectionAccent: Record<CenterTheme, string> = {
   역사: "border-l-4 border-l-amber-400",
   생태: "border-l-4 border-l-emerald-400",
   기술: "border-l-4 border-l-sky-400",
-  "체험·교육": "border-l-4 border-l-violet-400",
+  문화: "border-l-4 border-l-purple-400",
   "건축·조망": "border-l-4 border-l-slate-400",
 };

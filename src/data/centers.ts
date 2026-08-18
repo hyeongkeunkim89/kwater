@@ -24,7 +24,7 @@ export const CENTER_THEME_ORDER = [
   "역사",
   "생태",
   "기술",
-  "체험·교육",
+  "문화",
   "건축·조망",
 ] as const;
 
@@ -77,20 +77,20 @@ export type WaterCenter = WaterCenterBase &
 
 /** 시설 id별 테마(문화관 현황·필터용, 시설당 2개. 첫 번째가 「전체」목록에서의 그룹 기준) */
 const centerThemesById: Record<string, readonly CenterTheme[]> = {
-  chungju: ["기술", "체험·교육"],
-  daecheong: ["역사", "생태"],
+  chungju: ["기술", "문화"],
+  daecheong: ["생태", "역사"],
   buan: ["생태", "역사"],
-  soyang: ["생태", "기술"],
-  hantan: ["기술", "체험·교육"],
-  juam: ["기술", "생태"],
-  jangheung: ["체험·교육", "생태"],
-  yeongju: ["생태", "체험·교육"],
-  seomjin: ["기술", "생태"],
-  gimcheon: ["기술", "생태"],
-  yongdam: ["생태", "체험·교육"],
-  namgang: ["생태", "역사"],
-  miryang: ["기술", "생태"],
-  hoengseong: ["체험·교육", "역사"],
+  soyang: ["역사", "기술"],
+  hantan: ["생태", "문화"],
+  juam: ["생태", "기술"],
+  jangheung: ["생태", "문화"],
+  yeongju: ["생태", "문화"],
+  seomjin: ["생태", "기술"],
+  gimcheon: ["문화", "기술"],
+  yongdam: ["생태", "문화"],
+  namgang: ["문화", "역사"],
+  miryang: ["문화", "생태"],
+  hoengseong: ["역사", "문화"],
   "peace-dam": ["역사", "기술"],
 };
 

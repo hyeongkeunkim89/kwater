@@ -141,7 +141,7 @@ export default function GatewayLandingPage() {
           </div>
         </Link>
 
-        {/* ── 컬럼 5: 교육 (Education) ── */}
+        {/* ── 컬럼 5: 문화 (Culture) ── */}
         <Link
           href="/main"
           className="group relative flex-1 min-h-[220px] md:min-h-screen overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
@@ -154,18 +154,18 @@ export default function GatewayLandingPage() {
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent group-hover:from-slate-950/95 transition duration-300" />
-          <div className="absolute inset-0 bg-sky-950/20 opacity-40 group-hover:opacity-10 transition duration-300" />
+          <div className="absolute inset-0 bg-purple-950/20 opacity-40 group-hover:opacity-10 transition duration-300" />
 
           {/* 콘텐츠 */}
           <div className="relative z-10">
-            <span className="text-[10px] font-black tracking-widest text-sky-300 uppercase bg-sky-950/80 px-2.5 py-1 rounded-full border border-sky-500/30 backdrop-blur-sm">
-              04 · EDUCATION & EXPERIENCE
+            <span className="text-[10px] font-black tracking-widest text-purple-300 uppercase bg-purple-950/80 px-2.5 py-1 rounded-full border border-purple-500/30 backdrop-blur-sm">
+              04 · CULTURE & ARTS
             </span>
-            <h2 className="mt-3 text-xl sm:text-2xl lg:text-3xl font-black text-white group-hover:text-sky-300 transition drop-shadow-md">
-              🎓 교육
+            <h2 className="mt-3 text-xl sm:text-2xl lg:text-3xl font-black text-white group-hover:text-purple-300 transition drop-shadow-md">
+              🎭 문화
             </h2>
             <p className="mt-1.5 text-xs text-slate-200 font-medium leading-snug tracking-[-0.03em] break-keep line-clamp-2 drop-shadow">
-              어린이 친환경 물 체험관, 체험 및 전문 해설사 가이드 투어 안내
+              수변 미디어아트, 레저 및 지역 문화행사, 대중 복합 휴식 공간 안내
             </p>
           </div>
         </Link>
