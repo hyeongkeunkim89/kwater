@@ -144,7 +144,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsAuthOpen(false);
   };
 
-
   const loginWithSocial = (provider: "kakao" | "naver") => {
     if (provider === "naver") {
       window.location.href = "/api/auth/naver";

@@ -21,6 +21,10 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "1층": "/buan-1f.PNG",
     "2층": "/buan-2f.PNG",
   },
+  yongdam: {
+    "1층": "/yongdam-1f.PNG",
+    "2층": "/yongdam-2f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -89,6 +93,19 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/buan/2층/영상실.PNG",
     ],
   },
+  yongdam: {
+    "1층": [
+      "/images/floors/yongdam/1층/기획전시.PNG",
+      "/images/floors/yongdam/1층/다목적 전시실1.PNG",
+      "/images/floors/yongdam/1층/다목적 전시실2.PNG",
+      "/images/floors/yongdam/1층/영상실.PNG",
+    ],
+    "2층": [
+      "/images/floors/yongdam/2층/북카페.PNG",
+      "/images/floors/yongdam/2층/야외 휴식공간.PNG",
+      "/images/floors/yongdam/2층/키즈존.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -113,5 +130,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
   buan: [
     "/images/surroundings/buan/공원.PNG",
     "/images/surroundings/buan/주차장.PNG",
+  ],
+  yongdam: [
+    "/images/surroundings/yongdam/공원 및 광장.PNG",
+    "/images/surroundings/yongdam/주차장.PNG",
   ],
 };
