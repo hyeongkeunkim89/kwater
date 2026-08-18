@@ -79,9 +79,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
   },
   buan: {
-    imageSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/%EB%B6%80%EC%95%88%EB%8C%90_%EC%A7%95%EA%B2%80%EB%8B%A4%EB%A6%AC.jpg/960px-%EB%B6%80%EC%95%88%EB%8C%90_%EC%A7%95%EA%B2%80%EB%8B%A4%EB%A6%AC.jpg",
-    imageAlt: "부안댐 본체 및 부안댐 물문화관 수계 전경",
+    imageSrc: "/centers/buan.jpg",
+    imageAlt: "부안댐 본체 및 부안댐 물문화관 전경",
     profileIntro:
       "변산반도 국립공원과 맞닿은 수역을 품은 부안댐 일대의 청정 산림 및 호수 생태계를 전시실과 영상으로 만납니다.\n\n변산반도 자생 동식물과 부안호 상수원 보호 등 강과 호수 곁의 자연 환경 보호 스토리를 다룹니다.\n\n변산반도 국립공원 숲과 호수를 즐기려는 가족·성인 방문객에게 어울리는 청정 생태관입니다.",
     facilityProfile: [
@@ -148,9 +147,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
   },
   juam: {
-    imageSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Korea_suncheon_riverside.JPG/960px-Korea_suncheon_riverside.JPG",
-    imageAlt: "주암댐 본체 및 주암호 수계 전경",
+    imageSrc: "/centers/juam.jpg",
+    imageAlt: "주암댐 본체 및 주암댐 물문화관 전경",
     profileIntro:
       "대한민국 대표 생태 도시 순천만 생태축과 연결되어 주암호의 청정 수질 보존과 수생태계를 보호합니다.\n\n광주·전남의 젖줄인 주암호 수질 환경과 습지 생태계의 소중함을 다채로운 교육으로 전달합니다.\n\n청정 물 환경 교육 및 호수 자연 생태 탐방을 희망하는 가족·학생 단체에 맞춘 생태관입니다.",
     facilityProfile: [
@@ -164,9 +162,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
   },
   jangheung: {
-    imageSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Korea-Jangheung-Jeungsanji-01.jpg/960px-Korea-Jangheung-Jeungsanji-01.jpg",
-    imageAlt: "장흥댐 본체 및 탐진강 수생태계 전경",
+    imageSrc: "/centers/jangheung.jpg",
+    imageAlt: "장흥댐 본체 및 장흥댐 물문화관 전경",
     profileIntro:
       "전남 청정 탐진강 상류 유역의 맑은 물과 수생생물, 민물고기, 수변 식생 생태계를 전시합니다.\n\n탐진강과 장흥호 주변의 자연 습지 관찰 및 수생태계 보호 스토리관을 갖추고 있습니다.\n\n탐진강 생태 관찰 및 맑은 물 자연 교육을 원하는 유아·가족 관람객에게 추천됩니다.",
     facilityProfile: [
@@ -224,9 +221,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
   },
   gimcheon: {
-    imageSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Nakdong_River_seen_from_Gumi_20260216.jpg/960px-Nakdong_River_seen_from_Gumi_20260216.jpg",
-    imageAlt: "김천부항댐 본체 및 수변 짚와이어·출렁다리 전경",
+    imageSrc: "/centers/gimcheon.jpg",
+    imageAlt: "김천부항댐 본체 및 부항댐 물문화관 전경",
     profileIntro:
       "국내 최고 높이(93m) 부항댐 짚와이어, 출렁다리, 스카이워크 등 수변 익스트림 스포츠를 갖추고 있습니다.\n\n부항호 위를 거니는 수변 산책 코스와 활기찬 수변 레저 문화를 제공하는 레저 관광 거점입니다.\n\n익스트림 수변 레저 및 동적인 관광 문화를 즐기는 청년, 가족 단위 방문객에게 인기가 높습니다.",
     facilityProfile: [
@@ -240,9 +236,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
   },
   yongdam: {
-    imageSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/%EC%9A%A9%EB%8B%B4%ED%98%B8.jpg/960px-%EC%9A%A9%EB%8B%B4%ED%98%B8.jpg",
-    imageAlt: "용담댐 본체 및 용담호 전경",
+    imageSrc: "/centers/yongdam.jpg",
+    imageAlt: "용담댐 본체 및 용담댐 물문화관 전경",
     profileIntro:
       "용담호 주변 습지 및 숲 생태 자원을 관찰할 수 있는 6개 테마 정원과 디지털 생태학습관을 가집니다.\n\n숲, 계곡, 습지 등 용담호의 자연 동식물 생태계를 입체적인 디지털 콘텐츠로 안내합니다.\n\n자연 습지 관찰 및 호수 생태 힐링 탐방을 희망하는 가족·단체에 최적화되어 있습니다.",
     facilityProfile: [
@@ -272,9 +267,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
   },
   namgang: {
-    imageSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Jinu_Jinyang_lake.jpg/960px-Jinu_Jinyang_lake.jpg",
-    imageAlt: "남강댐 본체 및 진양호 수변공원 전경",
+    imageSrc: "/centers/namgang.jpg",
+    imageAlt: "남강댐 본체 및 진양호 물문화관 전경",
     profileIntro:
       "진주 대표 축제인 남강 유등 축제와 연계된 수변 기획 미술 전시 및 갤러리, 북카페를 갖추고 있습니다.\n\n진주 남강의 수변 문화예술을 즐기고 주민들이 휴식할 수 있는 친수 소통 공간을 선사합니다.\n\n수변 문화예술 전시와 진주 남강 풍경을 감상하려는 지역 주민 및 관광객에게 적합합니다.",
     facilityProfile: [
@@ -287,9 +281,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
   },
   miryang: {
-    imageSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Miryang_riverwalk.jpg/960px-Miryang_riverwalk.jpg",
-    imageAlt: "밀양댐 본체 및 수변 생태공원 전경",
+    imageSrc: "/centers/miryang.jpg",
+    imageAlt: "밀양댐 본체 및 밀양댐 물문화관 전경",
     profileIntro:
       "밀양댐 수변공원 및 단장천 계곡과 어우러져 지역 주민들과 방문객들에게 문화행사와 여가를 제공합니다.\n\n밀양 지역 문화예술단체 협력 전시 및 소소한 문화 이벤트가 수변 잔디광장에서 펼쳐집니다.\n\n수변 피크닉, 산책 및 문화 이벤트를 함께 즐기고 싶은 가족·연인 단위 방문객에게 좋습니다.",
     facilityProfile: [
