@@ -17,12 +17,51 @@ import { naverMapSearchHref } from "@/lib/mapLinks";
 import { createClient } from "@/utils/supabase/server";
 import { FloorGuideAccordion } from "@/components/FloorGuideAccordion";
 import { FacilityTabs } from "@/components/FacilityTabs";
-import type { CenterFloor, CenterFacility } from "@/types/database";
+import type { CenterFloor, CenterFacility, FloorAmenity } from "@/types/database";
 import {
   LOCAL_FLOOR_MAPS,
   LOCAL_FLOOR_PHOTOS_MANIFEST,
   LOCAL_SURROUNDINGS_MANIFEST,
 } from "@/data/local-photos-manifest";
+
+function resolveFloorAmenities(
+  floorKey: string,
+  rooms: { name: string }[],
+  existingAmenities?: FloorAmenity[]
+): FloorAmenity[] {
+  const result: FloorAmenity[] = existingAmenities && existingAmenities.length > 0 ? [...existingAmenities] : [];
+  const keyLower = floorKey.toLowerCase().trim();
+  const roomText = rooms.map((r) => r.name).join(" ");
+
+  const hasToilet = result.some((a) => a.label.includes("화장실"));
+  if (!hasToilet) {
+    const isFirstFloor =
+      keyLower.includes("1층") ||
+      keyLower.includes("지상1층") ||
+      keyLower.includes("지하1층") ||
+      keyLower.includes("1f") ||
+      keyLower.includes("1~");
+
+    const isSecondFloor = keyLower.includes("2층") || keyLower.includes("2f");
+    const hasToiletMentioned = roomText.includes("화장실");
+
+    if (isFirstFloor || isSecondFloor || hasToiletMentioned) {
+      result.push({ label: "화장실", icon: "toilet" });
+    }
+  }
+
+  if (!result.some((a) => a.label.includes("안내")) && (roomText.includes("안내") || roomText.includes("로비"))) {
+    result.push({ label: "안내데스크", icon: "info" });
+  }
+
+  if (!result.some((a) => a.label.includes("엘리베이터") || a.label.includes("승강기"))) {
+    if (keyLower.includes("2층") || keyLower.includes("3층") || keyLower.includes("전망") || roomText.includes("엘리베이터")) {
+      result.push({ label: "승강기(엘리베이터)", icon: "elevator" });
+    }
+  }
+
+  return result;
+}
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -90,6 +129,7 @@ export default async function CenterDetailPage({ params }: Props) {
           }
         }
 
+        const rooms = f.highlights.map((h) => ({ name: h, link: null }));
         return {
           id: `static-floor-${i}`,
           center_id: id,
@@ -97,19 +137,26 @@ export default async function CenterDetailPage({ params }: Props) {
           floor_name: f.floorLabel,
           floor_map_url: fallbackMapUrl,
           description: null,
-          rooms: f.highlights.map(h => ({ name: h, link: null })),
-          amenities: [],
+          rooms,
+          amenities: resolveFloorAmenities(f.floorLabel, rooms),
           sort_order: i,
           created_at: "",
         };
       });
 
-  // DB에 층 정보가 일부 있더라도 floor_map_url이 누락되었으면 매니페스트에서 보완
+  // DB에 층 정보가 일부 있더라도 floor_map_url 또는 amenities 보완
   const floors: CenterFloor[] = rawFloors.map((f) => {
-    if (!f.floor_map_url && LOCAL_FLOOR_MAPS[id]?.[f.floor_key]) {
-      return { ...f, floor_map_url: LOCAL_FLOOR_MAPS[id][f.floor_key] };
-    }
-    return f;
+    const floor_map_url = !f.floor_map_url && LOCAL_FLOOR_MAPS[id]?.[f.floor_key]
+      ? LOCAL_FLOOR_MAPS[id][f.floor_key]
+      : f.floor_map_url;
+
+    const amenities = resolveFloorAmenities(f.floor_key, f.rooms, f.amenities);
+
+    return {
+      ...f,
+      floor_map_url,
+      amenities,
+    };
   });
 
   // 정적 매니페스트 + 로컬 이미지 스캔 후 각 층에 매핑
