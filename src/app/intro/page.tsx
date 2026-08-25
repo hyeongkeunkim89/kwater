@@ -71,8 +71,8 @@ export default function IntroPage() {
       {/* 웅장하지만 밝은 히어로 섹션 */}
       <section className="relative h-[55vh] min-h-[400px] w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-sky-50 to-indigo-50 border-b border-slate-200">
         <Image
-          src="/water_center_intro.png"
-          alt="K-water 물문화관 전경"
+          src="/centers/hoengseong.jpg"
+          alt="횡성댐 본체 및 횡성댐 물문화관 전경"
           fill
           priority
           className="object-cover brightness-95 scale-102 transition-transform duration-[20s] ease-out hover:scale-100 opacity-60"
