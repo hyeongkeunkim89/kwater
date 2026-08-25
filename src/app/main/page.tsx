@@ -48,7 +48,7 @@ export default function MainPage() {
                 desc: "물문화관 층별 전시 공간과 편의시설 안내, 실내 도면 및 대표 전경을 한눈에 살펴보세요.",
                 btnLabel: "시설 안내 보기",
                 icon: "🏛️",
-                path: "/yunyeong",
+                path: "/intro",
                 bg: "from-amber-500/10 to-orange-500/5 hover:from-amber-500/15 hover:to-orange-500/10 border-amber-100",
                 btnBg: "bg-amber-500 hover:bg-amber-400 text-white",
               },
