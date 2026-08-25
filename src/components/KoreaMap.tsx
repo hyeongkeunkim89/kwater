@@ -87,6 +87,11 @@ function getProvinceName(props: Record<string, unknown>): string {
   );
 }
 
+function getCenterShortName(fullName: string): string {
+  if (fullName.includes("달전망대")) return "달전망대";
+  return fullName.replace(/\s*(물문화관|조력문화관|문화관)$/, "");
+}
+
 function BangulPin({
   color,
   selected,
@@ -192,13 +197,50 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
           {mapCenters.map((center) => {
             const display = resolveDisplayStatus(center, todaySeoul);
             const isSelected = selected?.id === center.id;
+            const shortName = getCenterShortName(center.name);
+            const color = PIN_COLORS[display];
+            const badgeWidth = shortName.length * 11 + 14;
+            const badgeHeight = isSelected ? 22 : 18;
+
             return (
               <Marker
                 key={center.id}
                 coordinates={center.coordinates as [number, number]}
                 onClick={() => setSelected(isSelected ? null : center)}
               >
-                <BangulPin color={PIN_COLORS[display]} selected={isSelected} />
+                <g className="cursor-pointer group">
+                  <BangulPin color={color} selected={isSelected} />
+
+                  {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 */}
+                  <g transform={`translate(${isSelected ? 20 : 15}, ${isSelected ? -11 : -9})`}>
+                    <rect
+                      x="0"
+                      y="0"
+                      width={badgeWidth}
+                      height={badgeHeight}
+                      rx={isSelected ? 6 : 5}
+                      fill={isSelected ? "#0f172a" : "#ffffff"}
+                      fillOpacity={isSelected ? 0.96 : 0.92}
+                      stroke={isSelected ? "#38bdf8" : color}
+                      strokeWidth={isSelected ? 1.8 : 1.2}
+                      style={{
+                        filter: "drop-shadow(0px 1px 2px rgba(15, 23, 42, 0.15))",
+                      }}
+                    />
+                    <text
+                      x={badgeWidth / 2}
+                      y={badgeHeight / 2 + 0.5}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      fontSize={isSelected ? 11 : 10}
+                      fontWeight={isSelected ? "800" : "700"}
+                      fill={isSelected ? "#ffffff" : "#0f172a"}
+                      className="pointer-events-none select-none font-sans tracking-tight"
+                    >
+                      {shortName}
+                    </text>
+                  </g>
+                </g>
               </Marker>
             );
           })}
