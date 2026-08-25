@@ -48,7 +48,7 @@ function MyPageContent() {
   const [reservations, setReservations] = useState<MockReservation[]>([
     {
       id: "REV-20260815-01",
-      centerName: "충주다목적댐 물문화관",
+      centerName: "충주댐 물문화관",
       date: "2026-08-20 (목)",
       time: "14:00",
       visitorCount: 3,

@@ -155,13 +155,13 @@ const waterCenterBaseList: WaterCenterBase[] = [
   // 💡 기술 (Technology - 2개소)
   {
     id: "chungju",
-    name: "충주다목적댐 물문화관",
+    name: "충주댐 물문화관",
     kind: "댐 물문화관",
     sido: "충북",
     sigungu: "충주시",
     address: "충청북도 충주시 동량면 지등로 745",
     summary:
-      "스마트 수자원 관리, 3D 및 미디어파사드 연출이 집약된 첨단 기술관입니다.",
+      "충주댐과 충주호를 중심으로, K-water의 첨단 스마트 수자원 관리 기술과 댐 본체 미디어파사드 연출을 관람할 수 있습니다.",
     status: "운영중",
     statusNote: "입장 마감·주차 등은 시설 안내 확인",
     weeklyClosedDays: ["월"],

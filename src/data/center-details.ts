@@ -44,9 +44,9 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
   chungju: {
     imageSrc:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Chungju_Dam.JPG/960px-Chungju_Dam.JPG",
-    imageAlt: "충주다목적댐 본체 및 충주댐 물문화관 전경",
+    imageAlt: "충주댐 본체 및 충주댐 물문화관 전경",
     profileIntro:
-      "충주다목적댐과 충주호를 중심으로, K-water의 첨단 스마트 수자원 관리 기술과 댐 본체 미디어파사드 연출을 관람할 수 있습니다.\n\n3D 디지털 전시와 모니터링 스토리를 통해 댐과 수자원 관리가 우리 일상과 어떻게 닿는지 이해하기 쉽게 구성되어 있습니다.\n\n어린이·청소년 및 가족 나들이객에게 첨단 미래 기술 체험을 전달하는 대표 과학·기술관입니다.",
+      "충주댐과 충주호를 중심으로, K-water의 첨단 스마트 수자원 관리 기술과 댐 본체 미디어파사드 연출을 관람할 수 있습니다.\n\n3D 디지털 전시와 모니터링 스토리를 통해 댐과 수자원 관리가 우리 일상과 어떻게 닿는지 이해하기 쉽게 구성되어 있습니다.\n\n어린이·청소년 및 가족 나들이객에게 첨단 미래 기술 체험을 전달하는 대표 과학·기술관입니다.",
     facilityProfile: [
       { label: "테마", value: "스마트 수자원 관리 & 첨단 미디어 기술" },
       { label: "대상", value: "IT·과학 기술 체험을 희망하는 아동·청소년 및 가족" },
