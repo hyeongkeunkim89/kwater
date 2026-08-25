@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
-import { waterCenters } from "@/data/centers";
 
 export const metadata = {
   title: "문화관 소개 | K-water 물문화관 홍보 허브",
@@ -10,57 +9,82 @@ export const metadata = {
 };
 
 export default function IntroPage() {
-  const themes = [
+  const coreThemes = [
     {
-      title: "역사 (History)",
-      desc: "댐과 보의 연대기부터 치수와 이수의 발자취를 통해 대한민국의 생명력을 연결해 온 물의 역사와 만납니다.",
-      icon: "📜",
-      bg: "bg-sky-50 text-sky-700 border-sky-100",
-    },
-    {
-      title: "생태 (Ecology)",
-      desc: "강 유역을 감싸 안은 천혜의 자연 속에서 멸종위기 야생생물과 식물들이 자생하는 살아 숨 쉬는 녹색 지구를 목격합니다.",
-      icon: "🌱",
-      bg: "bg-emerald-50 text-emerald-700 border-emerald-100",
-    },
-    {
+      code: "01 · TECHNOLOGY",
       title: "기술 (Technology)",
-      desc: "세계 최대 규모의 시화호 조력발전소와 스마트 댐 수자원 관리 등 첨단 기후대응 청정기술의 비전을 공유합니다.",
       icon: "⚙️",
-      bg: "bg-purple-50 text-purple-700 border-purple-100",
+      bg: "bg-cyan-50 text-cyan-800 border-cyan-200",
+      desc: "세계 최대 규모의 시화호 조력발전소(시화나래 달전망대)와 첨단 스마트 댐 수자원 관리, 합천호 수상태양광 등 기후대응 청정기술의 미래 비전을 제시합니다.",
+      centers: [
+        {
+          name: "시화나래 조력문화관 · 달전망대",
+          tag: "경기 안산시",
+          desc: "조석(밀물·썰물)을 이용한 세계 최대 시화호 조력발전의 원리와 바다 에너지 체험 및 360도 유리전망대 조망",
+        },
+        {
+          name: "충주댐 물문화관",
+          tag: "충북 충주시",
+          desc: "국내 최대 다목적댐과 첨단 미디어파사드 연출, 3D 디지털 수자원 모니터링 시스템 체험",
+        },
+      ],
     },
     {
-      title: "체험·교육 (Education)",
-      desc: "인터랙티브 미디어 아트, 물 과학 실험실, 오감 체험 코너를 통해 아이들부터 어른들까지 온 몸으로 즐기는 에듀테인먼트를 제공합니다.",
-      icon: "🎒",
-      bg: "bg-amber-50 text-amber-700 border-amber-100",
+      code: "02 · ECOLOGY",
+      title: "생태 (Ecology)",
+      icon: "🌿",
+      bg: "bg-emerald-50 text-emerald-800 border-emerald-200",
+      desc: "금강 수계 대청호, 소양호, 변산반도 국립공원 등 천혜의 자연 속에서 멸종위기 야생 동식물과 수생태계의 생명력을 보호하고 전파합니다.",
+      centers: [
+        {
+          name: "대청댐 물문화관",
+          tag: "대전 대덕구",
+          desc: "금강 민물고기 생태 수족관과 대청호 청정 자연 생태계 보전 교육",
+        },
+        {
+          name: "부안댐 물문화관",
+          tag: "전북 부안군",
+          desc: "변산반도 국립공원 산림·호수 생태 보호 및 자생 동식물 생태 학습",
+        },
+      ],
     },
     {
-      title: "건축·조망 (Architecture)",
-      desc: "빼어난 수변 경관과 댐 전망대, 조형적 아름다움을 갖춘 랜드마크 건축물에서 자연이 그린 명화를 감상할 수 있습니다.",
+      code: "03 · HISTORY",
+      title: "역사 (History)",
       icon: "🏛️",
-      bg: "bg-rose-50 text-rose-700 border-rose-100",
-    },
-  ];
-
-  const showcaseCenters = [
-    {
-      name: "소양강댐 물문화관",
-      location: "강원 춘천시",
-      summary: "동양 최대 사력댐의 웅장한 자연 경관과 맑은 소양호의 생태계를 한눈에 감상하는 소통의 장입니다.",
-      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/640px-SoyangDam.JPG",
-    },
-    {
-      name: "대청댐 물문화관",
-      location: "대전 대덕구",
-      summary: "금강 수계와 대청호의 자연 생태, 그리고 댐 주변의 조형 예술과 힐링 산책로를 감상하는 친환경 공간입니다.",
-      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg/640px-Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg",
+      bg: "bg-amber-50 text-amber-800 border-amber-200",
+      desc: "대한민국 근대 치수 사업의 발자취와 댐 건설로 정든 고향을 떠나야 했던 수몰지 주민들의 삶의 기록과 사료를 보존합니다.",
+      centers: [
+        {
+          name: "횡성댐 물문화관 (망향의 동산)",
+          tag: "강원 횡성군",
+          desc: "수몰지 5개 리 주민들의 옛 사진·유물 보존 및 횡성호수길 망향 탐방",
+        },
+        {
+          name: "소양강댐 물문화관",
+          tag: "강원 춘천시",
+          desc: "동양 최대 사급댐 축조 역사와 근대 수자원 개발 60년 사료관",
+        },
+      ],
     },
     {
-      name: "충주댐 물문화관",
-      location: "충북 충주시",
-      summary: "국내 최대의 다목적댐인 충주호의 수려한 경관과 스마트 친환경 물관리 시스템을 체험하는 친환경 문화관입니다.",
-      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Chungju_Lake.jpg/640px-Chungju_Lake.jpg",
+      code: "04 · CULTURE & ARTS",
+      title: "문화 (Culture & Arts)",
+      icon: "🎭",
+      bg: "bg-purple-50 text-purple-800 border-purple-200",
+      desc: "진주 남강 유등축제 연계 수변 갤러리, 디아크 레저 미디어아트, 김천부항댐 짚와이어 등 자연과 어우러지는 다채로운 문화예술 쉼터입니다.",
+      centers: [
+        {
+          name: "남강댐 물문화관",
+          tag: "경남 진주시",
+          desc: "진주 남강 유등 축제 연계 수변 기획 미술 갤러리 및 북카페",
+        },
+        {
+          name: "김천부항댐 물문화관",
+          tag: "경북 김천시",
+          desc: "국내 최고 93m 짚와이어, 출렁다리, 스카이워크 수변 액티비티",
+        },
+      ],
     },
   ];
 
@@ -95,68 +119,60 @@ export default function IntroPage() {
         </div>
       </section>
 
-      {/* 문화관 철학 및 정의 */}
+      {/* 랜딩페이지 연계: 4대 핵심 관람 테마 상세 소개 */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-xs font-bold tracking-widest text-sky-600 uppercase">
-              Brand Philosophy
+            <span className="inline-block rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black text-sky-800 uppercase tracking-widest mb-3">
+              4 Core Exhibition Themes
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              물문화관 4대 핵심 테마 & 대표 관람지
             </h2>
-            <p className="mt-3 text-2xl sm:text-3xl font-black text-slate-900">
-              물문화관이 전하는 세 가지 약속
+            <p className="mt-2 text-xs sm:text-sm text-slate-500 font-semibold max-w-xl mx-auto">
+              기술, 생태, 역사, 문화 4가지 핵심 주제를 중심으로 대표적인 K-water 물문화 공간을 소개합니다.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-8 hover:bg-white hover:shadow-md transition duration-300">
-              <span className="text-4xl block mb-4">🌍</span>
-              <h3 className="text-lg font-bold text-slate-800 mb-2">지속 가능한 미래 보전</h3>
-              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-semibold">
-                지기적 치수와 친환경 그린 에너지를 통해 기후 위기에 대응하고, 우리의 소중한 강과 생태계를 건강하게 보전하는 미래를 나눕니다.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-8 hover:bg-white hover:shadow-md transition duration-300">
-              <span className="text-4xl block mb-4">💡</span>
-              <h3 className="text-lg font-bold text-slate-800 mb-2">체험과 배움의 에듀테인먼트</h3>
-              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-semibold">
-                재미있는 과학 원리 실험, 최신 미디어 아트를 접목한 흥미로운 전시기획을 통해 아이들이 창의적인 사고와 미래 기술을 체험하도록 합니다.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-8 hover:bg-white hover:shadow-md transition duration-300">
-              <span className="text-4xl block mb-4">🏡</span>
-              <h3 className="text-lg font-bold text-slate-800 mb-2">열린 시민 힐링 쉼터</h3>
-              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-semibold">
-                주변 둘레길, 조망 좋은 노천 카페, 계절별 다채로운 시민 참여 문화 프로그램을 제공하여 일상의 따뜻한 휴식과 감동을 나눕니다.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5대 관람 테마 안내 */}
-      <section className="py-20 bg-slate-100/60 border-y border-slate-200/80">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-xs font-bold tracking-widest text-sky-600 uppercase">
-              Exhibition Themes
-            </h2>
-            <p className="mt-3 text-2xl sm:text-3xl font-black text-slate-900">
-              오감을 사로잡는 5가지 전시 테마
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-5">
-            {themes.map((theme) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {coreThemes.map((theme) => (
               <div
-                key={theme.title}
-                className="flex flex-col sm:flex-row items-start gap-5 p-6 rounded-2xl border border-slate-200/80 bg-white hover:border-sky-300 hover:shadow-sm transition"
+                key={theme.code}
+                className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50/60 p-6 hover:bg-white hover:border-sky-300 hover:shadow-lg transition-all duration-300"
               >
-                <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl font-bold ${theme.bg}`}>
-                  {theme.icon}
-                </span>
                 <div>
-                  <h3 className="text-base font-bold text-slate-800 mb-1.5">{theme.title}</h3>
-                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium">{theme.desc}</p>
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <span className={`inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-bold border ${theme.bg}`}>
+                      <span>{theme.icon}</span>
+                      <span>{theme.title}</span>
+                    </span>
+                    <span className="text-[10px] font-black tracking-widest text-slate-400">
+                      {theme.code}
+                    </span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-semibold mb-6">
+                    {theme.desc}
+                  </p>
+
+                  <div className="space-y-3 pt-4 border-t border-slate-200/60">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                      주요 대표 문화관 예시
+                    </span>
+                    {theme.centers.map((c) => (
+                      <div key={c.name} className="rounded-xl bg-white p-3 border border-slate-200/80 shadow-sm">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <h4 className="text-xs font-bold text-slate-900">{c.name}</h4>
+                          <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md">
+                            {c.tag}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-snug font-medium">
+                          {c.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
@@ -164,8 +180,8 @@ export default function IntroPage() {
         </div>
       </section>
 
-      {/* 문화관 현황 안내 연결 배너 */}
-      <section className="py-16 bg-white border-t border-slate-200/80">
+      {/* 현황 탐색 연결 배너 */}
+      <section className="py-16 bg-slate-100/70 border-t border-slate-200/80">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <span className="inline-block rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black text-sky-800 uppercase tracking-widest mb-3">
             K-water All 15 Culture Hubs
