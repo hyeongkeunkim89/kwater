@@ -371,7 +371,7 @@ function TabBtn({
   );
 }
 
-const CenterCard = memo(function CenterCard({
+export const CenterCard = memo(function CenterCard({
   center: c,
   todaySeoul,
 }: {
@@ -384,7 +384,7 @@ const CenterCard = memo(function CenterCard({
   const naverHref = naverMapSearchHref(c);
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-lg hover:shadow-sky-100">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-lg hover:shadow-sky-100 shadow-sm">
       <div className="h-1 w-full bg-gradient-to-r from-sky-400 to-blue-500" />
 
       <div className="flex items-start gap-3 px-4 pt-3 pb-2">
@@ -438,8 +438,8 @@ const CenterCard = memo(function CenterCard({
 
       <div className="mx-4 border-t border-slate-100" />
 
-      <div className="flex flex-1 flex-col gap-2 px-4 py-2.5">
-        <p className="line-clamp-2 text-sm leading-relaxed text-slate-500">
+      <div className="flex flex-1 flex-col gap-2.5 px-4 py-3">
+        <p className="line-clamp-2 text-xs sm:text-sm leading-relaxed text-slate-600">
           {c.summary}
         </p>
 
@@ -477,10 +477,28 @@ const CenterCard = memo(function CenterCard({
             {formatWeeklyClosureSentence(c.weeklyClosedDays)} (09:00~18:00)
           </span>
         </div>
+
+        {/* 푸터 하단 이동 링크 버튼 동기화 */}
+        <div className="flex gap-2 pt-1 mt-auto">
+          <Link
+            href={detailHref}
+            className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-800 transition hover:border-sky-400 hover:bg-sky-50 hover:text-sky-800 shadow-sm"
+          >
+            상세보기 →
+          </Link>
+          <a
+            href={naverHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-sky-600 py-2.5 text-xs font-bold text-white transition hover:bg-sky-700 shadow-sm shadow-sky-600/20"
+          >
+            네이버지도 🗺️ ↗
+          </a>
         </div>
-      </article>
-    );
-  });
+      </div>
+    </article>
+  );
+});
 
 function countByResolvedStatus(list: WaterCenter[], today: WeekdayHan) {
   const init = emptyDisplayStatusCounts();

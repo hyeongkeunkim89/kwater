@@ -8,7 +8,7 @@ import {
   Geography,
   Marker,
 } from "react-simple-maps";
-import type { WaterCenter } from "@/data/centers";
+import type { WaterCenter, WeekdayHan } from "@/data/centers";
 import { formatWeeklyClosureSentence, waterCenters } from "@/data/centers";
 import {
   displayStatusStyles,
@@ -19,6 +19,7 @@ import {
 } from "@/lib/center-display";
 import { centerThemeBadgeClass, koreaMapUi } from "@/lib/centerExplorerUi";
 import { naverMapSearchHref } from "@/lib/mapLinks";
+import { CenterCard } from "@/components/CenterExplorer";
 
 const PROVINCES_URL = "/korea-provinces.json";
 
@@ -320,7 +321,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
         {selected ? (
           <CenterPanel
             center={selected}
-            display={resolveDisplayStatus(selected, todaySeoul)}
+            todaySeoul={todaySeoul}
             onClose={() => setSelected(null)}
           />
         ) : (
@@ -355,89 +356,25 @@ function EmptyPanel() {
 
 function CenterPanel({
   center,
-  display,
+  todaySeoul,
   onClose,
 }: {
   center: WaterCenter;
-  display: DisplayStatus;
+  todaySeoul: WeekdayHan;
   onClose: () => void;
 }) {
-  const mapHref = naverMapSearchHref(center);
-
   return (
-    <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
-      <div className="flex items-start justify-between gap-3 border-b border-slate-100 bg-sky-50/70 px-4 py-4">
-        <div className="min-w-0">
-          <p className="text-[11px] font-medium text-sky-700">{center.kind}</p>
-          <div className="mt-1 flex flex-wrap gap-1">
-            {center.themes.slice(0, 1).map((t) => (
-              <span
-                key={t}
-                className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ring-inset ${centerThemeBadgeClass[t]}`}
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-          <h3 className="mt-0.5 text-base font-bold leading-snug text-slate-900">{center.name}</h3>
-          <p className="mt-0.5 text-xs font-medium text-slate-600">
-            {formatCenterRegionLine(center)}
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label={koreaMapUi.panelClose}
-          className="shrink-0 flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-base leading-none text-slate-600 hover:bg-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
-        >
-          <span aria-hidden>×</span>
-        </button>
-      </div>
-      <div className="space-y-3 p-4">
-        <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${displayStatusStyles[display].badge}`}>
-          {display}
-        </span>
-        <p className="line-clamp-3 text-sm leading-relaxed text-slate-600">{center.summary}</p>
-        <div>
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-            {koreaMapUi.facilitySummary}
-          </p>
-          <ul className="flex flex-wrap gap-1.5">
-            {center.facilityProfile.slice(0, 3).map((item) => (
-              <li key={item.label} className="rounded-lg bg-sky-50 px-2 py-1 text-xs text-sky-950 ring-1 ring-sky-100">
-                <span className="font-medium text-sky-800">{item.label}</span>
-                <span className="text-sky-900/80">{" \u00B7 "}{item.value}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="rounded-xl bg-slate-50 px-3 py-2.5 text-xs text-slate-700">
-          <p>
-            <span className="font-medium text-slate-900">{koreaMapUi.address}</span>{" "}
-            <span className="break-all text-slate-600">{center.address}</span>
-          </p>
-          <p className="mt-1">
-            <span className="font-medium text-slate-900">{koreaMapUi.weeklyOff}</span>{" "}
-            {formatWeeklyClosureSentence(center.weeklyClosedDays)}
-          </p>
-        </div>
-        <div className="flex gap-2 pt-0.5">
-          <Link
-            href={`/centers/${center.id}`}
-            className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-slate-200 py-2.5 text-sm font-semibold text-slate-800 hover:border-sky-400 hover:text-sky-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
-          >
-            {koreaMapUi.detail}
-          </Link>
-          <a
-            href={mapHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-sky-600 py-2.5 text-sm font-semibold text-white hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
-          >
-            {koreaMapUi.openMap}
-          </a>
-        </div>
-      </div>
-    </article>
+    <div className="relative">
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label={koreaMapUi.panelClose}
+        className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900/60 text-white backdrop-blur-md transition hover:bg-slate-900 hover:scale-105 focus:outline-none shadow-md"
+      >
+        <span aria-hidden className="text-base font-bold">×</span>
+      </button>
+
+      <CenterCard center={center} todaySeoul={todaySeoul} />
+    </div>
   );
 }
