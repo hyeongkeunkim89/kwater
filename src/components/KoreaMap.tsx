@@ -92,6 +92,32 @@ function getCenterShortName(fullName: string): string {
   return fullName.replace(/\s*(물문화관|조력문화관|문화관)$/, "");
 }
 
+function measureTextWidth(text: string, fontSize: number): number {
+  let width = 0;
+  for (const char of text) {
+    if (/[가-힣]/.test(char)) {
+      width += fontSize * 0.96;
+    } else if (/[A-Z0-9]/.test(char)) {
+      width += fontSize * 0.62;
+    } else {
+      width += fontSize * 0.42;
+    }
+  }
+  return Math.ceil(width);
+}
+
+type LabelPosition = {
+  anchor: "left" | "right";
+  offsetY: number;
+};
+
+const CENTER_LABEL_POSITIONS: Record<string, LabelPosition> = {
+  hantan: { anchor: "left", offsetY: -10 },
+  daecheong: { anchor: "left", offsetY: -8 },
+  buan: { anchor: "left", offsetY: -8 },
+  hapcheon: { anchor: "left", offsetY: -8 },
+};
+
 function BangulPin({
   color,
   selected,
@@ -199,8 +225,22 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             const isSelected = selected?.id === center.id;
             const shortName = getCenterShortName(center.name);
             const color = PIN_COLORS[display];
-            const badgeWidth = shortName.length * 11 + 14;
-            const badgeHeight = isSelected ? 22 : 18;
+
+            const fontSize = isSelected ? 11 : 10;
+            const textWidth = measureTextWidth(shortName, fontSize);
+            const badgeWidth = textWidth + 10;
+            const badgeHeight = isSelected ? 20 : 17;
+
+            const posConfig = CENTER_LABEL_POSITIONS[center.id] ?? {
+              anchor: "right",
+              offsetY: isSelected ? -10 : -8,
+            };
+            const isLeft = posConfig.anchor === "left";
+
+            const badgeX = isLeft ? -14 - badgeWidth : 14;
+            const textX = isLeft ? -14 - badgeWidth / 2 : 14 + badgeWidth / 2;
+            const badgeY = posConfig.offsetY;
+            const textY = badgeY + badgeHeight / 2 + 0.5;
 
             return (
               <Marker
@@ -211,16 +251,16 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                 <g className="cursor-pointer group">
                   <BangulPin color={color} selected={isSelected} />
 
-                  {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 */}
-                  <g transform={`translate(${isSelected ? 20 : 15}, ${isSelected ? -11 : -9})`}>
+                  {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 (개별 스마트 앵커 & 타이트 패딩) */}
+                  <g transform={`translate(${badgeX}, ${badgeY})`}>
                     <rect
                       x="0"
                       y="0"
                       width={badgeWidth}
                       height={badgeHeight}
-                      rx={isSelected ? 6 : 5}
+                      rx={isSelected ? 5 : 4}
                       fill={isSelected ? "#0f172a" : "#ffffff"}
-                      fillOpacity={isSelected ? 0.96 : 0.92}
+                      fillOpacity={isSelected ? 0.96 : 0.93}
                       stroke={isSelected ? "#38bdf8" : color}
                       strokeWidth={isSelected ? 1.8 : 1.2}
                       style={{
@@ -232,7 +272,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                       y={badgeHeight / 2 + 0.5}
                       textAnchor="middle"
                       dominantBaseline="central"
-                      fontSize={isSelected ? 11 : 10}
+                      fontSize={fontSize}
                       fontWeight={isSelected ? "800" : "700"}
                       fill={isSelected ? "#ffffff" : "#0f172a"}
                       className="pointer-events-none select-none font-sans tracking-tight"
