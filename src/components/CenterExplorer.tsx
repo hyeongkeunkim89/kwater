@@ -379,83 +379,80 @@ export const CenterCard = memo(function CenterCard({
   todaySeoul: WeekdayHan;
 }) {
   const display = resolveDisplayStatus(c, todaySeoul);
-  const profilePreview = c.facilityProfile.slice(0, 3);
   const detailHref = `/centers/${c.id}`;
+  const reserveHref = `/reserve?center=${c.id}`;
   const naverHref = naverMapSearchHref(c);
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-lg hover:shadow-sky-100 shadow-sm">
-      <div className="h-1 w-full bg-gradient-to-r from-sky-400 to-blue-500" />
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl shadow-sm">
+      {/* 상단 대표 사진 이미지 커버 배너 */}
+      <Link href={detailHref} className="relative h-48 w-full overflow-hidden bg-slate-100 block shrink-0">
+        <Image
+          src={c.imageSrc}
+          alt={c.imageAlt || c.name}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          quality={85}
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
 
-      <div className="flex items-start gap-3 px-4 pt-3 pb-2">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-sky-600">
+        {/* 상단 뱃지 묶음 */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-1.5 z-10">
+          <div className="flex flex-wrap gap-1.5">
+            <span className="rounded-full bg-slate-900/80 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
               {c.kind}
-            </p>
-            <span className={`inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold ring-1 ring-inset ${displayStatusStyles[display].badge}`}>
-              {display}
+            </span>
+            <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
+              {c.sido} · {c.sigungu}
             </span>
           </div>
-          <div className="mt-1.5 flex flex-wrap gap-1">
-            {c.themes.slice(0, 1).map((t) => (
-              <span
-                key={t}
-                className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ring-inset ${centerThemeBadgeClass[t]}`}
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-          <Link
-            href={detailHref}
-            className="mt-0.5 block rounded-md text-[16px] font-black leading-tight tracking-tight text-slate-900 outline-none transition hover:text-sky-800 focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2"
-          >
-            <h3 className="text-[16px] font-black leading-tight tracking-tight">{c.name}</h3>
-          </Link>
-          <p className="mt-0.5 text-xs font-medium text-slate-600">
+
+          <span className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-bold backdrop-blur-md ring-1 ring-inset ${displayStatusStyles[display].badge}`}>
+            {display}
+          </span>
+        </div>
+
+        {/* 하단 타이틀 Overlay */}
+        <div className="absolute bottom-3 left-3 right-3 text-white z-10">
+          <h3 className="text-lg font-black leading-tight drop-shadow-md text-white">
+            {c.name}
+          </h3>
+          <p className="text-[11px] font-medium text-slate-200 drop-shadow-sm mt-0.5">
             {formatCenterRegionLine(c)}
           </p>
         </div>
+      </Link>
 
-        <Link
-          href={detailHref}
-          aria-label={`${c.name} 상세 페이지`}
-          className="shrink-0 rounded-xl outline-none ring-1 ring-slate-200 transition hover:ring-sky-300 focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2"
-        >
-          <div className="relative h-[96px] w-[136px] overflow-hidden rounded-[inherit]">
-            <Image
-              src={c.imageSrc}
-              alt={c.imageAlt}
-              fill
-              sizes="136px"
-              quality={85}
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          </div>
-        </Link>
-      </div>
-
-      <div className="mx-4 border-t border-slate-100" />
-
-      <div className="flex flex-1 flex-col gap-2.5 px-4 py-3">
-        <p className="line-clamp-2 text-xs sm:text-sm leading-relaxed text-slate-600">
+      {/* 본문 영역 */}
+      <div className="flex flex-1 flex-col gap-3 p-4">
+        <p className="line-clamp-2 text-xs sm:text-sm leading-relaxed text-slate-600 font-medium">
           {c.summary}
         </p>
 
-        <ul className="flex flex-col gap-1">
-          {profilePreview.slice(0, 2).map((item) => (
-            <li
-              key={item.label}
-              className="flex items-baseline gap-1.5 rounded-lg bg-sky-50 px-2.5 py-1 text-xs ring-1 ring-sky-100"
-            >
-              <span className="shrink-0 font-semibold text-sky-800">{item.label}</span>
-              <span className="min-w-0 text-slate-600 line-clamp-2 leading-snug">{item.value}</span>
-            </li>
-          ))}
-        </ul>
+        {/* 🏛️ 층별 주요 공간 (Floor Guide) */}
+        {c.floors && c.floors.length > 0 && (
+          <div className="rounded-xl bg-slate-50 border border-slate-100 p-2.5 text-xs space-y-1.5">
+            <span className="text-[10px] font-bold text-sky-700 uppercase tracking-wide block">
+              🏛️ 층별 주요 공간
+            </span>
+            <div className="space-y-1">
+              {c.floors.slice(0, 3).map((f) => (
+                <div key={f.floorLabel} className="flex items-baseline gap-2">
+                  <span className="shrink-0 font-bold text-slate-800 text-[10px] bg-white px-1.5 py-0.5 rounded border border-slate-200">
+                    {f.floorLabel}
+                  </span>
+                  <span className="text-slate-600 truncate text-[11px] font-medium">
+                    {f.highlights.join(", ")}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1.5 gap-y-1.5 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-600">
+        {/* 위치 및 주일 휴무 정보 */}
+        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1.5 gap-y-1 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-600 mt-auto">
           <span className="shrink-0 font-bold text-slate-800 leading-snug">
             {centerExplorerUi.location}
           </span>
@@ -466,8 +463,8 @@ export const CenterCard = memo(function CenterCard({
             title="네이버지도에서 해당 위치 보기 (새 창)"
             className="min-w-0 leading-snug font-bold text-sky-700 hover:text-sky-900 hover:underline hover:underline-offset-2 transition flex items-center gap-1 group/loc"
           >
-            <span>{c.address}</span>
-            <span className="text-[10px] text-sky-500 group-hover/loc:translate-x-0.5 transition">🗺️ ↗</span>
+            <span className="truncate">{c.address}</span>
+            <span className="text-[10px] text-sky-500 group-hover/loc:translate-x-0.5 transition shrink-0">🗺️ ↗</span>
           </a>
 
           <span className="shrink-0 font-bold text-slate-800 leading-snug">
@@ -478,22 +475,20 @@ export const CenterCard = memo(function CenterCard({
           </span>
         </div>
 
-        {/* 푸터 하단 이동 링크 버튼 동기화 */}
-        <div className="flex gap-2 pt-1 mt-auto">
+        {/* 하단 버튼 묶음 */}
+        <div className="flex gap-2 pt-1">
           <Link
             href={detailHref}
             className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-800 transition hover:border-sky-400 hover:bg-sky-50 hover:text-sky-800 shadow-sm"
           >
-            상세보기 →
+            시설안내 →
           </Link>
-          <a
-            href={naverHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-sky-600 py-2.5 text-xs font-bold text-white transition hover:bg-sky-700 shadow-sm shadow-sky-600/20"
+          <Link
+            href={reserveHref}
+            className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-sky-600 py-2.5 text-xs font-bold text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20"
           >
-            네이버지도 🗺️ ↗
-          </a>
+            투어예약 📅
+          </Link>
         </div>
       </div>
     </article>
