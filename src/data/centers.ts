@@ -307,7 +307,8 @@ const waterCenterBaseList: WaterCenterBase[] = [
     kind: "댐 물문화관",
     sido: "경북",
     sigungu: "김천시",
-    address: "경상북도 김천시 부항면 부항댐길 352",
+    address: "경북 김천시 지례면 도곡리 1005-5",
+    mapSearchQuery: "경북 김천시 지례면 도곡리 1005-5",
     summary:
       "국내 최고 짚와이어, 출렁다리, 스카이워크 수변 레저 문화를 선도하는 레저 문화 거점입니다.",
     status: "운영중",

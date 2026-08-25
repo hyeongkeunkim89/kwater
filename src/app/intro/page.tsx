@@ -164,110 +164,24 @@ export default function IntroPage() {
         </div>
       </section>
 
-      {/* 전국 15대 물문화관 & 층별 주요 시설 전경 */}
-      <section className="py-20 bg-white" id="centers-showcase">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <span className="inline-block rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black text-sky-800 uppercase tracking-widest mb-3">
-              K-water All 15 Culture Hubs
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-              전국 15개 K-water 물문화관 & 층별 시설 안내
-            </h2>
-            <p className="mt-3 text-xs sm:text-sm text-slate-500 max-w-2xl mx-auto font-semibold leading-relaxed">
-              전국 아름다운 수변과 댐 곁에 위치한 15개 물문화관의 대표 전경과 층별 공간을 한눈에 살펴보세요.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {waterCenters.map((center) => (
-              <article
-                key={center.id}
-                className="group flex flex-col rounded-2xl overflow-hidden border border-slate-200 bg-white hover:border-sky-300 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                {/* 센터 대표 이미지 뷰어 */}
-                <Link href={`/centers/${center.id}`} className="relative h-52 w-full overflow-hidden bg-slate-100 block">
-                  <Image
-                    src={center.imageSrc}
-                    alt={center.imageAlt || center.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    quality={85}
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                  
-                  {/* 상단 뱃지 */}
-                  <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
-                    <span className="rounded-full bg-slate-900/80 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
-                      {center.kind}
-                    </span>
-                    <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
-                      {center.sido} · {center.sigungu}
-                    </span>
-                  </div>
-
-                  {/* 하단 타이틀 Overlay */}
-                  <div className="absolute bottom-3 left-3 right-3 text-white z-10">
-                    <h3 className="text-lg font-black leading-tight drop-shadow-md text-white">
-                      {center.name}
-                    </h3>
-                  </div>
-                </Link>
-
-                {/* 콘텐츠 카드 바디 */}
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium line-clamp-2">
-                    {center.summary}
-                  </p>
-
-                  {/* 층별 전시 가이드 미리보기 */}
-                  {center.floors && center.floors.length > 0 && (
-                    <div className="rounded-xl bg-slate-50 border border-slate-100 p-3 text-xs space-y-1.5">
-                      <span className="text-[10px] font-bold text-sky-700 uppercase tracking-wide block">
-                        🏛️ 층별 주요 공간
-                      </span>
-                      <div className="space-y-1">
-                        {center.floors.slice(0, 3).map((f) => (
-                          <div key={f.floorLabel} className="flex items-baseline gap-2">
-                            <span className="shrink-0 font-bold text-slate-800 text-[11px] bg-white px-1.5 py-0.5 rounded border border-slate-200">
-                              {f.floorLabel}
-                            </span>
-                            <span className="text-slate-600 truncate text-[11px] font-medium">
-                              {f.highlights.join(", ")}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* 하단 이동 및 예약 버튼 */}
-                  <div className="pt-2 flex gap-2 border-t border-slate-100">
-                    <Link
-                      href={`/centers/${center.id}`}
-                      className="flex-1 inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-800 hover:bg-sky-50 hover:border-sky-300 hover:text-sky-800 transition"
-                    >
-                      시설안내 →
-                    </Link>
-                    <Link
-                      href={`/reserve?center=${center.id}`}
-                      className="flex-1 inline-flex min-h-10 items-center justify-center rounded-xl bg-sky-600 text-xs font-bold text-white hover:bg-sky-500 transition shadow-sm shadow-sky-600/20"
-                    >
-                      투어예약 📅
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="text-center mt-14">
+      {/* 문화관 현황 안내 연결 배너 */}
+      <section className="py-16 bg-white border-t border-slate-200/80">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <span className="inline-block rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black text-sky-800 uppercase tracking-widest mb-3">
+            K-water All 15 Culture Hubs
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            전국 15개 K-water 물문화관 현황 보기
+          </h2>
+          <p className="mt-3 text-xs sm:text-sm text-slate-500 max-w-xl mx-auto font-semibold leading-relaxed">
+            전국 거점 댐 수역에 위치한 15개 물문화관의 운영 시간, 실시간 관람 상태, 층별 주요 공간 및 지도를 현황 페이지에서 탐색해 보세요.
+          </p>
+          <div className="mt-8">
             <Link
               href="/status"
               className="inline-flex min-h-12 items-center justify-center rounded-xl bg-slate-900 hover:bg-slate-800 text-sm font-bold text-white px-8 transition shadow-lg gap-2"
             >
-              <span>🗺️ 대화형 지도로 전국 현황 한눈에 보기</span>
+              <span>🗺️ 전국 15개 물문화관 현황 보러가기</span>
               <span>→</span>
             </Link>
           </div>
