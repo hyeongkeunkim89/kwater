@@ -59,7 +59,8 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
               </span>
             </div>
             <p className="mt-2.5 text-xs sm:text-sm text-white/50 leading-relaxed max-w-md">
-              물, 자연, 그리고 사람이 하나되는 행복을 만듭니다. 전국 물문화관에서 깨끗한 환경과 미래의 물 문화를 체험해 보세요.
+              물, 자연, 그리고 사람이 하나되는 행복을 만듭니다.<br />
+              전국 물문화관에서 깨끗한 환경과 미래의 물 문화를 체험해 보세요.
             </p>
             <p className="mt-3 text-xs text-white/35">
               본 홈페이지는 전국 K-water 물문화관의 홍보 및 가이드 투어 예약 관리를 위한 통합 플랫폼입니다.
