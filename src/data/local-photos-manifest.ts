@@ -29,6 +29,10 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "1층": "/juam-1f.PNG",
     "2층": "/juam-2f.PNG",
   },
+  jangheung: {
+    "1층": "/jangheung-1f.PNG",
+    "2층": "/jangheung-2f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -124,6 +128,18 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/juam/2층/야외데크.PNG",
     ],
   },
+  jangheung: {
+    "1층": [
+      "/images/floors/jangheung/1층/역사문화실1.PNG",
+      "/images/floors/jangheung/1층/역사문화실2.PNG",
+      "/images/floors/jangheung/1층/영상실.PNG",
+    ],
+    "2층": [
+      "/images/floors/jangheung/2층/물전시실1.PNG",
+      "/images/floors/jangheung/2층/물전시실2.PNG",
+      "/images/floors/jangheung/2층/전망대.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -156,5 +172,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
   juam: [
     "/images/surroundings/juam/광장.PNG",
     "/images/surroundings/juam/주차장.PNG",
+  ],
+  jangheung: [
+    "/images/surroundings/jangheung/공원.PNG",
+    "/images/surroundings/jangheung/주차장.PNG",
   ],
 };

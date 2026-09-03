@@ -170,8 +170,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "탐진강 생태 관찰 및 맑은 물 자연 교육을 희망하는 가족·유아" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["역사문화실", "지역 수몰·추억 스토리"] },
-      { floorLabel: "2층", highlights: ["워터리움", "물·댐 과학 체험"] },
+      { floorLabel: "1층", highlights: ["역사문화실", "영상실", "화장실"] },
+      { floorLabel: "2층", highlights: ["물전시실", "전망대", "화장실"] },
     ],
   },
   yeongju: {
