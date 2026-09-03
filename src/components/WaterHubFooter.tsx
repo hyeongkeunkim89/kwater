@@ -45,40 +45,40 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <footer className="shrink-0 border-t border-white/10 bg-[#0e1726] text-white/70 py-12 sm:py-16">
+    <footer className="shrink-0 border-t border-white/10 bg-[#0e1726] text-white/70 py-6 sm:py-8">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-5">
           {/* 회사 소개 */}
           <div className="md:col-span-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-500 text-sm font-black text-white">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-xs font-black text-white">
                 K
               </span>
-              <span className="text-base font-black text-white tracking-wide">
+              <span className="text-sm sm:text-base font-black text-white tracking-wide">
                 K-water 한국수자원공사
               </span>
             </div>
-            <p className="mt-4 text-sm text-white/50 leading-relaxed max-w-md">
+            <p className="mt-2.5 text-xs sm:text-sm text-white/50 leading-relaxed max-w-md">
               물, 자연, 그리고 사람이 하나되는 행복을 만듭니다. 전국 물문화관에서 깨끗한 환경과 미래의 물 문화를 체험해 보세요.
             </p>
-            <p className="mt-6 text-xs text-white/35">
+            <p className="mt-3 text-xs text-white/35">
               본 홈페이지는 전국 K-water 물문화관의 홍보 및 가이드 투어 예약 관리를 위한 통합 플랫폼입니다.
             </p>
           </div>
 
           {/* 패밀리 사이트 */}
           <div className="md:col-span-2">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-2.5">
               패밀리사이트
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
               {familySites.map((site) => (
                 <a
                   key={site.name}
                   href={site.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-sm hover:text-sky-400 transition py-1"
+                  className="inline-flex items-center text-xs sm:text-sm hover:text-sky-400 transition py-0.5"
                 >
                   <svg
                     className="mr-1.5 h-3.5 w-3.5 text-white/30 shrink-0"
@@ -101,7 +101,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
         </div>
 
         {/* 저작권 표시 */}
-        <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
+        <div className="mt-6 pt-5 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
           <p>© {new Date().getFullYear()} K-water 한국수자원공사. All rights reserved.</p>
           <div className="flex gap-x-4">
             <Link href="/yunyeong" className="hover:text-white transition">
