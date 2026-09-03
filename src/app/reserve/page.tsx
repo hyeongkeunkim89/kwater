@@ -18,19 +18,19 @@ export default async function ReservePage({ searchParams }: Props) {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between">
       <WaterHubHeader activeNav="reserve" />
 
-      {/* 다크 히어로 타이틀 */}
-      <div className="relative overflow-hidden bg-[#0b111e] shrink-0">
+      {/* 라이트 히어로 타이틀 */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-sky-50 to-indigo-50 border-b border-slate-200/80 shrink-0">
         <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute left-1/3 top-0 h-60 w-60 -translate-x-1/2 rounded-full bg-sky-600/15 blur-[80px]" />
+          <div className="absolute right-1/4 top-0 h-48 w-48 rounded-full bg-teal-50/5 blur-[80px]" />
         </div>
-        <div className="relative mx-auto max-w-5xl px-6 py-12 sm:px-10 sm:py-16 text-center">
-          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
+        <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 text-left">
+          <span className="text-xs font-extrabold uppercase tracking-widest text-[#2F9FF3]">
             GUIDED TOUR
-          </p>
-          <h1 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
+          </span>
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
             가이드 투어 예약
           </h1>
-          <p className="mt-3 text-sm leading-relaxed text-white/50">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed font-semibold max-w-2xl">
             문화관·날짜·시간을 선택하고 방문자 정보를 입력하면 예약이 접수됩니다.
             <br className="hidden sm:block" />
             담당자 확인 후 예약이 확정됩니다.

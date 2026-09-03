@@ -95,35 +95,48 @@ export default function MainPage() {
         {/* 전국 거점 현황 요약 및 바로가기 바 */}
         <section
           aria-label="물문화관 전국 현황 현황판"
-          className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6"
+          className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-5 lg:gap-6"
         >
-          <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-            <span className="text-3xl shrink-0" role="img" aria-label="지도">🗺️</span>
-            <div>
-              <h4 className="text-base font-black text-slate-800 break-keep">
+          {/* 좌측: 지도 아이콘 & 타이틀/설명 문구 */}
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3.5 sm:gap-4 text-center sm:text-left flex-1 min-w-0">
+            <span className="text-3xl shrink-0 p-2 rounded-xl bg-sky-50 border border-sky-100" role="img" aria-label="지도">
+              🗺️
+            </span>
+            <div className="min-w-0">
+              <h4 className="text-base sm:text-lg font-black text-slate-800 tracking-tight break-keep">
                 전국 15대 댐 물문화관 현황지도
               </h4>
-              <p className="text-xs text-slate-500 mt-1 font-semibold break-keep">
-                전국 곳곳의 댐 수역에 아름답게 개설된 15개의 물문화관 운영 정보와 관람 상태를 바로 확인해 보세요.
+              <p className="text-xs text-slate-500 mt-1 font-semibold break-keep leading-relaxed">
+                전국 곳곳의 댐 수역에 위치한 15개 물문화관의 운영 정보와 실시간 관람 상태를 바로 확인해 보세요.
               </p>
             </div>
           </div>
-          <div className="w-full md:w-auto shrink-0 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 sm:divide-x sm:divide-slate-100">
-            <div className="flex w-full items-center justify-center gap-8 sm:gap-6 sm:justify-start">
+
+          {/* 우측: 통계 수치 (15개소/8개 시도) & 현황지도 바로보기 버튼 */}
+          <div className="w-full lg:w-auto shrink-0 flex flex-col sm:flex-row items-center justify-between sm:justify-end gap-4 sm:gap-6 sm:divide-x sm:divide-slate-200/80 pt-4 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+            <div className="flex w-full sm:w-auto items-center justify-evenly sm:justify-start gap-4 sm:gap-2">
               <div className="sm:px-4 text-center">
-                <span className="text-lg font-black text-sky-500 tabular-nums">{waterCenters.length}개소</span>
-                <span className="text-[10px] text-slate-400 font-semibold block mt-0.5 whitespace-nowrap">물문화관 수</span>
+                <span className="text-base sm:text-lg font-black text-sky-600 tabular-nums">
+                  {waterCenters.length}개소
+                </span>
+                <span className="text-[10px] text-slate-400 font-bold block mt-0.5 whitespace-nowrap uppercase tracking-wider">
+                  물문화관 수
+                </span>
               </div>
-              <div className="h-8 w-px bg-slate-100 sm:hidden" />
+              <div className="h-7 w-px bg-slate-200/80 sm:hidden" />
               <div className="sm:px-4 text-center">
-                <span className="text-lg font-black text-sky-500 tabular-nums">{sidoList.length}개</span>
-                <span className="text-[10px] text-slate-400 font-semibold block mt-0.5 whitespace-nowrap">광역 시·도 거점</span>
+                <span className="text-base sm:text-lg font-black text-sky-600 tabular-nums">
+                  {sidoList.length}개
+                </span>
+                <span className="text-[10px] text-slate-400 font-bold block mt-0.5 whitespace-nowrap uppercase tracking-wider">
+                  광역 시·도 거점
+                </span>
               </div>
             </div>
             <div className="w-full sm:w-auto sm:pl-6">
               <Link
                 href="/status"
-                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-bold text-white px-5 transition w-full text-center whitespace-nowrap"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-bold text-white px-6 transition w-full text-center whitespace-nowrap shadow-sm"
               >
                 현황지도 바로보기 →
               </Link>
