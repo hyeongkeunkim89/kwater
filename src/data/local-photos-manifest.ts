@@ -191,6 +191,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
     "/images/surroundings/jangheung/주차장.PNG",
   ],
   namgang: [
+    "/images/surroundings/namgang/노을공원.PNG",
+    "/images/surroundings/namgang/사랑의길.PNG",
+    "/images/surroundings/namgang/주차장.PNG",
     "/images/surroundings/namgang/포토존.PNG",
   ],
 };

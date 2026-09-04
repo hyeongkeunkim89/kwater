@@ -27,7 +27,8 @@ import {
 function resolveFloorAmenities(
   floorKey: string,
   rooms: { name: string }[],
-  existingAmenities?: FloorAmenity[]
+  existingAmenities?: FloorAmenity[],
+  centerId?: string
 ): FloorAmenity[] {
   const result: FloorAmenity[] = existingAmenities && existingAmenities.length > 0 ? [...existingAmenities] : [];
   const keyLower = floorKey.toLowerCase().trim();
@@ -45,7 +46,10 @@ function resolveFloorAmenities(
     const isSecondFloor = keyLower.includes("2층") || keyLower.includes("2f");
     const hasToiletMentioned = roomText.includes("화장실");
 
-    if (isFirstFloor || isSecondFloor || hasToiletMentioned) {
+    // 남강댐(namgang) 1층은 화장실 제외 (2층 편의시설에만 화장실 표기)
+    const isNamgang1F = centerId === "namgang" && isFirstFloor;
+
+    if (!isNamgang1F && (isFirstFloor || isSecondFloor || hasToiletMentioned)) {
       result.push({ label: "화장실", icon: "toilet" });
     }
   }
@@ -138,7 +142,7 @@ export default async function CenterDetailPage({ params }: Props) {
           floor_map_url: fallbackMapUrl,
           description: null,
           rooms,
-          amenities: resolveFloorAmenities(f.floorLabel, rooms),
+          amenities: resolveFloorAmenities(f.floorLabel, rooms, undefined, id),
           sort_order: i,
           created_at: "",
         };
@@ -150,7 +154,7 @@ export default async function CenterDetailPage({ params }: Props) {
       ? LOCAL_FLOOR_MAPS[id][f.floor_key]
       : f.floor_map_url;
 
-    const amenities = resolveFloorAmenities(f.floor_key, f.rooms, f.amenities);
+    const amenities = resolveFloorAmenities(f.floor_key, f.rooms, f.amenities, id);
 
     return {
       ...f,

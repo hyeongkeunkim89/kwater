@@ -275,7 +275,7 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "수변 문화예술 전시 및 여가를 즐기는 지역 주민·관광객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["다목적전시실", "화장실"] },
+      { floorLabel: "1층", highlights: ["다목적전시실"] },
       { floorLabel: "2층", highlights: ["영상실", "화장실"] },
     ],
   },
