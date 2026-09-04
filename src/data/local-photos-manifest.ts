@@ -33,6 +33,10 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "1층": "/jangheung-1f.PNG",
     "2층": "/jangheung-2f.PNG",
   },
+  namgang: {
+    "1층": "/namgang-1f.PNG",
+    "2층": "/namgang-2f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -140,6 +144,15 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/jangheung/2층/전망대.PNG",
     ],
   },
+  namgang: {
+    "1층": [
+      "/images/floors/namgang/1층/다목적전시실1.PNG",
+      "/images/floors/namgang/1층/다목적전시실2.PNG",
+    ],
+    "2층": [
+      "/images/floors/namgang/2층/영상실.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -176,5 +189,8 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
   jangheung: [
     "/images/surroundings/jangheung/공원.PNG",
     "/images/surroundings/jangheung/주차장.PNG",
+  ],
+  namgang: [
+    "/images/surroundings/namgang/포토존.PNG",
   ],
 };
