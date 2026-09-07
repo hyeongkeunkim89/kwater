@@ -133,7 +133,11 @@ export default async function CenterDetailPage({ params }: Props) {
           }
         }
 
-        const rooms = f.highlights.map((h) => ({ name: h, link: null }));
+        const rawRooms = f.highlights.map((h) => ({ name: h, link: null }));
+        const rooms = rawRooms.filter(
+          (r) => r.name !== "화장실" && r.name !== "승강기" && r.name !== "엘리베이터"
+        );
+
         return {
           id: `static-floor-${i}`,
           center_id: id,
@@ -142,7 +146,7 @@ export default async function CenterDetailPage({ params }: Props) {
           floor_map_url: fallbackMapUrl,
           description: null,
           rooms,
-          amenities: resolveFloorAmenities(f.floorLabel, rooms, undefined, id),
+          amenities: resolveFloorAmenities(f.floorLabel, rawRooms, undefined, id),
           sort_order: i,
           created_at: "",
         };
@@ -154,11 +158,15 @@ export default async function CenterDetailPage({ params }: Props) {
       ? LOCAL_FLOOR_MAPS[id][f.floor_key]
       : f.floor_map_url;
 
+    const rooms = f.rooms.filter(
+      (r) => r.name !== "화장실" && r.name !== "승강기" && r.name !== "엘리베이터"
+    );
     const amenities = resolveFloorAmenities(f.floor_key, f.rooms, f.amenities, id);
 
     return {
       ...f,
       floor_map_url,
+      rooms,
       amenities,
     };
   });
