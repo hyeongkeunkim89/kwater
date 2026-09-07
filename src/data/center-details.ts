@@ -276,7 +276,7 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     ],
     floors: [
       { floorLabel: "1층", highlights: ["다목적전시실"] },
-      { floorLabel: "2층", highlights: ["영상실", "화장실"] },
+      { floorLabel: "2층", highlights: ["영상실", "남강정원"] },
     ],
   },
   miryang: {

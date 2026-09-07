@@ -151,6 +151,7 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
     ],
     "2층": [
       "/images/floors/namgang/2층/영상실.PNG",
+      "/images/floors/namgang/2층/남강정원.PNG",
     ],
   },
 };
