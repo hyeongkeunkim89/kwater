@@ -289,8 +289,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "수변 공원 피크닉 및 소소한 문화 행사를 즐기는 가족·연인" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비", "밀양댐·호수 입문"] },
-      { floorLabel: "2층", highlights: ["전시·영상", "광역 수계 해설"] },
+      { floorLabel: "1층", highlights: ["로비", "주제관", "체험관"] },
+      { floorLabel: "2층", highlights: ["영상실", "휴게실"] },
     ],
   },
   hoengseong: {

@@ -37,6 +37,10 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "1층": "/namgang-1f.PNG",
     "2층": "/namgang-2f.PNG",
   },
+  miryang: {
+    "1층": "/miryang-1f.PNG",
+    "2층": "/miryang-2f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -154,6 +158,18 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/namgang/2층/남강정원.PNG",
     ],
   },
+  miryang: {
+    "1층": [
+      "/images/floors/miryang/1층/로비.PNG",
+      "/images/floors/miryang/1층/주제관.PNG",
+      "/images/floors/miryang/1층/체험관1.PNG",
+      "/images/floors/miryang/1층/체험관2.PNG",
+    ],
+    "2층": [
+      "/images/floors/miryang/2층/영상실.PNG",
+      "/images/floors/miryang/2층/휴게실.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -196,5 +212,8 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
     "/images/surroundings/namgang/사랑의길.PNG",
     "/images/surroundings/namgang/주차장.PNG",
     "/images/surroundings/namgang/포토존.PNG",
+  ],
+  miryang: [
+    "/images/surroundings/miryang/생태공원.PNG",
   ],
 };
