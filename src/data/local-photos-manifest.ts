@@ -41,6 +41,10 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "1층": "/miryang-1f.PNG",
     "2층": "/miryang-2f.PNG",
   },
+  hantan: {
+    "1층": "/hantan-1f.PNG",
+    "2층": "/hantan-2f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -170,6 +174,18 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/miryang/2층/휴게실.PNG",
     ],
   },
+  hantan: {
+    "1층": [
+      "/images/floors/hantan/1층/연천군 홍보관.PNG",
+      "/images/floors/hantan/1층/큰여울 놀이터.PNG",
+      "/images/floors/hantan/1층/큰여울 놀이터2.PNG",
+    ],
+    "2층": [
+      "/images/floors/hantan/2층/기획전시실.PNG",
+      "/images/floors/hantan/2층/복합문화공간.PNG",
+      "/images/floors/hantan/2층/어린이놀이터.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -215,5 +231,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
   ],
   miryang: [
     "/images/surroundings/miryang/생태공원.PNG",
+  ],
+  hantan: [
+    "/images/surroundings/hantan/공원.PNG",
+    "/images/surroundings/hantan/주차장.PNG",
   ],
 };

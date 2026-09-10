@@ -125,9 +125,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "지질 생태 체험 및 화산암 협곡 지형을 학습하려는 탐방객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비·안내", "홍수·댐 역할 입문"] },
-      { floorLabel: "2층", highlights: ["심화 전시", "안전·대피 교육 콘텐츠"] },
-      { floorLabel: "옥외", highlights: ["둘레·전망 동선(시설 공지 준수)"] },
+      { floorLabel: "1층", highlights: ["연천군 홍보관", "큰여울 놀이터"] },
+      { floorLabel: "2층", highlights: ["기획전시실", "복합문화공간", "어린이놀이터"] },
     ],
   },
   hapcheon: {
