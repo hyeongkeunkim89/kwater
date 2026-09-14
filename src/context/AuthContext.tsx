@@ -243,7 +243,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 1. 관리자(admin) 로그인 검증 (ID: admin / PW: admin)
     if (lowerId === "admin") {
       if (lowerPass !== "admin") {
-        alert("🔒 관리자 비밀번호가 올바르지 않습니다.\n관리자 아이디: admin / 비밀번호: admin");
+        alert("🔒 관리자 비밀번호가 올바르지 않습니다.");
         return false;
       }
 

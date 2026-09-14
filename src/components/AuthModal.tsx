@@ -155,7 +155,7 @@ export function AuthModal() {
                   type="text"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
-                  placeholder="예: admin 또는 user@kwater.or.kr"
+                  placeholder="아이디 또는 이메일 주소 입력"
                   className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
                 />
               </div>
@@ -166,14 +166,9 @@ export function AuthModal() {
                   type="password"
                   value={loginPass}
                   onChange={(e) => setLoginPass(e.target.value)}
-                  placeholder="비밀번호 입력 (관리자: admin)"
+                  placeholder="비밀번호 입력"
                   className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
                 />
-              </div>
-
-              <div className="rounded-xl bg-sky-50 p-2.5 text-[11px] text-sky-900 border border-sky-100 flex items-center gap-1.5 font-semibold">
-                <span className="shrink-0">💡</span>
-                <span>관리자 계정: 아이디 <strong className="text-sky-700 font-extrabold">admin</strong> / 비밀번호 <strong className="text-sky-700 font-extrabold">admin</strong> 입력 시 관리자 전용 콘솔(/yunyeong)로 자동 접속됩니다.</span>
               </div>
 
               <button
