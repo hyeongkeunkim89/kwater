@@ -15,6 +15,7 @@ export interface Reservation {
   name: string;
   phone: string;
   userEmail?: string;
+  guestPin?: string;  // 비회원 조회용 비밀번호 4자리
   partySize: number;
   purpose: VisitPurpose;
   requests: string;

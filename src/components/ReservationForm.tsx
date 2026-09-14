@@ -110,14 +110,15 @@ export function ReservationForm({
   // Step 1
   const [name, setName] = useState(user?.name || "");
   const [phone, setPhone] = useState(user?.phone || "");
+  const [guestPin, setGuestPin] = useState("");
   const [partySize, setPartySize] = useState(2);
   const [purpose, setPurpose] = useState<VisitPurpose>("개인·가족 관람");
   const [requests, setRequests] = useState("");
 
   useEffect(() => {
     if (user) {
-      if (!name) setName(user.name);
-      if (!phone && user.phone) setPhone(user.phone);
+      if (user.name) setName(user.name);
+      if (user.phone) setPhone(user.phone);
     }
   }, [user]);
 
@@ -205,6 +206,7 @@ export function ReservationForm({
   const step1Valid =
     name.trim().length >= 2 &&
     /^[0-9-]{9,13}$/.test(phone.replace(/\s/g, "")) &&
+    (!user ? /^\d{4}$/.test(guestPin.trim()) : true) &&
     partySize >= 1 &&
     partySize <= maxForSelectedTime &&
     (!reservationsLive || Boolean(serverAvailMap));
@@ -228,6 +230,7 @@ export function ReservationForm({
             name: name.trim(),
             phone: phone.trim(),
             userEmail: user?.email || "",
+            guestPin: !user ? guestPin.trim() : undefined,
             partySize,
             purpose,
             requests: requests.trim(),
@@ -256,6 +259,7 @@ export function ReservationForm({
       name: name.trim(),
       phone: phone.trim(),
       userEmail: user?.email || "",
+      guestPin: !user ? guestPin.trim() : undefined,
       partySize,
       purpose,
       requests: requests.trim(),
@@ -490,6 +494,17 @@ export function ReservationForm({
             </p>
           </div>
 
+          {/* 로그인 회원 / 비회원 안내 배너 */}
+          {user ? (
+            <div className="flex items-center gap-2 rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-xs font-bold text-emerald-800">
+              <span>🟢 로그인 회원 정보({user.name} / {user.email})로 자동으로 입력되었습니다. 필요 시 수정 가능합니다.</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs font-bold text-amber-900">
+              <span>🎟️ 비회원 예약 중입니다. 예약 조회 시 사용할 비밀번호(숫자 4자리)를 설정해 주세요.</span>
+            </div>
+          )}
+
           <div className="grid gap-5 sm:grid-cols-2">
             {/* 예약자명 */}
             <div className="space-y-1.5">
@@ -518,6 +533,26 @@ export function ReservationForm({
                 className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
               />
             </div>
+
+            {/* 비회원 조회 비밀번호 (비회원 전용) */}
+            {!user && (
+              <div className="space-y-1.5 sm:col-span-2">
+                <label className="text-sm font-semibold text-slate-700">
+                  비회원 조회 비밀번호 (숫자 4자리) <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="password"
+                  maxLength={4}
+                  placeholder="예약 조회용 비밀번호 숫자 4자리 (예: 1234)"
+                  value={guestPin}
+                  onChange={(e) => setGuestPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
+                />
+                <p className="text-[11px] text-slate-400 font-semibold">
+                  💡 비회원 예약 조회 시 휴대폰 번호와 함께 본인 확인용으로 사용됩니다.
+                </p>
+              </div>
+            )}
 
             {/* 방문 인원 */}
             <div className="space-y-1.5">

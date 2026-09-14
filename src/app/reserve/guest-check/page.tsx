@@ -38,13 +38,21 @@ function GuestCheckContent() {
   const handleSearch = (p: string, _pin: string) => {
     setIsSearched(true);
     const targetDigits = p.replace(/\D/g, "");
+    const pinDigits = _pin.trim();
     if (!targetDigits) {
       setGuestReservations([]);
       return;
     }
     const all = getAllReservations();
     const matched = all
-      .filter((r) => r.phone.replace(/\D/g, "") === targetDigits)
+      .filter((r) => {
+        const phoneMatch = r.phone.replace(/\D/g, "") === targetDigits;
+        if (!phoneMatch) return false;
+        if (r.guestPin && pinDigits) {
+          return r.guestPin === pinDigits;
+        }
+        return true;
+      })
       .map((r) => ({
         id: r.id,
         guestName: `${r.name} (비회원)`,
