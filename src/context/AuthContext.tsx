@@ -240,24 +240,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false;
     }
 
-    // 1. 관리자(admin) 로그인 검증 (ID: admin / PW: admin)
+    // 1. 관리자(admin) 로그인 검증
     if (lowerId === "admin") {
-      if (lowerPass !== "admin") {
-        alert("🔒 관리자 비밀번호가 올바르지 않습니다.");
-        return false;
-      }
-
-      // 서버 API를 호출하여 제대로 된 서명(HMAC) 쿠키 발급
       try {
         const res = await fetch("/api/staff-console/session", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ password: "admin" }),
+          body: JSON.stringify({ password: lowerPass }),
           credentials: "same-origin",
         });
 
+        const j = (await res.json().catch(() => ({}))) as { error?: string };
         if (!res.ok) {
-          alert("관리자 세션 발급에 실패했습니다.");
+          alert(`🔒 관리자 로그인 실패: ${j.error || "비밀번호가 올바르지 않습니다."}`);
           return false;
         }
       } catch (e) {
