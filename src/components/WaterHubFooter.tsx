@@ -105,8 +105,8 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
         <div className="mt-6 pt-5 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
           <p>© {new Date().getFullYear()} K-water 한국수자원공사. All rights reserved.</p>
           <div className="flex gap-x-4">
-            <Link href="/yunyeong" className="hover:text-white transition">
-              관리자 모드 로그인
+            <Link href="/mypage" className="hover:text-white transition">
+              관리자 로그인
             </Link>
           </div>
         </div>

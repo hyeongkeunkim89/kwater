@@ -13,7 +13,7 @@ export function StaffConsoleLogoutButton({ show = true }: { show?: boolean }) {
     document.cookie = "staff_console_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "kakao_user_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "kwm_staff_console_gate=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/yunyeong;";
-    window.location.href = "/yunyeong/login";
+    window.location.href = "/mypage";
   }
 
   return (

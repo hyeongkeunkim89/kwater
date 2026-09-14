@@ -1,7 +1,6 @@
-import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
 import { permanentRedirect } from "next/navigation";
 
-/** 구 주소 호환: `/admin` → 관리자 페이지(/yunyeong) */
+/** 구 주소 호환: `/admin` → 마이페이지(/mypage) */
 export default function AdminLegacyRedirect() {
-  permanentRedirect(STAFF_CONSOLE_HREF);
+  permanentRedirect("/mypage");
 }

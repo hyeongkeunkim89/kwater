@@ -270,8 +270,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       saveUserSession(adminUser);
       closeAuthModal();
 
-      alert(`🔑 관리자(admin) 계정으로 로그인되었습니다.\n관리자 전용 콘솔페이지(/yunyeong)로 이동합니다.`);
-      window.location.href = "/yunyeong";
+      alert(`🔑 관리자(admin) 계정으로 로그인되었습니다.\n마이페이지(/mypage)로 이동합니다.`);
+      window.location.href = "/mypage";
       return true;
     }
 

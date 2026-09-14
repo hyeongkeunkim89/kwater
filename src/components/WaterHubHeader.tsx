@@ -96,14 +96,14 @@ export function WaterHubHeader({
               {user.role === "admin" ? (
                 <>
                   <Link
-                    href="/yunyeong"
+                    href="/mypage"
                     className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-black text-amber-900 border border-amber-300 transition hover:bg-amber-100"
                   >
                     <span>🏛️</span>
                     <span>{user.name}</span>
                   </Link>
                   <Link
-                    href="/yunyeong"
+                    href="/mypage"
                     className="rounded-full bg-amber-600 px-3.5 py-1.5 text-xs font-black text-white hover:bg-amber-500 transition shadow-sm shadow-amber-600/20"
                   >
                     관리자 콘솔

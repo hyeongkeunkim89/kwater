@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { useAuth } from "@/context/AuthContext";
+import { AdminDashboard } from "@/components/AdminDashboard";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import type { Reservation } from "@/types/reservation";
@@ -35,13 +36,17 @@ export default function MyPage() {
 
 function MyPageContent() {
   const { user, isLoading, openAuthModal, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState<"reservations" | "qna" | "profile">("reservations");
+  const [activeTab, setActiveTab] = useState<"reservations" | "qna" | "profile" | "admin">("reservations");
   const [reservations, setReservations] = useState<Reservation[]>([]);
 
   useEffect(() => {
     if (!user) {
       setReservations([]);
       return;
+    }
+
+    if (user.role === "admin") {
+      setActiveTab("admin");
     }
 
     const all = getAllReservations();
@@ -128,13 +133,19 @@ function MyPageContent() {
         <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 text-center sm:text-left">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-sky-500/20 text-2xl font-black text-sky-400 border border-sky-400/30">
-              👤
+              {user.role === "admin" ? "🏛️" : "👤"}
             </div>
             <div>
               <div className="flex items-center gap-2 justify-center sm:justify-start">
                 <h1 className="text-2xl font-black text-white">{user.name} 님의 마이페이지</h1>
                 <span className="rounded-full bg-sky-500/20 px-2.5 py-0.5 text-xs font-bold text-sky-300 border border-sky-400/30">
-                  {user.provider === "kakao" ? "카카오 계정" : user.provider === "naver" ? "네이버 계정" : "이메일 회원"}
+                  {user.role === "admin"
+                    ? "통합 관리자"
+                    : user.provider === "kakao"
+                    ? "카카오 계정"
+                    : user.provider === "naver"
+                    ? "네이버 계정"
+                    : "이메일 회원"}
                 </span>
               </div>
               <p className="mt-1 text-xs text-slate-300 font-semibold">{user.email}</p>
@@ -160,10 +171,22 @@ function MyPageContent() {
 
       <main className="mx-auto max-w-7xl w-full px-6 py-10 flex-1">
         {/* 탭 헤더 */}
-        <div className="flex border-b border-slate-200 mb-8">
+        <div className="flex border-b border-slate-200 mb-8 overflow-x-auto">
+          {user.role === "admin" && (
+            <button
+              onClick={() => setActiveTab("admin")}
+              className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
+                activeTab === "admin"
+                  ? "border-sky-600 text-sky-600 font-black"
+                  : "border-transparent text-slate-400 hover:text-slate-700"
+              }`}
+            >
+              🏛️ 통합 관리자 콘솔
+            </button>
+          )}
           <button
             onClick={() => setActiveTab("reservations")}
-            className={`pb-3 px-6 text-sm font-black transition border-b-2 ${
+            className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
               activeTab === "reservations"
                 ? "border-sky-600 text-sky-600"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -173,7 +196,7 @@ function MyPageContent() {
           </button>
           <button
             onClick={() => setActiveTab("qna")}
-            className={`pb-3 px-6 text-sm font-black transition border-b-2 ${
+            className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
               activeTab === "qna"
                 ? "border-sky-600 text-sky-600"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -182,6 +205,17 @@ function MyPageContent() {
             내 문의 및 Q&A (0)
           </button>
         </div>
+
+        {/* 0. 통합 관리자 콘솔 탭 (관리자 전용) */}
+        {activeTab === "admin" && user.role === "admin" && (
+          <div className="pt-2">
+            <AdminDashboard
+              storiesLive={true}
+              reservationsLive={true}
+              adminSecretConfigured={true}
+            />
+          </div>
+        )}
 
         {/* 1. 투어 예약 탭 */}
         {activeTab === "reservations" && (
