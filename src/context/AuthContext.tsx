@@ -285,13 +285,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const matched = users.find(
       (u) =>
         u.email.toLowerCase() === lowerId ||
-        u.id.toLowerCase() === lowerId ||
-        u.name.toLowerCase() === lowerId
+        u.id.toLowerCase() === lowerId
     );
 
     if (!matched) {
       alert(
-        `❌ 등록되지 않은 아이디/이메일입니다.\n[회원가입] 탭에서 신규 가입 후 로그인해 주세요.\n(테스트 계정 예시: user@kwater.or.kr / 비밀번호: 123456)`
+        `❌ [로그인 실패] 등록되지 않은 아이디/이메일입니다.\n\n가입된 계정이 없다면 상단 [📝 회원가입] 탭에서 가입 후 로그인해 주세요.\n(테스트용 계정: user@kwater.or.kr / 비밀번호: 123456)`
       );
       return false;
     }
