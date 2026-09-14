@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(u);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
-      document.cookie = `kakao_user_session=${encodeURIComponent(JSON.stringify(u))}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `user_session=${encodeURIComponent(JSON.stringify(u))}; path=/; max-age=604800; SameSite=Lax`;
     } catch (e) {
       console.error("Failed to save to localStorage", e);
     }
@@ -95,17 +95,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (typeof document !== "undefined" && document.cookie) {
           const cookies = document.cookie.split("; ");
           for (const c of cookies) {
-            if (c.startsWith("naver_user_session=") || c.startsWith("kakao_user_session=")) {
+            if (c.startsWith("user_session=") || c.startsWith("naver_user_session=") || c.startsWith("kakao_user_session=")) {
               const rawVal = c.substring(c.indexOf("=") + 1);
               const jsonStr = decodeURIComponent(rawVal);
               const raw = JSON.parse(jsonStr);
               if (raw && raw.id) {
                 resolvedUser = {
                   id: String(raw.id),
-                  name: raw.name || raw.nickname || "소셜 회원",
-                  email: raw.email || `${raw.id}@social.user`,
+                  name: raw.name || raw.nickname || "회원",
+                  email: raw.email || `${raw.id}@user`,
                   phone: raw.phone || "",
-                  provider: raw.provider || (c.startsWith("naver") ? "naver" : "kakao"),
+                  provider: raw.provider || (c.startsWith("naver") ? "naver" : c.startsWith("kakao") ? "kakao" : "email"),
                   role: raw.role || "user",
                 };
                 saveUserSession(resolvedUser);
@@ -170,55 +170,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithEmail = async (idOrEmail: string, pass: string): Promise<boolean> => {
-    const lower = idOrEmail.toLowerCase().trim();
+    const lowerId = idOrEmail.toLowerCase().trim();
     const lowerPass = pass.trim();
 
-    // 관리자 계정 판단: ID가 admin이거나 비밀번호가 admin일 때 (또는 기존 관리자 패턴)
-    const isAdmin =
-      lower === "admin" ||
-      lowerPass === "admin" ||
-      lower.includes("admin") ||
-      lower.includes("staff") ||
-      lower.includes("manager") ||
-      lower === "kwater" ||
-      lower.endsWith("@kwater.or.kr") ||
-      lowerPass === "kwater2026!";
+    // 1. 관리자(admin) 검증: 아이디 admin 또는 비밀번호 admin
+    if (lowerId === "admin" || lowerId.includes("admin")) {
+      if (lowerPass !== "admin") {
+        alert("관리자 비밀번호가 올바르지 않습니다. (비밀번호: admin)");
+        return false;
+      }
 
-    const userRole: UserRole = isAdmin ? "admin" : "user";
+      const adminUser: UserProfile = {
+        id: `staff_admin`,
+        name: "K-water 통합 관리자",
+        email: "admin@kwater.or.kr",
+        provider: "staff",
+        role: "admin",
+      };
 
-    let userName = idOrEmail.includes("@") ? idOrEmail.split("@")[0] : idOrEmail;
-    if (isAdmin) {
-      if (lower.includes("soyang")) userName = "소양강댐 담당자";
-      else if (lower.includes("chungju")) userName = "충주댐 담당자";
-      else if (lower.includes("daecheong")) userName = "대청댐 담당자";
-      else if (lower.includes("andong")) userName = "안동댐 담당자";
-      else if (lower.includes("buan")) userName = "부안댐 담당자";
-      else userName = "K-water 통합 관리자";
+      document.cookie = `kwm_staff_console_gate=1; path=/; max-age=604800; SameSite=Lax`;
+      saveUserSession(adminUser);
+      closeAuthModal();
+
+      alert(`🔑 관리자(admin) 계정으로 로그인되었습니다.\n관리자 전용 콘솔페이지(/yunyeong)로 자동 이동합니다.`);
+      window.location.href = "/yunyeong";
+      return true;
     }
 
-    const mockUser: UserProfile = {
-      id: isAdmin ? `staff_${Date.now()}` : `user_${Date.now()}`,
-      name: userName,
+    // 2. 일반 관람객 로그인
+    if (!lowerPass) {
+      alert("비밀번호를 입력해주세요.");
+      return false;
+    }
+
+    const userName = idOrEmail.includes("@") ? idOrEmail.split("@")[0] : idOrEmail;
+    const memberUser: UserProfile = {
+      id: `user_${Date.now()}`,
+      name: userName || "관람객 회원",
       email: idOrEmail.includes("@") ? idOrEmail : `${idOrEmail}@kwater.or.kr`,
       phone: "010-1234-5678",
-      provider: isAdmin ? "staff" : "email",
-      role: userRole,
+      provider: "email",
+      role: "user",
     };
 
-    if (isAdmin) {
-      document.cookie = `kwm_staff_console_gate=1; path=/; max-age=604800; SameSite=Lax`;
-    }
-
-    saveUserSession(mockUser);
+    saveUserSession(memberUser);
     closeAuthModal();
 
-    if (isAdmin) {
-      alert(`🔑 관리자 계정(${userName})으로 로그인되었습니다.\n관리자 전용 페이지(/yunyeong)로 자동 이동합니다.`);
-      window.location.href = "/yunyeong";
-    } else {
-      alert(`👋 ${userName} 님, 환영합니다.`);
-      window.location.href = "/mypage";
-    }
+    alert(`👋 ${memberUser.name} 님, 환영합니다.`);
+    window.location.href = "/mypage";
     return true;
   };
 
@@ -259,8 +258,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem(STORAGE_KEY);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      document.cookie = "user_session=; path=/; max-age=0; SameSite=Lax";
+      document.cookie = "kakao_user_session=; path=/; max-age=0; SameSite=Lax";
+      document.cookie = "naver_user_session=; path=/; max-age=0; SameSite=Lax";
+      document.cookie = "kwm_staff_console_gate=; path=/; max-age=0; SameSite=Lax";
+    } catch (e) {
+      console.error("Logout cleanup error", e);
+    }
     void fetch("/api/auth/logout", { method: "POST" });
+    alert("로그아웃 되었습니다.");
+    window.location.href = "/";
   };
 
   return (
