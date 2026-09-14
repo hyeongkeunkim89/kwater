@@ -14,6 +14,7 @@ export interface Reservation {
   time: string;       // HH:MM
   name: string;
   phone: string;
+  userEmail?: string;
   partySize: number;
   purpose: VisitPurpose;
   requests: string;

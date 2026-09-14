@@ -1,21 +1,13 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
-
-type MockReservation = {
-  id: string;
-  centerName: string;
-  date: string;
-  time: string;
-  visitorCount: number;
-  status: "승인완료" | "대기중" | "관람완료" | "취소됨";
-  type: "회원예약" | "비회원예약";
-};
+import { useSearchParams } from "next/navigation";
+import type { Reservation } from "@/types/reservation";
+import { getAllReservations, updateStatus } from "@/lib/reservations";
 
 function LoginAlertHandler() {
   const searchParams = useSearchParams();
@@ -44,32 +36,37 @@ export default function MyPage() {
 function MyPageContent() {
   const { user, isLoading, openAuthModal, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<"reservations" | "qna" | "profile">("reservations");
+  const [reservations, setReservations] = useState<Reservation[]>([]);
 
-  const [reservations, setReservations] = useState<MockReservation[]>([
-    {
-      id: "REV-20260815-01",
-      centerName: "충주댐 물문화관",
-      date: "2026-08-20 (목)",
-      time: "14:00",
-      visitorCount: 3,
-      status: "승인완료",
-      type: "회원예약",
-    },
-    {
-      id: "REV-20260710-09",
-      centerName: "소양강댐 물문화관",
-      date: "2026-07-10 (금)",
-      time: "11:00",
-      visitorCount: 2,
-      status: "관람완료",
-      type: "회원예약",
-    },
-  ]);
+  useEffect(() => {
+    if (!user) {
+      setReservations([]);
+      return;
+    }
+
+    const all = getAllReservations();
+    const myReservations = all.filter((r) => {
+      const userEmailLower = user.email?.toLowerCase().trim();
+      const resEmailLower = r.userEmail?.toLowerCase().trim();
+      if (userEmailLower && resEmailLower && userEmailLower === resEmailLower) return true;
+
+      const userPhoneDigits = user.phone ? user.phone.replace(/\D/g, "") : "";
+      const resPhoneDigits = r.phone ? r.phone.replace(/\D/g, "") : "";
+      if (userPhoneDigits && resPhoneDigits && userPhoneDigits === resPhoneDigits) return true;
+
+      if (user.name && r.name && user.name.trim() === r.name.trim() && userPhoneDigits && resPhoneDigits && userPhoneDigits === resPhoneDigits) return true;
+
+      return false;
+    });
+
+    setReservations(myReservations);
+  }, [user]);
 
   const handleCancelReservation = (id: string) => {
     if (confirm("정말 예약을 취소하시겠습니까?")) {
+      updateStatus(id, "취소");
       setReservations((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, status: "취소됨" } : r))
+        prev.map((r) => (r.id === id ? { ...r, status: "취소" } : r))
       );
     }
   };
@@ -199,26 +196,27 @@ function MyPageContent() {
                     <span className="text-xs font-mono font-extrabold text-slate-400">{item.id}</span>
                     <span
                       className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-bold ${
-                        item.status === "승인완료"
-                          ? "bg-emerald-100 text-emerald-800"
-                          : item.status === "관람완료"
-                          ? "bg-slate-100 text-slate-700"
-                          : "bg-rose-100 text-rose-800"
+                        item.status === "확정"
+                          ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                          : item.status === "대기"
+                          ? "bg-amber-100 text-amber-900 border border-amber-300"
+                          : "bg-slate-100 text-slate-600 border border-slate-300"
                       }`}
                     >
-                      {item.status}
+                      {item.status === "대기" ? "대기중" : item.status === "확정" ? "승인완료" : "취소됨"}
                     </span>
                   </div>
                   <h3 className="text-lg font-black text-slate-900">{item.centerName}</h3>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600 font-semibold">
                     <span>🗓️ 관람일: {item.date}</span>
                     <span>⏰ 관람시간: {item.time}</span>
-                    <span>👥 인원: {item.visitorCount}명</span>
+                    <span>👥 인원: {item.partySize}명</span>
+                    <span>🎯 목적: {item.purpose}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-center">
-                  {item.status === "승인완료" && (
+                  {item.status !== "취소" && (
                     <button
                       onClick={() => handleCancelReservation(item.id)}
                       className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2 text-xs font-bold text-rose-700 hover:bg-rose-100 transition"

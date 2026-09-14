@@ -6,6 +6,8 @@ import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import Link from "next/link";
 
+import { getAllReservations, updateStatus } from "@/lib/reservations";
+
 type GuestReservation = {
   id: string;
   guestName: string;
@@ -34,20 +36,26 @@ function GuestCheckContent() {
   }, [initialPhone, initialPin]);
 
   const handleSearch = (p: string, _pin: string) => {
-    // Mock guest reservation search
     setIsSearched(true);
-    setGuestReservations([
-      {
-        id: "GUEST-20260818-04",
-        guestName: "김철수 (비회원)",
-        phone: p || "010-1234-5678",
-        centerName: "평화의댐 물문화관",
-        date: "2026-08-25 (화)",
-        time: "10:30",
-        visitorCount: 4,
-        status: "승인완료",
-      },
-    ]);
+    const targetDigits = p.replace(/\D/g, "");
+    if (!targetDigits) {
+      setGuestReservations([]);
+      return;
+    }
+    const all = getAllReservations();
+    const matched = all
+      .filter((r) => r.phone.replace(/\D/g, "") === targetDigits)
+      .map((r) => ({
+        id: r.id,
+        guestName: `${r.name} (비회원)`,
+        phone: r.phone,
+        centerName: r.centerName,
+        date: r.date,
+        time: r.time,
+        visitorCount: r.partySize,
+        status: (r.status === "확정" ? "승인완료" : r.status === "대기" ? "대기중" : "취소됨") as GuestReservation["status"],
+      }));
+    setGuestReservations(matched);
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -61,6 +69,7 @@ function GuestCheckContent() {
 
   const handleCancel = (id: string) => {
     if (confirm("비회원 예약을 정말 취소하시겠습니까?")) {
+      updateStatus(id, "취소");
       setGuestReservations((prev) =>
         prev.map((r) => (r.id === id ? { ...r, status: "취소됨" } : r))
       );
