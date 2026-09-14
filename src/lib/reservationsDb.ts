@@ -115,43 +115,47 @@ function advisoryPair(slotKey: string): [number, number] {
 /** pooler 6543이 아니면 tour_reservations 테이블·인덱스 자동 생성 */
 function ensureTourReservationsSchema(sql: ReservationsSql) {
   if (!globalForSchema.tourReservationsSchemaPromise) {
-    if (reservationsSkipRuntimeSchemaDdl()) {
-      globalForSchema.tourReservationsSchemaPromise = Promise.resolve();
-    } else {
-      globalForSchema.tourReservationsSchemaPromise = (async () => {
-        await sql`
-          CREATE TABLE IF NOT EXISTS tour_reservations (
-            id text PRIMARY KEY,
-            center_id text NOT NULL,
-            center_name text NOT NULL,
-            visit_date date NOT NULL,
-            visit_time text NOT NULL,
-            name text NOT NULL,
-            phone text NOT NULL,
-            user_email text,
-            guest_pin text,
-            party_size integer NOT NULL CHECK (party_size >= 1 AND party_size <= 100),
-            purpose text NOT NULL,
-            requests text NOT NULL DEFAULT '',
-            status text NOT NULL DEFAULT '대기' CHECK (status IN ('대기', '확정', '취소')),
-            created_at timestamptz NOT NULL DEFAULT now(),
-            CONSTRAINT tour_reservations_purpose_chk CHECK (
-              purpose IN ('개인·가족 관람', '단체·기관 방문', '교육 프로그램', '기타')
+    globalForSchema.tourReservationsSchemaPromise = (async () => {
+      try {
+        if (!reservationsSkipRuntimeSchemaDdl()) {
+          await sql`
+            CREATE TABLE IF NOT EXISTS tour_reservations (
+              id text PRIMARY KEY,
+              center_id text NOT NULL,
+              center_name text NOT NULL,
+              visit_date date NOT NULL,
+              visit_time text NOT NULL,
+              name text NOT NULL,
+              phone text NOT NULL,
+              user_email text,
+              guest_pin text,
+              party_size integer NOT NULL CHECK (party_size >= 1 AND party_size <= 100),
+              purpose text NOT NULL,
+              requests text NOT NULL DEFAULT '',
+              status text NOT NULL DEFAULT '대기' CHECK (status IN ('대기', '확정', '취소')),
+              created_at timestamptz NOT NULL DEFAULT now(),
+              CONSTRAINT tour_reservations_purpose_chk CHECK (
+                purpose IN ('개인·가족 관람', '단체·기관 방문', '교육 프로그램', '기타')
+              )
             )
-          )
-        `;
+          `;
+        }
         await sql`ALTER TABLE tour_reservations ADD COLUMN IF NOT EXISTS user_email text;`;
         await sql`ALTER TABLE tour_reservations ADD COLUMN IF NOT EXISTS guest_pin text;`;
-        await sql`
-          CREATE INDEX IF NOT EXISTS tour_reservations_slot_idx
-          ON tour_reservations (center_id, visit_date, visit_time)
-        `;
-        await sql`
-          CREATE INDEX IF NOT EXISTS tour_reservations_created_idx
-          ON tour_reservations (created_at DESC)
-        `;
-      })();
-    }
+        if (!reservationsSkipRuntimeSchemaDdl()) {
+          await sql`
+            CREATE INDEX IF NOT EXISTS tour_reservations_slot_idx
+            ON tour_reservations (center_id, visit_date, visit_time)
+          `;
+          await sql`
+            CREATE INDEX IF NOT EXISTS tour_reservations_created_idx
+            ON tour_reservations (created_at DESC)
+          `;
+        }
+      } catch (e) {
+        console.warn("Schema check non-fatal error:", e);
+      }
+    })();
   }
   return globalForSchema.tourReservationsSchemaPromise;
 }
@@ -288,7 +292,7 @@ export async function getGuestReservationsFromDb(phone: string, pin: string): Pr
   const rows = await sql<TourReservationRow[]>`
     SELECT id, center_id, center_name, visit_date, visit_time, name, phone, user_email, guest_pin, party_size, purpose, requests, status, created_at
     FROM tour_reservations
-    WHERE regexp_replace(phone, '\D', '', 'g') = ${targetDigits}
+    WHERE regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits}
       AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()})
     ORDER BY created_at DESC
   `;
@@ -307,7 +311,7 @@ export async function getUserReservationsFromDb(email?: string, phone?: string):
     SELECT id, center_id, center_name, visit_date, visit_time, name, phone, user_email, guest_pin, party_size, purpose, requests, status, created_at
     FROM tour_reservations
     WHERE (${emailLower} <> '' AND lower(user_email) = ${emailLower})
-       OR (${phoneDigits} <> '' AND regexp_replace(phone, '\D', '', 'g') = ${phoneDigits})
+       OR (${phoneDigits} <> '' AND regexp_replace(phone, '[^0-9]', '', 'g') = ${phoneDigits})
     ORDER BY created_at DESC
   `;
   return rows.map(rowToReservation);
@@ -323,7 +327,7 @@ export async function cancelGuestReservationInDb(id: string, phone: string, pin:
     UPDATE tour_reservations
     SET status = '취소'
     WHERE id = ${id}
-      AND (regexp_replace(phone, '\D', '', 'g') = ${targetDigits} OR ${targetDigits} = '')
+      AND (regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits} OR ${targetDigits} = '')
       AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()})
     RETURNING id
   `;
