@@ -49,22 +49,62 @@ function MyPageContent() {
       setActiveTab("admin");
     }
 
-    const all = getAllReservations();
-    const myReservations = all.filter((r) => {
+    let isSubscribed = true;
+
+    const loadReservations = async () => {
+      let serverList: Reservation[] = [];
+      try {
+        const res = await fetch("/api/reservations/my-reservations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: user.email, phone: user.phone }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.reservations)) {
+            serverList = data.reservations;
+          }
+        }
+      } catch (e) {
+        console.error("My reservations fetch error", e);
+      }
+
+      const all = getAllReservations();
       const userEmailLower = user.email?.toLowerCase().trim();
-      const resEmailLower = r.userEmail?.toLowerCase().trim();
-      if (userEmailLower && resEmailLower && userEmailLower === resEmailLower) return true;
-
       const userPhoneDigits = user.phone ? user.phone.replace(/\D/g, "") : "";
-      const resPhoneDigits = r.phone ? r.phone.replace(/\D/g, "") : "";
-      if (userPhoneDigits && resPhoneDigits && userPhoneDigits === resPhoneDigits) return true;
 
-      if (user.name && r.name && user.name.trim() === r.name.trim() && userPhoneDigits && resPhoneDigits && userPhoneDigits === resPhoneDigits) return true;
+      const localMatched = all.filter((r) => {
+        const resEmailLower = r.userEmail?.toLowerCase().trim();
+        if (userEmailLower && resEmailLower && userEmailLower === resEmailLower) return true;
 
-      return false;
-    });
+        const resPhoneDigits = r.phone ? r.phone.replace(/\D/g, "") : "";
+        if (userPhoneDigits && resPhoneDigits && userPhoneDigits === resPhoneDigits) return true;
 
-    setReservations(myReservations);
+        if (user.name && r.name && user.name.trim() === r.name.trim() && userPhoneDigits && resPhoneDigits && userPhoneDigits === resPhoneDigits) return true;
+
+        return false;
+      });
+
+      const combined = [...serverList, ...localMatched];
+      const seenIds = new Set<string>();
+      const finalMatched: Reservation[] = [];
+      for (const r of combined) {
+        if (r.id && !seenIds.has(r.id)) {
+          seenIds.add(r.id);
+          finalMatched.push(r);
+        }
+      }
+
+      if (isSubscribed) {
+        setReservations(finalMatched);
+      }
+    };
+
+    void loadReservations();
+
+    return () => {
+      isSubscribed = false;
+    };
   }, [user]);
 
   const handleCancelReservation = (id: string) => {

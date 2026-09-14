@@ -31,11 +31,11 @@ function GuestCheckContent() {
 
   useEffect(() => {
     if (initialPhone && initialPin) {
-      handleSearch(initialPhone, initialPin);
+      void handleSearch(initialPhone, initialPin);
     }
   }, [initialPhone, initialPin]);
 
-  const handleSearch = (p: string, _pin: string) => {
+  const handleSearch = async (p: string, _pin: string) => {
     setIsSearched(true);
     const targetDigits = p.replace(/\D/g, "");
     const pinDigits = _pin.trim();
@@ -43,14 +43,37 @@ function GuestCheckContent() {
       setGuestReservations([]);
       return;
     }
-    const all = getAllReservations();
-    const matched = all
+
+    let serverList: any[] = [];
+    try {
+      const res = await fetch("/api/reservations/guest-lookup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: p, pin: _pin }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.reservations)) {
+          serverList = data.reservations;
+        }
+      }
+    } catch (e) {
+      console.error("Guest lookup fetch error", e);
+    }
+
+    const localList = getAllReservations();
+    const combined = [...serverList, ...localList];
+    const seenIds = new Set<string>();
+
+    const matched = combined
       .filter((r) => {
-        const phoneMatch = r.phone.replace(/\D/g, "") === targetDigits;
+        if (!r.id || seenIds.has(r.id)) return false;
+        const phoneMatch = (r.phone || "").replace(/\D/g, "") === targetDigits;
         if (!phoneMatch) return false;
         if (r.guestPin && pinDigits) {
-          return r.guestPin === pinDigits;
+          if (r.guestPin !== pinDigits) return false;
         }
+        seenIds.add(r.id);
         return true;
       })
       .map((r) => ({
@@ -63,6 +86,7 @@ function GuestCheckContent() {
         visitorCount: r.partySize,
         status: (r.status === "확정" ? "승인완료" : r.status === "대기" ? "대기중" : "취소됨") as GuestReservation["status"],
       }));
+
     setGuestReservations(matched);
   };
 
@@ -72,12 +96,21 @@ function GuestCheckContent() {
       alert("휴대폰 번호와 비밀번호 4자리를 입력해주세요.");
       return;
     }
-    handleSearch(phone, pin);
+    void handleSearch(phone, pin);
   };
 
-  const handleCancel = (id: string) => {
+  const handleCancel = async (id: string) => {
     if (confirm("비회원 예약을 정말 취소하시겠습니까?")) {
       updateStatus(id, "취소");
+      try {
+        await fetch("/api/reservations/guest-cancel", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, phone, pin }),
+        });
+      } catch (e) {
+        console.error("Guest cancel fetch error", e);
+      }
       setGuestReservations((prev) =>
         prev.map((r) => (r.id === id ? { ...r, status: "취소됨" } : r))
       );

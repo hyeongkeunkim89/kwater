@@ -59,6 +59,8 @@ type TourReservationRow = {
   visit_time: string;
   name: string;
   phone: string;
+  user_email?: string | null;
+  guest_pin?: string | null;
   party_size: number;
   purpose: string;
   requests: string;
@@ -88,6 +90,8 @@ function rowToReservation(r: TourReservationRow): Reservation {
     time: slotKeyFromDbVisitTime(r.visit_time),
     name: r.name,
     phone: r.phone,
+    userEmail: r.user_email || undefined,
+    guestPin: r.guest_pin || undefined,
     partySize: Number(r.party_size),
     purpose: r.purpose as VisitPurpose,
     requests: r.requests ?? "",
@@ -124,6 +128,8 @@ function ensureTourReservationsSchema(sql: ReservationsSql) {
             visit_time text NOT NULL,
             name text NOT NULL,
             phone text NOT NULL,
+            user_email text,
+            guest_pin text,
             party_size integer NOT NULL CHECK (party_size >= 1 AND party_size <= 100),
             purpose text NOT NULL,
             requests text NOT NULL DEFAULT '',
@@ -134,6 +140,8 @@ function ensureTourReservationsSchema(sql: ReservationsSql) {
             )
           )
         `;
+        await sql`ALTER TABLE tour_reservations ADD COLUMN IF NOT EXISTS user_email text;`;
+        await sql`ALTER TABLE tour_reservations ADD COLUMN IF NOT EXISTS guest_pin text;`;
         await sql`
           CREATE INDEX IF NOT EXISTS tour_reservations_slot_idx
           ON tour_reservations (center_id, visit_date, visit_time)
@@ -154,7 +162,7 @@ export async function listTourReservationsFromDb(): Promise<Reservation[]> {
   if (!sql) return [];
   await ensureTourReservationsSchema(sql);
   const rows = await sql<TourReservationRow[]>`
-    SELECT id, center_id, center_name, visit_date, visit_time, name, phone, party_size, purpose, requests, status, created_at
+    SELECT id, center_id, center_name, visit_date, visit_time, name, phone, user_email, guest_pin, party_size, purpose, requests, status, created_at
     FROM tour_reservations
     ORDER BY created_at DESC
   `;
@@ -246,7 +254,7 @@ export async function insertTourReservationDb(
 
     const inserted = await tx<TourReservationRow[]>`
       INSERT INTO tour_reservations (
-        id, center_id, center_name, visit_date, visit_time, name, phone, party_size, purpose, requests, status
+        id, center_id, center_name, visit_date, visit_time, name, phone, user_email, guest_pin, party_size, purpose, requests, status
       ) VALUES (
         ${id},
         ${input.centerId},
@@ -255,17 +263,71 @@ export async function insertTourReservationDb(
         ${input.time},
         ${input.name},
         ${input.phone},
+        ${input.userEmail ?? null},
+        ${input.guestPin ?? null},
         ${input.partySize},
         ${input.purpose},
         ${input.requests},
         '대기'
       )
-      RETURNING id, center_id, center_name, visit_date, visit_time, name, phone, party_size, purpose, requests, status, created_at
+      RETURNING id, center_id, center_name, visit_date, visit_time, name, phone, user_email, guest_pin, party_size, purpose, requests, status, created_at
     `;
     const row = inserted[0];
     if (!row) throw new Error("INSERT_FAILED");
     return rowToReservation(row);
   });
+}
+
+/** 비회원 예약 조회 */
+export async function getGuestReservationsFromDb(phone: string, pin: string): Promise<Reservation[]> {
+  const sql = getReservationsSql();
+  if (!sql) return [];
+  await ensureTourReservationsSchema(sql);
+  const targetDigits = phone.replace(/\D/g, "");
+  if (!targetDigits) return [];
+  const rows = await sql<TourReservationRow[]>`
+    SELECT id, center_id, center_name, visit_date, visit_time, name, phone, user_email, guest_pin, party_size, purpose, requests, status, created_at
+    FROM tour_reservations
+    WHERE regexp_replace(phone, '\D', '', 'g') = ${targetDigits}
+      AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()})
+    ORDER BY created_at DESC
+  `;
+  return rows.map(rowToReservation);
+}
+
+/** 회원 마이페이지 예약 조회 */
+export async function getUserReservationsFromDb(email?: string, phone?: string): Promise<Reservation[]> {
+  const sql = getReservationsSql();
+  if (!sql) return [];
+  await ensureTourReservationsSchema(sql);
+  const emailLower = email?.trim().toLowerCase() || "";
+  const phoneDigits = phone ? phone.replace(/\D/g, "") : "";
+  if (!emailLower && !phoneDigits) return [];
+  const rows = await sql<TourReservationRow[]>`
+    SELECT id, center_id, center_name, visit_date, visit_time, name, phone, user_email, guest_pin, party_size, purpose, requests, status, created_at
+    FROM tour_reservations
+    WHERE (${emailLower} <> '' AND lower(user_email) = ${emailLower})
+       OR (${phoneDigits} <> '' AND regexp_replace(phone, '\D', '', 'g') = ${phoneDigits})
+    ORDER BY created_at DESC
+  `;
+  return rows.map(rowToReservation);
+}
+
+/** 비회원 예약 취소 */
+export async function cancelGuestReservationInDb(id: string, phone: string, pin: string): Promise<boolean> {
+  const sql = getReservationsSql();
+  if (!sql) return false;
+  await ensureTourReservationsSchema(sql);
+  const targetDigits = phone.replace(/\D/g, "");
+  const rows = await sql<{ id: string }[]>`
+    UPDATE tour_reservations
+    SET status = '취소'
+    WHERE id = ${id}
+      AND (regexp_replace(phone, '\D', '', 'g') = ${targetDigits} OR ${targetDigits} = '')
+      AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()})
+    RETURNING id
+  `;
+  return rows.length > 0;
 }
 
 /** 관리자: 대기/확정/취소 상태 변경 */

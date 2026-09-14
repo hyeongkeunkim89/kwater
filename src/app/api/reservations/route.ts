@@ -68,6 +68,8 @@ export async function POST(req: NextRequest) {
   const time = typeof b.time === "string" ? b.time.trim() : "";
   const name = typeof b.name === "string" ? b.name.trim() : "";
   const phoneRaw = typeof b.phone === "string" ? b.phone.replace(/\s/g, "") : "";
+  const userEmail = typeof b.userEmail === "string" ? b.userEmail.trim() : undefined;
+  const guestPin = typeof b.guestPin === "string" ? b.guestPin.trim() : undefined;
   const partySize = typeof b.partySize === "number" ? b.partySize : Number.NaN;
   const purpose = typeof b.purpose === "string" ? b.purpose.trim() : "";
   const requests = typeof b.requests === "string" ? b.requests.trim().slice(0, REQUESTS_MAX) : "";
@@ -106,6 +108,8 @@ export async function POST(req: NextRequest) {
       time,
       name,
       phone: phoneRaw,
+      userEmail,
+      guestPin,
       partySize,
       purpose: purpose as VisitPurpose,
       requests,
