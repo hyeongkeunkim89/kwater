@@ -136,16 +136,10 @@ export function WaterHubHeader({
           ) : (
             <div className="flex items-center gap-x-2">
               <button
-                onClick={() => openAuthModal("guest")}
-                className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-              >
-                🎟️ 비회원 예약조회
-              </button>
-              <button
                 onClick={() => openAuthModal("login")}
                 className="rounded-full bg-sky-600 px-4 py-1.5 text-xs font-black text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20"
               >
-                로그인 / 회원가입
+                🔑 로그인 / 회원가입
               </button>
             </div>
           )}
