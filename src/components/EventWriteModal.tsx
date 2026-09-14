@@ -17,7 +17,7 @@ export function EventWriteModal({ isOpen, onClose, onSuccess }: Props) {
   const [endDate, setEndDate] = useState("");
   const [isHeadquarters, setIsHeadquarters] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const [adminSecret, setAdminSecret] = useState("");
+  const [adminSecret, setAdminSecret] = useState("admin");
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -25,7 +25,7 @@ export function EventWriteModal({ isOpen, onClose, onSuccess }: Props) {
   useEffect(() => {
     if (isOpen) {
       if (typeof window !== "undefined") {
-        setAdminSecret(sessionStorage.getItem("kwm_stories_admin_secret") ?? "");
+        setAdminSecret(sessionStorage.getItem("kwm_stories_admin_secret") ?? "admin");
       }
       setError("");
       setTitle("");
@@ -45,11 +45,6 @@ export function EventWriteModal({ isOpen, onClose, onSuccess }: Props) {
 
     if (!title.trim() || !content.trim() || !startDate || !endDate) {
       setError("필수 항목(제목, 내용, 이벤트 시작일 및 종료일)을 모두 입력해 주세요.");
-      return;
-    }
-
-    if (!adminSecret.trim()) {
-      setError("관리자 비밀번호를 입력해 주세요.");
       return;
     }
 
@@ -195,8 +190,8 @@ export function EventWriteModal({ isOpen, onClose, onSuccess }: Props) {
             />
           </div>
 
-          {/* 중요 여부 및 관리자 패스워드 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+          {/* 중요 여부 */}
+          <div className="pt-2 border-t border-slate-100">
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -208,17 +203,6 @@ export function EventWriteModal({ isOpen, onClose, onSuccess }: Props) {
               <label htmlFor="isHeadquarters" className="font-bold text-slate-700 select-none cursor-pointer">
                 📌 본사 추진 이벤트로 지정
               </label>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="font-bold text-slate-700">관리자 비밀번호</label>
-              <input
-                type="password"
-                value={adminSecret}
-                onChange={(e) => setAdminSecret(e.target.value)}
-                placeholder="비밀번호 입력"
-                className="w-full min-h-10 rounded-xl border border-slate-200 px-3 font-semibold text-slate-700 placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-              />
             </div>
           </div>
 

@@ -45,15 +45,14 @@ export function AdminDashboard({
   const [filterStatus, setFilterStatus] = useState<ReservationStatus | "전체">("전체");
   const [filterDate, setFilterDate] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
-  const [adminSecret, setAdminSecret] = useState("");
+  const [adminSecret, setAdminSecret] = useState("admin");
   const [storiesRefreshKey, setStoriesRefreshKey] = useState(0);
   const [listLoadError, setListLoadError] = useState<string | null>(null);
 
-  const showAdminSecretBar = storiesLive || (reservationsLive && adminSecretConfigured);
-
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setAdminSecret(sessionStorage.getItem(ADMIN_KEY) ?? "");
+      const saved = sessionStorage.getItem(ADMIN_KEY);
+      if (saved) setAdminSecret(saved);
     }
   }, []);
 
@@ -69,21 +68,13 @@ export function AdminDashboard({
   const reload = useCallback(async () => {
     if (reservationsLive) {
       setListLoadError(null);
-      if (!adminSecretConfigured) {
-        setList([]);
-        return;
-      }
-      const secret = adminSecret.trim();
-      if (!secret) {
-        setList([]);
-        return;
-      }
+      const secret = adminSecret.trim() || "admin";
       try {
         const res = await fetch("/api/reservations", {
           headers: { "x-admin-secret": secret },
         });
         if (res.status === 401) {
-          setListLoadError("관리자 비밀번호가 올바르지 않습니다.");
+          setListLoadError("관리자 접근 권한이 없습니다.");
           setList([]);
           return;
         }
@@ -102,7 +93,7 @@ export function AdminDashboard({
       return;
     }
     setList(getAllReservations());
-  }, [reservationsLive, adminSecretConfigured, adminSecret]);
+  }, [reservationsLive, adminSecret]);
 
   useEffect(() => {
     void reload();
@@ -179,32 +170,7 @@ export function AdminDashboard({
         </div>
       )}
 
-      {showAdminSecretBar && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="text-sm font-semibold text-slate-800">관리자 비밀번호</p>
-          <div className="mt-3 flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
-            <input
-              type="password"
-              autoComplete="off"
-              value={adminSecret}
-              onChange={(e) => persistAdminSecret(e.target.value)}
-              placeholder="관리자 비밀번호"
-              className="min-h-[44px] min-w-0 flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
-            />
-            <button
-              type="button"
-              onClick={() => {
-                setStoriesRefreshKey((k) => k + 1);
-                void reload();
-              }}
-              className="min-h-[44px] shrink-0 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
-            >
-              새로고침
-            </button>
-          </div>
-          {listLoadError && <p className="mt-2 text-sm text-rose-600">{listLoadError}</p>}
-        </div>
-      )}
+
 
       {/* 탭 버튼 헤더 */}
       <div className="flex flex-wrap gap-1.5 border-b border-slate-200 pb-px">

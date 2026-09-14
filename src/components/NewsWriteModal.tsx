@@ -15,7 +15,7 @@ export function NewsWriteModal({ isOpen, onClose, onSuccess }: Props) {
   const [content, setContent] = useState("");
   const [isPinned, setIsPinned] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const [adminSecret, setAdminSecret] = useState("");
+  const [adminSecret, setAdminSecret] = useState("admin");
   
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export function NewsWriteModal({ isOpen, onClose, onSuccess }: Props) {
   useEffect(() => {
     if (isOpen) {
       if (typeof window !== "undefined") {
-        setAdminSecret(sessionStorage.getItem("kwm_stories_admin_secret") ?? "");
+        setAdminSecret(sessionStorage.getItem("kwm_stories_admin_secret") ?? "admin");
       }
       setError("");
       setTitle("");
@@ -41,11 +41,6 @@ export function NewsWriteModal({ isOpen, onClose, onSuccess }: Props) {
 
     if (!title.trim() || !content.trim()) {
       setError("제목과 내용을 입력해 주세요.");
-      return;
-    }
-
-    if (!adminSecret.trim()) {
-      setError("관리자 비밀번호를 입력해 주세요.");
       return;
     }
 
@@ -167,8 +162,8 @@ export function NewsWriteModal({ isOpen, onClose, onSuccess }: Props) {
             />
           </div>
 
-          {/* 중요 여부 및 관리자 패스워드 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+          {/* 중요 여부 */}
+          <div className="pt-2 border-t border-slate-100">
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -180,17 +175,6 @@ export function NewsWriteModal({ isOpen, onClose, onSuccess }: Props) {
               <label htmlFor="isPinned" className="font-bold text-slate-700 select-none cursor-pointer">
                 📌 상단에 중요 공지로 고정
               </label>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="font-bold text-slate-700">관리자 비밀번호</label>
-              <input
-                type="password"
-                value={adminSecret}
-                onChange={(e) => setAdminSecret(e.target.value)}
-                placeholder="비밀번호 입력"
-                className="w-full min-h-10 rounded-xl border border-slate-200 px-3 font-semibold text-slate-700 placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-              />
             </div>
           </div>
 
