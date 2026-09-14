@@ -173,11 +173,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const lowerId = idOrEmail.toLowerCase().trim();
     const lowerPass = pass.trim();
 
-    // 1. 관리자(admin) 검증: 아이디 admin 또는 비밀번호 admin
-    if (lowerId === "admin" || lowerId.includes("admin")) {
+    // 1. 관리자(admin) 로그인 검증
+    if (lowerId === "admin") {
       if (lowerPass !== "admin") {
-        alert("관리자 비밀번호가 올바르지 않습니다. (비밀번호: admin)");
+        alert("🔒 관리자 비밀번호가 올바르지 않습니다.\n관리자 아이디: admin / 비밀번호: admin");
         return false;
+      }
+
+      // 서버 API를 호출하여 제대로 된 서명(HMAC) 쿠키 발급
+      try {
+        const res = await fetch("/api/staff-console/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password: "admin" }),
+          credentials: "same-origin",
+        });
+
+        if (!res.ok) {
+          alert("관리자 세션 발급에 실패했습니다.");
+          return false;
+        }
+      } catch (e) {
+        console.error("Staff console session error", e);
       }
 
       const adminUser: UserProfile = {
@@ -188,11 +205,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         role: "admin",
       };
 
-      document.cookie = `kwm_staff_console_gate=1; path=/; max-age=604800; SameSite=Lax`;
       saveUserSession(adminUser);
       closeAuthModal();
 
-      alert(`🔑 관리자(admin) 계정으로 로그인되었습니다.\n관리자 전용 콘솔페이지(/yunyeong)로 자동 이동합니다.`);
+      alert(`🔑 관리자(admin) 계정으로 로그인되었습니다.\n관리자 전용 콘솔페이지(/yunyeong)로 이동합니다.`);
       window.location.href = "/yunyeong";
       return true;
     }
