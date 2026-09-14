@@ -31,6 +31,64 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const STORAGE_KEY = "kwater_portal_user";
+const USERS_DB_KEY = "kwater_registered_users_db";
+
+type RegisteredAccount = {
+  id: string;
+  name: string;
+  email: string;
+  pass: string;
+  phone?: string;
+  provider: "email" | "staff";
+  role: UserRole;
+};
+
+// 기본 샘플 회원 계정 (체험용 테스트 계정)
+const SEED_USERS: RegisteredAccount[] = [
+  {
+    id: "user_kwater",
+    name: "홍길동",
+    email: "user@kwater.or.kr",
+    pass: "123456",
+    phone: "010-1234-5678",
+    provider: "email",
+    role: "user",
+  },
+  {
+    id: "user_test",
+    name: "테스트회원",
+    email: "test@kwater.or.kr",
+    pass: "123456",
+    phone: "010-9876-5432",
+    provider: "email",
+    role: "user",
+  },
+];
+
+function getRegisteredUsers(): RegisteredAccount[] {
+  if (typeof window === "undefined") return SEED_USERS;
+  try {
+    const raw = localStorage.getItem(USERS_DB_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.error("Failed to parse registered users DB", e);
+  }
+  return SEED_USERS;
+}
+
+function saveRegisteredUsers(users: RegisteredAccount[]) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(USERS_DB_KEY, JSON.stringify(users));
+  } catch (e) {
+    console.error("Failed to save registered users DB", e);
+  }
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -173,7 +231,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const lowerId = idOrEmail.toLowerCase().trim();
     const lowerPass = pass.trim();
 
-    // 1. 관리자(admin) 로그인 검증
+    if (!lowerId) {
+      alert("아이디 또는 이메일을 입력해주세요.");
+      return false;
+    }
+    if (!lowerPass) {
+      alert("비밀번호를 입력해주세요.");
+      return false;
+    }
+
+    // 1. 관리자(admin) 로그인 검증 (ID: admin / PW: admin)
     if (lowerId === "admin") {
       if (lowerPass !== "admin") {
         alert("🔒 관리자 비밀번호가 올바르지 않습니다.\n관리자 아이디: admin / 비밀번호: admin");
@@ -213,20 +280,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return true;
     }
 
-    // 2. 일반 관람객 로그인
-    if (!lowerPass) {
-      alert("비밀번호를 입력해주세요.");
+    // 2. 일반 회원 로그인 검증 (등록된 회원 DB 확인)
+    const users = getRegisteredUsers();
+    const matched = users.find(
+      (u) =>
+        u.email.toLowerCase() === lowerId ||
+        u.id.toLowerCase() === lowerId ||
+        u.name.toLowerCase() === lowerId
+    );
+
+    if (!matched) {
+      alert(
+        `❌ 등록되지 않은 아이디/이메일입니다.\n[회원가입] 탭에서 신규 가입 후 로그인해 주세요.\n(테스트 계정 예시: user@kwater.or.kr / 비밀번호: 123456)`
+      );
       return false;
     }
 
-    const userName = idOrEmail.includes("@") ? idOrEmail.split("@")[0] : idOrEmail;
+    if (matched.pass !== lowerPass) {
+      alert(`❌ 비밀번호가 올바르지 않습니다. 다시 확인해 주세요.`);
+      return false;
+    }
+
     const memberUser: UserProfile = {
-      id: `user_${Date.now()}`,
-      name: userName || "관람객 회원",
-      email: idOrEmail.includes("@") ? idOrEmail : `${idOrEmail}@kwater.or.kr`,
-      phone: "010-1234-5678",
-      provider: "email",
-      role: "user",
+      id: matched.id,
+      name: matched.name,
+      email: matched.email,
+      phone: matched.phone || "010-1234-5678",
+      provider: matched.provider || "email",
+      role: matched.role || "user",
     };
 
     saveUserSession(memberUser);
@@ -240,20 +321,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signupWithEmail = async (
     name: string,
     email: string,
-    _pass: string,
+    pass: string,
     phone: string
   ): Promise<boolean> => {
-    const mockUser: UserProfile = {
+    const lowerEmail = email.toLowerCase().trim();
+    if (!name.trim() || !lowerEmail || !pass.trim()) {
+      alert("모든 필수 항목을 입력해주세요.");
+      return false;
+    }
+
+    const users = getRegisteredUsers();
+    if (users.some((u) => u.email.toLowerCase() === lowerEmail)) {
+      alert("❌ 이미 가입된 이메일 주소입니다. 로그인해 주세요.");
+      return false;
+    }
+
+    const newUser: RegisteredAccount = {
       id: `user_${Date.now()}`,
-      name,
-      email,
-      phone,
+      name: name.trim(),
+      email: lowerEmail,
+      pass: pass.trim(),
+      phone: phone.trim() || "010-0000-0000",
       provider: "email",
       role: "user",
     };
-    saveUserSession(mockUser);
+
+    const updated = [...users, newUser];
+    saveRegisteredUsers(updated);
+
+    const userProfile: UserProfile = {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      phone: newUser.phone,
+      provider: "email",
+      role: "user",
+    };
+
+    saveUserSession(userProfile);
     closeAuthModal();
-    alert("회원가입 및 로그인이 완료되었습니다.");
+
+    alert(`🎉 ${newUser.name} 님의 회원가입이 완료되었습니다!\n마이페이지로 이동합니다.`);
     window.location.href = "/mypage";
     return true;
   };
