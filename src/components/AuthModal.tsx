@@ -6,17 +6,13 @@ import { useRouter } from "next/navigation";
 import { waterCenters } from "@/data/centers";
 
 export function AuthModal() {
-  const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail, loginAsStaff } = useAuth();
-  const [tab, setTab] = useState<"login" | "staff" | "signup" | "guest">(authTab === "guest" ? "guest" : "login");
+  const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail } = useAuth();
+  const [tab, setTab] = useState<"login" | "signup" | "guest">(authTab === "guest" ? "guest" : "login");
   const router = useRouter();
 
-  // Login form state
+  // Login form state (아이디 또는 이메일)
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPass, setLoginPass] = useState("");
-
-  // Staff login state
-  const [staffPass, setStaffPass] = useState("");
-  const [staffCenter, setStaffCenter] = useState("all");
 
   // Signup form state
   const [signUpName, setSignUpName] = useState("");
@@ -44,26 +40,11 @@ export function AuthModal() {
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!loginEmail || !loginPass) {
-      alert("이메일과 비밀번호를 입력해주세요.");
+    if (!loginEmail) {
+      alert("아이디 또는 이메일을 입력해주세요.");
       return;
     }
     await loginWithEmail(loginEmail, loginPass);
-    router.push("/mypage");
-  };
-
-  const handleStaffLoginSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!staffPass) {
-      alert("담당자 관리 암호를 입력해주세요.");
-      return;
-    }
-    const success = await loginAsStaff(staffPass, staffCenter);
-    if (success) {
-      router.push("/yunyeong");
-    } else {
-      alert("담당자 관리 암호가 올바르지 않습니다.");
-    }
   };
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
@@ -98,8 +79,8 @@ export function AuthModal() {
           ✕
         </button>
 
-        {/* 상단 탭 구분 (관람객 vs 문화관 담당자) */}
-        <div className="grid grid-cols-4 border-b border-slate-200 pb-3 mb-6 gap-1 text-center">
+        {/* 상단 탭 구분 (통합로그인 / 회원가입 / 비회원) */}
+        <div className="grid grid-cols-3 border-b border-slate-200 pb-3 mb-6 gap-1 text-center">
           <button
             onClick={() => setTab("login")}
             className={`py-2 text-xs font-black transition border-b-2 ${
@@ -108,17 +89,7 @@ export function AuthModal() {
                 : "border-transparent text-slate-400 hover:text-slate-700"
             }`}
           >
-            👥 관람객
-          </button>
-          <button
-            onClick={() => setTab("staff")}
-            className={`py-2 text-xs font-black transition border-b-2 ${
-              tab === "staff"
-                ? "border-amber-500 text-amber-600 font-extrabold"
-                : "border-transparent text-slate-400 hover:text-slate-700"
-            }`}
-          >
-            🏛️ 담당자
+            🔑 로그인
           </button>
           <button
             onClick={() => setTab("signup")}
@@ -142,16 +113,16 @@ export function AuthModal() {
           </button>
         </div>
 
-        {/* 1. 관람객 로그인 탭 */}
+        {/* 1. 통합 로그인 탭 */}
         {tab === "login" && (
           <div className="space-y-5">
             <div className="text-center">
               <span className="inline-block rounded-full bg-sky-100 px-3 py-0.5 text-[11px] font-black text-sky-800 mb-1">
-                일반 관람객 전용
+                통합 인증 원스톱 로그인
               </span>
-              <h2 className="text-xl font-black text-slate-900">관람객 로그인</h2>
+              <h2 className="text-xl font-black text-slate-900">물문화관 로그인</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
-                카카오, 네이버, 이메일로 1초 만에 로그인하세요.
+                소셜 로그인 또는 아이디/이메일로 로그인하세요.
               </p>
             </div>
 
@@ -174,17 +145,17 @@ export function AuthModal() {
 
             <div className="relative flex items-center justify-center my-3">
               <div className="w-full border-t border-slate-200" />
-              <span className="absolute bg-white px-3 text-xs text-slate-400 font-bold">또는 이메일 로그인</span>
+              <span className="absolute bg-white px-3 text-xs text-slate-400 font-bold">또는 아이디/이메일 로그인</span>
             </div>
 
             <form onSubmit={handleLoginSubmit} className="space-y-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">이메일 주소</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">아이디 또는 이메일주소</label>
                 <input
-                  type="email"
+                  type="text"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
-                  placeholder="example@kwater.or.kr"
+                  placeholder="예: user@kwater.or.kr 또는 admin / staff_soyang"
                   className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
                 />
               </div>
@@ -200,62 +171,16 @@ export function AuthModal() {
                 />
               </div>
 
+              <div className="rounded-xl bg-sky-50 p-2.5 text-[11px] text-sky-900 border border-sky-100 flex items-center gap-1.5 font-semibold">
+                <span className="shrink-0">💡</span>
+                <span>관리자/담당자 ID로 로그인 시 관리자 전용 콘솔페이지(/yunyeong)로 자동 이동합니다.</span>
+              </div>
+
               <button
                 type="submit"
                 className="w-full rounded-xl bg-slate-900 py-3 text-sm font-black text-white hover:bg-slate-800 transition shadow-md"
               >
-                관람객 로그인
-              </button>
-            </form>
-          </div>
-        )}
-
-        {/* 2. 문화관 담당자 / 해설사 로그인 탭 */}
-        {tab === "staff" && (
-          <div className="space-y-4">
-            <div className="text-center">
-              <span className="inline-block rounded-full bg-amber-100 px-3 py-0.5 text-[11px] font-black text-amber-800 mb-1">
-                K-water 문화관 직원/해설사 전용
-              </span>
-              <h2 className="text-xl font-black text-slate-900">문화관 담당자 로그인</h2>
-              <p className="mt-1 text-xs text-slate-500 font-semibold">
-                투어 예약 승인 및 게시판 관리를 위해 관리 암호를 입력하세요.
-              </p>
-            </div>
-
-            <form onSubmit={handleStaffLoginSubmit} className="space-y-3 pt-2">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">소속 문화관 선택</label>
-                <select
-                  value={staffCenter}
-                  onChange={(e) => setStaffCenter(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-amber-500"
-                >
-                  <option value="all">🌐 전국 전체 문화관 (최고 관리자)</option>
-                  {waterCenters.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      🏛️ {c.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">담당자 비밀번호</label>
-                <input
-                  type="password"
-                  value={staffPass}
-                  onChange={(e) => setStaffPass(e.target.value)}
-                  placeholder="관리 암호 입력"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full rounded-xl bg-amber-600 py-3 text-sm font-black text-white hover:bg-amber-500 transition shadow-md shadow-amber-600/20"
-              >
-                🏛️ 담당자 전용 콘솔 접속
+                🔑 로그인
               </button>
             </form>
           </div>

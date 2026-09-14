@@ -149,17 +149,6 @@ export function WaterHubHeader({
               </button>
             </div>
           )}
-
-          <div className="h-4 w-px bg-slate-200 mx-1" aria-hidden />
-
-          {showStaffConsoleLink && (
-            <button
-              onClick={() => openAuthModal("staff")}
-              className="inline-flex min-h-10 items-center whitespace-nowrap text-xs font-semibold text-slate-400 transition hover:text-slate-700"
-            >
-              담당자 로그인
-            </button>
-          )}
         </div>
 
         {/* 모바일 햄버거 토글 버튼 (선명한 고대비 디자인 적용) */}

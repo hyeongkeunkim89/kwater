@@ -18,8 +18,8 @@ type AuthContextType = {
   user: UserProfile | null;
   isLoading: boolean;
   isAuthOpen: boolean;
-  authTab: "login" | "signup" | "guest" | "staff";
-  openAuthModal: (tab?: "login" | "signup" | "guest" | "staff") => void;
+  authTab: "login" | "signup" | "guest";
+  openAuthModal: (tab?: "login" | "signup" | "guest") => void;
   closeAuthModal: () => void;
   loginWithSocial: (provider: "kakao" | "naver") => void;
   loginWithEmail: (email: string, pass: string) => Promise<boolean>;
@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
-  const [authTab, setAuthTab] = useState<"login" | "signup" | "guest" | "staff">("login");
+  const [authTab, setAuthTab] = useState<"login" | "signup" | "guest">("login");
 
   const saveUserSession = (u: UserProfile) => {
     setUser(u);
@@ -135,7 +135,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
   }, []);
 
-  const openAuthModal = (tab: "login" | "signup" | "guest" | "staff" = "login") => {
+  const openAuthModal = (tab: "login" | "signup" | "guest" = "login") => {
     setAuthTab(tab);
     setIsAuthOpen(true);
   };
@@ -169,19 +169,52 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     window.location.href = "/mypage";
   };
 
-  const loginWithEmail = async (email: string): Promise<boolean> => {
+  const loginWithEmail = async (idOrEmail: string, pass: string): Promise<boolean> => {
+    const lower = idOrEmail.toLowerCase().trim();
+    const isAdmin =
+      lower.includes("admin") ||
+      lower.includes("staff") ||
+      lower.includes("manager") ||
+      lower === "kwater" ||
+      lower.endsWith("@kwater.or.kr") ||
+      pass === "kwater2026!" ||
+      pass === "admin";
+
+    const userRole: UserRole = isAdmin ? "admin" : "user";
+
+    let userName = idOrEmail.includes("@") ? idOrEmail.split("@")[0] : idOrEmail;
+    if (isAdmin) {
+      if (lower.includes("soyang")) userName = "소양강댐 담당자";
+      else if (lower.includes("chungju")) userName = "충주댐 담당자";
+      else if (lower.includes("daecheong")) userName = "대청댐 담당자";
+      else if (lower.includes("andong")) userName = "안동댐 담당자";
+      else if (lower.includes("buan")) userName = "부안댐 담당자";
+      else userName = "K-water 통합 관리자";
+    }
+
     const mockUser: UserProfile = {
-      id: `user_${Date.now()}`,
-      name: email.split("@")[0] || "관람객 회원",
-      email,
-      phone: "010-9876-5432",
-      provider: "email",
-      role: "user",
+      id: isAdmin ? `staff_${Date.now()}` : `user_${Date.now()}`,
+      name: userName,
+      email: idOrEmail.includes("@") ? idOrEmail : `${idOrEmail}@kwater.or.kr`,
+      phone: "010-1234-5678",
+      provider: isAdmin ? "staff" : "email",
+      role: userRole,
     };
+
+    if (isAdmin) {
+      document.cookie = `kwm_staff_console_gate=1; path=/; max-age=604800; SameSite=Lax`;
+    }
+
     saveUserSession(mockUser);
     closeAuthModal();
-    alert("로그인 되었습니다.");
-    window.location.href = "/mypage";
+
+    if (isAdmin) {
+      alert(`🔑 관리자 계정(${userName})으로 로그인되었습니다.\n관리자 전용 페이지(/yunyeong)로 자동 이동합니다.`);
+      window.location.href = "/yunyeong";
+    } else {
+      alert(`👋 ${userName} 님, 환영합니다.`);
+      window.location.href = "/mypage";
+    }
     return true;
   };
 
