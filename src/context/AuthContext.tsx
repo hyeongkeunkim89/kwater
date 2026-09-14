@@ -171,14 +171,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginWithEmail = async (idOrEmail: string, pass: string): Promise<boolean> => {
     const lower = idOrEmail.toLowerCase().trim();
+    const lowerPass = pass.trim();
+
+    // 관리자 계정 판단: ID가 admin이거나 비밀번호가 admin일 때 (또는 기존 관리자 패턴)
     const isAdmin =
+      lower === "admin" ||
+      lowerPass === "admin" ||
       lower.includes("admin") ||
       lower.includes("staff") ||
       lower.includes("manager") ||
       lower === "kwater" ||
       lower.endsWith("@kwater.or.kr") ||
-      pass === "kwater2026!" ||
-      pass === "admin";
+      lowerPass === "kwater2026!";
 
     const userRole: UserRole = isAdmin ? "admin" : "user";
 

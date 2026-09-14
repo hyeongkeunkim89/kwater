@@ -53,22 +53,20 @@ export function getStaffGateSigningSecret(): string {
     process.env.STAFF_CONSOLE_SESSION_SECRET?.trim() ||
     process.env.WATER_STORIES_ADMIN_SECRET?.trim() ||
     process.env.STAFF_CONSOLE_PASSWORD?.trim() ||
-    ""
+    "admin"
   );
 }
 
 export function isStaffConsoleGateEnabled(): boolean {
-  return Boolean(
-    process.env.STAFF_CONSOLE_PASSWORD?.trim() || process.env.WATER_STORIES_ADMIN_SECRET?.trim(),
-  );
+  return true;
 }
 
-/** 로그인 폼·미들웨어가 비교하는 비밀번호(전용 값 우선, 없으면 물 이야기 관리자 시크릿과 동일) */
+/** 로그인 폼·미들웨어가 비교하는 비밀번호(기본값: admin) */
 export function getStaffConsoleGatePassword(): string {
   return (
     process.env.STAFF_CONSOLE_PASSWORD?.trim() ||
     process.env.WATER_STORIES_ADMIN_SECRET?.trim() ||
-    ""
+    "admin"
   );
 }
 
