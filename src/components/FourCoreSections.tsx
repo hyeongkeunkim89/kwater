@@ -44,7 +44,7 @@ export function FourCoreSections() {
             {
               title: "시설 및 층별 전시 안내",
               desc: "기술 전시관 실내 도면, 층별 시설 안내 및 대표 전경 확인",
-              path: "/yunyeong",
+              path: "/status",
               tag: "시설 안내 메인",
             },
           ].map((item) => (
@@ -154,7 +154,7 @@ export function FourCoreSections() {
             </p>
           </div>
           <Link
-            href="/yunyeong"
+            href="/status"
             className="shrink-0 inline-flex min-h-11 items-center justify-center rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black px-5 transition shadow-lg shadow-amber-500/20 whitespace-nowrap"
           >
             시설 & 전시 안내 메인 바로가기 →
@@ -178,7 +178,7 @@ export function FourCoreSections() {
             {
               title: "층별 전시 & 실내 도면",
               desc: "수몰 역사관 실내 도면, 전시 구성 및 편의시설 사전 보기",
-              path: "/yunyeong",
+              path: "/status",
               tag: "도면 안내 메인",
             },
           ].map((item) => (

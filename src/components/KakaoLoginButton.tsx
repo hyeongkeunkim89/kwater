@@ -9,7 +9,7 @@ interface KakaoLoginButtonProps {
 }
 
 export function KakaoLoginButton({
-  redirectPath = "/yunyeong",
+  redirectPath = "/mypage",
   className = "",
   buttonText = "카카오로 시작하기",
 }: KakaoLoginButtonProps) {
