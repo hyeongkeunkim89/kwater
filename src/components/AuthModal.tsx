@@ -86,21 +86,47 @@ export function AuthModal() {
     }
   };
 
-  // 비밀번호 강도 계산
+  // 비밀번호 고대비 강도 계산
   const getPasswordStrength = (pass: string) => {
-    if (!pass) return { label: "", color: "", width: "0%" };
-    if (pass.length < 8) return { label: "위험 (8자 이상 필요)", color: "bg-rose-500 text-rose-600", width: "33%" };
+    if (!pass) return { score: 0, label: "", badgeBg: "", barColor: "" };
+
     const hasLetter = /[a-zA-Z]/.test(pass);
     const hasNum = /[0-9]/.test(pass);
     const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
 
+    if (pass.length < 8) {
+      return {
+        score: 1,
+        label: "⚠️ 약함 (최소 8자 이상 필요)",
+        badgeBg: "bg-red-100 text-red-800 border-red-300 font-black",
+        barColor: "bg-red-600 shadow-sm shadow-red-500/50",
+      };
+    }
+
     if (hasLetter && hasNum && hasSpecial) {
-      return { label: "매우 안전 (영문+숫자+특수문자)", color: "bg-emerald-500 text-emerald-600", width: "100%" };
+      return {
+        score: 3,
+        label: "🔒 매우 안전 (영문+숫자+특수문자)",
+        badgeBg: "bg-emerald-100 text-emerald-800 border-emerald-300 font-black",
+        barColor: "bg-emerald-600 shadow-sm shadow-emerald-500/50",
+      };
     }
+
     if (hasLetter && hasNum) {
-      return { label: "보통 (특수문자 추가 권장)", color: "bg-amber-500 text-amber-600", width: "66%" };
+      return {
+        score: 2,
+        label: "⚡ 보통 (특수문자 추가 권장)",
+        badgeBg: "bg-amber-100 text-amber-900 border-amber-300 font-black",
+        barColor: "bg-amber-500 shadow-sm shadow-amber-500/50",
+      };
     }
-    return { label: "약함 (숫자/특수문자 필요)", color: "bg-rose-400 text-rose-500", width: "40%" };
+
+    return {
+      score: 1,
+      label: "⚠️ 약함 (숫자/특수문자 필요)",
+      badgeBg: "bg-red-100 text-red-800 border-red-300 font-black",
+      barColor: "bg-red-600 shadow-sm shadow-red-500/50",
+    };
   };
 
   // 약관 전체 동의 토글
@@ -370,19 +396,24 @@ export function AuthModal() {
                   </button>
                 </div>
                 {/* 비밀번호 강도 게이지 */}
-                {signUpPass && (
-                  <div className="mt-1.5 space-y-1">
-                    <div className="h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
-                      <div
-                        className={`h-full transition-all duration-300 ${getPasswordStrength(signUpPass).color}`}
-                        style={{ width: getPasswordStrength(signUpPass).width }}
-                      />
+                {signUpPass && (() => {
+                  const strength = getPasswordStrength(signUpPass);
+                  return (
+                    <div className="mt-2 space-y-1.5 rounded-xl border border-slate-300 bg-slate-100/90 p-2.5 shadow-inner">
+                      <div className="flex items-center justify-between text-[11px]">
+                        <span className="font-extrabold text-slate-700">비밀번호 보안 강도</span>
+                        <span className={`inline-block rounded-md px-2 py-0.5 text-[10px] border ${strength.badgeBg}`}>
+                          {strength.label}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-1.5 h-2.5 w-full">
+                        <div className={`rounded-full transition-all duration-300 ${strength.score >= 1 ? strength.barColor : "bg-slate-300/80 border border-slate-400/40"}`} />
+                        <div className={`rounded-full transition-all duration-300 ${strength.score >= 2 ? strength.barColor : "bg-slate-300/80 border border-slate-400/40"}`} />
+                        <div className={`rounded-full transition-all duration-300 ${strength.score >= 3 ? strength.barColor : "bg-slate-300/80 border border-slate-400/40"}`} />
+                      </div>
                     </div>
-                    <p className={`text-[10px] font-bold ${getPasswordStrength(signUpPass).color}`}>
-                      안전도: {getPasswordStrength(signUpPass).label}
-                    </p>
-                  </div>
-                )}
+                  );
+                })()}
               </div>
 
               {/* 4. 비밀번호 재확인 + 실시간 일치 검증 */}
