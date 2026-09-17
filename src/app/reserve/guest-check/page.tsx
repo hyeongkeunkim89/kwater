@@ -27,6 +27,7 @@ function GuestCheckContent() {
   const [phone, setPhone] = useState(initialPhone);
   const [pin, setPin] = useState(initialPin);
   const [isSearched, setIsSearched] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [guestReservations, setGuestReservations] = useState<GuestReservation[]>([]);
 
   useEffect(() => {
@@ -37,10 +38,12 @@ function GuestCheckContent() {
 
   const handleSearch = async (p: string, _pin: string) => {
     setIsSearched(true);
+    setIsSearching(true);
     const targetDigits = p.replace(/\D/g, "");
     const pinDigits = _pin.trim();
     if (!targetDigits) {
       setGuestReservations([]);
+      setIsSearching(false);
       return;
     }
 
@@ -59,6 +62,8 @@ function GuestCheckContent() {
       }
     } catch (e) {
       console.error("Guest lookup fetch error", e);
+    } finally {
+      setIsSearching(false);
     }
 
     const localList = getAllReservations();
@@ -155,16 +160,50 @@ function GuestCheckContent() {
 
         <button
           type="submit"
-          className="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-black text-white hover:bg-emerald-500 transition shadow-lg shadow-emerald-600/20"
+          disabled={isSearching}
+          className="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-black text-white hover:bg-emerald-500 transition shadow-lg shadow-emerald-600/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          예약 내역 조회하기 🔍
+          {isSearching ? (
+            <>
+              <span className="animate-spin">🌀</span>
+              <span>예약 내역 조회 중입니다...</span>
+            </>
+          ) : (
+            <span>예약 내역 조회하기 🔍</span>
+          )}
         </button>
       </form>
 
       {/* 조회 결과 */}
       {isSearched && (
         <div className="space-y-4">
-          <h2 className="text-lg font-black text-slate-900 mb-3">조회된 비회원 예약 내역 ({guestReservations.length}건)</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-black text-slate-900">
+              조회된 비회원 예약 내역 ({guestReservations.length}건)
+            </h2>
+            {isSearching && (
+              <span className="text-xs text-emerald-600 font-bold animate-pulse">조회 진행 중...</span>
+            )}
+          </div>
+
+          {!isSearching && guestReservations.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center space-y-3 shadow-sm">
+              <div className="text-4xl">🔍</div>
+              <h3 className="text-base font-bold text-slate-800">일치하는 비회원 예약 내역이 없습니다</h3>
+              <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+                입력하신 <strong>휴대폰 번호</strong>와 <strong>비밀번호 4자리</strong>가 예약 접수 시 등록한 정보와 정확히 일치하는지 확인해 주세요.<br />
+                (비회원 예약이 아니거나 회원이신 경우 상단 로그인을 통해 마이페이지에서 확인하실 수 있습니다.)
+              </p>
+              <div className="pt-2 flex justify-center gap-3">
+                <Link
+                  href="/reserve"
+                  className="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-black text-white hover:bg-emerald-500 transition shadow-sm shadow-emerald-600/20"
+                >
+                  새 투어 예약하기 📅
+                </Link>
+              </div>
+            </div>
+          )}
 
           {guestReservations.map((r) => (
             <div

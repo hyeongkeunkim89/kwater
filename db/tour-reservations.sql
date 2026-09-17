@@ -19,12 +19,22 @@ CREATE TABLE IF NOT EXISTS tour_reservations (
   party_size integer NOT NULL CHECK (party_size >= 1 AND party_size <= 100),
   purpose text NOT NULL,
   requests text NOT NULL DEFAULT '',
+  user_email text,               -- 회원 예약 시 계정 이메일 (마이페이지 조회용)
+  guest_pin text,                -- 비회원 예약 시 조회용 숫자 4자리 비밀번호
   status text NOT NULL DEFAULT '대기' CHECK (status IN ('대기', '확정', '취소')),
   created_at timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT tour_reservations_purpose_chk CHECK (
     purpose IN ('개인·가족 관람', '단체·기관 방문', '교육 프로그램', '기타')
   )
 );
+
+-- 비회원 휴대폰 + PIN 조회 인덱스
+CREATE INDEX IF NOT EXISTS tour_reservations_guest_lookup_idx
+  ON tour_reservations (phone, guest_pin);
+
+-- 회원 이메일 조회 인덱스
+CREATE INDEX IF NOT EXISTS tour_reservations_user_email_idx
+  ON tour_reservations (user_email);
 
 -- 슬롯별 잔여 인원 집계 (center_id + visit_date + visit_time)
 CREATE INDEX IF NOT EXISTS tour_reservations_slot_idx

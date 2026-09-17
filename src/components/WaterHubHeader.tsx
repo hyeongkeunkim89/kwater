@@ -216,6 +216,68 @@ export function WaterHubHeader({
 
           {/* 메뉴 리스트 영역 */}
           <div className="flex-1 px-5 py-6 overflow-y-auto bg-white flex flex-col justify-between">
+            {/* 모바일 사용자 계정 영역 */}
+            <div className="mb-6 rounded-2xl bg-slate-50 border border-slate-200 p-4">
+              {user ? (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-black text-base border border-sky-200">
+                        {user.role === "admin" ? "🏛️" : "👤"}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm font-black text-slate-900">{user.name}</span>
+                          <span className="rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-bold text-sky-800">
+                            {user.role === "admin" ? "관리자" : "회원"}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-400 font-medium truncate max-w-[180px]">{user.email}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        logout();
+                      }}
+                      className="text-xs font-bold text-slate-500 hover:text-slate-900 bg-white border border-slate-200 px-2.5 py-1 rounded-lg"
+                    >
+                      로그아웃
+                    </button>
+                  </div>
+                  <Link
+                    href="/mypage"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex w-full items-center justify-center rounded-xl bg-slate-900 py-2.5 text-xs font-black text-white hover:bg-slate-800 transition"
+                  >
+                    {user.role === "admin" ? "🏛️ 통합 관리자 콘솔 바로가기" : "👤 마이페이지 바로가기"}
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  <p className="text-xs font-bold text-slate-500">물문화관 방문을 환영합니다!</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        openAuthModal("login");
+                      }}
+                      className="flex items-center justify-center rounded-xl bg-sky-600 py-2.5 text-xs font-black text-white hover:bg-sky-500 transition shadow-sm shadow-sky-600/20"
+                    >
+                      🔑 로그인/가입
+                    </button>
+                    <Link
+                      href="/reserve/guest-check"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center rounded-xl border border-slate-300 bg-white py-2.5 text-xs font-black text-slate-700 hover:bg-slate-100 transition"
+                    >
+                      🎟️ 비회원조회
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="flex flex-col gap-2">
               {menuItems.map((item) => (
                 <Link

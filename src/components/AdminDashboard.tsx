@@ -119,8 +119,10 @@ export function AdminDashboard({
     [list],
   );
 
+  const effectiveSecret = adminSecret.trim() || "admin";
+
   const authHeaders = (): HeadersInit => ({
-    "x-admin-secret": adminSecret.trim(),
+    "x-admin-secret": effectiveSecret,
     "Content-Type": "application/json",
   });
 
@@ -146,7 +148,7 @@ export function AdminDashboard({
     if (reservationsLive) {
       const res = await fetch(`/api/reservations/${encodeURIComponent(id)}`, {
         method: "DELETE",
-        headers: { "x-admin-secret": adminSecret.trim() },
+        headers: { "x-admin-secret": effectiveSecret },
       });
       if (!res.ok) {
         const j = (await res.json().catch(() => ({}))) as { error?: string };
@@ -378,21 +380,21 @@ export function AdminDashboard({
         {activeTab === "stories" && (
           <AdminWaterStoriesPanel
             storiesLive={storiesLive}
-            adminSecret={adminSecret}
+            adminSecret={effectiveSecret}
             storiesRefreshKey={storiesRefreshKey}
           />
         )}
 
         {activeTab === "news" && (
-          <AdminNewsPanel adminSecret={adminSecret} storiesLive={storiesLive} />
+          <AdminNewsPanel adminSecret={effectiveSecret} storiesLive={storiesLive} />
         )}
 
         {activeTab === "events" && (
-          <AdminEventsPanel adminSecret={adminSecret} storiesLive={storiesLive} />
+          <AdminEventsPanel adminSecret={effectiveSecret} storiesLive={storiesLive} />
         )}
 
         {activeTab === "feedbacks" && (
-          <AdminFeedbacksPanel adminSecret={adminSecret} />
+          <AdminFeedbacksPanel adminSecret={effectiveSecret} />
         )}
       </div>
 

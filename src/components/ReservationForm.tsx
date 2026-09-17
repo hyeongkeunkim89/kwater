@@ -529,7 +529,16 @@ export function ReservationForm({
                 type="tel"
                 placeholder="010-0000-0000"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => {
+                  const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+                  let formatted = digits;
+                  if (digits.length > 7) {
+                    formatted = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+                  } else if (digits.length > 3) {
+                    formatted = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+                  }
+                  setPhone(formatted);
+                }}
                 className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
               />
             </div>

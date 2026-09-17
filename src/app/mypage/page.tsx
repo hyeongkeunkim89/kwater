@@ -8,6 +8,7 @@ import { AdminDashboard } from "@/components/AdminDashboard";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import type { Reservation } from "@/types/reservation";
+import type { Feedback } from "@/types/feedback";
 import { getAllReservations, updateStatus } from "@/lib/reservations";
 
 function LoginAlertHandler() {
@@ -38,6 +39,7 @@ function MyPageContent() {
   const { user, isLoading, openAuthModal, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<"reservations" | "qna" | "profile" | "admin">("reservations");
   const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [myFeedbacks, setMyFeedbacks] = useState<Feedback[]>([]);
 
   useEffect(() => {
     if (!user) {
@@ -97,6 +99,24 @@ function MyPageContent() {
 
       if (isSubscribed) {
         setReservations(finalMatched);
+      }
+
+      // Load user's feedbacks
+      try {
+        const fbRes = await fetch("/api/feedbacks");
+        if (fbRes.ok) {
+          const allFb = (await fbRes.json()) as Feedback[];
+          if (Array.isArray(allFb)) {
+            const userFb = allFb.filter(
+              (f) => f.writerName && user.name && f.writerName.trim() === user.name.trim()
+            );
+            if (isSubscribed) {
+              setMyFeedbacks(userFb);
+            }
+          }
+        }
+      } catch (e) {
+        console.error("My feedbacks fetch error", e);
       }
     };
 
@@ -238,11 +258,11 @@ function MyPageContent() {
             onClick={() => setActiveTab("qna")}
             className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
               activeTab === "qna"
-                ? "border-sky-600 text-sky-600"
+                ? "border-sky-600 text-sky-600 font-bold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
             }`}
           >
-            내 문의 및 Q&A (0)
+            내 문의 및 Q&A ({myFeedbacks.length})
           </button>
         </div>
 
@@ -325,15 +345,79 @@ function MyPageContent() {
 
         {/* 2. 내 Q&A 탭 */}
         {activeTab === "qna" && (
-          <div className="rounded-2xl border border-dashed border-slate-300 py-16 text-center space-y-3">
-            <p className="text-3xl">💬</p>
-            <p className="text-sm font-semibold text-slate-500">작성하신 문의글이 없습니다.</p>
-            <Link
-              href="/feedback"
-              className="inline-block rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white hover:bg-slate-800 transition"
-            >
-              소통창구에서 문의하기
-            </Link>
+          <div className="space-y-4">
+            {myFeedbacks.length > 0 ? (
+              myFeedbacks.map((fb) => (
+                <div
+                  key={fb.id}
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="rounded-md bg-sky-100 px-2 py-0.5 text-[11px] font-bold text-sky-800">
+                        {fb.centerName}
+                      </span>
+                      {fb.isPrivate && (
+                        <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-600">
+                          🔒 비밀글
+                        </span>
+                      )}
+                      <span
+                        className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                          fb.adminReply
+                            ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                            : "bg-amber-100 text-amber-800 border border-amber-200"
+                        }`}
+                      >
+                        {fb.adminReply ? "답변완료" : "답변대기"}
+                      </span>
+                    </div>
+                    <span className="text-xs text-slate-400">
+                      {fb.createdAt ? new Date(fb.createdAt).toLocaleDateString("ko-KR") : ""}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base font-black text-slate-900">{fb.title}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-wrap">{fb.content}</p>
+
+                  {fb.adminReply && (
+                    <div className="rounded-xl bg-sky-50 border border-sky-100 p-4 space-y-1 mt-3">
+                      <div className="flex items-center gap-1.5 text-xs font-black text-sky-900">
+                        <span>🏛️ K-water 답변</span>
+                        {fb.adminRepliedAt && (
+                          <span className="text-[11px] text-sky-600 font-normal">
+                            ({new Date(fb.adminRepliedAt).toLocaleDateString("ko-KR")})
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">
+                        {fb.adminReply}
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="pt-2 flex justify-end">
+                    <Link
+                      href="/feedback"
+                      className="text-xs font-bold text-sky-600 hover:text-sky-800 transition"
+                    >
+                      소통창구 전체 목록 보기 →
+                    </Link>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="rounded-2xl border border-dashed border-slate-300 py-16 text-center space-y-3">
+                <p className="text-3xl">💬</p>
+                <p className="text-sm font-semibold text-slate-500">작성하신 문의글이 없습니다.</p>
+                <Link
+                  href="/feedback"
+                  className="inline-block rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white hover:bg-slate-800 transition"
+                >
+                  소통창구에서 문의하기
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </main>
