@@ -45,6 +45,11 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "1층": "/hantan-1f.PNG",
     "2층": "/hantan-2f.PNG",
   },
+  soyang: {
+    "1층": "/soyang-1f.PNG",
+    "2층": "/soyang-2f.PNG",
+    "3층": "/soyang-3f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
@@ -186,6 +191,18 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/hantan/2층/어린이놀이터.PNG",
     ],
   },
+  soyang: {
+    "1층": [
+      "/images/floors/soyang/1층/로비.PNG",
+      "/images/floors/soyang/1층/OT전시실.PNG",
+      "/images/floors/soyang/1층/수몰전시관.PNG",
+    ],
+    "2층": [
+      "/images/floors/soyang/2층/제1전시실.PNG",
+      "/images/floors/soyang/2층/제2전시실.PNG",
+    ],
+    "3층": [],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -235,5 +252,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
   hantan: [
     "/images/surroundings/hantan/공원.PNG",
     "/images/surroundings/hantan/주차장.PNG",
+  ],
+  soyang: [
+    "/images/surroundings/soyang/다목적카페.PNG",
+    "/images/surroundings/soyang/야외데크.PNG",
   ],
 };
