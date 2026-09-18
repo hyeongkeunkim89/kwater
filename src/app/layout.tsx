@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "K-water 물문화관 | 전국 거점 안내",
   description:
     "한국수자원공사 물문화관·조력문화관의 개요, 위치, 운영 현황을 한눈에 확인할 수 있는 홍보용 안내 페이지입니다.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 /** 모바일 브라우저에서 레이아웃·핀치 줌 기본 동작을 명시 */
