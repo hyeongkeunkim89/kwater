@@ -201,7 +201,10 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/soyang/2층/제1전시실.PNG",
       "/images/floors/soyang/2층/제2전시실.PNG",
     ],
-    "3층": [],
+    "3층": [
+      "/images/floors/soyang/3층/워터갤러리.PNG",
+      "/images/floors/soyang/3층/워터클래스.PNG",
+    ],
   },
 };
 

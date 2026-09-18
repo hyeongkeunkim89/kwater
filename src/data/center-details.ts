@@ -111,7 +111,7 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     floors: [
       { floorLabel: "1층", highlights: ["로비", "OT전시실", "수몰전시관"] },
       { floorLabel: "2층", highlights: ["제1전시실", "제2전시실"] },
-      { floorLabel: "3층", highlights: ["전망대", "야외 사진 포인트"] },
+      { floorLabel: "3층", highlights: ["워터갤러리", "워터클래스"] },
     ],
   },
   hantan: {
