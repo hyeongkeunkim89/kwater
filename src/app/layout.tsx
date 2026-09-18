@@ -6,8 +6,9 @@ export const metadata: Metadata = {
   description:
     "한국수자원공사 물문화관·조력문화관의 개요, 위치, 운영 현황을 한눈에 확인할 수 있는 홍보용 안내 페이지입니다.",
   icons: {
-    icon: "/favicon.png?v=2",
-    shortcut: "/favicon.png?v=2",
+    icon: "/icon.png?v=3",
+    shortcut: "/icon.png?v=3",
+    apple: "/icon.png?v=3",
   },
 };
 
@@ -29,8 +30,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <link rel="icon" href="/favicon.png?v=2" type="image/png" />
-        <link rel="shortcut icon" href="/favicon.png?v=2" />
+        <link rel="icon" href="/icon.png?v=3" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
