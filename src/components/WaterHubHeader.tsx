@@ -52,21 +52,21 @@ export function WaterHubHeader({
     <header className="sticky top-0 z-50 shrink-0 border-b border-slate-200 bg-white shadow-sm">
       <div
         className={[
-          "mx-auto flex max-w-7xl items-center justify-between gap-4 min-h-[72px] sm:min-h-[80px]",
-          dense ? "px-4 py-2.5 sm:px-8" : "px-4 py-3 sm:px-8 md:py-3.5",
+          "mx-auto flex max-w-7xl items-center justify-between gap-4 min-h-[88px] md:min-h-[96px]",
+          dense ? "px-4 py-2 sm:px-8" : "px-4 py-2.5 sm:px-8 md:py-3",
         ].join(" ")}
       >
         {/* 로고 영역 */}
         <Link
           href="/main"
-          className="flex min-w-0 max-w-full shrink-0 items-center transition-opacity hover:opacity-95"
+          className="flex shrink-0 items-center transition-opacity hover:opacity-95"
         >
           <Image
             src="/images/logo.png"
             alt="K-water 한국수자원공사 물문화관 홍보관"
-            width={360}
-            height={90}
-            className="h-10 sm:h-12 md:h-13 lg:h-14 w-auto shrink-0 object-contain"
+            width={480}
+            height={120}
+            className="h-[48px] sm:h-[56px] md:h-[64px] w-auto max-w-none shrink-0 object-contain"
             priority
           />
         </Link>
