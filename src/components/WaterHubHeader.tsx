@@ -59,20 +59,16 @@ export function WaterHubHeader({
         {/* 로고 영역 */}
         <Link
           href="/main"
-          className="group flex min-w-0 max-w-full shrink-0 items-center gap-2 sm:gap-3"
+          className="flex min-w-0 max-w-full shrink-0 items-center transition-opacity hover:opacity-90"
         >
           <Image
-            src="/kwater-logo.svg"
-            alt="K-water 한국수자원공사"
-            width={110}
-            height={20}
-            className="h-4.5 w-auto shrink-0 brightness-0 opacity-80 transition-opacity group-hover:opacity-100 sm:h-5"
+            src="/images/logo.png"
+            alt="K-water 한국수자원공사 물문화관 홍보관"
+            width={260}
+            height={60}
+            className="h-8 sm:h-9 md:h-9.5 w-auto shrink-0 object-contain"
             priority
           />
-          <div className="hidden h-4 w-px bg-slate-200 sm:block sm:h-5" aria-hidden />
-          <span className="min-w-0 truncate text-xs font-black tracking-tight text-slate-800 transition-colors group-hover:text-slate-900 sm:text-sm">
-            물문화관 홍보관
-          </span>
         </Link>
 
         {/* 데스크톱 내비게이션 */}
