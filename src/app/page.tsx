@@ -26,9 +26,9 @@ export default function GatewayLandingPage() {
           <Image
             src="/kwater-logo.svg"
             alt="K-water 한국수자원공사"
-            width={150}
-            height={30}
-            className="h-6 sm:h-7 lg:h-7.5 w-auto brightness-0 invert opacity-95"
+            width={200}
+            height={40}
+            className="h-9 sm:h-10 lg:h-11 w-auto brightness-0 invert opacity-95"
             priority
           />
           <h1 className="mt-4 text-3xl sm:text-4xl lg:text-[2.35rem] font-black text-white tracking-tight whitespace-nowrap leading-none drop-shadow-md">
