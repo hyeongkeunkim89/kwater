@@ -18,9 +18,9 @@ export type ActiveNav =
   | "none";
 
 const navInactive =
-  "text-slate-700 hover:text-sky-600 transition-colors py-2 px-1 font-extrabold text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap";
+  "relative text-slate-700 hover:text-sky-600 font-extrabold text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap py-2 px-1 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[2.5px] after:w-0 after:bg-sky-500 after:rounded-full after:transition-all after:duration-300 hover:after:w-full";
 const navActive =
-  "text-sky-600 font-black border-b-2 border-sky-500 pb-0.5 py-2 px-1 text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap";
+  "relative text-sky-600 font-black text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap py-2 px-1 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[2.5px] after:w-full after:bg-sky-500 after:rounded-full";
 
 const mobileNavInactive =
   "flex items-center justify-between text-slate-800 hover:text-sky-600 font-extrabold text-base py-3.5 px-3 rounded-xl hover:bg-slate-100/70 border-b border-slate-100/80 transition duration-150";
