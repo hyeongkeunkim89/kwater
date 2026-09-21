@@ -58,7 +58,7 @@ export function QuickFAQAccordion() {
           </p>
         </div>
         <Link
-          href="/reserve"
+          href="/feedback"
           className="self-start sm:self-auto inline-flex items-center gap-1 text-xs font-bold text-sky-600 hover:text-sky-700 transition"
         >
           <span>해설 투어 예약 문의</span>
