@@ -130,12 +130,18 @@ export function WaterHubHeader({
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-x-2">
+            <div className="flex items-center gap-x-2 sm:gap-x-2.5">
               <button
                 onClick={() => openAuthModal("login")}
-                className="rounded-full bg-sky-600 px-4 py-1.5 text-xs font-black text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20"
+                className="text-xs font-bold text-slate-700 hover:text-sky-600 transition px-2.5 py-1.5 rounded-lg hover:bg-slate-100/60"
               >
-                🔑 로그인 / 회원가입
+                로그인
+              </button>
+              <button
+                onClick={() => openAuthModal("signup")}
+                className="rounded-full border border-sky-500 text-sky-600 hover:bg-sky-50 transition px-3.5 py-1.5 text-xs font-black shadow-2xs"
+              >
+                회원가입
               </button>
             </div>
           )}
@@ -258,17 +264,19 @@ export function WaterHubHeader({
                         setMobileMenuOpen(false);
                         openAuthModal("login");
                       }}
-                      className="flex items-center justify-center rounded-xl bg-sky-600 py-2.5 text-xs font-black text-white hover:bg-sky-500 transition shadow-sm shadow-sky-600/20"
+                      className="flex items-center justify-center rounded-xl bg-slate-900 py-2.5 text-xs font-black text-white hover:bg-slate-800 transition shadow-sm"
                     >
-                      🔑 로그인/가입
+                      로그인
                     </button>
-                    <Link
-                      href="/reserve/guest-check"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center rounded-xl border border-slate-300 bg-white py-2.5 text-xs font-black text-slate-700 hover:bg-slate-100 transition"
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        openAuthModal("signup");
+                      }}
+                      className="flex items-center justify-center rounded-xl border border-sky-500 bg-sky-50/50 py-2.5 text-xs font-black text-sky-700 hover:bg-sky-100/60 transition"
                     >
-                      🎟️ 비회원조회
-                    </Link>
+                      회원가입
+                    </button>
                   </div>
                 </div>
               )}
