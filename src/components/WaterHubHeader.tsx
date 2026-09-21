@@ -130,18 +130,25 @@ export function WaterHubHeader({
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-x-2 sm:gap-x-2.5">
+            <div className="flex items-center gap-x-2">
               <button
                 onClick={() => openAuthModal("login")}
-                className="text-xs font-bold text-slate-700 hover:text-sky-600 transition px-2.5 py-1.5 rounded-lg hover:bg-slate-100/60"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4.5 py-2 text-xs font-bold text-white transition hover:bg-slate-800 shadow-xs"
               >
-                로그인
-              </button>
-              <button
-                onClick={() => openAuthModal("signup")}
-                className="rounded-full border border-sky-500 text-sky-600 hover:bg-sky-50 transition px-3.5 py-1.5 text-xs font-black shadow-2xs"
-              >
-                회원가입
+                <svg
+                  className="h-3.5 w-3.5 text-sky-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+                <span>로그인 · 회원가입</span>
               </button>
             </div>
           )}
@@ -258,26 +265,28 @@ export function WaterHubHeader({
               ) : (
                 <div className="space-y-2.5">
                   <p className="text-xs font-bold text-slate-500">물문화관 방문을 환영합니다!</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        openAuthModal("login");
-                      }}
-                      className="flex items-center justify-center rounded-xl bg-slate-900 py-2.5 text-xs font-black text-white hover:bg-slate-800 transition shadow-sm"
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openAuthModal("login");
+                    }}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-xs font-extrabold text-white hover:bg-slate-800 transition shadow-sm"
+                  >
+                    <svg
+                      className="h-4 w-4 text-sky-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
-                      로그인
-                    </button>
-                    <button
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        openAuthModal("signup");
-                      }}
-                      className="flex items-center justify-center rounded-xl border border-sky-500 bg-sky-50/50 py-2.5 text-xs font-black text-sky-700 hover:bg-sky-100/60 transition"
-                    >
-                      회원가입
-                    </button>
-                  </div>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                    <span>로그인 / 회원가입</span>
+                  </button>
                 </div>
               )}
             </div>
