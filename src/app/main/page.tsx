@@ -12,9 +12,9 @@ export default function MainPage() {
       title: "가이드 투어 사전 예약",
       desc: "전국 15대 물문화관에서 제공하는 다채로운 전문 가이드 해설 투어를 사전 신청하세요.",
       btnLabel: "투어 예약하기",
-      badge: "충주댐 체험관 실사",
+      badge: "K-water 현장 체험존",
       badgeColor: "bg-sky-50 text-sky-800 border-sky-200/80",
-      image: "/images/cards/chungju_experience.png",
+      image: "/images/cards/kwater_official_tour.png",
       path: "/reserve",
       icon: (
         <svg className="h-3.5 w-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -26,9 +26,9 @@ export default function MainPage() {
       title: "전국 거점 현황 지도",
       desc: "15개 거점 물문화관의 실시간 관람 상태, 운영시간 및 위치 정보를 대화형 지도에서 한눈에 확인하세요.",
       btnLabel: "현황지도 보기",
-      badge: "소양강댐 갤러리 실사",
+      badge: "K-water 기획 파노라마관",
       badgeColor: "bg-teal-50 text-teal-800 border-teal-200/80",
-      image: "/images/cards/soyang_gallery.png",
+      image: "/images/cards/kwater_official_map.png",
       path: "/status",
       icon: (
         <svg className="h-3.5 w-3.5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,9 +40,9 @@ export default function MainPage() {
       title: "시설 및 층별 전시 안내",
       desc: "물문화관 층별 전시 공간과 편의시설 안내, 실내 도면 및 대표 전경을 한눈에 살펴보세요.",
       btnLabel: "시설 안내 보기",
-      badge: "횡성댐 주제관 실사",
+      badge: "K-water 시청각 영상실",
       badgeColor: "bg-amber-50 text-amber-900 border-amber-200/80",
-      image: "/images/cards/hoengseong_experience.png",
+      image: "/images/cards/kwater_official_facility.png",
       path: "/intro",
       icon: (
         <svg className="h-3.5 w-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
