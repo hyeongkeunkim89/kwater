@@ -25,7 +25,7 @@ export default function GatewayLandingPage() {
         <div className="my-6 sm:my-8 flex flex-col items-center w-full px-2">
           <div className="bg-white/95 backdrop-blur-sm p-3.5 sm:p-4 rounded-2xl shadow-xl border border-white/20 w-full flex justify-center items-center group transition duration-300 hover:bg-white">
             <Image
-              src="/images/logo.png"
+              src="/images/kwater_waterhub_logo.png"
               alt="K-water 한국수자원공사 물문화관"
               width={360}
               height={82}
