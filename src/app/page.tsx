@@ -27,8 +27,8 @@ export default function GatewayLandingPage() {
             <Image
               src="/images/kwater_waterhub_logo.png"
               alt="K-water 한국수자원공사 물문화관"
-              width={360}
-              height={82}
+              width={828}
+              height={276}
               className="h-12 sm:h-14 lg:h-16 w-auto object-contain transition duration-300 group-hover:scale-[1.02]"
               priority
             />

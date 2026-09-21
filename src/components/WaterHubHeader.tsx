@@ -64,8 +64,8 @@ export function WaterHubHeader({
           <Image
             src="/images/kwater_waterhub_logo.png"
             alt="K-water 한국수자원공사 물문화관"
-            width={470}
-            height={107}
+            width={828}
+            height={276}
             className="h-[60px] sm:h-[70px] md:h-[80px] w-auto max-w-[260px] sm:max-w-none shrink-0 object-contain"
             priority
           />
