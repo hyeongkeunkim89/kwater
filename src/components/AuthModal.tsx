@@ -1,13 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { waterCenters } from "@/data/centers";
 
 export function AuthModal() {
   const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail } = useAuth();
-  const [tab, setTab] = useState<"login" | "signup" | "guest">(authTab === "guest" ? "guest" : "login");
+  const [tab, setTab] = useState<"login" | "signup" | "guest">(authTab || "login");
+
+  useEffect(() => {
+    if (isAuthOpen) {
+      setTab(authTab || "login");
+    }
+  }, [isAuthOpen, authTab]);
   const router = useRouter();
 
   // Login form state (아이디 또는 이메일)
