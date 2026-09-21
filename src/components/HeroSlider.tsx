@@ -22,6 +22,7 @@ interface Slide {
   location: string;
   kind: string;
   caption: string;
+  bgPosition?: string;
 }
 
 const SLIDES: Slide[] = [
@@ -33,6 +34,7 @@ const SLIDES: Slide[] = [
     location: "강원 춘천시 · 댐 물문화관",
     kind: "SOYANGGANG DAM",
     caption: "아시아 최대 사력댐 — 높이 123m, 저수용량 29억 톤의 웅장한 호수 전경",
+    bgPosition: "center 12%",
   },
   {
     // 충주댐·충주호 실제 전경 (Wikimedia Commons, CC BY-SA 3.0, 방창현겨울아찌)
@@ -42,6 +44,7 @@ const SLIDES: Slide[] = [
     location: "충북 충주시 · 댐 물문화관",
     kind: "CHUNGJU DAM",
     caption: "국내 최대 다목적댐이 빚어낸 27.5억 톤 규모의 청풍호반 자연 물길",
+    bgPosition: "center center",
   },
   {
     // 대청댐 방류 실제 전경 (Wikimedia Commons, CC BY-SA 4.0, Rickinasia)
@@ -51,6 +54,7 @@ const SLIDES: Slide[] = [
     location: "대전 대덕구 · 댐 물문화관",
     kind: "DAECHEONG DAM",
     caption: "장마 후 힘차게 방류하는 대청댐 — 금강 유역 생태와 물 안전의 핵심 기지",
+    bgPosition: "center center",
   },
 ];
 
@@ -107,11 +111,12 @@ export function HeroSlider() {
 
   return (
     <div className="relative h-full min-h-0 w-full flex-1 overflow-hidden bg-slate-900">
-      {/* ── 슬라이드 이미지 레이어 + 자연스러운 소프트 시네마틱 오버레이 ── */}
+      {/* ── 슬라이드 이미지 레이어 + 상단 산문구(한국수자원공사 소양강 다목적댐) 보존 선명한 시네마틱 오버레이 ── */}
       {SLIDES.map((slide, i) => {
         const isActive = i === current;
         const isPrev = i === prev;
         const kenBurnsOn = isActive && !prefersReducedMotion;
+        const bgPos = slide.bgPosition || "center center";
         return (
           <div
             key={slide.imageUrl}
@@ -123,16 +128,18 @@ export function HeroSlider() {
             }}
           >
             <div
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-cover"
               style={{
                 backgroundImage: `url(${slide.imageUrl})`,
-                transform: kenBurnsOn ? "scale(1.06)" : "scale(1)",
+                backgroundPosition: bgPos,
+                transformOrigin: bgPos,
+                transform: kenBurnsOn ? "scale(1.025)" : "scale(1)",
                 transition: kenBurnsOn ? "transform 6000ms ease-out" : "none",
               }}
             />
-            {/* 자연스럽고 청량한 시네마틱 음영 (인위적인 흰 박스 없이 배경 풍경을 100% 살려주는 비네팅) */}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-950/35 to-transparent md:from-slate-950/70 md:via-slate-950/25" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-white/20" />
+            {/* 상단 산 표지 문구가 잘리지 않고 투명하게 보이도록 그라데이션 정교화 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/30 to-transparent md:from-slate-950/65 md:via-slate-950/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
           </div>
         );
       })}

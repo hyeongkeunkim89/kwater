@@ -13,7 +13,7 @@ export default function MainPage() {
       {/* 메인 히어로 비주얼 슬라이더 */}
       <section
         aria-label="물문화관 대표 소개 슬라이드쇼"
-        className="h-[460px] md:h-[560px] lg:h-[620px] w-full shrink-0 relative overflow-hidden bg-sky-50"
+        className="h-[480px] sm:h-[560px] md:h-[620px] lg:h-[680px] xl:h-[720px] w-full shrink-0 relative overflow-hidden bg-slate-900"
       >
         <HeroSliderWrapper />
       </section>
