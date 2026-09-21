@@ -53,7 +53,7 @@ export default function GatewayLandingPage() {
         
         {/* ── 컬럼 2: 기술 (Technology) ── */}
         <Link
-          href="/intro"
+          href="/main"
           className="group relative flex-1 min-h-[220px] md:min-h-screen border-b md:border-b-0 md:border-r border-white/10 overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
           <div
@@ -84,7 +84,7 @@ export default function GatewayLandingPage() {
 
         {/* ── 컬럼 3: 생태 (Ecology) ── */}
         <Link
-          href="/status"
+          href="/main"
           className="group relative flex-1 min-h-[220px] md:min-h-screen border-b md:border-b-0 md:border-r border-white/10 overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
           <div
@@ -114,7 +114,7 @@ export default function GatewayLandingPage() {
 
         {/* ── 컬럼 4: 역사 (History) ── */}
         <Link
-          href="/intro"
+          href="/main"
           className="group relative flex-1 min-h-[220px] md:min-h-screen border-b md:border-b-0 md:border-r border-white/10 overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
           <div
@@ -144,7 +144,7 @@ export default function GatewayLandingPage() {
 
         {/* ── 컬럼 5: 문화 (Culture) ── */}
         <Link
-          href="/events"
+          href="/main"
           className="group relative flex-1 min-h-[220px] md:min-h-screen overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
           <div
