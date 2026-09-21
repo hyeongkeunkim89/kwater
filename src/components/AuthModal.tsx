@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { waterCenters } from "@/data/centers";
@@ -218,11 +219,23 @@ export function AuthModal() {
         {/* 닫기 버튼 */}
         <button
           onClick={closeAuthModal}
-          className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900"
+          className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900 z-10"
           aria-label="닫기"
         >
           ✕
         </button>
+
+        {/* 메인 브랜드 로고 */}
+        <div className="flex justify-center pt-1 pb-3">
+          <Image
+            src="/images/logo.png"
+            alt="K-water 한국수자원공사 물문화관"
+            width={320}
+            height={73}
+            className="h-8 sm:h-9 w-auto object-contain"
+            priority
+          />
+        </div>
 
         {/* 상단 탭 구분 (통합로그인 / 회원가입 / 비회원) */}
         <div className="grid grid-cols-3 border-b border-slate-200 pb-3 mb-6 gap-1 text-center">

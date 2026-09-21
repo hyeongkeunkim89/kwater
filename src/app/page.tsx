@@ -21,19 +21,18 @@ export default function GatewayLandingPage() {
           </div>
         </div>
 
-        {/* 2. 가운데: K-water 로고 & 물문화관 타이틀 (확대 적용) */}
-        <div className="my-6 sm:my-8 flex flex-col items-center">
-          <Image
-            src="/kwater-logo.svg"
-            alt="K-water 한국수자원공사"
-            width={200}
-            height={40}
-            className="h-9 sm:h-10 lg:h-11 w-auto brightness-0 invert opacity-95"
-            priority
-          />
-          <h1 className="mt-4 text-3xl sm:text-4xl lg:text-[2.35rem] font-black text-white tracking-tight whitespace-nowrap leading-none drop-shadow-md">
-            물문화관
-          </h1>
+        {/* 2. 가운데: K-water 물문화관 공식 로고 */}
+        <div className="my-6 sm:my-8 flex flex-col items-center w-full px-2">
+          <div className="bg-white/95 backdrop-blur-sm p-3.5 sm:p-4 rounded-2xl shadow-xl border border-white/20 w-full flex justify-center items-center group transition duration-300 hover:bg-white">
+            <Image
+              src="/images/logo.png"
+              alt="K-water 한국수자원공사 물문화관"
+              width={360}
+              height={82}
+              className="h-12 sm:h-14 lg:h-16 w-auto object-contain transition duration-300 group-hover:scale-[1.02]"
+              priority
+            />
+          </div>
           <p className="mt-3 text-[10px] sm:text-[11px] font-black text-sky-400 tracking-[0.16em] uppercase whitespace-nowrap opacity-90">
             WATER CULTURE PORTAL
           </p>
