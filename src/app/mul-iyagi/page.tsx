@@ -70,7 +70,7 @@ export default async function MulIyagiPage({ searchParams }: Props) {
 
       <div className="border-b border-slate-200 bg-slate-50/80">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-6 py-3 text-sm text-slate-600 sm:px-10">
-          <Link href="/" className="font-medium text-sky-700 transition hover:text-sky-900">
+          <Link href="/main" className="font-medium text-sky-700 transition hover:text-sky-900">
             ← 홈으로
           </Link>
           <span className="text-slate-300" aria-hidden>
