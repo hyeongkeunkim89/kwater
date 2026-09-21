@@ -45,21 +45,24 @@ export function QuickFAQAccordion() {
     <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xl" role="img" aria-label="질문">❓</span>
+          <div className="flex items-center gap-2.5">
+            <span className="shrink-0 rounded-md bg-sky-600 px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-white">
+              FAQ
+            </span>
             <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-              방문 전 필수 체크! 자주 묻는 질문 (FAQ)
+              자주 묻는 질문
             </h3>
           </div>
           <p className="text-xs text-slate-500 font-semibold mt-1">
-            물문화관 방문에 관한 핵심 궁금증을 빠르게 확인해 보세요.
+            전국 물문화관 관람 및 해설 가이드 투어 사전 예약 관련 필수 체크사항입니다.
           </p>
         </div>
         <Link
           href="/reserve"
-          className="self-start sm:self-auto text-xs font-extrabold text-sky-600 hover:text-sky-700 hover:underline"
+          className="self-start sm:self-auto inline-flex items-center gap-1 text-xs font-bold text-sky-600 hover:text-sky-700 transition"
         >
-          해설 투어 예약 문의 →
+          <span>해설 투어 예약 문의</span>
+          <span>→</span>
         </Link>
       </div>
 
@@ -69,28 +72,43 @@ export function QuickFAQAccordion() {
           return (
             <div
               key={faq.id}
-              className="rounded-xl border border-slate-200/80 bg-slate-50/40 overflow-hidden transition"
+              className={`rounded-xl border transition-all duration-200 ${
+                isOpen
+                  ? "border-sky-200 bg-sky-50/30 shadow-xs"
+                  : "border-slate-200/80 bg-white hover:border-slate-300"
+              }`}
             >
               <button
                 onClick={() => toggleAccordion(faq.id)}
-                className="w-full min-h-12 p-4 text-left flex items-center justify-between gap-3 hover:bg-slate-100/60 transition"
+                className="w-full min-h-13 p-4 text-left flex items-center justify-between gap-3 transition"
               >
                 <div className="flex items-center gap-3 min-w-0 pr-2">
-                  <span className="shrink-0 text-[10px] font-extrabold text-sky-700 bg-sky-100/70 px-2 py-0.5 rounded">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-sky-100 text-[11px] font-black text-sky-800">
+                    Q
+                  </span>
+                  <span className="shrink-0 text-[11px] font-black text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
                     {faq.tag}
                   </span>
-                  <span className="text-xs sm:text-sm font-extrabold text-slate-800 leading-snug">
+                  <span className="text-xs sm:text-sm font-extrabold text-slate-900 leading-snug">
                     {faq.question}
                   </span>
                 </div>
-                <span className="shrink-0 text-slate-400 font-black text-sm">
-                  {isOpen ? "▲" : "▼"}
-                </span>
+                <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-all duration-200 ${isOpen ? "bg-sky-100 text-sky-600 rotate-180" : "bg-slate-100 text-slate-400"}`}>
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </button>
 
               {isOpen && (
-                <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/50 bg-white">
-                  <p dangerouslySetInnerHTML={{ __html: faq.answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-100 bg-white/80 rounded-b-xl flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-slate-200 text-[11px] font-black text-slate-700 mt-0.5">
+                    A
+                  </span>
+                  <div
+                    className="flex-1 text-slate-700 font-semibold leading-relaxed pt-0.5"
+                    dangerouslySetInnerHTML={{ __html: faq.answer.replace(/\*\*(.*?)\*\*/g, '<strong class="font-extrabold text-sky-700">$1</strong>') }}
+                  />
                 </div>
               )}
             </div>
