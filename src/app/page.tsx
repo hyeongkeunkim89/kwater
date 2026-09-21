@@ -24,11 +24,11 @@ export default function GatewayLandingPage() {
         {/* 2. 가운데: K-water 물문화관 브랜드 로고 */}
         <div className="my-6 sm:my-8 flex flex-col items-center w-full px-1">
           <Image
-            src="/images/kwater_waterhub_logo.png"
-            alt="K-water 한국수자원공사 물문화관"
-            width={828}
-            height={276}
-            className="h-14 sm:h-16 lg:h-20 w-auto object-contain brightness-0 invert opacity-95 hover:opacity-100 transition duration-300 drop-shadow-md"
+            src="/images/landing_waterhub_logo.png"
+            alt="K-water 물문화관"
+            width={392}
+            height={192}
+            className="h-16 sm:h-20 lg:h-24 w-auto object-contain brightness-0 invert opacity-95 hover:opacity-100 transition duration-300 drop-shadow-md"
             priority
           />
           <p className="mt-3 text-[10px] sm:text-[11px] font-black text-sky-400 tracking-[0.16em] uppercase whitespace-nowrap opacity-90">
