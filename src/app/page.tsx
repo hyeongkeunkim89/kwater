@@ -56,7 +56,7 @@ export default function GatewayLandingPage() {
         
         {/* ── 컬럼 2: 기술 (Technology) ── */}
         <Link
-          href="/main"
+          href="/intro"
           className="group relative flex-1 min-h-[220px] md:min-h-screen border-b md:border-b-0 md:border-r border-white/15 overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
           {/* 배경 대표 배경 이미지 & 시네마틱 내추럴 오버레이 */}
@@ -85,7 +85,7 @@ export default function GatewayLandingPage() {
 
         {/* ── 컬럼 3: 생태 (Ecology) ── */}
         <Link
-          href="/main"
+          href="/status"
           className="group relative flex-1 min-h-[220px] md:min-h-screen border-b md:border-b-0 md:border-r border-white/15 overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
           {/* 배경 대표 배경 이미지 & 시네마틱 내추럴 오버레이 */}
@@ -114,7 +114,7 @@ export default function GatewayLandingPage() {
 
         {/* ── 컬럼 4: 역사 (History) ── */}
         <Link
-          href="/main"
+          href="/intro"
           className="group relative flex-1 min-h-[220px] md:min-h-screen border-b md:border-b-0 md:border-r border-white/15 overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
           {/* 배경 대표 배경 이미지 & 시네마틱 내추럴 오버레이 */}
@@ -143,7 +143,7 @@ export default function GatewayLandingPage() {
 
         {/* ── 컬럼 5: 문화 (Culture) ── */}
         <Link
-          href="/main"
+          href="/events"
           className="group relative flex-1 min-h-[220px] md:min-h-screen overflow-hidden transition-all duration-500 ease-out md:hover:flex-[1.35] flex flex-col justify-end p-6 sm:p-8"
         >
           {/* 배경 대표 배경 이미지 & 시네마틱 내추럴 오버레이 */}
