@@ -19,14 +19,14 @@ type Props = {
 // 외부/깨진 이미지 URL을 로컬 고화질 이미지 자산으로 안전하게 변환
 function resolveEventImageUrl(url?: string): string | undefined {
   if (!url) return undefined;
-  if (url.includes("wikimedia.org") || url.includes("SoyangDam")) {
+  if (url.includes("wikimedia.org") && url.includes("SoyangDam")) {
     return "/images/cards/soyang_gallery.png";
   }
-  if (url.includes("wikimedia.org") || url.includes("Daecheong_Dam")) {
+  if (url.includes("wikimedia.org") && url.includes("Daecheong_Dam")) {
     return "/images/cards/kwater_official_tour.png";
   }
-  if (url.includes("wikimedia.org") || url.includes("Chungju_Lake")) {
-    return "/images/cards/chungju_experience.png";
+  if (url.includes("wikimedia.org") && url.includes("Chungju_Lake")) {
+    return "/images/cards/daecheong_upcycling.jpg";
   }
   return url;
 }
