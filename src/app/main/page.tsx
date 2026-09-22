@@ -40,7 +40,7 @@ export default function MainPage() {
       btnLabel: "시설 안내 보기",
       badge: "시청각 영상실",
       image: "/images/cards/kwater_official_facility.png",
-      path: "/centers",
+      path: "/intro",
       icon: (
         <svg className="h-3.5 w-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h6m-6 0V11m0 0h6" />
