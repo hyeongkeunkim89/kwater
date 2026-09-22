@@ -13,7 +13,7 @@ export default function IntroPage() {
   const coreThemes = [
     {
       num: "01",
-      badge: "기술 (Technology)",
+      badge: "기술",
       title: "첨단 수자원 기술 & 미래 청정에너지",
       desc: "세계 최대 규모의 시화호 조력발전소와 스마트 댐 수자원 관리, 합천호 수상태양광 등 기후위기에 대응하는 K-water의 미래 수자원 청정기술을 직접 체험합니다.",
       image: "/images/cards/chungju_experience.png",
@@ -34,7 +34,7 @@ export default function IntroPage() {
     },
     {
       num: "02",
-      badge: "생태 (Ecology)",
+      badge: "생태",
       title: "청정 수변 자연 & 수생태계 보존",
       desc: "금강 수계 대청호, 소양호, 변산반도 국립공원 등 천혜의 자연 속에서 멸종위기 야생 동식물과 수생태계의 귀중한 생명력을 보호하고 전파합니다.",
       image: "/centers/buan.jpg",
@@ -55,7 +55,7 @@ export default function IntroPage() {
     },
     {
       num: "03",
-      badge: "역사 (History)",
+      badge: "역사",
       title: "치수 60년 발자취 & 수몰지 삶의 사료",
       desc: "대한민국 근대 치수 사업의 역사적 발자취와 댐 건설로 터전을 양보해야 했던 수몰지 주민들의 고향 유물과 아련한 추억의 사진을 소중하게 보존합니다.",
       image: "/images/cards/hoengseong_experience.png",
@@ -76,7 +76,7 @@ export default function IntroPage() {
     },
     {
       num: "04",
-      badge: "문화 (Culture & Arts)",
+      badge: "문화",
       title: "수변 문화예술 갤러리 & 레저 쉼터",
       desc: "진주 남강 유등축제 연계 수변 기획 미술 갤러리, 강정고령보 디아크 미디어아트, 김천부항댐 짚와이어 등 자연과 어우러지는 다채로운 힐링 공간입니다.",
       image: "/centers/namgang.jpg",
@@ -179,8 +179,8 @@ export default function IntroPage() {
       <section className="py-16 bg-white border-b border-slate-200/80 mt-6">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold text-sky-700 uppercase tracking-wider bg-sky-100 px-3 py-1 rounded-md inline-block mb-3">
-              Core Institutional Values
+            <span className="text-xs font-bold text-sky-700 tracking-wider bg-sky-100 px-3 py-1 rounded-md inline-block mb-3">
+              물문화관 핵심 가치
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               물문화관이 추구하는 3대 가치
@@ -234,8 +234,8 @@ export default function IntroPage() {
       <section className="py-20 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-xs font-bold text-sky-700 tracking-wider uppercase bg-sky-100/80 px-3 py-1 rounded-md inline-block mb-3">
-              4 Core Exhibition Themes
+            <span className="text-xs font-bold text-sky-700 tracking-wider bg-sky-100/80 px-3 py-1 rounded-md inline-block mb-3">
+              4대 관람 테마
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               물문화관 4대 핵심 관람 테마
