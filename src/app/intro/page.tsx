@@ -277,8 +277,16 @@ export default function IntroPage() {
                 </div>
               </div>
 
-              <div className="p-6 sm:p-8 lg:p-10 lg:col-span-5 flex flex-col justify-between bg-slate-900 text-white">
-                <div>
+              <div className="relative p-6 sm:p-8 lg:p-10 lg:col-span-5 flex flex-col justify-between bg-slate-950 text-white overflow-hidden">
+                <Image
+                  src="/centers/hoengseong.jpg"
+                  alt="횡성댐 실루엣"
+                  fill
+                  className="object-cover opacity-25 scale-105 pointer-events-none"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/50 pointer-events-none" />
+
+                <div className="relative z-10">
                   <span className={`inline-block rounded-md px-3 py-1 text-xs font-bold mb-3 ${currentTheme.badgeColor}`}>
                     {currentTheme.badge}
                   </span>
@@ -290,7 +298,7 @@ export default function IntroPage() {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-slate-800 space-y-2">
+                <div className="relative z-10 mt-6 pt-6 border-t border-slate-800 space-y-2">
                   <span className="text-[11px] font-bold text-slate-400 block mb-2 uppercase tracking-wider">
                     주요 관람 하이라이트
                   </span>
@@ -419,14 +427,14 @@ export default function IntroPage() {
 
       {/* 5. CTA 하단 연결 배너 */}
       <section className="relative py-20 bg-slate-950 text-white overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-20">
-          <Image
-            src="/images/cards/kwater_official_facility.png"
-            alt="수자원공사 수변 공간"
-            fill
-            className="object-cover"
-          />
-        </div>
+        <Image
+          src="/centers/hoengseong.jpg"
+          alt="횡성댐 물문화관 전경 실루엣"
+          fill
+          className="object-cover opacity-35 scale-105 pointer-events-none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30 pointer-events-none" />
+
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <span className="inline-block rounded-full bg-sky-500/20 text-sky-300 text-xs font-bold px-4 py-1 mb-4 border border-sky-500/30">
             K-water 전국 물문화관 통합 서비스
