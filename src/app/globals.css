@@ -42,12 +42,12 @@
  * 국립중앙박물관(museum.go.kr) 스타일 전역 폰트 지정
  * ------------------------------------------------------------- */
 *, ::before, ::after {
-  font-family: 'NanumSquare', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-family: 'NanumSquare', 'Noto Sans KR', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   letter-spacing: -0.025em;
 }
 
 html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div, li, th, td, label {
-  font-family: 'NanumSquare', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-family: 'NanumSquare', 'Noto Sans KR', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   letter-spacing: -0.025em;
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;
@@ -57,7 +57,7 @@ html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'NanumSquare', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'NanumSquare', 'Noto Sans KR', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   word-break: keep-all;
   font-weight: 400;
   line-height: 1.6;

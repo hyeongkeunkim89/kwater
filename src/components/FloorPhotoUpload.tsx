@@ -149,7 +149,9 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
         ) : (
           "층 사진 추가"
         )}
-        <span className={`ml-0.5 transition-transform ${open ? "rotate-180" : ""}`}>▾</span>
+        <svg className={`ml-0.5 h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
       </button>
 
       {open && (
@@ -210,11 +212,13 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
                       e.stopPropagation();
                       setDeleteTarget(img);
                     }}
-                    className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500/80 text-[10px] font-bold text-white opacity-0 transition group-hover:opacity-100 hover:bg-red-600"
+                    className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500/80 text-white opacity-0 transition group-hover:opacity-100 hover:bg-red-600"
                     aria-label="사진 삭제"
                     title="삭제"
                   >
-                    ✕
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </button>
                 </div>
               ))}
@@ -234,10 +238,12 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); openByIdx(lightboxIdx - 1); }}
-              className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-xl text-white hover:bg-white/25"
+              className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
               aria-label="이전 사진"
             >
-              ‹
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
           )}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -251,10 +257,12 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); openByIdx(lightboxIdx + 1); }}
-              className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-xl text-white hover:bg-white/25"
+              className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
               aria-label="다음 사진"
             >
-              ›
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           )}
           <button
@@ -263,7 +271,9 @@ export function FloorPhotoUpload({ centerId, floorKey, floorLabel }: Props) {
             className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
             aria-label="닫기"
           >
-            ✕
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
           <span className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs text-white/80">
             {lightboxIdx + 1} / {images.length}

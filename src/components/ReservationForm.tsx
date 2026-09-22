@@ -283,8 +283,10 @@ export function ReservationForm({
     const doneCenter = getCenterById(done.centerId);
     return (
       <div className="mx-auto max-w-xl rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center shadow-sm">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
-          ✓
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+          <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
         </div>
         <h2 className="mt-4 text-xl font-bold text-emerald-900">예약이 접수됐습니다</h2>
         <p className="mt-2 text-sm text-emerald-700">
