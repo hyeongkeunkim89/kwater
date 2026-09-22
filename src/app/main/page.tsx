@@ -13,11 +13,10 @@ export default function MainPage() {
       desc: "전국 15대 물문화관에서 제공하는 다채로운 전문 가이드 해설 투어를 사전 신청하세요.",
       btnLabel: "투어 예약하기",
       badge: "현장 체험존",
-      badgeColor: "bg-sky-50 text-sky-800 border-sky-200/80",
       image: "/images/cards/kwater_official_tour.png",
       path: "/reserve",
       icon: (
-        <svg className="h-3.5 w-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="h-3.5 w-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       ),
@@ -27,11 +26,10 @@ export default function MainPage() {
       desc: "15개 거점 물문화관의 실시간 관람 상태, 운영시간 및 위치 정보를 대화형 지도에서 한눈에 확인하세요.",
       btnLabel: "현황지도 보기",
       badge: "기획 파노라마관",
-      badgeColor: "bg-teal-50 text-teal-800 border-teal-200/80",
       image: "/images/cards/kwater_official_map.png",
       path: "/status",
       icon: (
-        <svg className="h-3.5 w-3.5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="h-3.5 w-3.5 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
         </svg>
       ),
@@ -41,11 +39,10 @@ export default function MainPage() {
       desc: "물문화관 층별 전시 공간과 편의시설 안내, 실내 도면 및 대표 전경을 한눈에 살펴보세요.",
       btnLabel: "시설 안내 보기",
       badge: "시청각 영상실",
-      badgeColor: "bg-amber-50 text-amber-900 border-amber-200/80",
       image: "/images/cards/kwater_official_facility.png",
-      path: "/intro",
+      path: "/centers",
       icon: (
-        <svg className="h-3.5 w-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="h-3.5 w-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h6m-6 0V11m0 0h6" />
         </svg>
       ),
@@ -67,53 +64,69 @@ export default function MainPage() {
       {/* 메인 홈페이지 콘텐츠 영역 */}
       <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 space-y-10 sm:space-y-14 flex-1">
         
-        {/* 1. 빠른 메뉴 예약 및 서비스 카드 (실사 썸네일 & 모던 포털) */}
-        <section aria-label="빠른 메뉴 및 예약 서비스">
+        {/* 1. 빠른 메뉴 및 예약 서비스 (SK GATEWAY 럭셔리 포털 스타일) */}
+        <section aria-label="주요 물문화 서비스 바로가기">
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200/80 pb-4">
+            <div>
+              <span className="text-[11px] font-black uppercase tracking-[0.2em] text-sky-600 block mb-1">
+                K-WATER QUICK GATEWAY
+              </span>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                주요 물문화 서비스 바로가기
+              </h2>
+            </div>
+            <p className="text-xs text-slate-500 font-semibold">
+              국민 누구나 자유롭게 이용할 수 있는 K-water 대표 관문 서비스입니다.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {QUICK_CARDS.map((card) => (
-              <div
+              <Link
                 key={card.title}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg"
+                href={card.path}
+                className="group relative h-[300px] sm:h-[340px] md:h-[360px] w-full overflow-hidden rounded-2xl bg-slate-950 shadow-md transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 block border border-slate-200/60"
               >
-                {/* 상단 비주얼 실사 썸네일 */}
-                <div className="relative h-44 w-full overflow-hidden bg-slate-100 sm:h-48">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
-                  <span
-                    className={`absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-black backdrop-blur-md shadow-xs bg-white/90 ${card.badgeColor}`}
-                  >
+                {/* 1. 전체 풀 커버 고화질 배경 이미지 (Zoom 애니메이션) */}
+                <Image
+                  src={card.image}
+                  alt={card.title}
+                  fill
+                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108 brightness-95"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+
+                {/* 2. 다크 시네마틱 딤드 그라디언트 오버레이 */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-slate-950/20 group-hover:via-slate-950/65 transition-colors duration-500" />
+
+                {/* 3. 호버 시 테두리 빛나는 라인 애니메이션 (SK GATEWAY 시그니처) */}
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-sky-400/80 rounded-2xl transition-all duration-500 pointer-events-none" />
+
+                {/* 4. 상단 배지 (글래스모피즘) */}
+                <div className="absolute left-5 top-5 z-10">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-950/70 border border-white/20 px-3.5 py-1 text-xs font-bold text-sky-300 backdrop-blur-md shadow-md">
                     {card.icon}
                     <span>{card.badge}</span>
                   </span>
                 </div>
 
-                {/* 카드 본문 및 바로가기 버튼 */}
-                <div className="flex flex-1 flex-col justify-between p-6">
-                  <div>
-                    <h3 className="text-lg font-black text-slate-900 tracking-tight transition group-hover:text-sky-600">
-                      {card.title}
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm font-semibold leading-relaxed text-slate-500">
-                      {card.desc}
-                    </p>
-                  </div>
-                  <div className="mt-6 pt-4 border-t border-slate-100">
-                    <Link
-                      href={card.path}
-                      className="inline-flex w-full items-center justify-between rounded-xl bg-slate-50 px-4 py-3 text-xs font-extrabold text-slate-700 transition hover:bg-sky-50 hover:text-sky-700 group-hover:bg-sky-50 group-hover:text-sky-700"
-                    >
-                      <span>{card.btnLabel}</span>
-                      <span className="text-sm font-black transition-transform group-hover:translate-x-1">→</span>
-                    </Link>
+                {/* 5. 하단 콘텐츠 영역 */}
+                <div className="absolute bottom-0 inset-x-0 p-6 z-10 flex flex-col justify-end">
+                  <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight drop-shadow-md group-hover:text-sky-300 transition-colors duration-300 mb-2">
+                    {card.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-semibold text-slate-200 leading-relaxed drop-shadow-sm mb-5 break-keep opacity-90">
+                    {card.desc}
+                  </p>
+
+                  <div className="pt-3.5 border-t border-white/20 flex items-center justify-between text-xs sm:text-sm font-black text-sky-300 group-hover:text-white transition-colors duration-300">
+                    <span>{card.btnLabel}</span>
+                    <span className="text-base font-black transform group-hover:translate-x-1.5 transition-transform duration-300">
+                      →
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
