@@ -1,5 +1,13 @@
 import type { Metadata, Viewport } from "next";
+import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+
+const notoSansKr = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "900"],
+  display: "swap",
+  variable: "--font-noto-sans-kr",
+});
 
 export const metadata: Metadata = {
   title: "K-water 물문화관 | 전국 거점 안내",
@@ -28,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={notoSansKr.variable}>
       <head>
         <link rel="icon" href="/icon.png?v=4" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,13 +45,17 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        {/* 국립중앙박물관 웹사이트 공식 서체 패밀리 (Noto Sans KR + NanumSquare 웹폰트) */}
+        {/* 국립중앙박물관 서체 패밀리 CDN (Noto Sans KR + NanumSquare) */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Nanum+Square:wght@300;400;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap"
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen min-w-0 overflow-x-hidden font-sans antialiased">
+      <body className={`${notoSansKr.className} min-h-screen min-w-0 overflow-x-hidden font-sans antialiased`}>
         <KakaoScriptLoader />
         <Providers>{children}</Providers>
       </body>
