@@ -31,7 +31,7 @@ const SLIDES: Slide[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG",
     centerName: "소양강댐 물문화관",
-    location: "강원 춘천시 · 댐 물문화관",
+    location: "강원 춘천시",
     kind: "SOYANGGANG DAM",
     caption: "아시아 최대 사력댐 — 높이 123m, 저수용량 29억 톤의 웅장한 호수 전경",
     bgPosition: "center 12%",
@@ -41,7 +41,7 @@ const SLIDES: Slide[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Chungju_Lake.jpg/1280px-Chungju_Lake.jpg",
     centerName: "충주댐 물문화관",
-    location: "충북 충주시 · 댐 물문화관",
+    location: "충북 충주시",
     kind: "CHUNGJU DAM",
     caption: "국내 최대 다목적댐이 빚어낸 27.5억 톤 규모의 청풍호반 자연 물길",
     bgPosition: "center center",
@@ -51,7 +51,7 @@ const SLIDES: Slide[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg/1280px-Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg",
     centerName: "대청댐 물문화관",
-    location: "대전 대덕구 · 댐 물문화관",
+    location: "대전 대덕구",
     kind: "DAECHEONG DAM",
     caption: "장마 후 힘차게 방류하는 대청댐 — 금강 유역 생태와 물 안전의 핵심 기지",
     bgPosition: "center center",
