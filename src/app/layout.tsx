@@ -4,7 +4,7 @@ import "./globals.css";
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "900"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
   variable: "--font-noto-sans-kr",
 });
@@ -45,17 +45,17 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        {/* 국립중앙박물관 서체 패밀리 CDN (Noto Sans KR + NanumSquare) */}
+        {/* 국립중앙박물관 공식 지정 서체: Noto Sans KR (300~900) & NanumSquare 웹폰트 CDN */}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className={`${notoSansKr.className} min-h-screen min-w-0 overflow-x-hidden font-sans antialiased`}>
+      <body className={`${notoSansKr.className} min-h-screen min-w-0 overflow-x-hidden font-sans antialiased text-slate-900`}>
         <KakaoScriptLoader />
         <Providers>{children}</Providers>
       </body>

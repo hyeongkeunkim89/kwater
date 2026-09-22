@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@import url("https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap");
+
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
@@ -9,9 +12,8 @@
   --accent-muted: #e5f6fd;
   --dark-bg: #0b111e;
   --dark-surface: #111827;
-  /* 국립중앙박물관(museum.go.kr) 웹사이트 공식 서체 (Noto Sans KR + NanumSquare) */
-  --font-noto-sans-kr: "Noto Sans KR", "NanumSquare", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-  --font-nanum-square: "NanumSquare", "Noto Sans KR", sans-serif;
+  /* 국립중앙박물관(museum.go.kr) 공식 지정 서체 패밀리 (Noto Sans KR + NanumSquare) */
+  --font-museum: "Noto Sans KR", "NanumSquare", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
 
 @theme inline {
@@ -23,7 +25,7 @@
   --color-kwater-orange: #FF9E1B;
   --color-kwater-hover: #0088BD;
   --color-kwater-light: #e5f6fd;
-  --font-sans: "Noto Sans KR", "NanumSquare", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+  --font-sans: var(--font-museum);
   --font-size-xs: 0.875rem; /* 14px */
   --font-size-sm: 0.875rem; /* 14px */
 }
@@ -37,22 +39,42 @@
   animation: bounce-subtle 2.5s infinite ease-in-out;
 }
 
-/* 국립중앙박물관 서체 패밀리(Noto Sans KR + NanumSquare) 전체 요소 강제 적용 */
+/* -------------------------------------------------------------
+ * 국립중앙박물관(museum.go.kr) 웹사이트 100% 서체 및 굵기 규격 스타일
+ * ------------------------------------------------------------- */
 *, ::before, ::after {
-  font-family: "Noto Sans KR", "NanumSquare", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif !important;
+  font-family: var(--font-museum) !important;
+  letter-spacing: -0.025em;
 }
 
-html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div, li {
-  font-family: "Noto Sans KR", "NanumSquare", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif !important;
+html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div, li, th, td, label {
+  font-family: var(--font-museum) !important;
+  letter-spacing: -0.025em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 국립중앙박물관 본문 굵기 (400 Regular / 500 Medium) 규격화 */
 body {
   background: var(--background);
   color: var(--foreground);
-  /* 모바일에서 더블탭 줌 지연 완화 */
+  font-weight: 400;
+  line-height: 1.6;
   touch-action: manipulation;
+}
+
+p, span, li, td, label, div {
+  font-weight: 400;
+}
+
+/* 국립중앙박물관 제목/헤딩 굵기 (700 Bold / NanumSquareB) 규격화 */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700 !important;
+  letter-spacing: -0.035em !important;
+}
+
+strong, b {
+  font-weight: 700 !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
