@@ -59,7 +59,7 @@ export default function IntroPage() {
     {
       value: "전시 · 전망대 · 북카페",
       label: "대표 시설",
-      desc: "전시실, 전망대, 북카페, 야외 수변공원 등",
+      desc: "전시실, 전망대, 북카페, 야외 수변공간 등",
     },
   ];
 
@@ -67,108 +67,98 @@ export default function IntroPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans break-keep">
       <WaterHubHeader activeNav="intro" />
 
-      {/* 1. 첨부 시안(media_1790051557550.png) 완벽 복원 히어로 배너 */}
+      {/* 1. 시안 2: gimcheon.jpg 새벽 물안개 배경 & 중앙 집중형 공식 히어로 배너 */}
       <section className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6">
-        <div className="relative min-h-[500px] sm:min-h-[560px] lg:min-h-[580px] w-full overflow-hidden rounded-tl-[48px] rounded-bl-[48px] rounded-tr-[24px] rounded-br-[24px] bg-slate-900 shadow-2xl flex items-center justify-center p-6 sm:p-10 lg:p-12">
+        <div className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[580px] w-full overflow-hidden rounded-bl-[40px] rounded-tl-[24px] rounded-tr-[24px] rounded-br-[24px] bg-slate-900 shadow-2xl flex flex-col items-center justify-center p-6 sm:p-10 lg:p-12 text-center">
           
-          {/* 고해상도 댐/호수 배경 이미지 */}
+          {/* gimcheon.jpg 배경 이미지 */}
           <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG"
-            alt="소양강댐 전경 배경"
+            src="/images/intro-bg.jpg"
+            alt="김천부항댐 물문화관 및 출렁다리 전경 배경"
             fill
             priority
-            className="object-cover object-[center_25%] opacity-60 brightness-95 scale-105"
+            className="object-cover object-center opacity-70 brightness-90 scale-105"
           />
 
-          {/* 시네마틱 오버레이 그라디언트 */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-slate-950/85" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-slate-950/40" />
+          {/* 새벽 물안개 느낌의 네이비-블랙 오버레이 & 백드롭 블러 */}
+          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 to-slate-950/50" />
 
-          {/* 히어로 본문 레이아웃 (중앙 텍스트 + 우측 블록) */}
-          <div className="relative z-10 w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          {/* 중앙 집중형 히어로 콘텐츠 */}
+          <div className="relative z-10 w-full max-w-3xl mx-auto flex flex-col items-center justify-center">
             
-            {/* [중앙 메인 영역] */}
-            <div className="flex-1 text-center flex flex-col items-center max-w-2xl mx-auto">
-              
-              {/* 공식 슬로건 이미지 (시안대로 배경 위 바로 선명 배치) */}
-              <div className="mb-4 sm:mb-6">
-                <Image
-                  src="/images/slogan.png"
-                  alt="세상에 행복을 水 놓다"
-                  width={480}
-                  height={120}
-                  priority
-                  className="h-auto w-auto max-w-[260px] sm:max-w-[340px] md:max-w-[390px] object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)] filter brightness-110"
-                />
-              </div>
-
-              {/* 중간 카피 (화이트 볼드 타이포) */}
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight leading-snug drop-shadow-md mb-3">
-                WCEH: 수자원 관리의 유산
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-100 font-medium leading-relaxed max-w-xl mx-auto drop-shadow-sm break-keep mb-8 opacity-95">
-                한국수자원공사 물문화관은 지난 반세기<br className="hidden sm:inline" />
-                대한민국의 수자원 관리 역사를 체계적으로 기록하고 보존해왔습니다.<br />
-                물의 소중한 가치를 전파하고, 지역과 함께 호흡하는<br className="hidden sm:inline" />
-                지속 가능한 상생의 공간을 지향합니다.
-              </p>
-
-              {/* 하단 3대 가치 아이콘 바 (원형 아이콘 + 라벨) */}
-              <div className="grid grid-cols-3 gap-6 sm:gap-10 pt-4 border-t border-white/20 w-full max-w-md mx-auto">
-                <div className="flex flex-col items-center">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/25 bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-2 shadow-inner">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-sky-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <span className="text-xs sm:text-sm font-bold text-white tracking-tight">역사 보존</span>
-                </div>
-
-                <div className="flex flex-col items-center">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/25 bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-2 shadow-inner">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                  </div>
-                  <span className="text-xs sm:text-sm font-bold text-white tracking-tight">생태 교육</span>
-                </div>
-
-                <div className="flex flex-col items-center">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/25 bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-2 shadow-inner">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-amber-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <span className="text-xs sm:text-sm font-bold text-white tracking-tight">지역 상생</span>
-                </div>
-              </div>
-
+            {/* 상단: 공식 슬로건 이미지 선명 배치 */}
+            <div className="mb-5 sm:mb-6">
+              <Image
+                src="/images/slogan.png"
+                alt="세상에 행복을 水 놓다"
+                width={460}
+                height={115}
+                priority
+                className="h-auto w-auto max-w-[260px] sm:max-w-[340px] md:max-w-[400px] object-contain mx-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)] filter brightness-110"
+              />
             </div>
 
-            {/* [우측 사이드 정보 블록] (시안 이미지 스타일 복원) */}
-            <div className="w-full lg:w-[310px] shrink-0 text-left text-white drop-shadow-md lg:border-l lg:border-white/15 lg:pl-8 py-2">
-              <p className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.2em] text-sky-300 mb-1">
-                WATER CULTURE CENTER
-              </p>
-              <h2 className="text-lg sm:text-xl font-black text-white mb-2 tracking-tight">
-                전국 15개 <span className="text-sky-300">물문화관 거점</span>
-              </h2>
-              <p className="text-xs text-slate-100 font-medium leading-relaxed opacity-90 break-keep mb-4">
-                한강, 낙동강, 금강, 영산강 등 전국 주요 수계에 위치한 15개 물문화관은 지역별 특색을 살린 전시실, 전망대, 야외 수변공간을 무료로 개방하고 있습니다.
-              </p>
+            {/* 타이틀 및 소개글 */}
+            <h1 className="text-2xl sm:text-3.5xl md:text-4xl font-black text-white tracking-tight leading-tight drop-shadow-md mb-4">
+              K-water 물문화관
+            </h1>
+            <p className="text-xs sm:text-sm md:text-base text-slate-100 font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-sm break-keep mb-9 opacity-95">
+              K-water 한국수자원공사 물문화관은 지난 50년간 대한민국의 수자원 관리 역사를 체계적으로 기록하고 보존해왔습니다. 물(水)의 가치를 전파하고 지역사회와 호흡하는 상생의 공간을 지향합니다.
+            </p>
 
-              <div className="border-t border-white/15 pt-3.5 mb-4">
-                <p className="text-[11px] text-sky-200/90 leading-snug font-normal break-keep">
-                  전국 물문화관의 통합 정보 및 실시간 위치와 현황은 전국현황 지도 페이지에서 확인하실 수 있습니다.
-                </p>
+            {/* 하단 3대 가치 아이콘 바 (수평 정렬: 역사 보존 | 생태 교육 | 지역 상생) */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 border-t border-white/20 w-full max-w-2xl mx-auto">
+              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/20 shadow-md">
+                <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center text-sky-200 shrink-0">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <span className="text-xs sm:text-sm font-bold text-white block">역사 보존</span>
+                  <span className="text-[10px] text-sky-200/80 font-medium uppercase tracking-wider block">History Preservation</span>
+                </div>
               </div>
 
+              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/20 shadow-md">
+                <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center text-emerald-200 shrink-0">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <span className="text-xs sm:text-sm font-bold text-white block">생태 교육</span>
+                  <span className="text-[10px] text-emerald-200/80 font-medium uppercase tracking-wider block">Eco-Education</span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/20 shadow-md">
+                <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center text-amber-200 shrink-0">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <span className="text-xs sm:text-sm font-bold text-white block">지역 상생</span>
+                  <span className="text-[10px] text-amber-200/80 font-medium uppercase tracking-wider block">Community</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 바로가기 버튼 CTA */}
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/centers"
-                className="inline-flex w-full items-center justify-between rounded-xl bg-sky-600 hover:bg-sky-500 text-xs font-bold text-white px-4 py-2.5 transition shadow-md group"
+                className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs sm:text-sm px-7 transition shadow-lg shadow-sky-600/30"
               >
-                <span>전국 물문화관 둘러보기</span>
-                <span className="font-black group-hover:translate-x-1 transition-transform">→</span>
+                전국 15개 물문화관 둘러보기 →
+              </Link>
+              <Link
+                href="/reserve"
+                className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md font-bold text-xs sm:text-sm px-7 transition"
+              >
+                무료 가이드 투어 예약
               </Link>
             </div>
 
