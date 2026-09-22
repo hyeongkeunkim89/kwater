@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
   const familySites = [
@@ -13,9 +14,15 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
       <footer className="shrink-0 border-t border-white/10 bg-[#152035] py-6">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center sm:flex-row sm:text-left">
           <div className="flex items-center gap-3">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-xs font-black text-white">
-              K
-            </span>
+            <div className="flex h-7 items-center justify-center rounded-md bg-white px-2 py-1 shrink-0">
+              <Image
+                src="/images/kwater_logo.png"
+                alt="K-water Logo"
+                width={56}
+                height={25}
+                className="h-5 w-auto object-contain"
+              />
+            </div>
             <p className="text-xs text-white/55">
               © {new Date().getFullYear()} K-water 물문화관 · 내부 활용 자료
             </p>
@@ -51,9 +58,15 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
           {/* 회사 소개 */}
           <div className="md:col-span-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-xs font-black text-white">
-                K
-              </span>
+              <div className="flex h-7 items-center justify-center rounded-md bg-white px-2 py-1 shrink-0">
+                <Image
+                  src="/images/kwater_logo.png"
+                  alt="K-water Logo"
+                  width={56}
+                  height={25}
+                  className="h-5 w-auto object-contain"
+                />
+              </div>
               <span className="text-sm sm:text-base font-black text-white tracking-wide">
                 K-water 한국수자원공사
               </span>
