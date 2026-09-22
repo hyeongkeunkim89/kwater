@@ -16,6 +16,90 @@ type Props = {
   storiesLive: boolean;
 };
 
+// 외부/깨진 이미지 URL을 로컬 고화질 이미지 자산으로 안전하게 변환
+function resolveEventImageUrl(url?: string): string | undefined {
+  if (!url) return undefined;
+  if (url.includes("wikimedia.org") || url.includes("SoyangDam")) {
+    return "/images/cards/soyang_gallery.png";
+  }
+  if (url.includes("wikimedia.org") || url.includes("Daecheong_Dam")) {
+    return "/images/cards/kwater_official_tour.png";
+  }
+  if (url.includes("wikimedia.org") || url.includes("Chungju_Lake")) {
+    return "/images/cards/chungju_experience.png";
+  }
+  return url;
+}
+
+function EventCardItem({
+  event,
+  center,
+  type,
+  status,
+  formatDate,
+}: {
+  event: Event;
+  center: string;
+  type: string;
+  status: { label: string; style: string };
+  formatDate: (d: string) => string;
+}) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const resolvedUrl = resolveEventImageUrl(event.imageUrl);
+
+  return (
+    <Link
+      href={`/events?id=${event.id}&center=${center}&type=${type}`}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-sky-400 hover:shadow-md transition duration-200"
+    >
+      {/* 포스터 배너 영역 */}
+      <div className="relative h-44 w-full bg-slate-100 overflow-hidden shrink-0">
+        <span
+          className={[
+            "absolute top-3 left-3 z-10 rounded border text-[10px] font-bold px-2 py-0.5 shadow-sm backdrop-blur-xs",
+            status.style,
+          ].join(" ")}
+        >
+          {status.label}
+        </span>
+
+        {resolvedUrl && !imgFailed ? (
+          <img
+            src={resolvedUrl}
+            alt={event.title}
+            onError={() => setImgFailed(true)}
+            className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
+          />
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-sky-400 via-sky-500 to-indigo-600 text-white p-4 text-center">
+            <span className="text-3xl mb-1">🎈</span>
+            <span className="text-xs font-bold text-white/90 tracking-wide">{event.centerName}</span>
+          </div>
+        )}
+      </div>
+
+      {/* 정보 영역 */}
+      <div className="p-5 flex-1 flex flex-col justify-between">
+        <div>
+          <span className="inline-block rounded bg-sky-50 text-[10px] font-bold text-sky-700 px-2 py-0.5">
+            {event.centerName}
+          </span>
+          <h3 className="mt-2.5 text-base font-bold text-slate-900 group-hover:text-sky-600 line-clamp-2 leading-snug">
+            {event.title}
+          </h3>
+          <p className="mt-1.5 text-xs text-slate-500 line-clamp-2 leading-relaxed font-semibold">
+            {event.content}
+          </p>
+        </div>
+
+        <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 font-semibold">
+          기간: {formatDate(event.startDate)} ~ {formatDate(event.endDate)}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export function EventBoard({ filteredEvents, selectedEvent, center, type, storiesLive }: Props) {
   const [showWriteModal, setShowWriteModal] = useState(false);
   const router = useRouter();
@@ -50,6 +134,8 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
     router.refresh(); // refresh Server Component data
   };
 
+  const selectedEventImageUrl = resolveEventImageUrl(selectedEvent?.imageUrl);
+
   return (
     <>
       {selectedEvent ? (
@@ -78,10 +164,10 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
           </div>
 
           {/* 포스터 이미지 */}
-          {selectedEvent.imageUrl && (
+          {selectedEventImageUrl && (
             <div className="my-8 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
               <img
-                src={selectedEvent.imageUrl}
+                src={selectedEventImageUrl}
                 alt={selectedEvent.title}
                 className="max-h-[500px] w-full object-contain mx-auto"
               />
@@ -208,53 +294,14 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
                 {filteredEvents.map((event) => {
                   const status = getEventStatus(event.startDate, event.endDate);
                   return (
-                    <Link
+                    <EventCardItem
                       key={event.id}
-                      href={`/events?id=${event.id}&center=${center}&type=${type}`}
-                      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-sky-400 hover:shadow-md transition duration-200"
-                    >
-                      {/* 포스터 배너 영역 (이미지 없을 시 물빛 그라데이션) */}
-                      <div className="relative h-44 w-full bg-gradient-to-r from-sky-400 to-indigo-500 overflow-hidden shrink-0">
-                        {event.imageUrl ? (
-                          <img
-                            src={event.imageUrl}
-                            alt={event.title}
-                            className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center text-white/30 font-black text-lg">
-                            K-water Event
-                          </div>
-                        )}
-                        <span
-                          className={[
-                            "absolute top-3 left-3 rounded border text-[10px] font-bold px-2 py-0.5 shadow-sm",
-                            status.style,
-                          ].join(" ")}
-                        >
-                          {status.label}
-                        </span>
-                      </div>
-
-                      {/* 정보 영역 */}
-                      <div className="p-5 flex-1 flex flex-col justify-between">
-                        <div>
-                          <span className="inline-block rounded bg-sky-50 text-[10px] font-bold text-sky-700 px-2 py-0.5">
-                            {event.centerName}
-                          </span>
-                          <h3 className="mt-2.5 text-base font-bold text-slate-900 group-hover:text-sky-600 line-clamp-2 leading-snug">
-                            {event.title}
-                          </h3>
-                          <p className="mt-1.5 text-xs text-slate-500 line-clamp-2 leading-relaxed font-semibold">
-                            {event.content}
-                          </p>
-                        </div>
-
-                        <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 font-semibold">
-                          기간: {formatDate(event.startDate)} ~ {formatDate(event.endDate)}
-                        </div>
-                      </div>
-                    </Link>
+                      event={event}
+                      center={center}
+                      type={type}
+                      status={status}
+                      formatDate={formatDate}
+                    />
                   );
                 })}
               </div>
