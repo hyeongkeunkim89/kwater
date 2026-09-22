@@ -23,7 +23,7 @@ function resolveEventImageUrl(url?: string): string | undefined {
     return "/images/cards/soyang_gallery.png";
   }
   if (url.includes("wikimedia.org") && url.includes("Daecheong_Dam")) {
-    return "/images/cards/kwater_official_tour.png";
+    return "/images/cards/children_drawing_contest.jpg";
   }
   if (url.includes("wikimedia.org") && url.includes("Chungju_Lake")) {
     return "/images/cards/daecheong_upcycling.jpg";
