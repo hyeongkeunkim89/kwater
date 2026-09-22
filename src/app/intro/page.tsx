@@ -9,13 +9,13 @@ export const metadata = {
 };
 
 export default function IntroPage() {
-  // 3대 핵심 가치 데이터
+  // 3대 핵심 가치 상세 카드
   const coreValues = [
     {
       title: "역사 보존",
       desc: "대한민국 50년 수자원 개발 및 관리의 역사적 기록 보존",
       icon: (
-        <svg className="w-7 h-7 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
         </svg>
       ),
@@ -25,7 +25,7 @@ export default function IntroPage() {
       title: "생태·환경 교육",
       desc: "물 순환의 원리와 미래 생태 환경을 배우는 체험형 교육 프로그램 운영",
       icon: (
-        <svg className="w-7 h-7 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3.05 11a9 9 0 0117.9 0M4.1 15a9 9 0 0015.8 0" />
         </svg>
@@ -36,7 +36,7 @@ export default function IntroPage() {
       title: "지역사회 상생",
       desc: "지역 주민과 함께 호흡하는 열린 문화 예술 및 복합 휴식 공간 제공",
       icon: (
-        <svg className="w-7 h-7 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
       ),
@@ -67,56 +67,94 @@ export default function IntroPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans break-keep">
       <WaterHubHeader activeNav="intro" />
 
-      {/* 1. 기관 정체성을 담은 상단 히어로(Hero) 배너 */}
-      <section className="relative min-h-[480px] sm:min-h-[520px] w-full flex items-center justify-center overflow-hidden bg-slate-900">
+      {/* 1. 메인 페이지(/main)와 완벽히 통일된 댐/호수 히어로 섹션 */}
+      <section className="h-[520px] sm:h-[580px] md:h-[620px] lg:h-[660px] w-full shrink-0 relative overflow-hidden bg-slate-900 rounded-bl-[40px] sm:rounded-bl-[56px] shadow-xl">
+        {/* 고해상도 댐/호수 배경 이미지 */}
         <Image
-          src="/centers/hoengseong.jpg"
-          alt="수자원 및 댐 전경 배경"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG"
+          alt="소양강댐 수자원 전경 배경"
           fill
           priority
-          className="object-cover object-center opacity-40 brightness-90 scale-105"
+          className="object-cover object-[center_20%] opacity-55 brightness-90 scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#001E3C] via-[#002D5A]/80 to-slate-950/70" />
 
-        <div className="relative z-10 max-w-4xl px-6 text-center py-16 flex flex-col items-center">
-          {/* 기관 상단 배지 */}
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 px-4 py-1.5 text-xs sm:text-sm font-semibold text-white mb-8 backdrop-blur-md">
-            <span className="h-2 w-2 rounded-full bg-sky-400 animate-pulse" />
-            K-water 한국수자원공사 공식 문화 공간
-          </span>
+        {/* 시네마틱 오버레이 (메인 히어로와 동일한 어두운 그라디언트) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/50 to-slate-950/75 md:from-slate-950/80 md:via-slate-950/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-slate-950/40" />
 
-          {/* 공식 슬로건 이미지 캡슐 */}
-          <div className="bg-white/95 backdrop-blur-md px-6 sm:px-10 py-5 sm:py-6 rounded-2xl shadow-2xl border border-white/40 mb-8 inline-block max-w-full">
-            <Image
-              src="/images/slogan.png"
-              alt="세상에 행복을 水 놓다 - K-water 슬로건"
-              width={500}
-              height={130}
-              priority
-              className="h-auto w-auto max-w-[260px] sm:max-w-[360px] md:max-w-[420px] object-contain mx-auto"
-            />
+        {/* 히어로 콘텐츠 컨테이너 */}
+        <div className="relative z-10 h-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex items-center justify-between gap-8">
+          
+          {/* [중앙/좌측 메인 영역] */}
+          <div className="flex-1 max-w-2xl text-left py-10 flex flex-col justify-center">
+            
+            {/* 공식 슬로건 이미지 캡슐 */}
+            <div className="mb-6 bg-white/95 backdrop-blur-md px-5 sm:px-7 py-3.5 sm:py-4 rounded-2xl shadow-xl border border-white/40 inline-block w-fit">
+              <Image
+                src="/images/slogan.png"
+                alt="세상에 행복을 水 놓다 - K-water 슬로건"
+                width={420}
+                height={110}
+                priority
+                className="h-auto w-auto max-w-[220px] sm:max-w-[300px] md:max-w-[350px] object-contain"
+              />
+            </div>
+
+            {/* 중간 카피 (화이트 볼드 타이포) */}
+            <h1 className="text-2xl sm:text-3.5xl md:text-4xl font-black text-white leading-tight tracking-tight drop-shadow-md mb-3">
+              대한민국 수자원 관리와 물문화의 거점
+            </h1>
+            <p className="text-xs sm:text-sm md:text-base text-slate-100 font-medium leading-relaxed drop-shadow-sm max-w-xl mb-6">
+              K-water 물문화관은 지난 반세기 동안 대한민국 수자원 관리 역사를 체계적으로 기록하고 보존해왔습니다. 물의 소중한 가치를 전파하고, 국민과 함께 호흡하는 지속 가능한 상생 공간을 지향합니다.
+            </p>
+
+            {/* 하단 3대 가치 아이콘 바 (단정한 라인 아이콘 + 라벨) */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-5 border-t border-white/20 text-white font-bold text-xs sm:text-sm">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15">
+                <svg className="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5" />
+                </svg>
+                <span>역사 보존</span>
+              </div>
+              <span className="text-white/40 font-light">|</span>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15">
+                <svg className="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+                <span>생태 교육</span>
+              </div>
+              <span className="text-white/40 font-light">|</span>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15">
+                <svg className="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>지역 상생</span>
+              </div>
+            </div>
           </div>
 
-          {/* 핵심 소개 문구 */}
-          <p className="text-sm sm:text-base md:text-lg text-slate-100 max-w-3xl mx-auto font-medium leading-relaxed break-keep">
-            K-water 한국수자원공사는 전국 15개 거점 물문화관을 통해 대한민국 수자원의 역사와 가치를 체계적으로 보존하고, 국민과 함께하는 복합 문화·체험 공간을 만들어가고 있습니다.
-          </p>
-
-          {/* 주요 바로가기 버튼 모음 */}
-          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto">
-            <Link
-              href="/centers"
-              className="w-full sm:w-auto inline-flex min-h-12 items-center justify-center rounded-xl bg-[#004D95] hover:bg-[#003870] text-white font-bold text-sm px-8 transition shadow-lg shadow-[#004D95]/40"
-            >
-              전국 물문화관 둘러보기 →
-            </Link>
-            <Link
-              href="/reserve"
-              className="w-full sm:w-auto inline-flex min-h-12 items-center justify-center rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md font-bold text-sm px-8 transition"
-            >
-              무료 가이드 투어 예약
-            </Link>
+          {/* [우측 사이드 정보 블록] (메인 페이지 우측 카드 스타일 동기화) */}
+          <div className="hidden lg:flex flex-col justify-center max-w-[340px] text-white drop-shadow-md bg-slate-950/40 backdrop-blur-md p-6 rounded-2xl border border-white/15">
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-300">
+              K-WATER WATER CULTURE CENTER
+            </p>
+            <h2 className="mt-1.5 text-xl font-black leading-snug tracking-tight text-sky-300">
+              전국 15개 물문화관 거점
+            </h2>
+            <p className="mt-3 text-xs leading-relaxed text-slate-100 font-medium opacity-95">
+              한강, 낙동강, 금강, 영산강 등 전국 주요 수계에 위치한 15개 물문화관은 지역별 특색을 살린 전시실, 전망대, 야외 수변공간을 무료로 개방하고 있습니다.
+            </p>
+            <div className="mt-5 pt-4 border-t border-white/15">
+              <Link
+                href="/centers"
+                className="inline-flex w-full items-center justify-between rounded-xl bg-sky-600 hover:bg-sky-500 text-xs font-bold text-white px-4 py-2.5 transition shadow-md"
+              >
+                <span>전국 물문화관 둘러보기</span>
+                <span className="font-black">→</span>
+              </Link>
+            </div>
           </div>
+
         </div>
       </section>
 
@@ -215,7 +253,7 @@ export default function IntroPage() {
         </div>
       </section>
 
-      {/* 4. 방문 관람 안내 */}
+      {/* 4. 관람 안내 및 편의 서비스 */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
