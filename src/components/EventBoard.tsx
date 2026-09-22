@@ -20,7 +20,7 @@ type Props = {
 function resolveEventImageUrl(url?: string): string | undefined {
   if (!url) return undefined;
   if (url.includes("wikimedia.org") && url.includes("SoyangDam")) {
-    return "/images/cards/soyang_gallery.png";
+    return "/images/cards/soyang_cherry_blossom_walk.jpg";
   }
   if (url.includes("wikimedia.org") && url.includes("Daecheong_Dam")) {
     return "/images/cards/children_drawing_contest.jpg";
