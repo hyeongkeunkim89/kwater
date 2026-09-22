@@ -168,10 +168,10 @@ export default function MainPage() {
             <div className="w-full sm:w-auto sm:pl-6">
               <Link
                 href="/status"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-slate-900 hover:bg-sky-600 text-xs font-black text-white px-6 py-2.5 transition-all duration-200 w-full text-center whitespace-nowrap shadow-sm hover:shadow-md group"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs font-black text-white px-5 py-2 transition-all duration-200 shadow-sm hover:shadow-md group whitespace-nowrap w-full sm:w-auto"
               >
                 <span>전국 현황지도 바로가기</span>
-                <span className="ml-1.5 transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
+                <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
               </Link>
             </div>
           </div>
