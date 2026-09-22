@@ -67,20 +67,20 @@ export default function IntroPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans break-keep">
       <WaterHubHeader activeNav="intro" />
 
-      {/* 1. 첨부 시안 이미지(media_1790052225216.png) 100% 동일 복원 히어로 배너 */}
+      {/* 1. 사용자가 전달한 고화질 전경 사진 & 밝은 물안개 오버레이 히어로 배너 */}
       <section className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6">
         <div className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[580px] w-full overflow-hidden rounded-tl-[48px] rounded-bl-[48px] rounded-tr-[24px] rounded-br-[24px] bg-slate-100 shadow-xl flex items-center justify-end p-6 sm:p-10 lg:p-12">
           
-          {/* 댐 및 수자원 항공뷰 전경 배경 이미지 */}
+          {/* 전달받은 횡성댐 물문화관 전경 고화질 배경 이미지 */}
           <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg/1280px-Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg"
-            alt="대청댐 및 댐 수역 항공 전경"
+            src="/images/intro-bg.jpg"
+            alt="K-water 물문화관 전경 고화질 배경"
             fill
             priority
             className="object-cover object-[left_center] opacity-85 brightness-105"
           />
 
-          {/* 밝고 은은한 물안개 느낌의 수평 화이트 그라디언트 오버레이 */}
+          {/* 은은한 물안개 느낌의 수평 화이트 그라디언트 오버레이 (물안개 효과 유지) */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-white/90 md:via-white/70 md:to-white/95" />
           <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-white/30" />
 
@@ -99,9 +99,9 @@ export default function IntroPage() {
               />
             </div>
 
-            {/* 타이틀 및 카피 문구 (시안과 동일한 딥 다크 타이포) */}
+            {/* 타이틀 및 카피 문구 */}
             <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 tracking-tight mb-3">
-              김천부항댐 물문화관
+              K-water 물문화관
             </h1>
             <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed break-keep max-w-xl mx-auto mb-8 opacity-90">
               한국수자원공사 물문화관은 지난 50년간 대한민국의 수자원 관리<br className="hidden sm:inline" />
@@ -109,7 +109,7 @@ export default function IntroPage() {
               지역사회와 호흡하는 지속 가능한 상생의 공간을 지향합니다.
             </p>
 
-            {/* 하단 3대 가치 라인 아이콘 & 영문 라벨 (시안 동일) */}
+            {/* 하단 3대 가치 라인 아이콘 & 영문 라벨 */}
             <div className="grid grid-cols-3 gap-6 sm:gap-10 pt-4 border-t border-slate-900/15 w-full max-w-md mx-auto">
               {/* 역사 보존 */}
               <div className="flex flex-col items-center">
