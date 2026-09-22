@@ -213,16 +213,20 @@ export function HeroSlider() {
       <button
         onClick={goPrev}
         aria-label="이전 슬라이드"
-        className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/40 backdrop-blur-md text-white transition hover:bg-sky-500 hover:border-sky-500 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:left-6 font-bold text-lg"
+        className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/40 backdrop-blur-md text-white transition hover:bg-sky-500 hover:border-sky-500 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:left-6"
       >
-        ‹
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
       </button>
       <button
         onClick={goNext}
         aria-label="다음 슬라이드"
-        className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/40 backdrop-blur-md text-white transition hover:bg-sky-500 hover:border-sky-500 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:right-6 font-bold text-lg"
+        className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/40 backdrop-blur-md text-white transition hover:bg-sky-500 hover:border-sky-500 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:right-6"
       >
-        ›
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
       </button>
 
       {/* ── 슬라이드 카운터 ── */}
