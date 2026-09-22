@@ -164,15 +164,15 @@ export default function IntroPage() {
       <WaterHubHeader activeNav="intro" />
 
       {/* 1. 상단 히어로 (갤러리 쇼케이스 헤더) */}
-      <section className="relative min-h-[460px] sm:min-h-[500px] w-full flex items-center justify-center overflow-hidden bg-slate-950">
+      <section className="relative min-h-[460px] sm:min-h-[500px] w-full flex items-center justify-center overflow-hidden bg-slate-900">
         <Image
           src="/centers/hoengseong.jpg"
           alt="횡성댐 물문화관 전경"
           fill
           priority
-          className="object-cover object-center opacity-35 scale-105"
+          className="object-cover object-center opacity-65 brightness-95 scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-900/10" />
 
         <div className="relative z-10 max-w-4xl px-6 text-center text-white py-16">
           <div className="inline-flex items-center gap-2 rounded-full bg-sky-500/20 border border-sky-400/30 px-4 py-1.5 text-xs sm:text-sm font-bold text-sky-300 mb-6 backdrop-blur-md">
@@ -277,14 +277,14 @@ export default function IntroPage() {
                 </div>
               </div>
 
-              <div className="relative p-6 sm:p-8 lg:p-10 lg:col-span-5 flex flex-col justify-between bg-slate-950 text-white overflow-hidden">
+              <div className="relative p-6 sm:p-8 lg:p-10 lg:col-span-5 flex flex-col justify-between bg-slate-900 text-white overflow-hidden">
                 <Image
                   src="/centers/hoengseong.jpg"
                   alt="횡성댐 실루엣"
                   fill
-                  className="object-cover opacity-25 scale-105 pointer-events-none"
+                  className="object-cover opacity-55 brightness-95 scale-105 pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/50 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/50 to-slate-900/20 pointer-events-none" />
 
                 <div className="relative z-10">
                   <span className={`inline-block rounded-md px-3 py-1 text-xs font-bold mb-3 ${currentTheme.badgeColor}`}>
@@ -426,14 +426,14 @@ export default function IntroPage() {
       </section>
 
       {/* 5. CTA 하단 연결 배너 */}
-      <section className="relative py-20 bg-slate-950 text-white overflow-hidden">
+      <section className="relative py-20 bg-slate-900 text-white overflow-hidden">
         <Image
           src="/centers/hoengseong.jpg"
           alt="횡성댐 물문화관 전경 실루엣"
           fill
-          className="object-cover opacity-35 scale-105 pointer-events-none"
+          className="object-cover opacity-65 brightness-95 scale-105 pointer-events-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-900/10 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <span className="inline-block rounded-full bg-sky-500/20 text-sky-300 text-xs font-bold px-4 py-1 mb-4 border border-sky-500/30">
