@@ -228,7 +228,7 @@ export function AuthModal() {
         {/* 메인 브랜드 로고 */}
         <div className="flex justify-center pt-1 pb-3">
           <Image
-            src="/images/kwater_waterhub_logo.png?v=2"
+            src="/images/kwater_waterhub_logo.png"
             alt="K-water 한국수자원공사 물문화관"
             width={800}
             height={250}
