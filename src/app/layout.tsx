@@ -37,8 +37,9 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* 국립중앙박물관 웹사이트 공식 서체 패밀리 (Noto Sans KR + NanumSquare 웹폰트) */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Nanum+Square:wght@300;400;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap"
           rel="stylesheet"
         />
       </head>

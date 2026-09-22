@@ -9,7 +9,9 @@
   --accent-muted: #e5f6fd;
   --dark-bg: #0b111e;
   --dark-surface: #111827;
-  --font-noto-sans-kr: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* 국립중앙박물관(museum.go.kr) 웹사이트 공식 지정 서체 패밀리 (Noto Sans KR + NanumSquare) */
+  --font-noto-sans-kr: "Noto Sans KR", "NanumSquare", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  --font-nanum-square: "NanumSquare", "Noto Sans KR", sans-serif;
 }
 
 @theme inline {
@@ -35,14 +37,23 @@
   animation: bounce-subtle 2.5s infinite ease-in-out;
 }
 
+/* 국립중앙박물관 웹사이트 서체 적용 */
+html, body, button, input, select, textarea {
+  font-family: var(--font-noto-sans-kr) !important;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-noto-sans-kr), "Malgun Gothic", "Apple SD Gothic Neo",
-    sans-serif;
+  font-family: var(--font-noto-sans-kr);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   /* 모바일에서 더블탭 줌 지연 완화 */
   touch-action: manipulation;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-noto-sans-kr);
 }
 
 @media (prefers-reduced-motion: reduce) {
