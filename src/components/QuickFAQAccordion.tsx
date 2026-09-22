@@ -59,10 +59,10 @@ export function QuickFAQAccordion() {
         </div>
         <Link
           href="/feedback"
-          className="self-start sm:self-auto inline-flex items-center gap-1 text-xs font-bold text-sky-600 hover:text-sky-700 transition"
+          className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-full bg-sky-50 border border-sky-200/80 px-4 py-2 text-xs font-black text-sky-700 hover:bg-sky-100 hover:border-sky-300 transition shadow-2xs group whitespace-nowrap"
         >
           <span>해설 투어 예약 문의</span>
-          <span>→</span>
+          <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
         </Link>
       </div>
 
