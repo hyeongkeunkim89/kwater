@@ -25,8 +25,8 @@ export default async function EventsPage({ searchParams }: Props) {
     filteredEvents = rawEvents.filter((ev) => !ev.isHeadquarters);
   }
 
-  // 시간순 정렬 (이벤트 시작일 startDate 기준 오름차순 정렬)
-  filteredEvents.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+  // 시간순 정렬 (이벤트 시작일 startDate 기준 내림차순 정렬: 최신/미래 이벤트가 상단)
+  filteredEvents.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
 
   // Fetch detail if id is provided
   let selectedEvent = null;

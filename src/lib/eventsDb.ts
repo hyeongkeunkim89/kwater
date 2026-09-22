@@ -133,7 +133,7 @@ export async function listEventsFromDb(centerId?: string): Promise<Event[]> {
     const filtered = centerId && centerId !== "all"
       ? rows.filter((r) => r.center_id === centerId || r.is_headquarters)
       : rows;
-    const sorted = [...filtered].sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
+    const sorted = [...filtered].sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime());
     result = sorted.map(rowToEvent);
   } else {
     await ensureEventsSchema(sql);
@@ -143,12 +143,12 @@ export async function listEventsFromDb(centerId?: string): Promise<Event[]> {
           SELECT id, center_id, center_name, title, content, start_date, end_date, is_headquarters, image_url, created_at
           FROM events
           WHERE center_id = ${centerId} OR is_headquarters = true
-          ORDER BY start_date ASC, created_at DESC
+          ORDER BY start_date DESC, created_at DESC
         `
       : await sql<EventRow[]>`
           SELECT id, center_id, center_name, title, content, start_date, end_date, is_headquarters, image_url, created_at
           FROM events
-          ORDER BY start_date ASC, created_at DESC
+          ORDER BY start_date DESC, created_at DESC
         `;
 
     result = rows.map(rowToEvent);
