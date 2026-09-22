@@ -59,7 +59,7 @@ export function WaterHubHeader({
         {/* 로고 영역 */}
         <Link
           href="/main"
-          className="flex shrink-0 items-center transition-opacity hover:opacity-95"
+          className="flex shrink-0 items-center transition-transform duration-300 ease-out hover:scale-[1.04] active:scale-[0.98]"
         >
           <Image
             src="/images/kwater_waterhub_logo.png"
