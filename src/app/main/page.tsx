@@ -66,18 +66,13 @@ export default function MainPage() {
         
         {/* 1. 빠른 메뉴 및 예약 서비스 (SK GATEWAY 럭셔리 포털 스타일) */}
         <section aria-label="주요 물문화 서비스 바로가기">
-          <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200/80 pb-4">
-            <div>
-              <span className="text-[11px] font-black uppercase tracking-[0.2em] text-sky-600 block mb-1">
-                K-WATER QUICK GATEWAY
-              </span>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                주요 물문화 서비스 바로가기
-              </h2>
-            </div>
-            <p className="text-xs text-slate-500 font-semibold">
-              국민 누구나 자유롭게 이용할 수 있는 K-water 대표 관문 서비스입니다.
-            </p>
+          <div className="mb-6 border-b border-slate-200/80 pb-4">
+            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-sky-600 block mb-1">
+              K-WATER GATEWAY
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              주요 물문화 서비스 바로가기
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
