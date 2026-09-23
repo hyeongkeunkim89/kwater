@@ -42,24 +42,22 @@ export function QuickFAQAccordion() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+    <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
-          <div className="flex items-center gap-2.5">
-            <span className="shrink-0 rounded-md bg-sky-600 px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-white">
-              FAQ
-            </span>
-            <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-              자주 묻는 질문
-            </h3>
-          </div>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
+            K-WATER FAQ
+          </span>
+          <h3 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+            자주 묻는 질문
+          </h3>
+          <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
             전국 물문화관 관람 및 해설 가이드 투어 사전 예약 관련 필수 체크사항입니다.
           </p>
         </div>
         <Link
           href="/feedback"
-          className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs font-black text-white px-5 py-2 transition-all duration-200 shadow-sm hover:shadow-md group whitespace-nowrap"
+          className="self-start sm:self-auto inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-xs hover:shadow-md group whitespace-nowrap"
         >
           <span>해설 투어 예약 문의</span>
           <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
