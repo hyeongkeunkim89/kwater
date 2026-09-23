@@ -56,15 +56,15 @@ export default function MainPage() {
       {/* 메인 히어로 비주얼 슬라이더 */}
       <section
         aria-label="물문화관 대표 소개 슬라이드쇼"
-        className="h-[480px] sm:h-[560px] md:h-[620px] lg:h-[680px] xl:h-[720px] w-full shrink-0 relative overflow-hidden bg-slate-900"
+        className="h-[380px] sm:h-[440px] md:h-[480px] lg:h-[500px] w-full shrink-0 relative overflow-hidden bg-slate-900"
       >
         <HeroSliderWrapper />
       </section>
 
       {/* 메인 홈페이지 콘텐츠 영역 */}
-      <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 space-y-8 flex-1">
-        {/* 상단 2컬럼 레이아웃 (동일 너비 50:50 및 동일 높이) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+      <main className="mx-auto max-w-7xl w-full px-6 py-6 sm:py-8 space-y-6 flex-1">
+        {/* 상단 2컬럼 레이아웃 (동일 너비 50:50 및 컴팩트 동일 높이) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           {/* 좌측 1/2컬럼: K-water 미디어 하이라이트 */}
           <section className="lg:col-span-1 h-full">
             <KwaterHighlightSection />
@@ -74,39 +74,39 @@ export default function MainPage() {
           <div className="lg:col-span-1 h-full">
             <section
               aria-label="주요 물문화 서비스 바로가기"
-              className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 h-full flex flex-col justify-between"
+              className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300 h-full flex flex-col justify-between"
             >
-              <div className="border-b border-slate-100 pb-5">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
+              <div className="border-b border-slate-100 pb-3.5">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-2.5 py-0.5 text-[11px] font-black tracking-wider uppercase text-sky-700">
                   K-WATER GATEWAY
                 </span>
-                <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                <h2 className="mt-1.5 text-lg sm:text-xl font-black text-slate-900 tracking-tight">
                   주요 물문화 서비스 바로가기
                 </h2>
-                <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+                <p className="mt-0.5 text-xs font-medium text-slate-500">
                   전국 15개 물문화관의 핵심 서비스와 가이드 해설 투어, 현황 지도를 한눈에 이용해 보세요.
                 </p>
               </div>
 
-              <div className="mt-5 space-y-4 flex-1 flex flex-col justify-between">
+              <div className="mt-3.5 space-y-3 flex-1 flex flex-col justify-between">
                 {QUICK_CARDS.map((card) => (
                   <Link
                     key={card.title}
                     href={card.path}
-                    className="group relative flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md h-36 sm:h-40 flex-1 min-h-[140px]"
+                    className="group relative flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md h-24 sm:h-28 flex-1 min-h-[96px]"
                   >
                     {/* 1. 좌측 카드 썸네일 이미지 */}
-                    <div className="relative h-40 sm:h-full sm:w-44 shrink-0 overflow-hidden bg-slate-100">
+                    <div className="relative h-24 sm:h-full sm:w-36 shrink-0 overflow-hidden bg-slate-100">
                       <Image
                         src={card.image}
                         alt={card.title}
                         fill
                         className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, 200px"
+                        sizes="(max-width: 640px) 100vw, 150px"
                       />
                       {/* 상단 뱃지 */}
-                      <div className="absolute left-3 top-3 z-10">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-white/20 px-2.5 py-0.5 text-[11px] font-bold text-white backdrop-blur-md shadow-xs">
+                      <div className="absolute left-2.5 top-2.5 z-10">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/80 border border-white/20 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur-md shadow-xs">
                           {card.icon}
                           <span>{card.badge}</span>
                         </span>
@@ -114,19 +114,19 @@ export default function MainPage() {
                     </div>
 
                     {/* 2. 우측 정보 및 버튼 영역 */}
-                    <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 bg-white min-w-0">
+                    <div className="p-3 sm:p-3.5 flex flex-col justify-between flex-1 bg-white min-w-0">
                       <div>
-                        <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200">
+                        <h3 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200 line-clamp-1">
                           {card.title}
                         </h3>
-                        <p className="mt-1.5 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">
+                        <p className="mt-0.5 text-[11px] font-medium text-slate-600 leading-tight line-clamp-1 break-keep">
                           {card.desc}
                         </p>
                       </div>
 
-                      <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
+                      <div className="mt-1 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
                         <span>{card.btnLabel}</span>
-                        <span className="text-sm font-black transform group-hover:translate-x-1.5 transition-transform duration-200">
+                        <span className="text-xs font-black transform group-hover:translate-x-1 transition-transform duration-200">
                           →
                         </span>
                       </div>
