@@ -185,9 +185,9 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
       <div className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-lg border border-slate-200">
         <ComposableMap
           projection="geoMercator"
-          projectionConfig={{ center: [127.8, 35.8], scale: 6800 }}
+          projectionConfig={{ center: [127.75, 36.35], scale: 5750 }}
           style={{ width: "100%", height: "auto", display: "block" }}
-          viewBox="0 0 800 700"
+          viewBox="0 0 800 760"
         >
           <defs>
             <linearGradient id="seaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -197,7 +197,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             </linearGradient>
           </defs>
 
-          <rect width="800" height="700" fill="url(#seaGrad)" />
+          <rect width="800" height="760" fill="url(#seaGrad)" />
 
           <Geographies geography={PROVINCES_URL}>
             {({ geographies }) =>
