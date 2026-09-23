@@ -206,29 +206,17 @@ export default function FeedbackPage() {
         <div className="pointer-events-none absolute inset-0" aria-hidden>
           <div className="absolute right-1/4 top-0 h-48 w-48 rounded-full bg-sky-500/5 blur-[80px]" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 sm:px-8 text-center sm:text-left flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-          <div>
-            <span className="text-xs font-black uppercase tracking-widest text-[#2F9FF3]">
-              VISITOR CENTER TALK &amp; FAQ
-            </span>
-            <h1 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
-              소통창구 및 자주 묻는 질문
-            </h1>
-            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl font-medium">
-              물문화관 관람 전 궁금하신 점을 자주 묻는 질문(FAQ)에서 먼저 확인해 보세요. 
-              추가 문의 및 서비스 건의는 1:1 소통 게시판을 통해 언제든 자유롭게 남겨주실 수 있습니다.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setShowWriteModal(true)}
-            className="self-center sm:self-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-bold text-white px-6 transition shadow-sm"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            <span>1:1 문의글 작성하기</span>
-          </button>
+        <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 sm:px-8 text-center sm:text-left">
+          <span className="text-xs font-black uppercase tracking-widest text-[#2F9FF3]">
+            VISITOR CENTER TALK &amp; FAQ
+          </span>
+          <h1 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+            소통창구 및 자주 묻는 질문
+          </h1>
+          <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl font-medium">
+            물문화관 관람 전 궁금하신 점을 자주 묻는 질문(FAQ)에서 먼저 확인해 보세요. 
+            추가 문의 및 서비스 건의는 1:1 소통 게시판을 통해 언제든 자유롭게 남겨주실 수 있습니다.
+          </p>
         </div>
       </div>
 
@@ -257,12 +245,12 @@ export default function FeedbackPage() {
               <button
                 type="button"
                 onClick={() => setShowWriteModal(true)}
-                className="self-start sm:self-auto inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold px-4 transition shadow-xs whitespace-nowrap shrink-0"
+                className="self-start sm:self-auto inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-bold text-white px-5 transition shadow-sm whitespace-nowrap shrink-0"
               >
-                <svg className="w-3.5 h-3.5 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                <span>새 문의글 작성</span>
+                <span>1:1 문의글 작성하기</span>
               </button>
             </div>
 
