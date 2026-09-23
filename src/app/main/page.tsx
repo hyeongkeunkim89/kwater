@@ -4,6 +4,7 @@ import { HeroSliderWrapper } from "@/components/HeroSliderWrapper";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { QuickFAQAccordion } from "@/components/QuickFAQAccordion";
+import { KwaterHighlightSection } from "@/components/KwaterHighlightSection";
 import { sidoList, waterCenters } from "@/data/centers";
 
 export default function MainPage() {
@@ -126,7 +127,10 @@ export default function MainPage() {
           </div>
         </section>
 
-        {/* 2. 자주 묻는 질문 FAQ */}
+        {/* 2. K-water 미디어 하이라이트 (SK HIGHLIGHT 스타일) */}
+        <KwaterHighlightSection />
+
+        {/* 3. 자주 묻는 질문 FAQ */}
         <section aria-label="자주 묻는 질문 FAQ">
           <QuickFAQAccordion />
         </section>
