@@ -5,13 +5,13 @@ export type DisplayStatus = "운영중" | "오늘 휴관" | "임시휴관";
 
 export const displayStatusStyles: Record<DisplayStatus, { badge: string }> = {
   운영중: {
-    badge: "bg-emerald-500/15 text-emerald-800 ring-emerald-500/25",
+    badge: "bg-emerald-600 text-white font-bold shadow-xs ring-1 ring-emerald-500/40",
   },
   "오늘 휴관": {
-    badge: "bg-violet-500/15 text-violet-900 ring-violet-500/30",
+    badge: "bg-purple-600 text-white font-bold shadow-xs ring-1 ring-purple-500/40",
   },
   임시휴관: {
-    badge: "bg-rose-500/15 text-rose-900 ring-rose-500/25",
+    badge: "bg-rose-600 text-white font-bold shadow-xs ring-1 ring-rose-500/40",
   },
 };
 
