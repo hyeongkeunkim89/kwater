@@ -189,12 +189,13 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
           </div>
         </div>
       ) : (
-        /* ================= 목록 화면 ================= */
-        <div className="space-y-10">
-          {/* 🌟 대표 참여형 이벤트: 물 이야기 사진전 */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-6 border-b border-slate-100">
-              <div className="space-y-3 max-w-2xl">
+        /* ================= 목록 화면 (좌측: 이달의 물 이야기 사진전 / 우측: 체험 및 이벤트 목록) ================= */
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* 1. 좌측 (lg:col-span-5): 대표 참여형 이벤트 - 이달의 물 이야기 사진전 */}
+          <section aria-label="이달의 물 이야기 사진전" className="lg:col-span-5">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm space-y-5">
+              <div className="space-y-3 border-b border-slate-100 pb-5">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 text-[#004D95] border border-blue-100 text-[11px] font-black px-3 py-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#004D95]"></span>
@@ -204,97 +205,99 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
                     상시 참여 이벤트
                   </span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-                  <svg className="w-6 h-6 text-[#004D95] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h2 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                  <svg className="w-5 h-5 text-[#004D95] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span>이달의 물 이야기 사진전</span>
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  전국 15개 물문화관과 수변 산책로에서 포착한 특별하고 아름다운 순간을 공유해 주세요. 
+                <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                  전국 15개 물문화관과 수변 산책로에서 포착한 특별한 순간을 공유해 보세요. 
                   매월 우수작을 선정하여 명예의 전당인 <strong className="font-bold text-[#004D95]">&apos;이달의 사진&apos;</strong> 등재 및 문화상품권을 드립니다.
                 </p>
-              </div>
-              <div className="shrink-0 flex flex-col sm:flex-row md:flex-col gap-2.5 w-full md:w-auto">
-                <Link
-                  href="/mul-iyagi"
-                  className="flex-1 md:flex-initial inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-bold text-white px-6 transition shadow-sm text-center"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                  <span>사진 응모하기</span>
-                </Link>
-                <Link
-                  href="/mul-iyagi"
-                  className="flex-1 md:flex-initial inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-bold px-6 transition text-center"
-                >
-                  <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>전체 갤러리 감상</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* 최근 응모작 실시간 썸네일 */}
-            <RecentWaterStories storiesLive={storiesLive} />
-          </div>
-
-          {/* 기타 체험/이벤트 */}
-          <div className="border-t border-slate-200/80 pt-8 space-y-8">
-            {/* 필터 및 작성 버튼 */}
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-start gap-4 flex-1">
-                {/* 이벤트 구분 */}
-                <div className="flex flex-col gap-2 shrink-0">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                    이벤트 구분
-                  </label>
-                  <div className="flex gap-2">
-                    {[
-                      { key: "all", label: "전체 이벤트" },
-                      { key: "hq", label: "본사 주관 공통" },
-                      { key: "centers", label: "개별 문화관 전용" },
-                    ].map((t) => (
-                      <Link
-                        key={t.key}
-                        href={`/events?type=${t.key}&center=${center}`}
-                        className={[
-                          "min-h-10 inline-flex items-center justify-center rounded-xl px-4 py-2 text-xs font-bold transition",
-                          type === t.key
-                            ? "bg-slate-900 text-white shadow-sm"
-                            : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50",
-                        ].join(" ")}
-                      >
-                        {t.label}
-                      </Link>
-                    ))}
-                  </div>
+                <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                  <Link
+                    href="/mul-iyagi"
+                    className="flex-1 inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs font-bold text-white px-4 transition shadow-xs text-center"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>사진 응모하기</span>
+                  </Link>
+                  <Link
+                    href="/mul-iyagi"
+                    className="flex-1 inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold px-4 transition text-center"
+                  >
+                    <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>전체 갤러리</span>
+                  </Link>
                 </div>
-
-                {/* 개별 문화관 필터 */}
-                {type !== "hq" && (
-                  <div className="flex flex-col gap-2 w-full max-w-xs">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                      문화관 선택
-                    </label>
-                    <CenterFilterSelect includeHeadquarters={false} />
-                  </div>
-                )}
               </div>
 
+              {/* 최근 응모작 실시간 썸네일 */}
+              <RecentWaterStories storiesLive={storiesLive} />
+            </div>
+          </section>
+
+          {/* 2. 우측 (lg:col-span-7): 기타 체험 및 이벤트 목록 */}
+          <section aria-label="체험 및 이벤트 목록" className="lg:col-span-7 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+              <div>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-black tracking-wider uppercase text-[#004D95]">
+                  EXPERIENCE &amp; PROGRAMS
+                </span>
+                <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                  현장 체험 및 이벤트 목록
+                </h2>
+                <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+                  전국 물문화관에서 진행 중이거나 예정된 다채로운 문화·생태 프로그램입니다.
+                </p>
+              </div>
               <button
                 type="button"
                 onClick={() => setShowWriteModal(true)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#004D95] hover:bg-[#003870] text-sm font-bold text-white px-5 transition shadow-sm self-start md:self-auto"
+                className="self-start sm:self-auto inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-bold text-white px-4 transition shadow-sm whitespace-nowrap shrink-0"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
                 <span>새 이벤트 등록</span>
               </button>
+            </div>
+
+            {/* 필터 및 컨트롤 바 */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+                <span className="text-xs font-bold text-slate-500 shrink-0 mr-1">구분:</span>
+                {[
+                  { key: "all", label: "전체" },
+                  { key: "hq", label: "본사 공통" },
+                  { key: "centers", label: "개별 문화관" },
+                ].map((t) => (
+                  <Link
+                    key={t.key}
+                    href={`/events?type=${t.key}&center=${center}`}
+                    className={[
+                      "min-h-9 inline-flex items-center justify-center rounded-lg px-3 py-1.5 text-xs font-bold transition whitespace-nowrap",
+                      type === t.key
+                        ? "bg-[#004D95] text-white shadow-xs"
+                        : "bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100",
+                    ].join(" ")}
+                  >
+                    {t.label}
+                  </Link>
+                ))}
+              </div>
+
+              {type !== "hq" && (
+                <div className="w-full sm:w-48 shrink-0">
+                  <CenterFilterSelect includeHeadquarters={false} />
+                </div>
+              )}
             </div>
 
             {/* 카드 리스트 */}
@@ -304,7 +307,7 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
                 등록된 이벤트가 없습니다.
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {filteredEvents.map((event) => {
                   const status = getEventStatus(event.startDate, event.endDate);
                   return (
@@ -320,7 +323,7 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
                 })}
               </div>
             )}
-          </div>
+          </section>
         </div>
       )}
 

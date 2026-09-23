@@ -49,7 +49,7 @@ export function RecentWaterStories({ storiesLive }: { storiesLive: boolean }) {
       {recentStories.length === 0 ? (
         <p className="text-xs text-slate-400 italic py-4">아직 등록된 사진이 없습니다. 첫 번째 사진을 올려주세요!</p>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3">
           {recentStories.map((story) => (
             <div
               key={story.id}
