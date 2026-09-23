@@ -88,45 +88,45 @@ export default function MainPage() {
                 </p>
               </div>
 
-              <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
+              <div className="mt-5 space-y-4">
                 {QUICK_CARDS.map((card) => (
                   <Link
                     key={card.title}
                     href={card.path}
-                    className="group relative flex flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-sky-400 hover:shadow-xl"
+                    className="group relative flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md"
                   >
-                    {/* 1. 상단 카드 썸네일 이미지 */}
-                    <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-100">
+                    {/* 1. 좌측 카드 썸네일 이미지 */}
+                    <div className="relative h-40 sm:h-auto sm:w-48 shrink-0 overflow-hidden bg-slate-100">
                       <Image
                         src={card.image}
                         alt={card.title}
                         fill
                         className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 33vw"
+                        sizes="(max-width: 640px) 100vw, 200px"
                       />
                       {/* 상단 뱃지 */}
-                      <div className="absolute left-3.5 top-3.5 z-10">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-white/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md shadow-xs">
+                      <div className="absolute left-3 top-3 z-10">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-white/20 px-2.5 py-0.5 text-[11px] font-bold text-white backdrop-blur-md shadow-xs">
                           {card.icon}
                           <span>{card.badge}</span>
                         </span>
                       </div>
                     </div>
 
-                    {/* 2. 하단 정보 및 버튼 영역 */}
-                    <div className="p-5 flex flex-col justify-between flex-1 bg-white">
+                    {/* 2. 우측 정보 및 버튼 영역 */}
+                    <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 bg-white min-w-0">
                       <div>
-                        <h3 className="text-lg sm:text-xl font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200">
+                        <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200">
                           {card.title}
                         </h3>
-                        <p className="mt-1.5 mb-4 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">
+                        <p className="mt-1.5 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed break-keep">
                           {card.desc}
                         </p>
                       </div>
 
-                      <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
+                      <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
                         <span>{card.btnLabel}</span>
-                        <span className="text-base font-black transform group-hover:translate-x-1.5 transition-transform duration-200">
+                        <span className="text-sm font-black transform group-hover:translate-x-1.5 transition-transform duration-200">
                           →
                         </span>
                       </div>
