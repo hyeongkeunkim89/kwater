@@ -400,17 +400,11 @@ export const CenterCard = memo(function CenterCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
 
-        {/* 상단 뱃지 묶음 */}
-        <div className={`absolute top-3.5 left-3.5 flex items-center justify-between gap-1.5 z-10 ${onClose ? "right-14" : "right-3.5"}`}>
-          <div className="flex flex-wrap gap-1.5 min-w-0">
-            <span className="rounded-full bg-slate-900/80 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm shrink-0">
-              {c.kind}
-            </span>
-            <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm shrink-0">
-              {c.themes[0]}
-            </span>
-          </div>
-
+        {/* 상단 뱃지 묶음 — 좌측 상단으로 결합 정렬 */}
+        <div className="absolute top-3.5 left-3.5 flex flex-wrap items-center gap-2 z-10 max-w-[calc(100%-4rem)]">
+          <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm shrink-0">
+            {c.themes[0]}
+          </span>
           <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold backdrop-blur-md ring-1 ring-inset shrink-0 ${displayStatusStyles[display].badge}`}>
             {display}
           </span>
