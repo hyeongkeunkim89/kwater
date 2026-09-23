@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ComposableMap,
   Geographies,
@@ -173,6 +173,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
   const mapCenters = centersProp ?? waterCenters;
   const todaySeoul = useMemo(() => getSeoulWeekdayHan(), []);
   const [selected, setSelected] = useState<WaterCenter | null>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSelected((prev) =>
@@ -180,9 +181,22 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
     );
   }, [mapCenters]);
 
+  // 모바일/태블릿 화면(<1024px)에서 댐 아이콘/라벨 클릭 시 하단 상세 패널로 부드럽게 스크롤 이동
+  useEffect(() => {
+    if (selected && typeof window !== "undefined") {
+      const isMobile = window.innerWidth < 1024;
+      if (isMobile) {
+        const timer = setTimeout(() => {
+          panelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 80);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [selected]);
+
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
-      <div className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-lg border border-slate-200">
+      <div id="korea-map-container" className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-lg border border-slate-200 scroll-mt-20">
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{ center: [127.75, 36.35], scale: 5750 }}
@@ -315,7 +329,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
         </div>
       </div>
 
-      <div className="lg:w-[440px] xl:w-[460px] lg:shrink-0">
+      <div ref={panelRef} className="lg:w-[440px] xl:w-[460px] lg:shrink-0 scroll-mt-24">
         {selected ? (
           <CenterPanel
             center={selected}
@@ -361,18 +375,38 @@ function CenterPanel({
   todaySeoul: WeekdayHan;
   onClose: () => void;
 }) {
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label={koreaMapUi.panelClose}
-        className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900/60 text-white backdrop-blur-md transition hover:bg-slate-900 hover:scale-105 focus:outline-none shadow-md"
-      >
-        <span aria-hidden className="text-base font-bold">×</span>
-      </button>
+  const handleScrollToMap = () => {
+    document.getElementById("korea-map-container")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
-      <CenterCard center={center} todaySeoul={todaySeoul} />
+  return (
+    <div className="relative space-y-2">
+      {/* 모바일 뷰 상단 지도 위치로 돌아가는 내비게이션 바 */}
+      <div className="flex items-center justify-between gap-2 lg:hidden bg-sky-50/90 backdrop-blur-sm border border-sky-200/80 rounded-xl px-3 py-2">
+        <span className="text-xs font-bold text-sky-900">
+          📍 {center.name} 상세 정보
+        </span>
+        <button
+          type="button"
+          onClick={handleScrollToMap}
+          className="inline-flex items-center gap-1 text-xs font-bold text-sky-700 hover:text-sky-900 transition active:scale-95"
+        >
+          <span>🗺️ 지도 보기 ▲</span>
+        </button>
+      </div>
+
+      <div className="relative">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={koreaMapUi.panelClose}
+          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900/60 text-white backdrop-blur-md transition hover:bg-slate-900 hover:scale-105 focus:outline-none shadow-md"
+        >
+          <span aria-hidden className="text-base font-bold">×</span>
+        </button>
+
+        <CenterCard center={center} todaySeoul={todaySeoul} />
+      </div>
     </div>
   );
 }
