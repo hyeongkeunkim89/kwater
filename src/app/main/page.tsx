@@ -56,12 +56,11 @@ export default function MainPage() {
       {/* 메인 히어로 비주얼 슬라이더 */}
       <section
         aria-label="물문화관 대표 소개 슬라이드쇼"
-        className="h-[320px] sm:h-[360px] md:h-[400px] lg:h-[420px] w-full shrink-0 relative overflow-hidden bg-slate-900"
+        className="h-[440px] sm:h-[520px] md:h-[580px] lg:h-[620px] w-full shrink-0 relative overflow-hidden bg-slate-900"
       >
         <HeroSliderWrapper />
       </section>
 
-      {/* 메인 홈페이지 콘텐츠 영역 */}
       {/* 메인 홈페이지 콘텐츠 영역 */}
       <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 space-y-8 flex-1">
         {/* 상단 2컬럼 레이아웃 (동일 너비 50:50) */}
