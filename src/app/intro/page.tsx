@@ -190,27 +190,33 @@ export default function IntroPage() {
               </div>
             </div>
 
-            {/* 바로가기 버튼 */}
+            {/* 바로가기 버튼 (상단 히어로: 공간 안내 & 거점 지도) */}
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
-              <Link
-                href="/centers"
-                className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl bg-[#004D95] hover:bg-[#003870] text-white font-bold text-xs sm:text-sm px-7 transition shadow-md"
+              <a
+                href="#features"
+                className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl bg-[#004D95] hover:bg-[#003870] text-white font-bold text-xs sm:text-sm px-7 transition shadow-md gap-1.5"
               >
-                전국 15개 물문화관 둘러보기 →
-              </Link>
+                <span>주요 공간 &amp; 서비스</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
               <Link
-                href="/reserve"
-                className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 bg-white/80 hover:bg-white text-slate-800 font-bold text-xs sm:text-sm px-7 transition shadow-xs"
+                href="/status"
+                className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 bg-white/80 hover:bg-white text-slate-800 font-bold text-xs sm:text-sm px-7 transition shadow-xs gap-1.5"
               >
-                무료 가이드 투어 예약
+                <span>전국 거점 현황 지도</span>
+                <svg className="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. 물문화관 주요 시설 & 체험 역할 (중복 제거나 4대 특화 기능으로 개편) */}
-      <section className="py-16 sm:py-20 bg-white border-b border-slate-200 mt-8 sm:mt-12">
+      {/* 2. 물문화관 주요 시설 & 체험 역할 (id="features" 앵커 추가) */}
+      <section id="features" className="py-16 sm:py-20 bg-white border-b border-slate-200 mt-8 sm:mt-12 scroll-mt-6">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700 mb-3">
