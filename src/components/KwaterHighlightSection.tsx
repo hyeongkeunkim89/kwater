@@ -88,65 +88,58 @@ export function KwaterHighlightSection() {
         </div>
       </div>
 
-      {/* 비디오 리스트 */}
-      <div className="mt-4 space-y-3.5">
+      {/* SK HIGHLIGHT 스타일 유튜브 카드 리스트 (썸네일 위 제목 + 마우스 호버 시 제목 확대) */}
+      <div className="mt-4 space-y-4">
         {HIGHLIGHT_ITEMS.map((item) => (
           <div
             key={item.id}
             onClick={() => setActiveVideo(item)}
-            className="group cursor-pointer relative flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:border-[#004D95]/40 hover:shadow-md"
+            className="group cursor-pointer relative h-44 sm:h-48 w-full overflow-hidden rounded-xl border border-slate-200/90 bg-slate-950 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-[#004D95]/50"
           >
-            {/* 비디오 썸네일 */}
-            <div className="relative h-36 sm:h-28 w-full sm:w-40 shrink-0 overflow-hidden bg-slate-950">
-              {item.thumbnail.startsWith("http") ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={item.thumbnail}
-                  alt={item.title}
-                  className="h-full w-full object-cover object-center opacity-90 transition-transform duration-500 ease-out group-hover:scale-105 group-hover:opacity-100"
-                />
-              ) : (
-                <Image
-                  src={item.thumbnail}
-                  alt={item.title}
-                  fill
-                  className="object-cover object-center opacity-90 transition-transform duration-500 ease-out group-hover:scale-105 group-hover:opacity-100"
-                />
-              )}
-              {/* 태그 뱃지 */}
-              <div className="absolute left-2 top-2 z-10">
-                <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/85 border border-white/20 px-2 py-0.5 text-[9px] font-bold text-white backdrop-blur-md">
-                  {item.tag}
-                </span>
-              </div>
-              {/* 재생 버튼 아이콘 */}
-              <div className="absolute inset-0 z-10 flex items-center justify-center">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900/80 text-white border border-white/30 backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 shadow-md">
-                  <svg className="ml-0.5 h-4 w-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
+            {/* 1. 배경 썸네일 이미지 (마우스 호버 시 줌 애니메이션) */}
+            {item.thumbnail.startsWith("http") ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={item.thumbnail}
+                alt={item.title}
+                className="h-full w-full object-cover object-center opacity-85 transition-transform duration-500 ease-out group-hover:scale-108 group-hover:opacity-95"
+              />
+            ) : (
+              <Image
+                src={item.thumbnail}
+                alt={item.title}
+                fill
+                className="object-cover object-center opacity-85 transition-transform duration-500 ease-out group-hover:scale-108 group-hover:opacity-95"
+              />
+            )}
+
+            {/* 2. 그라데이션 오버레이 (텍스트 가독성 최상) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-black/20 transition-opacity duration-300 group-hover:from-slate-950/90 group-hover:via-slate-950/30" />
+
+            {/* 3. 상단 태그 뱃지 */}
+            <div className="absolute left-3.5 top-3.5 z-10">
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/80 border border-white/20 px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur-md shadow-xs">
+                {item.tag}
+              </span>
+            </div>
+
+            {/* 4. 중앙 유튜브 플레이 버튼 아이콘 */}
+            <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900/70 text-white border border-white/30 backdrop-blur-md transition-all duration-300 group-hover:scale-115 group-hover:bg-red-600 group-hover:border-red-500 shadow-lg">
+                <svg className="ml-0.5 h-5 w-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
               </div>
             </div>
 
-            {/* 비디오 타이틀 및 내용 */}
-            <div className="p-3 flex flex-col justify-between flex-1 bg-white min-w-0">
-              <div>
-                <span className="text-[10px] font-extrabold text-[#004D95] block">
-                  {item.author}
-                </span>
-                <h3 className="mt-0.5 text-xs sm:text-sm font-black text-slate-900 group-hover:text-[#004D95] transition-colors duration-200 line-clamp-1">
-                  {item.title}
-                </h3>
-                <p className="mt-1 text-[11px] text-slate-500 font-medium leading-normal line-clamp-2 break-keep">
-                  {item.desc}
-                </p>
-              </div>
-
-              <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-[#004D95]">
-                <span>영상 재생하기</span>
-                <span className="text-xs transform group-hover:translate-x-1 transition-transform duration-200">▶</span>
-              </div>
+            {/* 5. 하단 썸네일 위 제목 (마우스 호버 시 제목 확대 애니메이션: group-hover:scale-105) */}
+            <div className="absolute bottom-0 left-0 right-0 z-10 p-4 text-white">
+              <span className="text-[11px] font-bold text-sky-300/90 block mb-1 tracking-wide">
+                {item.author}
+              </span>
+              <h3 className="text-sm sm:text-base font-black text-white leading-snug line-clamp-2 transition-transform duration-300 ease-out origin-bottom-left group-hover:scale-105 group-hover:text-sky-100 drop-shadow-md">
+                {item.title}
+              </h3>
             </div>
           </div>
         ))}
