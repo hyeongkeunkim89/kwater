@@ -202,10 +202,13 @@ export default function FeedbackPage() {
       <WaterHubHeader activeNav="feedback" />
 
       {/* 히어로 타이틀 */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200 shrink-0">
+      <div className="relative overflow-hidden bg-gradient-to-r from-sky-50 to-indigo-50 border-b border-slate-200/80 shrink-0">
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="absolute right-1/4 top-0 h-48 w-48 rounded-full bg-sky-500/5 blur-[80px]" />
+        </div>
         <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 sm:px-8 text-center sm:text-left flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>
-            <span className="text-xs font-black uppercase tracking-widest text-[#004D95]">
+            <span className="text-xs font-black uppercase tracking-widest text-[#2F9FF3]">
               VISITOR CENTER TALK &amp; FAQ
             </span>
             <h1 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
