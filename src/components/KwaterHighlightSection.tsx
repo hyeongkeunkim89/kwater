@@ -63,13 +63,13 @@ export function KwaterHighlightSection() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
-            SK HIGHLIGHT STYLE · MEDIA
+            K-WATER HIGHLIGHT
           </span>
           <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-            K-water 미디어 하이라이트
+            생생한 물문화 영상 &amp; 숏폼
           </h2>
           <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
-            K-water 공식 유튜브에서 전해드리는 전국 댐과 물문화관의 생생한 숏폼 &amp; 대표 영상입니다.
+            K-water 공식 유튜브 채널에서 전해드리는 전국 댐과 물문화관의 생생한 현장 영상입니다.
           </p>
         </div>
 
