@@ -24,7 +24,7 @@ import { CenterCard } from "@/components/CenterExplorer";
 const PROVINCES_URL = "/korea-provinces.json";
 
 const PIN_COLORS: Record<DisplayStatus, string> = {
-  ["\uC6B4\uC601\uC911"]: "#0066B3",
+  ["\uC6B4\uC601\uC911"]: "#059669",
   ["\uC624\uB298 \uD734\uAD00"]: "#7c3aed",
   ["\uC784\uC2DC\uD734\uAD00"]: "#ef4444",
 };
