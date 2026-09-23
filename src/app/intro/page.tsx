@@ -109,41 +109,50 @@ export default function IntroPage() {
               지역사회와 호흡하는 지속 가능한 상생의 공간을 지향합니다.
             </p>
 
-            {/* 하단 3대 가치 라인 아이콘 & 영문 라벨 */}
-            <div className="grid grid-cols-3 gap-6 sm:gap-10 pt-4 border-t border-slate-900/15 w-full max-w-md mx-auto">
+            {/* 3대 핵심 가치 한글 뱃지 카드 */}
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-5 border-t border-slate-900/15 w-full max-w-lg mx-auto">
               {/* 역사 보존 */}
-              <div className="flex flex-col items-center">
-                <div className="mb-2 text-slate-900">
-                  <svg className="w-8 h-8 sm:w-9 sm:h-9 stroke-[1.75]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <div className="flex flex-col items-center justify-center rounded-xl bg-white/80 border border-slate-200/80 p-3 sm:p-3.5 text-center shadow-xs backdrop-blur-xs transition hover:bg-white hover:border-sky-300 hover:shadow-sm">
+                <div className="mb-1.5 flex h-9 w-9 items-center justify-center rounded-lg bg-sky-100/80 text-[#004D95]">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
-                <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 tracking-tight">
-                  History<br />Preservation
+                <span className="text-xs sm:text-sm font-black text-slate-900 tracking-tight">
+                  역사 보존
+                </span>
+                <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-0.5 whitespace-nowrap">
+                  50년 수자원 기록
                 </span>
               </div>
 
-              {/* 생태 교육 */}
-              <div className="flex flex-col items-center">
-                <div className="mb-2 text-slate-900">
-                  <svg className="w-8 h-8 sm:w-9 sm:h-9 stroke-[1.75]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              {/* 생태 체험 */}
+              <div className="flex flex-col items-center justify-center rounded-xl bg-white/80 border border-slate-200/80 p-3 sm:p-3.5 text-center shadow-xs backdrop-blur-xs transition hover:bg-white hover:border-sky-300 hover:shadow-sm">
+                <div className="mb-1.5 flex h-9 w-9 items-center justify-center rounded-lg bg-sky-100/80 text-sky-600">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.597 15.1a2 2 0 00-1.879 1.158L2.3 19.1A2 2 0 004.135 22h15.73a2 2 0 001.835-2.9l-2.272-3.672zM12 3v9m0 0l-3-3m3 3l3-3" />
                   </svg>
                 </div>
-                <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 tracking-tight">
-                  Eco-Education<br />Education
+                <span className="text-xs sm:text-sm font-black text-slate-900 tracking-tight">
+                  생태 체험
+                </span>
+                <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-0.5 whitespace-nowrap">
+                  디지털 미디어 체험
                 </span>
               </div>
 
               {/* 지역 상생 */}
-              <div className="flex flex-col items-center">
-                <div className="mb-2 text-slate-900">
-                  <svg className="w-8 h-8 sm:w-9 sm:h-9 stroke-[1.75]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+              <div className="flex flex-col items-center justify-center rounded-xl bg-white/80 border border-slate-200/80 p-3 sm:p-3.5 text-center shadow-xs backdrop-blur-xs transition hover:bg-white hover:border-sky-300 hover:shadow-sm">
+                <div className="mb-1.5 flex h-9 w-9 items-center justify-center rounded-lg bg-sky-100/80 text-teal-600">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 tracking-tight">
-                  Community
+                <span className="text-xs sm:text-sm font-black text-slate-900 tracking-tight">
+                  지역 상생
+                </span>
+                <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-0.5 whitespace-nowrap">
+                  힐링 수변 문화 공간
                 </span>
               </div>
             </div>
