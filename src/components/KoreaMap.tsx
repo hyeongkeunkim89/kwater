@@ -315,7 +315,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
         </div>
       </div>
 
-      <div className="lg:w-[360px] lg:shrink-0">
+      <div className="lg:w-[440px] xl:w-[460px] lg:shrink-0">
         {selected ? (
           <CenterPanel
             center={selected}
@@ -332,16 +332,16 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
 
 function EmptyPanel() {
   return (
-    <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white lg:min-h-[540px]">
+    <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white lg:min-h-[600px]">
       <div className="space-y-4 p-8 text-center">
-        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-md ring-4 ring-sky-300/80">
+        <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-white p-3.5 shadow-md ring-4 ring-sky-300/80">
           <img src="/character.png" alt="방울이 캐릭터" className="h-full w-full object-contain" />
         </div>
         <div>
-          <p className="font-bold text-slate-800">
+          <p className="text-lg font-bold text-slate-800">
             {koreaMapUi.emptyTitle}
           </p>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1.5 text-base leading-relaxed text-slate-600">
             {koreaMapUi.emptyBodyLine1}
             <br />
             {koreaMapUi.emptyBodyLine2}

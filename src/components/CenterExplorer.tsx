@@ -386,7 +386,7 @@ export const CenterCard = memo(function CenterCard({
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl shadow-sm">
       {/* 상단 대표 사진 이미지 커버 배너 */}
-      <Link href={detailHref} className="relative h-48 w-full overflow-hidden bg-slate-100 block shrink-0">
+      <Link href={detailHref} className="relative h-56 w-full overflow-hidden bg-slate-100 block shrink-0">
         <Image
           src={c.imageSrc}
           alt={c.imageAlt || c.name}
@@ -395,54 +395,54 @@ export const CenterCard = memo(function CenterCard({
           quality={85}
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
 
         {/* 상단 뱃지 묶음 */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-1.5 z-10">
+        <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-1.5 z-10">
           <div className="flex flex-wrap gap-1.5">
-            <span className="rounded-full bg-slate-900/80 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
+            <span className="rounded-full bg-slate-900/80 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm">
               {c.kind}
             </span>
-            <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
+            <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm">
               {c.themes[0]}
             </span>
           </div>
 
-          <span className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-bold backdrop-blur-md ring-1 ring-inset ${displayStatusStyles[display].badge}`}>
+          <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold backdrop-blur-md ring-1 ring-inset ${displayStatusStyles[display].badge}`}>
             {display}
           </span>
         </div>
 
         {/* 하단 타이틀 Overlay */}
-        <div className="absolute bottom-3 left-3 right-3 text-white z-10">
-          <h3 className="text-lg font-black leading-tight drop-shadow-md text-white">
+        <div className="absolute bottom-3.5 left-3.5 right-3.5 text-white z-10">
+          <h3 className="text-xl sm:text-2xl font-black leading-tight drop-shadow-md text-white">
             {c.name}
           </h3>
-          <p className="text-[11px] font-medium text-slate-200 drop-shadow-sm mt-0.5">
+          <p className="text-xs sm:text-sm font-medium text-slate-200 drop-shadow-sm mt-1">
             {formatCenterRegionLine(c)}
           </p>
         </div>
       </Link>
 
       {/* 본문 영역 */}
-      <div className="flex flex-1 flex-col gap-3 p-4">
-        <p className="line-clamp-2 text-xs sm:text-sm leading-relaxed text-slate-600 font-medium">
+      <div className="flex flex-1 flex-col gap-4 p-5">
+        <p className="line-clamp-2 text-sm sm:text-base leading-relaxed text-slate-700 font-medium">
           {c.summary}
         </p>
 
         {/* 🏛️ 층별 주요 공간 (Floor Guide) */}
         {c.floors && c.floors.length > 0 && (
-          <div className="rounded-xl bg-slate-50 border border-slate-100 p-2.5 text-xs space-y-1.5">
-            <span className="text-[10px] font-bold text-sky-700 uppercase tracking-wide block">
+          <div className="rounded-xl bg-slate-50 border border-slate-200/80 p-3.5 text-sm space-y-2">
+            <span className="text-xs font-bold text-sky-800 uppercase tracking-wide block">
               🏛️ 층별 주요 공간
             </span>
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               {c.floors.slice(0, 3).map((f) => (
                 <div key={f.floorLabel} className="flex items-baseline gap-2">
-                  <span className="shrink-0 font-bold text-slate-800 text-[10px] bg-white px-1.5 py-0.5 rounded border border-slate-200">
+                  <span className="shrink-0 font-bold text-slate-800 text-xs bg-white px-2 py-0.5 rounded border border-slate-200 shadow-2xs">
                     {f.floorLabel}
                   </span>
-                  <span className="text-slate-600 truncate text-[11px] font-medium">
+                  <span className="text-slate-700 truncate text-xs sm:text-sm font-medium">
                     {f.highlights.join(", ")}
                   </span>
                 </div>
@@ -452,8 +452,8 @@ export const CenterCard = memo(function CenterCard({
         )}
 
         {/* 위치 및 주일 휴무 정보 */}
-        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1.5 gap-y-1 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-600 mt-auto">
-          <span className="shrink-0 font-bold text-slate-800 leading-snug">
+        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-2 gap-y-1.5 rounded-xl bg-slate-50 border border-slate-200/80 p-3.5 text-sm text-slate-700 mt-auto">
+          <span className="shrink-0 font-bold text-slate-900 leading-snug">
             {centerExplorerUi.location}
           </span>
           <a
@@ -464,10 +464,10 @@ export const CenterCard = memo(function CenterCard({
             className="min-w-0 leading-snug font-bold text-sky-700 hover:text-sky-900 hover:underline hover:underline-offset-2 transition flex items-center gap-1 group/loc"
           >
             <span className="truncate">{c.address}</span>
-            <span className="text-[10px] text-sky-500 group-hover/loc:translate-x-0.5 transition shrink-0">🗺️ ↗</span>
+            <span className="text-xs text-sky-500 group-hover/loc:translate-x-0.5 transition shrink-0">🗺️ ↗</span>
           </a>
 
-          <span className="shrink-0 font-bold text-slate-800 leading-snug">
+          <span className="shrink-0 font-bold text-slate-900 leading-snug">
             {centerExplorerUi.weeklyClosed}
           </span>
           <span className="min-w-0 leading-snug font-semibold text-slate-700">
@@ -476,16 +476,16 @@ export const CenterCard = memo(function CenterCard({
         </div>
 
         {/* 하단 버튼 묶음 */}
-        <div className="flex gap-2 pt-1">
+        <div className="flex gap-2.5 pt-1">
           <Link
             href={detailHref}
-            className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-800 transition hover:border-sky-400 hover:bg-sky-50 hover:text-sky-800 shadow-sm"
+            className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-slate-300 bg-white py-3 text-sm font-bold text-slate-800 transition hover:border-sky-400 hover:bg-sky-50 hover:text-sky-800 shadow-sm"
           >
             시설안내 →
           </Link>
           <Link
             href={reserveHref}
-            className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-sky-600 py-2.5 text-xs font-bold text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20"
+            className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-sky-600 py-3 text-sm font-bold text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20"
           >
             투어예약 📅
           </Link>
