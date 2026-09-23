@@ -63,18 +63,18 @@ export default function MainPage() {
 
       {/* 메인 홈페이지 콘텐츠 영역 */}
       <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 space-y-8 flex-1">
-        {/* 상단 2컬럼 레이아웃 (좌: 미디어 하이라이트, 우: 주요 서비스 바로가기) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* 좌측 5컬럼: K-water 미디어 하이라이트 */}
-          <section className="lg:col-span-5">
+        {/* 상단 2컬럼 레이아웃 (동일 너비 50:50 및 동일 높이) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          {/* 좌측 1/2컬럼: K-water 미디어 하이라이트 */}
+          <section className="lg:col-span-1 h-full">
             <KwaterHighlightSection />
           </section>
 
-          {/* 우측 7컬럼: 주요 물문화 서비스 바로가기 */}
-          <div className="lg:col-span-7">
+          {/* 우측 1/2컬럼: 주요 물문화 서비스 바로가기 */}
+          <div className="lg:col-span-1 h-full">
             <section
               aria-label="주요 물문화 서비스 바로가기"
-              className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300"
+              className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 h-full flex flex-col justify-between"
             >
               <div className="border-b border-slate-100 pb-5">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
@@ -88,15 +88,15 @@ export default function MainPage() {
                 </p>
               </div>
 
-              <div className="mt-5 space-y-4">
+              <div className="mt-5 space-y-4 flex-1 flex flex-col justify-between">
                 {QUICK_CARDS.map((card) => (
                   <Link
                     key={card.title}
                     href={card.path}
-                    className="group relative flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md"
+                    className="group relative flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md h-36 sm:h-40 flex-1 min-h-[140px]"
                   >
                     {/* 1. 좌측 카드 썸네일 이미지 */}
-                    <div className="relative h-40 sm:h-auto sm:w-48 shrink-0 overflow-hidden bg-slate-100">
+                    <div className="relative h-40 sm:h-full sm:w-44 shrink-0 overflow-hidden bg-slate-100">
                       <Image
                         src={card.image}
                         alt={card.title}
@@ -119,12 +119,12 @@ export default function MainPage() {
                         <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200">
                           {card.title}
                         </h3>
-                        <p className="mt-1.5 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed break-keep">
+                        <p className="mt-1.5 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">
                           {card.desc}
                         </p>
                       </div>
 
-                      <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
                         <span>{card.btnLabel}</span>
                         <span className="text-sm font-black transform group-hover:translate-x-1.5 transition-transform duration-200">
                           →

@@ -57,7 +57,7 @@ export function KwaterHighlightSection() {
   return (
     <section
       aria-label="K-water 미디어 하이라이트"
-      className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300"
+      className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 h-full flex flex-col justify-between"
     >
       {/* 섹션 헤더 */}
       <div className="border-b border-slate-100 pb-5">
@@ -87,12 +87,12 @@ export function KwaterHighlightSection() {
       </div>
 
       {/* SK HIGHLIGHT 스타일 유튜브 카드 리스트 (썸네일 위 제목 + 마우스 호버 시 제목 확대) */}
-      <div className="mt-4 space-y-4">
+      <div className="mt-5 space-y-4 flex-1 flex flex-col justify-between">
         {HIGHLIGHT_ITEMS.map((item) => (
           <div
             key={item.id}
             onClick={() => setActiveVideo(item)}
-            className="group cursor-pointer relative h-44 sm:h-48 w-full overflow-hidden rounded-xl border border-slate-200/90 bg-slate-950 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-[#004D95]/50"
+            className="group cursor-pointer relative h-36 sm:h-40 w-full overflow-hidden rounded-xl border border-slate-200/90 bg-slate-950 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-[#004D95]/50 flex-1 min-h-[140px]"
           >
             {/* 1. 배경 썸네일 이미지 (마우스 호버 시 줌 애니메이션) */}
             {item.thumbnail.startsWith("http") ? (
