@@ -29,6 +29,7 @@ export const viewport: Viewport = {
 
 import { Providers } from "@/components/Providers";
 import { KakaoScriptLoader } from "@/components/KakaoScriptLoader";
+import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 
 export default function RootLayout({
   children,
@@ -57,7 +58,10 @@ export default function RootLayout({
       </head>
       <body className={`${notoSansKr.className} min-h-screen min-w-0 overflow-x-hidden font-sans antialiased text-slate-900`}>
         <KakaoScriptLoader />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <ScrollToTopButton />
+        </Providers>
       </body>
     </html>
   );
