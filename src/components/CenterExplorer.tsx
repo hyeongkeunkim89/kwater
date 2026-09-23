@@ -404,7 +404,7 @@ export const CenterCard = memo(function CenterCard({
               {c.kind}
             </span>
             <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
-              {c.sido} · {c.sigungu}
+              {c.themes[0]}
             </span>
           </div>
 
