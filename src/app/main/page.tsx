@@ -62,124 +62,132 @@ export default function MainPage() {
       </section>
 
       {/* 메인 홈페이지 콘텐츠 영역 */}
-      <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 space-y-10 sm:space-y-14 flex-1">
-        
-        {/* 1. 주요 물문화 서비스 바로가기 (모던 라이트 통일 카드 디자인) */}
-        <section aria-label="주요 물문화 서비스 바로가기" className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300">
-          <div className="border-b border-slate-100 pb-5">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
-              K-WATER GATEWAY
-            </span>
-            <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-              주요 물문화 서비스 바로가기
-            </h2>
-            <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
-              전국 15개 물문화관의 핵심 서비스와 가이드 해설 투어, 현황 지도를 한눈에 이용해 보세요.
-            </p>
-          </div>
+      <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* 좌측 5컬럼: K-water 미디어 하이라이트 */}
+          <section className="lg:col-span-5">
+            <KwaterHighlightSection />
+          </section>
 
-          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {QUICK_CARDS.map((card) => (
-              <Link
-                key={card.title}
-                href={card.path}
-                className="group relative flex flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-sky-400 hover:shadow-xl"
-              >
-                {/* 1. 상단 카드 썸네일 이미지 */}
-                <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-100">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
-                    fill
-                    className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  {/* 상단 뱃지 */}
-                  <div className="absolute left-3.5 top-3.5 z-10">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-white/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md shadow-xs">
-                      {card.icon}
-                      <span>{card.badge}</span>
-                    </span>
-                  </div>
+          {/* 우측 7컬럼: 주요 물문화 서비스 바로가기 & 전국 거점 종합안내 */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* 1. 주요 물문화 서비스 바로가기 */}
+            <section
+              aria-label="주요 물문화 서비스 바로가기"
+              className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300"
+            >
+              <div className="border-b border-slate-100 pb-5">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
+                  K-WATER GATEWAY
+                </span>
+                <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                  주요 물문화 서비스 바로가기
+                </h2>
+                <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+                  전국 15개 물문화관의 핵심 서비스와 가이드 해설 투어, 현황 지도를 한눈에 이용해 보세요.
+                </p>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
+                {QUICK_CARDS.map((card) => (
+                  <Link
+                    key={card.title}
+                    href={card.path}
+                    className="group relative flex flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-sky-400 hover:shadow-xl"
+                  >
+                    {/* 1. 상단 카드 썸네일 이미지 */}
+                    <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-100">
+                      <Image
+                        src={card.image}
+                        alt={card.title}
+                        fill
+                        className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                      {/* 상단 뱃지 */}
+                      <div className="absolute left-3.5 top-3.5 z-10">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-white/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md shadow-xs">
+                          {card.icon}
+                          <span>{card.badge}</span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* 2. 하단 정보 및 버튼 영역 */}
+                    <div className="p-5 flex flex-col justify-between flex-1 bg-white">
+                      <div>
+                        <h3 className="text-lg sm:text-xl font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200">
+                          {card.title}
+                        </h3>
+                        <p className="mt-1.5 mb-4 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">
+                          {card.desc}
+                        </p>
+                      </div>
+
+                      <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
+                        <span>{card.btnLabel}</span>
+                        <span className="text-base font-black transform group-hover:translate-x-1.5 transition-transform duration-200">
+                          →
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* 2. 전국 15대 댐 물문화관 거점 종합안내 */}
+            <section
+              aria-label="물문화관 전국 현황 현황판"
+              className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300"
+            >
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                <div className="flex-1 min-w-0">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
+                    K-WATER NETWORK
+                  </span>
+                  <h3 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                    전국 15대 댐 물문화관 거점 종합안내
+                  </h3>
+                  <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+                    전국 댐 수역에 조성된 15개 물문화관의 운영시간, 관람 상태, 실시간 안내 정보를 지도로 경험해 보세요.
+                  </p>
                 </div>
 
-                {/* 2. 하단 정보 및 버튼 영역 */}
-                <div className="p-5 flex flex-col justify-between flex-1 bg-white">
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200">
-                      {card.title}
-                    </h3>
-                    <p className="mt-1.5 mb-4 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">
-                      {card.desc}
-                    </p>
+                <div className="shrink-0 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 sm:divide-x sm:divide-slate-200/80">
+                  <div className="flex w-full sm:w-auto items-center justify-evenly sm:justify-start gap-6 sm:gap-2">
+                    <div className="sm:px-4 text-center">
+                      <span className="text-lg sm:text-xl font-black text-sky-600 tabular-nums">
+                        {waterCenters.length}개소
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-bold block mt-0.5 whitespace-nowrap uppercase tracking-wider">
+                        전국 거점 수
+                      </span>
+                    </div>
+                    <div className="h-7 w-px bg-slate-200/80 sm:hidden" />
+                    <div className="sm:px-4 text-center">
+                      <span className="text-lg sm:text-xl font-black text-sky-600 tabular-nums">
+                        {sidoList.length}개
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-bold block mt-0.5 whitespace-nowrap uppercase tracking-wider">
+                        광역 시·도
+                      </span>
+                    </div>
                   </div>
-
-                  <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
-                    <span>{card.btnLabel}</span>
-                    <span className="text-base font-black transform group-hover:translate-x-1.5 transition-transform duration-200">
-                      →
-                    </span>
+                  <div className="w-full sm:w-auto sm:pl-6">
+                    <Link
+                      href="/status"
+                      className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-xs hover:shadow-md group whitespace-nowrap w-full sm:w-auto"
+                    >
+                      <span>전국 현황지도 바로가기</span>
+                      <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
+                    </Link>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* 2. K-water 미디어 하이라이트 (SK HIGHLIGHT 스타일) */}
-        <KwaterHighlightSection />
-
-        {/* 3. 전국 15대 댐 물문화관 거점 종합안내 */}
-        <section
-          aria-label="물문화관 전국 현황 현황판"
-          className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300"
-        >
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            <div className="flex-1 min-w-0">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
-                K-WATER NETWORK
-              </span>
-              <h3 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                전국 15대 댐 물문화관 거점 종합안내
-              </h3>
-              <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
-                전국 댐 수역에 조성된 15개 물문화관의 운영시간, 관람 상태, 실시간 안내 정보를 지도로 경험해 보세요.
-              </p>
-            </div>
-
-            <div className="shrink-0 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 sm:divide-x sm:divide-slate-200/80">
-              <div className="flex w-full sm:w-auto items-center justify-evenly sm:justify-start gap-6 sm:gap-2">
-                <div className="sm:px-4 text-center">
-                  <span className="text-lg sm:text-xl font-black text-sky-600 tabular-nums">
-                    {waterCenters.length}개소
-                  </span>
-                  <span className="text-[10px] text-slate-400 font-bold block mt-0.5 whitespace-nowrap uppercase tracking-wider">
-                    전국 거점 수
-                  </span>
-                </div>
-                <div className="h-7 w-px bg-slate-200/80 sm:hidden" />
-                <div className="sm:px-4 text-center">
-                  <span className="text-lg sm:text-xl font-black text-sky-600 tabular-nums">
-                    {sidoList.length}개
-                  </span>
-                  <span className="text-[10px] text-slate-400 font-bold block mt-0.5 whitespace-nowrap uppercase tracking-wider">
-                    광역 시·도
-                  </span>
                 </div>
               </div>
-              <div className="w-full sm:w-auto sm:pl-6">
-                <Link
-                  href="/status"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-xs hover:shadow-md group whitespace-nowrap w-full sm:w-auto"
-                >
-                  <span>전국 현황지도 바로가기</span>
-                  <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
-                </Link>
-              </div>
-            </div>
+            </section>
           </div>
-        </section>
-
+        </div>
       </main>
 
       <WaterHubFooter />

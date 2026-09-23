@@ -57,46 +57,47 @@ export function KwaterHighlightSection() {
   return (
     <section
       aria-label="K-water 미디어 하이라이트"
-      className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300"
+      className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300"
     >
-      {/* 섹션 헤더 (Option A 표준 헤더 규격) */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-5">
-        <div>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
+      {/* 섹션 헤더 */}
+      <div className="flex flex-col gap-3 border-b border-slate-100 pb-4">
+        <div className="flex items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 text-[#004D95] border border-blue-100 px-3 py-0.5 text-[11px] font-black tracking-wider uppercase">
             K-WATER HIGHLIGHT
           </span>
-          <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          <a
+            href="https://www.youtube.com/@kwatertv"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-xs font-bold text-red-600 hover:text-red-700 transition"
+          >
+            <svg className="h-3.5 w-3.5 fill-current text-red-600" viewBox="0 0 24 24">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            <span>공식 유튜브</span>
+            <span>→</span>
+          </a>
+        </div>
+        <div>
+          <h2 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
             생생한 물문화 영상 &amp; 숏폼
           </h2>
-          <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
-            K-water 공식 유튜브 채널에서 전해드리는 전국 댐과 물문화관의 생생한 현장 영상입니다.
+          <p className="mt-1 text-xs text-slate-500 font-medium">
+            K-water 공식 채널에서 전해드리는 물문화관 생생 영상입니다.
           </p>
         </div>
-
-        <a
-          href="https://www.youtube.com/@kwatertv"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="self-start sm:self-auto inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-red-600 text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-xs hover:shadow-md group whitespace-nowrap"
-        >
-          <svg className="h-4 w-4 text-red-500 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
-          <span>K-water 공식 유튜브 채널</span>
-          <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
-        </a>
       </div>
 
-      {/* 영상 카드 그리드 */}
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+      {/* 비디오 리스트 */}
+      <div className="mt-4 space-y-3.5">
         {HIGHLIGHT_ITEMS.map((item) => (
           <div
             key={item.id}
             onClick={() => setActiveVideo(item)}
-            className="group cursor-pointer relative flex flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-sky-400 hover:shadow-xl"
+            className="group cursor-pointer relative flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:border-[#004D95]/40 hover:shadow-md"
           >
-            {/* 비디오 썸네일 영역 */}
-            <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-950">
+            {/* 비디오 썸네일 */}
+            <div className="relative h-36 sm:h-28 w-full sm:w-40 shrink-0 overflow-hidden bg-slate-950">
               {item.thumbnail.startsWith("http") ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -112,48 +113,39 @@ export function KwaterHighlightSection() {
                   className="object-cover object-center opacity-90 transition-transform duration-500 ease-out group-hover:scale-105 group-hover:opacity-100"
                 />
               )}
-
-              {/* 딤드 및 플레이 버튼 오버레이 */}
-              <div className="absolute inset-0 bg-slate-950/30 group-hover:bg-slate-950/20 transition-colors duration-300" />
-
               {/* 태그 뱃지 */}
-              <div className="absolute left-3.5 top-3.5 z-10">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-white/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md shadow-xs">
+              <div className="absolute left-2 top-2 z-10">
+                <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/85 border border-white/20 px-2 py-0.5 text-[9px] font-bold text-white backdrop-blur-md">
                   {item.tag}
                 </span>
               </div>
-
-              {/* 재생 버튼 아이콘 (중앙 정렬) */}
+              {/* 재생 버튼 아이콘 */}
               <div className="absolute inset-0 z-10 flex items-center justify-center">
-                <div className="flex h-13 w-13 items-center justify-center rounded-full bg-slate-900/80 text-white border border-white/30 backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 group-hover:border-red-400 shadow-xl">
-                  <svg className="ml-1 h-6 w-6 fill-current" viewBox="0 0 24 24">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900/80 text-white border border-white/30 backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 shadow-md">
+                  <svg className="ml-0.5 h-4 w-4 fill-current" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </div>
               </div>
             </div>
 
-            {/* 비디오 설명 영역 */}
-            <div className="p-5 flex flex-col justify-between flex-1 bg-white">
+            {/* 비디오 타이틀 및 내용 */}
+            <div className="p-3 flex flex-col justify-between flex-1 bg-white min-w-0">
               <div>
-                <p className="text-[11px] font-extrabold text-sky-600 tracking-tight">
+                <span className="text-[10px] font-extrabold text-[#004D95] block">
                   {item.author}
-                </p>
-                <h3 className="mt-1 text-base sm:text-lg font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200 line-clamp-2 min-h-[3.25rem]">
+                </span>
+                <h3 className="mt-0.5 text-xs sm:text-sm font-black text-slate-900 group-hover:text-[#004D95] transition-colors duration-200 line-clamp-1">
                   {item.title}
                 </h3>
-                <p className="mt-1.5 mb-4 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed break-keep min-h-[2.5rem]">
+                <p className="mt-1 text-[11px] text-slate-500 font-medium leading-normal line-clamp-2 break-keep">
                   {item.desc}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
-                <span className="flex items-center gap-1">
-                  <span>영상 재생하기</span>
-                </span>
-                <span className="text-sm font-black transform group-hover:translate-x-1.5 transition-transform duration-200">
-                  ▶
-                </span>
+              <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-[#004D95]">
+                <span>영상 재생하기</span>
+                <span className="text-xs transform group-hover:translate-x-1 transition-transform duration-200">▶</span>
               </div>
             </div>
           </div>
