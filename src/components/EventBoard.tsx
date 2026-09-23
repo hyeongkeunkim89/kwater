@@ -192,37 +192,48 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
         /* ================= 목록 화면 ================= */
         <div className="space-y-10">
           {/* 🌟 대표 참여형 이벤트: 물 이야기 사진전 */}
-          <div className="rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50/50 via-teal-50/20 to-white p-5 sm:p-6 shadow-sm border-l-4 border-l-sky-500">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div className="space-y-2.5 max-w-2xl">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-6 border-b border-slate-100">
+              <div className="space-y-3 max-w-2xl">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex rounded-full bg-sky-100 text-sky-700 text-[10px] font-black px-2.5 py-0.5 uppercase tracking-wider">
-                    대표 시그니처 이벤트 (상시 운영)
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 text-[#004D95] border border-blue-100 text-[11px] font-black px-3 py-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#004D95]"></span>
+                    K-WATER GALLERY
                   </span>
-                  <span className="inline-flex rounded-full bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 shadow-sm shadow-emerald-500/10">
-                    진행중
+                  <span className="inline-flex rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold px-2.5 py-0.5">
+                    상시 참여 이벤트
                   </span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
-                  📷 이달의 물 이야기 사진전
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+                  <svg className="w-6 h-6 text-[#004D95] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>이달의 물 이야기 사진전</span>
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  물문화관의 수려한 자연 경관과 산책로를 걸으며 포착한 소중한 순간들을 사진으로 공유해 주세요! 
-                  매월 1편의 우수작을 선정하여 명예의 전당인 <strong>&apos;이달의 사진&apos;</strong>에 등재하고 상품을 드립니다.
+                  전국 15개 물문화관과 수변 산책로에서 포착한 특별하고 아름다운 순간을 공유해 주세요. 
+                  매월 우수작을 선정하여 명예의 전당인 <strong className="font-bold text-[#004D95]">&apos;이달의 사진&apos;</strong> 등재 및 문화상품권을 드립니다.
                 </p>
               </div>
-              <div className="shrink-0 flex flex-col sm:flex-row md:flex-col gap-2 w-full md:w-auto">
+              <div className="shrink-0 flex flex-col sm:flex-row md:flex-col gap-2.5 w-full md:w-auto">
                 <Link
                   href="/mul-iyagi"
-                  className="flex-1 md:flex-initial inline-flex min-h-[44px] items-center justify-center rounded-xl bg-sky-500 hover:bg-sky-400 text-xs font-bold text-white px-5 transition shadow-lg shadow-sky-500/10 text-center"
+                  className="flex-1 md:flex-initial inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-bold text-white px-6 transition shadow-sm text-center"
                 >
-                  📸 내 사진 업로드 (참여하기)
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span>사진 응모하기</span>
                 </Link>
                 <Link
                   href="/mul-iyagi"
-                  className="flex-1 md:flex-initial inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-bold px-5 transition text-center"
+                  className="flex-1 md:flex-initial inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-bold px-6 transition text-center"
                 >
-                  🖼️ 전체 사진 갤러리 구경
+                  <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span>전체 갤러리 감상</span>
                 </Link>
               </div>
             </div>
@@ -277,9 +288,12 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
               <button
                 type="button"
                 onClick={() => setShowWriteModal(true)}
-                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-sky-500 hover:bg-sky-400 text-sm font-bold text-white px-5 transition shadow-md shadow-sky-500/10 self-start md:self-auto"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#004D95] hover:bg-[#003870] text-sm font-bold text-white px-5 transition shadow-sm self-start md:self-auto"
               >
-                ✍️ 새 이벤트 등록하기
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                <span>새 이벤트 등록</span>
               </button>
             </div>
 

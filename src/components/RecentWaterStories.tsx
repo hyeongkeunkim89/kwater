@@ -38,34 +38,35 @@ export function RecentWaterStories({ storiesLive }: { storiesLive: boolean }) {
   return (
     <div className="mt-6 pt-6 border-t border-slate-100">
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-          실시간 참여 작품
+        <span className="text-xs font-bold text-slate-800 tracking-tight flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+          <span>실시간 시민 참여 작품</span>
         </span>
-        <span className="text-[10px] text-slate-400 font-medium">
-          최근 {recentStories.length}개 업로드 건
+        <span className="text-[11px] text-slate-500 font-semibold">
+          최근 {recentStories.length}개 작품
         </span>
       </div>
       {recentStories.length === 0 ? (
-        <p className="text-xs text-slate-400 italic">아직 등록된 사진이 없습니다. 첫 번째 사진을 올려주세요!</p>
+        <p className="text-xs text-slate-400 italic py-4">아직 등록된 사진이 없습니다. 첫 번째 사진을 올려주세요!</p>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {recentStories.map((story) => (
             <div
               key={story.id}
-              className="group relative aspect-square rounded-xl overflow-hidden bg-slate-100 border border-slate-200/60"
+              className="group relative aspect-[4/3] sm:aspect-square rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs hover:border-[#004D95]/40 hover:shadow-md transition duration-300"
             >
               <img
                 src={story.imageSrc}
                 alt={story.caption}
-                className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
+                className="h-full w-full object-cover group-hover:scale-105 transition duration-500 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-0 group-hover:opacity-100 transition duration-200 flex flex-col justify-end p-2.5 text-white">
-                <span className="text-[9px] font-black text-sky-400">{story.centerName}</span>
-                <p className="text-[10px] font-bold truncate mt-0.5">&quot;{story.caption}&quot;</p>
-                <span className="text-[8px] text-white/50 mt-1">by {story.nickname}</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition duration-200 flex flex-col justify-end p-3 text-white">
+                <span className="text-[10px] font-black text-sky-300 tracking-tight">{story.centerName}</span>
+                <p className="text-xs font-bold truncate mt-0.5 text-white/95">&quot;{story.caption}&quot;</p>
+                <span className="text-[10px] text-white/70 mt-0.5 font-medium">by {story.nickname}</span>
               </div>
               {story.isPhotoOfMonth && (
-                <span className="absolute top-2 left-2 rounded bg-amber-500 text-[8px] font-black text-white px-1.5 py-0.5 shadow-sm">
+                <span className="absolute top-2 left-2 rounded-md bg-amber-500 text-[10px] font-black text-white px-2 py-0.5 shadow-sm border border-amber-400">
                   이달의 사진
                 </span>
               )}
