@@ -60,9 +60,9 @@ export function KwaterHighlightSection() {
       className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300"
     >
       {/* 섹션 헤더 */}
-      <div className="flex flex-col gap-3 border-b border-slate-100 pb-4">
+      <div className="border-b border-slate-100 pb-5">
         <div className="flex items-center justify-between gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 text-[#004D95] border border-blue-100 px-3 py-0.5 text-[11px] font-black tracking-wider uppercase">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
             K-WATER HIGHLIGHT
           </span>
           <a
@@ -78,14 +78,12 @@ export function KwaterHighlightSection() {
             <span>→</span>
           </a>
         </div>
-        <div>
-          <h2 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
-            생생한 물문화 영상 &amp; 숏폼
-          </h2>
-          <p className="mt-1 text-xs text-slate-500 font-medium">
-            K-water 공식 채널에서 전해드리는 물문화관 생생 영상입니다.
-          </p>
-        </div>
+        <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          생생한 물문화 영상 &amp; 숏폼
+        </h2>
+        <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+          K-water 공식 채널에서 전해드리는 물문화관 생생 영상입니다.
+        </p>
       </div>
 
       {/* SK HIGHLIGHT 스타일 유튜브 카드 리스트 (썸네일 위 제목 + 마우스 호버 시 제목 확대) */}

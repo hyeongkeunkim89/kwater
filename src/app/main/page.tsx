@@ -148,9 +148,9 @@ export default function MainPage() {
               <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
                 K-WATER NETWORK
               </span>
-              <h3 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                 전국 15대 댐 물문화관 거점 종합안내
-              </h3>
+              </h2>
               <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
                 전국 댐 수역에 조성된 15개 물문화관의 운영시간, 관람 상태, 실시간 안내 정보를 지도로 경험해 보세요.
               </p>
