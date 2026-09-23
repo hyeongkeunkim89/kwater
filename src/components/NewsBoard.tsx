@@ -94,9 +94,12 @@ export function NewsBoard({ newsList, selectedNews, center }: Props) {
             <button
               type="button"
               onClick={() => setShowWriteModal(true)}
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-sky-500 hover:bg-sky-400 text-sm font-bold text-white px-5 transition shadow-md shadow-sky-500/10 self-start sm:self-auto"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-bold text-white px-5 transition shadow-sm self-start sm:self-auto"
             >
-              ✍️ 새 소식 등록하기
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>새 소식 등록하기</span>
             </button>
           </div>
 

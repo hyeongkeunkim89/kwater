@@ -191,9 +191,9 @@ export function NewsWriteModal({ isOpen, onClose, onSuccess }: Props) {
             <button
               type="submit"
               disabled={submitting}
-              className="min-h-11 rounded-xl bg-sky-500 hover:bg-sky-400 px-6 font-bold text-white transition flex items-center justify-center gap-2"
+              className="min-h-11 rounded-xl bg-[#004D95] hover:bg-[#003870] px-6 font-bold text-white transition flex items-center justify-center gap-2 text-sm shadow-sm"
             >
-              {submitting ? "등록 중..." : "✍️ 등록하기"}
+              {submitting ? "등록 중..." : "소식 등록하기"}
             </button>
           </div>
         </form>
