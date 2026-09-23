@@ -66,7 +66,7 @@ export function WaterHubHeader({
             alt="K-water 한국수자원공사 물문화관"
             width={1024}
             height={341}
-            className="h-[54px] sm:h-[64px] md:h-[72px] w-auto max-w-[240px] sm:max-w-none shrink-0 object-contain"
+            className="h-[64px] sm:h-[76px] md:h-[84px] w-auto max-w-[280px] sm:max-w-none shrink-0 object-contain"
             priority
           />
         </Link>

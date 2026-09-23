@@ -232,7 +232,7 @@ export function AuthModal() {
             alt="K-water 한국수자원공사 물문화관"
             width={1024}
             height={341}
-            className="h-12 sm:h-14 w-auto object-contain"
+            className="h-14 sm:h-16 w-auto object-contain"
             priority
           />
         </div>
