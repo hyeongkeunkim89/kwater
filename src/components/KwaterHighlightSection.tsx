@@ -19,7 +19,7 @@ const HIGHLIGHT_ITEMS: HighlightItem[] = [
   {
     id: "rO3a8hi0LUI",
     title: "우리나라에서 가장 인기 많은 댐은 어디일까요?",
-    desc: "K-water 공식 유튜브에서 인기 높은 전국 댐 이야기! 소양강댐, 충주댐, 대청댐의 매력을 숏폼 영상으로 확인해 보세요.",
+    desc: "소양강댐, 충주댐, 대청댐의 숨은 매력을 K-water 공식 숏폼 영상으로 확인해 보세요.",
     tag: "인기 숏폼 🎬",
     author: "K-water 한국수자원공사 Official",
     thumbnail: "https://i.ytimg.com/vi/rO3a8hi0LUI/hqdefault.jpg",
@@ -30,7 +30,7 @@ const HIGHLIGHT_ITEMS: HighlightItem[] = [
   {
     id: "ENpfGPkKeQA",
     title: "[Vlog] 대청댐 물문화관 탐방 & 뷰 맛집 카페 투어",
-    desc: "대청댐 물문화관 전시 공간 탐방부터 주변 뷰 맛집 카페와 맛집 투어까지! K-water 대학생 서포터즈의 생생한 탐방 브이로그입니다.",
+    desc: "대청댐 물문화관 전시 공간과 주변 뷰 맛집 카페 투어까지! 대학생 서포터즈의 탐방 브이로그입니다.",
     tag: "문화관 브이로그 🎥",
     author: "K-water 대학생 서포터즈",
     thumbnail: "https://i.ytimg.com/vi/ENpfGPkKeQA/hqdefault.jpg",
@@ -41,7 +41,7 @@ const HIGHLIGHT_ITEMS: HighlightItem[] = [
   {
     id: "jpsWBqvXWv0",
     title: "[출동 水퍼 서포터즈!] 낙동강 유역 K-WILL 물문화관 방문기",
-    desc: "낙동강 유역 주요 거점 물문화관 탐방! 생태 환경 체험존과 K-WILL 투어 현장의 다채로운 이야기를 만나보세요.",
+    desc: "낙동강 유역 주요 거점 물문화관 탐방! 생태 환경 체험존과 K-WILL 투어 현장 방문기입니다.",
     tag: "낙동강 유역 투어 🌊",
     author: "K-water 대학생 서포터즈",
     thumbnail: "https://i.ytimg.com/vi/jpsWBqvXWv0/hqdefault.jpg",
@@ -139,10 +139,10 @@ export function KwaterHighlightSection() {
                 <p className="text-[11px] font-extrabold text-sky-600 tracking-tight">
                   {item.author}
                 </p>
-                <h3 className="mt-1 text-base sm:text-lg font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200 line-clamp-2">
+                <h3 className="mt-1 text-base sm:text-lg font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200 line-clamp-2 min-h-[3.25rem]">
                   {item.title}
                 </h3>
-                <p className="mt-1.5 mb-4 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">
+                <p className="mt-1.5 mb-4 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed break-keep min-h-[2.5rem]">
                   {item.desc}
                 </p>
               </div>
