@@ -126,16 +126,16 @@ function BangulPin({
   color: string;
   selected: boolean;
 }) {
-  const size = selected ? 36 : 26;
-  const offset = selected ? -18 : -13;
-  const padding = selected ? 4 : 3;
+  const size = selected ? 42 : 32;
+  const offset = selected ? -21 : -16;
+  const padding = selected ? 4.5 : 3.5;
   const imgSize = size - padding * 2;
 
   return (
     <g transform={`translate(${offset}, ${offset})`} style={{ cursor: "pointer" }}>
       {/* 선택 시 그림자 효과 */}
       {selected && (
-        <circle cx={size / 2} cy={size / 2} r={size / 2 + 3} fill={color} opacity="0.25" />
+        <circle cx={size / 2} cy={size / 2} r={size / 2 + 4} fill={color} opacity="0.28" />
       )}
       {/* 바깥 링 (운영 현황 색상 표시) */}
       <circle
@@ -182,12 +182,12 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
 
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
-      <div className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-lg">
+      <div className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-lg border border-slate-200">
         <ComposableMap
           projection="geoMercator"
-          projectionConfig={{ center: [127.7, 36.2], scale: 5000 }}
+          projectionConfig={{ center: [127.8, 35.8], scale: 6800 }}
           style={{ width: "100%", height: "auto", display: "block" }}
-          viewBox="0 0 800 740"
+          viewBox="0 0 800 700"
         >
           <defs>
             <linearGradient id="seaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -197,7 +197,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             </linearGradient>
           </defs>
 
-          <rect width="800" height="740" fill="url(#seaGrad)" />
+          <rect width="800" height="700" fill="url(#seaGrad)" />
 
           <Geographies geography={PROVINCES_URL}>
             {({ geographies }) =>
@@ -213,7 +213,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                     geography={geo}
                     fill={fill}
                     stroke={stroke}
-                    strokeWidth={0.7}
+                    strokeWidth={0.8}
                     style={{ outline: "none" }}
                   />
                 );
@@ -227,21 +227,19 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             const shortName = getCenterShortName(center.name);
             const color = PIN_COLORS[display];
 
-            const fontSize = isSelected ? 11 : 10;
+            const fontSize = isSelected ? 13 : 12;
             const textWidth = measureTextWidth(shortName, fontSize);
-            const badgeWidth = textWidth + 10;
-            const badgeHeight = isSelected ? 20 : 17;
+            const badgeWidth = textWidth + 14;
+            const badgeHeight = isSelected ? 24 : 22;
 
             const posConfig = CENTER_LABEL_POSITIONS[center.id] ?? {
               anchor: "right",
-              offsetY: isSelected ? -10 : -8,
+              offsetY: isSelected ? -12 : -10,
             };
             const isLeft = posConfig.anchor === "left";
 
-            const badgeX = isLeft ? -14 - badgeWidth : 14;
-            const textX = isLeft ? -14 - badgeWidth / 2 : 14 + badgeWidth / 2;
+            const badgeX = isLeft ? -16 - badgeWidth : 16;
             const badgeY = posConfig.offsetY;
-            const textY = badgeY + badgeHeight / 2 + 0.5;
 
             return (
               <Marker
@@ -252,20 +250,20 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                 <g className="cursor-pointer group">
                   <BangulPin color={color} selected={isSelected} />
 
-                  {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 (개별 스마트 앵커 & 타이트 패딩) */}
+                  {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 (선명하고 큼직한 댐 이름 라벨) */}
                   <g transform={`translate(${badgeX}, ${badgeY})`}>
                     <rect
                       x="0"
                       y="0"
                       width={badgeWidth}
                       height={badgeHeight}
-                      rx={isSelected ? 5 : 4}
+                      rx={isSelected ? 6 : 5}
                       fill={isSelected ? "#0f172a" : "#ffffff"}
-                      fillOpacity={isSelected ? 0.96 : 0.93}
+                      fillOpacity={isSelected ? 0.98 : 0.95}
                       stroke={isSelected ? "#38bdf8" : color}
-                      strokeWidth={isSelected ? 1.8 : 1.2}
+                      strokeWidth={isSelected ? 2 : 1.5}
                       style={{
-                        filter: "drop-shadow(0px 1px 2px rgba(15, 23, 42, 0.15))",
+                        filter: "drop-shadow(0px 2px 4px rgba(15, 23, 42, 0.2))",
                       }}
                     />
                     <text
@@ -274,7 +272,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                       textAnchor="middle"
                       dominantBaseline="central"
                       fontSize={fontSize}
-                      fontWeight={isSelected ? "800" : "700"}
+                      fontWeight={isSelected ? "900" : "800"}
                       fill={isSelected ? "#ffffff" : "#0f172a"}
                       className="pointer-events-none select-none font-sans tracking-tight"
                     >
