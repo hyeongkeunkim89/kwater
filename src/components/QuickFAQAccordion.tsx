@@ -56,26 +56,28 @@ export function QuickFAQAccordion() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-5">
-        <div>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300">
+      <div className="flex flex-col gap-3 border-b border-slate-100 pb-5">
+        <div className="flex items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-[#004D95]">
             K-WATER FAQ
           </span>
-          <h3 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          <Link
+            href="/reserve"
+            className="inline-flex items-center gap-1 text-xs font-bold text-[#004D95] hover:text-[#003870] transition"
+          >
+            <span>투어 예약</span>
+            <span>→</span>
+          </Link>
+        </div>
+        <div>
+          <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
             자주 묻는 질문 (FAQ)
           </h3>
-          <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
-            전국 물문화관 관람, 주차, 휴관일 및 해설 가이드 투어 관련 자주 묻는 질문입니다.
+          <p className="mt-1 text-xs text-slate-500 font-medium">
+            물문화관 관람, 주차, 휴관일 및 가이드 투어 필수 확인사항입니다.
           </p>
         </div>
-        <Link
-          href="/reserve"
-          className="self-start sm:self-auto inline-flex items-center justify-center gap-1.5 rounded-full bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-xs hover:shadow-md group whitespace-nowrap"
-        >
-          <span>가이드 투어 예약하기</span>
-          <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
-        </Link>
       </div>
 
       <div className="mt-4 space-y-3">
