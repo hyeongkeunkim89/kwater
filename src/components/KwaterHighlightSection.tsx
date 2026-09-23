@@ -57,42 +57,42 @@ export function KwaterHighlightSection() {
   return (
     <section
       aria-label="K-water 미디어 하이라이트"
-      className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm transition-all duration-300"
+      className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300"
     >
       {/* 섹션 헤더 */}
-      <div className="border-b border-slate-100 pb-3">
+      <div className="border-b border-slate-100 pb-4">
         <div className="flex items-center justify-between gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-2.5 py-0.5 text-[11px] font-black tracking-wider uppercase text-sky-700">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
             K-WATER HIGHLIGHT
           </span>
           <a
             href="https://www.youtube.com/@kwatertv"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[11px] font-bold text-red-600 hover:text-red-700 transition"
+            className="inline-flex items-center gap-1 text-xs font-bold text-red-600 hover:text-red-700 transition"
           >
-            <svg className="h-3 w-3 fill-current text-red-600" viewBox="0 0 24 24">
+            <svg className="h-3.5 w-3.5 fill-current text-red-600" viewBox="0 0 24 24">
               <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
             </svg>
             <span>공식 유튜브</span>
             <span>→</span>
           </a>
         </div>
-        <h2 className="mt-1.5 text-base sm:text-lg font-black text-slate-900 tracking-tight">
+        <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
           생생한 물문화 영상 &amp; 숏폼
         </h2>
-        <p className="mt-0.5 text-[11px] font-medium text-slate-500">
+        <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
           K-water 공식 채널에서 전해드리는 물문화관 생생 영상입니다.
         </p>
       </div>
 
       {/* SK HIGHLIGHT 스타일 유튜브 카드 리스트 (썸네일 위 제목 + 마우스 호버 시 제목 확대) */}
-      <div className="mt-3 space-y-2.5">
+      <div className="mt-4 space-y-3.5">
         {HIGHLIGHT_ITEMS.map((item) => (
           <div
             key={item.id}
             onClick={() => setActiveVideo(item)}
-            className="group cursor-pointer relative h-20 sm:h-24 w-full overflow-hidden rounded-xl border border-slate-200/90 bg-slate-950 shadow-xs transition-all duration-300 hover:shadow-md hover:border-[#004D95]/50"
+            className="group cursor-pointer relative h-32 sm:h-36 w-full overflow-hidden rounded-xl border border-slate-200/90 bg-slate-950 shadow-xs transition-all duration-300 hover:shadow-md hover:border-[#004D95]/50"
           >
             {/* 1. 배경 썸네일 이미지 (마우스 호버 시 줌 애니메이션) */}
             {item.thumbnail.startsWith("http") ? (
@@ -115,27 +115,27 @@ export function KwaterHighlightSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-black/20 transition-opacity duration-300 group-hover:from-slate-950/90 group-hover:via-slate-950/30" />
 
             {/* 3. 상단 태그 뱃지 */}
-            <div className="absolute left-2 top-2 z-10">
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/80 border border-white/20 px-2 py-0.5 text-[9px] font-bold text-white backdrop-blur-md shadow-xs">
+            <div className="absolute left-3 top-3 z-10">
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/80 border border-white/20 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-md shadow-xs">
                 {item.tag}
               </span>
             </div>
 
             {/* 4. 중앙 유튜브 플레이 버튼 아이콘 */}
             <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900/70 text-white border border-white/30 backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 group-hover:border-red-500 shadow-md">
-                <svg className="ml-0.5 h-3 w-3 fill-current" viewBox="0 0 24 24">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900/70 text-white border border-white/30 backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 group-hover:border-red-500 shadow-md">
+                <svg className="ml-0.5 h-4 w-4 fill-current" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
 
             {/* 5. 하단 썸네일 위 제목 (마우스 호버 시 제목 확대 애니메이션) */}
-            <div className="absolute bottom-0 left-0 right-0 z-10 p-2.5 text-white">
-              <span className="text-[9px] font-bold text-sky-300/90 block mb-0.5 tracking-wide">
+            <div className="absolute bottom-0 left-0 right-0 z-10 p-3.5 text-white">
+              <span className="text-[10px] sm:text-xs font-bold text-sky-300/90 block mb-0.5 tracking-wide">
                 {item.author}
               </span>
-              <h3 className="text-xs font-black text-white leading-tight line-clamp-1 transition-transform duration-300 ease-out origin-bottom-left group-hover:scale-[1.02] group-hover:text-sky-100 drop-shadow-md">
+              <h3 className="text-xs sm:text-sm font-black text-white leading-snug line-clamp-2 transition-transform duration-300 ease-out origin-bottom-left group-hover:scale-[1.03] group-hover:text-sky-100 drop-shadow-md">
                 {item.title}
               </h3>
             </div>
