@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
+import { QuickFAQAccordion } from "@/components/QuickFAQAccordion";
 import { waterCenters } from "@/data/centers";
 import type { Feedback } from "@/types/feedback";
 
@@ -201,114 +202,168 @@ export default function FeedbackPage() {
       <WaterHubHeader activeNav="feedback" />
 
       {/* 히어로 타이틀 */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-sky-50 to-indigo-50 border-b border-slate-200/80 shrink-0">
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute right-1/4 top-0 h-48 w-48 rounded-full bg-sky-500/5 blur-[80px]" />
-        </div>
-        <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 text-center sm:text-left flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+      <div className="relative overflow-hidden bg-white border-b border-slate-200 shrink-0">
+        <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 sm:px-8 text-center sm:text-left flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-sky-600">
-              VISITOR CENTER TALK
+            <span className="text-xs font-black uppercase tracking-widest text-[#004D95]">
+              VISITOR CENTER TALK &amp; FAQ
             </span>
-            <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-              소통창구 (문의 및 건의)
+            <h1 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+              소통창구 및 자주 묻는 질문
             </h1>
-            <p className="mt-2 text-sm text-slate-500 leading-relaxed max-w-xl font-semibold">
-              물문화관 방문 전 건의사항이나 투어 관련 질의를 자유롭게 남겨주세요. 실명 또는 익명으로 등록할 수 있습니다.
+            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl font-medium">
+              물문화관 관람 전 궁금하신 점을 자주 묻는 질문(FAQ)에서 먼저 확인해 보세요. 
+              추가 문의 및 서비스 건의는 1:1 소통 게시판을 통해 언제든 자유롭게 남겨주실 수 있습니다.
             </p>
           </div>
           <button
             type="button"
             onClick={() => setShowWriteModal(true)}
-            className="self-center sm:self-auto inline-flex min-h-12 items-center justify-center rounded-xl bg-sky-500 hover:bg-sky-400 text-sm font-bold text-white px-6 transition shadow-lg shadow-sky-500/10"
+            className="self-center sm:self-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-bold text-white px-6 transition shadow-sm"
           >
-            ✍️ 문의글 작성하기
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            <span>1:1 문의글 작성하기</span>
           </button>
         </div>
       </div>
 
-      <main className="mx-auto max-w-7xl w-full px-6 py-10 sm:px-8 flex-1">
-        {/* 필터 바 (콤보박스 선택) */}
-        <div className="flex flex-col gap-1.5 w-full max-w-xs mb-8">
-          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-            문화관 선택
-          </label>
-          <select
-            value={filterCenter}
-            onChange={(e) => setFilterCenter(e.target.value)}
-            className="min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800 font-semibold outline-none focus:ring-2 focus:ring-sky-500/40"
-          >
-            <option value="all">전체 문의글</option>
-            <option value="headquarters">본사 / 공통</option>
-            {waterCenters.map((wc) => (
-              <option key={wc.id} value={wc.id}>
-                {wc.name}
-              </option>
-            ))}
-          </select>
-        </div>
+      <main className="mx-auto max-w-7xl w-full px-6 py-10 sm:px-8 space-y-12 sm:space-y-16 flex-1">
+        
+        {/* 1. 자주 묻는 질문 FAQ (QuickFAQAccordion) */}
+        <section aria-label="자주 묻는 질문 FAQ">
+          <QuickFAQAccordion />
+        </section>
 
-        {/* 게시글 표 리스트 */}
-        {loading ? (
-          <div className="text-center py-20 text-slate-400">불러오는 중...</div>
-        ) : feedbacks.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center text-slate-400">
-            <span className="text-4xl block mb-3">💬</span>
-            등록된 의견 및 문의글이 없습니다.
+        {/* 2. 1:1 시민 소통 게시판 */}
+        <section aria-label="1:1 시민 소통 게시판" className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-black tracking-wider uppercase text-[#004D95]">
+                1:1 INQUIRIES &amp; FEEDBACK
+              </span>
+              <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                1:1 시민 소통 게시판
+              </h2>
+              <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+                물문화관 이용 건의 및 개별 문의 사항을 남겨주시면 관리자가 검토 후 답변드립니다.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowWriteModal(true)}
+              className="self-start sm:self-auto inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold px-4 transition shadow-xs"
+            >
+              <svg className="w-3.5 h-3.5 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>새 문의글 작성</span>
+            </button>
           </div>
-        ) : (
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="min-w-full divide-y divide-slate-100">
-              <div className="bg-slate-50/70 p-4 font-bold text-xs text-slate-500 grid grid-cols-12 gap-2 text-center uppercase tracking-wider">
-                <div className="col-span-2 hidden sm:block">대상 기관</div>
-                <div className="col-span-8 sm:col-span-6 text-left px-2">제목</div>
-                <div className="col-span-2">작성자</div>
-                <div className="col-span-2">답변 여부</div>
-                <div className="col-span-2 sm:col-span-2">등록일</div>
-              </div>
-              <div className="divide-y divide-slate-100 bg-white">
-                {feedbacks.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => void handleOpenDetail(item)}
-                    className="w-full text-left p-4 grid grid-cols-12 gap-2 items-center text-xs sm:text-sm text-slate-700 hover:bg-slate-50 transition border-none bg-transparent"
-                  >
-                    <div className="col-span-2 hidden sm:block font-semibold text-slate-500 text-center truncate">
-                      {item.centerName}
-                    </div>
-                    <div className="col-span-8 sm:col-span-6 px-2 flex items-center gap-1.5 min-w-0">
-                      {item.isPrivate && (
-                        <span className="text-slate-400 shrink-0" aria-label="비밀글">
-                          🔒
-                        </span>
-                      )}
-                      <span className="truncate font-bold text-slate-800 hover:text-sky-600">
-                        {item.title}
-                      </span>
-                    </div>
-                    <div className="col-span-2 text-center truncate font-medium text-slate-500">
-                      {item.writerName}
-                    </div>
-                    <div className="col-span-2 text-center">
-                      {item.adminReply ? (
-                        <span className="inline-block rounded bg-emerald-50 text-[10px] font-bold text-emerald-700 px-2 py-0.5 border border-emerald-200">
-                          답변완료
-                        </span>
-                      ) : (
-                        <span className="inline-block rounded bg-slate-100 text-[10px] font-bold text-slate-500 px-2 py-0.5 border border-slate-200">
-                          대기중
-                        </span>
-                      )}
-                    </div>
-                    <div className="col-span-2 sm:col-span-2 text-center text-slate-400 font-medium">
-                      {formatDate(item.createdAt)}
-                    </div>
-                  </button>
+
+          {/* 필터 및 정보 조율 바 */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <label className="text-xs font-bold text-slate-500 shrink-0 whitespace-nowrap">
+                문화관 선택:
+              </label>
+              <select
+                value={filterCenter}
+                onChange={(e) => setFilterCenter(e.target.value)}
+                className="min-h-10 w-full sm:w-60 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs sm:text-sm text-slate-800 font-semibold outline-none focus:ring-2 focus:ring-sky-500/40"
+              >
+                <option value="all">전체 문의글 보기</option>
+                <option value="headquarters">본사 / 공통 문의</option>
+                {waterCenters.map((wc) => (
+                  <option key={wc.id} value={wc.id}>
+                    {wc.name}
+                  </option>
                 ))}
+              </select>
+            </div>
+
+            <span className="text-xs font-semibold text-slate-500">
+              총 <strong className="font-extrabold text-[#004D95]">{feedbacks.length}</strong>건의 문의글
+            </span>
+          </div>
+
+          {/* 게시글 표 리스트 */}
+          {loading ? (
+            <div className="text-center py-20 text-slate-400 text-xs sm:text-sm">문의글을 불러오는 중입니다...</div>
+          ) : feedbacks.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center text-slate-400">
+              <span className="text-4xl block mb-3">💬</span>
+              등록된 문의글이 없습니다. 첫 번째 문의를 남겨보세요!
+            </div>
+          ) : (
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="min-w-full divide-y divide-slate-100">
+                {/* 헤더 */}
+                <div className="bg-slate-50 p-4 font-bold text-xs text-slate-600 hidden sm:grid grid-cols-12 gap-3 text-center uppercase tracking-wider border-b border-slate-200">
+                  <div className="col-span-2 text-left px-2">대상 기관</div>
+                  <div className="col-span-5 text-left px-2">제목</div>
+                  <div className="col-span-2">작성자</div>
+                  <div className="col-span-1">답변 상태</div>
+                  <div className="col-span-2">등록일</div>
+                </div>
+                {/* 목록 내용 */}
+                <div className="divide-y divide-slate-100 bg-white">
+                  {feedbacks.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => void handleOpenDetail(item)}
+                      className="w-full text-left p-4 flex flex-col sm:grid sm:grid-cols-12 gap-2 sm:gap-3 items-start sm:items-center text-xs sm:text-sm text-slate-700 hover:bg-slate-50/80 transition border-none bg-transparent"
+                    >
+                      {/* 대상 기관 */}
+                      <div className="sm:col-span-2 font-bold text-[#004D95] text-left truncate flex items-center gap-1.5">
+                        <span className="sm:hidden text-[10px] bg-sky-50 px-2 py-0.5 rounded text-sky-700 font-bold">
+                          {item.centerName}
+                        </span>
+                        <span className="hidden sm:inline truncate px-2">{item.centerName}</span>
+                      </div>
+
+                      {/* 제목 및 비밀글 아이콘 */}
+                      <div className="sm:col-span-5 px-0 sm:px-2 flex items-center gap-1.5 min-w-0 w-full">
+                        {item.isPrivate && (
+                          <span className="text-slate-400 shrink-0 text-xs" aria-label="비밀글">
+                            🔒
+                          </span>
+                        )}
+                        <span className="truncate font-bold text-slate-900 hover:text-[#004D95] text-sm">
+                          {item.title}
+                        </span>
+                      </div>
+
+                      {/* 작성자 & 답변 여부 (모바일 대응) */}
+                      <div className="flex items-center justify-between w-full sm:w-auto sm:contents pt-1 sm:pt-0 border-t border-slate-100 sm:border-none">
+                        <div className="sm:col-span-2 sm:text-center text-slate-500 font-medium truncate text-xs">
+                          <span className="sm:hidden text-slate-400">작성자: </span>
+                          {item.writerName}
+                        </div>
+                        <div className="sm:col-span-1 sm:text-center">
+                          {item.adminReply ? (
+                            <span className="inline-block rounded-md bg-emerald-50 text-[10px] font-bold text-emerald-700 px-2 py-0.5 border border-emerald-200">
+                              답변완료
+                            </span>
+                          ) : (
+                            <span className="inline-block rounded-md bg-slate-100 text-[10px] font-bold text-slate-500 px-2 py-0.5 border border-slate-200">
+                              대기중
+                            </span>
+                          )}
+                        </div>
+                        <div className="sm:col-span-2 sm:text-center text-slate-400 font-medium text-xs">
+                          {formatDate(item.createdAt)}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </section>
+      </main>
 
         {/* ================= 비밀글 패스워드 확인 모달 ================= */}
         {openPasswordModal && (
@@ -619,7 +674,7 @@ export default function FeedbackPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="min-h-11 flex-1 rounded-xl bg-sky-500 text-sm font-bold text-white hover:bg-sky-400 transition"
+                    className="min-h-11 flex-1 rounded-xl bg-[#004D95] text-sm font-bold text-white hover:bg-[#003870] transition"
                   >
                     {submitting ? "등록 중..." : "제출하기"}
                   </button>
@@ -628,7 +683,6 @@ export default function FeedbackPage() {
             </div>
           </div>
         )}
-      </main>
 
       <WaterHubFooter />
     </div>
