@@ -230,9 +230,9 @@ export function AuthModal() {
           <Image
             src="/images/kwater_waterhub_logo.png"
             alt="K-water 한국수자원공사 물문화관"
-            width={800}
-            height={250}
-            className="h-12 sm:h-13 w-auto object-contain"
+            width={1024}
+            height={341}
+            className="h-12 sm:h-14 w-auto object-contain"
             priority
           />
         </div>
