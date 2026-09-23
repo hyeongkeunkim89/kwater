@@ -23,6 +23,7 @@ import {
   centerThemeSectionAccent,
   emptyDisplayStatusCounts,
   HYDRATION_WEEKDAY_PLACEHOLDER,
+  koreaMapUi,
   STATS_ORDER,
 } from "@/lib/centerExplorerUi";
 import { naverMapSearchHref } from "@/lib/mapLinks";
@@ -374,9 +375,11 @@ function TabBtn({
 export const CenterCard = memo(function CenterCard({
   center: c,
   todaySeoul,
+  onClose,
 }: {
   center: WaterCenter;
   todaySeoul: WeekdayHan;
+  onClose?: () => void;
 }) {
   const display = resolveDisplayStatus(c, todaySeoul);
   const detailHref = `/centers/${c.id}`;
@@ -398,20 +401,35 @@ export const CenterCard = memo(function CenterCard({
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
 
         {/* 상단 뱃지 묶음 */}
-        <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-1.5 z-10">
-          <div className="flex flex-wrap gap-1.5">
-            <span className="rounded-full bg-slate-900/80 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm">
+        <div className={`absolute top-3.5 left-3.5 flex items-center justify-between gap-1.5 z-10 ${onClose ? "right-14" : "right-3.5"}`}>
+          <div className="flex flex-wrap gap-1.5 min-w-0">
+            <span className="rounded-full bg-slate-900/80 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm shrink-0">
               {c.kind}
             </span>
-            <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm">
+            <span className="rounded-full bg-sky-500/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white shadow-sm shrink-0">
               {c.themes[0]}
             </span>
           </div>
 
-          <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold backdrop-blur-md ring-1 ring-inset ${displayStatusStyles[display].badge}`}>
+          <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold backdrop-blur-md ring-1 ring-inset shrink-0 ${displayStatusStyles[display].badge}`}>
             {display}
           </span>
         </div>
+
+        {onClose && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              onClose();
+            }}
+            aria-label={koreaMapUi.panelClose}
+            className="absolute right-3.5 top-3.5 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900/60 text-white backdrop-blur-md transition hover:bg-slate-900 hover:scale-105 focus:outline-none shadow-md"
+          >
+            <span aria-hidden className="text-base font-bold">×</span>
+          </button>
+        )}
 
         {/* 하단 타이틀 Overlay */}
         <div className="absolute bottom-3.5 left-3.5 right-3.5 text-white z-10">

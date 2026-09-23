@@ -395,18 +395,7 @@ function CenterPanel({
         </button>
       </div>
 
-      <div className="relative">
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label={koreaMapUi.panelClose}
-          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900/60 text-white backdrop-blur-md transition hover:bg-slate-900 hover:scale-105 focus:outline-none shadow-md"
-        >
-          <span aria-hidden className="text-base font-bold">×</span>
-        </button>
-
-        <CenterCard center={center} todaySeoul={todaySeoul} />
-      </div>
+      <CenterCard center={center} todaySeoul={todaySeoul} onClose={onClose} />
     </div>
   );
 }
