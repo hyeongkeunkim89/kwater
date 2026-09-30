@@ -633,17 +633,6 @@ export function AuthModal() {
               </p>
             </div>
 
-            {/* 안내 박스 */}
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5 text-xs text-slate-700 space-y-1.5 shadow-inner">
-              <div className="flex items-center gap-1.5 font-black text-slate-900">
-                <span className="text-sky-600">💡</span> 관리자 인증 안내
-              </div>
-              <ul className="list-disc list-inside space-y-1 text-[11px] text-slate-600 font-medium leading-relaxed">
-                <li>통합 관리자 아이디: <strong className="text-slate-900 font-bold">admin</strong></li>
-                <li>관리 비밀번호: 환경설정 지정 비밀번호 (<code className="bg-slate-200/80 px-1 py-0.5 rounded text-slate-800 font-bold">admin1234</code> 또는 <code className="bg-slate-200/80 px-1 py-0.5 rounded text-slate-800 font-bold">admin</code>)</li>
-              </ul>
-            </div>
-
             <form onSubmit={handleAdminSubmit} className="space-y-3 pt-1">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">관리자 아이디 / 이메일 *</label>
