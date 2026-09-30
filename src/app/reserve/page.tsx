@@ -1,11 +1,12 @@
 import { ReservationForm } from "@/components/ReservationForm";
+import { ReservationLookupCard } from "@/components/ReservationLookupCard";
 import { isReservationsLive } from "@/lib/reservationsConfig";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 
 export const metadata = {
-  title: "가이드 투어 예약 | K-water 물문화관",
-  description: "K-water 물문화관 가이드 투어를 예약하세요.",
+  title: "가이드 투어 예약 & 조회 | K-water 물문화관",
+  description: "K-water 물문화관 가이드 투어 예약 신청 및 실시간 예약 내역 조회를 한번에 이용하세요.",
 };
 
 type Props = { searchParams: Promise<{ center?: string }> };
@@ -23,24 +24,48 @@ export default async function ReservePage({ searchParams }: Props) {
         <div className="pointer-events-none absolute inset-0" aria-hidden>
           <div className="absolute right-1/4 top-0 h-48 w-48 rounded-full bg-teal-50/5 blur-[80px]" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 text-left">
+        <div className="relative mx-auto max-w-7xl px-6 py-10 sm:px-8 text-left">
           <span className="text-xs font-extrabold uppercase tracking-widest text-[#2F9FF3]">
-            GUIDED TOUR
+            GUIDED TOUR & LOOKUP
           </span>
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            가이드 투어 예약
+            가이드 투어 예약 및 조회
           </h1>
-          <p className="mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed font-semibold max-w-2xl">
-            문화관·날짜·시간을 선택하고 방문자 정보를 입력하면 예약이 접수됩니다.
-            <br className="hidden sm:block" />
-            담당자 확인 후 예약이 확정됩니다.
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed font-semibold max-w-3xl">
+            원하시는 물문화관의 투어를 새롭게 예약 신청하거나, 기존에 신청하신 예약 내역을 실시간으로 조회·취소하실 수 있습니다.
           </p>
         </div>
       </div>
 
-      {/* 폼 */}
-      <main className="mx-auto max-w-5xl w-full px-6 py-10 sm:px-10 flex-1">
-        <ReservationForm defaultCenterId={center} reservationsLive={reservationsLive} />
+      {/* 메인 2열 레이아웃 (왼쪽: 예약 접수, 오른쪽: 예약 조회) */}
+      <main className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* 1. 왼쪽: 가이드 투어 예약 접수 */}
+          <section className="lg:col-span-7 space-y-4 min-w-0">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-white text-xs font-extrabold shadow-sm">
+                1
+              </span>
+              <h2 className="text-xl font-black text-slate-900 tracking-tight">
+                가이드 투어 예약 접수
+              </h2>
+            </div>
+            <ReservationForm defaultCenterId={center} reservationsLive={reservationsLive} />
+          </section>
+
+          {/* 2. 오른쪽: 예약 신청 내역 조회 & 관리 */}
+          <section className="lg:col-span-5 space-y-4 min-w-0">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-extrabold shadow-sm">
+                2
+              </span>
+              <h2 className="text-xl font-black text-slate-900 tracking-tight">
+                예약 내역 조회 & 취소
+              </h2>
+            </div>
+            <ReservationLookupCard />
+          </section>
+        </div>
       </main>
 
       <WaterHubFooter />
