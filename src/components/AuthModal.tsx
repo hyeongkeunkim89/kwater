@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth, type AuthTab } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { waterCenters } from "@/data/centers";
 
 export function AuthModal() {
-  const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail } = useAuth();
-  const [tab, setTab] = useState<"login" | "signup" | "guest">(authTab || "login");
+  const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail, loginAsStaff } = useAuth();
+  const [tab, setTab] = useState<AuthTab>(authTab || "login");
 
   useEffect(() => {
     if (isAuthOpen) {
@@ -20,6 +20,12 @@ export function AuthModal() {
   // Login form state (아이디 또는 이메일)
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPass, setLoginPass] = useState("");
+
+  // Admin form state
+  const [adminId, setAdminId] = useState("admin");
+  const [adminPass, setAdminPass] = useState("");
+  const [showAdminPass, setShowAdminPass] = useState(false);
+  const [adminCenter, setAdminCenter] = useState("all");
 
   // Signup form state (6대 보완 요소 지원)
   const [signUpName, setSignUpName] = useState("");
@@ -203,6 +209,32 @@ export function AuthModal() {
     }
   };
 
+  const handleAdminSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!adminId.trim()) {
+      alert("⚠️ 관리자 아이디를 입력해 주세요.");
+      return;
+    }
+    if (!adminPass.trim()) {
+      alert("⚠️ 관리자 비밀번호를 입력해 주세요.");
+      return;
+    }
+
+    const trimmedId = adminId.trim().toLowerCase();
+    let success = false;
+
+    if (trimmedId === "admin" || trimmedId === "admin@kwater.or.kr") {
+      success = await loginWithEmail("admin", adminPass);
+    } else {
+      success = await loginAsStaff(adminPass, adminCenter);
+    }
+
+    if (success) {
+      closeAuthModal();
+      router.push("/mypage");
+    }
+  };
+
   const handleGuestLookup = (e: React.FormEvent) => {
     e.preventDefault();
     if (!guestPhone || !guestPin) {
@@ -237,11 +269,11 @@ export function AuthModal() {
           />
         </div>
 
-        {/* 상단 탭 구분 (통합로그인 / 회원가입 / 비회원) */}
-        <div className="grid grid-cols-3 border-b border-slate-200 pb-3 mb-6 gap-1 text-center">
+        {/* 상단 탭 구분 (로그인 / 회원가입 / 비회원 / 관리자) */}
+        <div className="grid grid-cols-4 border-b border-slate-200 pb-3 mb-6 gap-1 text-center">
           <button
             onClick={() => setTab("login")}
-            className={`py-2 text-xs font-black transition border-b-2 ${
+            className={`py-2 text-[11px] sm:text-xs font-black transition border-b-2 ${
               tab === "login"
                 ? "border-sky-600 text-sky-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -251,23 +283,33 @@ export function AuthModal() {
           </button>
           <button
             onClick={() => setTab("signup")}
-            className={`py-2 text-xs font-black transition border-b-2 ${
+            className={`py-2 text-[11px] sm:text-xs font-black transition border-b-2 ${
               tab === "signup"
                 ? "border-sky-600 text-sky-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
             }`}
           >
-            📝 회원가입
+            📝 가입
           </button>
           <button
             onClick={() => setTab("guest")}
-            className={`py-2 text-xs font-black transition border-b-2 ${
+            className={`py-2 text-[11px] sm:text-xs font-black transition border-b-2 ${
               tab === "guest"
                 ? "border-emerald-600 text-emerald-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
             }`}
           >
             🎟️ 비회원
+          </button>
+          <button
+            onClick={() => setTab("admin")}
+            className={`py-2 text-[11px] sm:text-xs font-black transition border-b-2 ${
+              tab === "admin"
+                ? "border-slate-900 text-slate-900 font-extrabold"
+                : "border-transparent text-slate-400 hover:text-slate-700"
+            }`}
+          >
+            🛡️ 관리자
           </button>
         </div>
 
@@ -335,6 +377,16 @@ export function AuthModal() {
               >
                 🔑 로그인
               </button>
+
+              <div className="pt-2 text-center border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setTab("admin")}
+                  className="text-xs font-bold text-slate-500 hover:text-slate-900 transition underline underline-offset-2 inline-flex items-center gap-1 mx-auto"
+                >
+                  <span>🛡️ K-water 관리자 계정으로 로그인</span>
+                </button>
+              </div>
             </form>
           </div>
         )}
@@ -566,6 +618,88 @@ export function AuthModal() {
                 className="w-full rounded-xl bg-emerald-600 py-3 text-sm font-black text-white hover:bg-emerald-500 transition shadow-md shadow-emerald-600/20"
               >
                 비회원 예약 조회하기 🔍
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* 4. 관리자 전용 로그인 탭 */}
+        {tab === "admin" && (
+          <div className="space-y-4">
+            <div className="text-center">
+              <span className="inline-block rounded-full bg-slate-900 px-3 py-0.5 text-[11px] font-black text-white mb-1 shadow-sm">
+                🛡️ K-water 운영진 / 수자원공사 관리자
+              </span>
+              <h2 className="text-xl font-black text-slate-900">관리자 전용 로그인</h2>
+              <p className="mt-1 text-xs text-slate-500 font-semibold">
+                통합 관제 및 물문화관 일선 담당자 전용 인증 공간입니다.
+              </p>
+            </div>
+
+            {/* 안내 박스 */}
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5 text-xs text-slate-700 space-y-1.5 shadow-inner">
+              <div className="flex items-center gap-1.5 font-black text-slate-900">
+                <span className="text-sky-600">💡</span> 관리자 인증 안내
+              </div>
+              <ul className="list-disc list-inside space-y-1 text-[11px] text-slate-600 font-medium leading-relaxed">
+                <li>통합 관리자 아이디: <strong className="text-slate-900 font-bold">admin</strong></li>
+                <li>관리 비밀번호: 환경설정 지정 비밀번호 (<code className="bg-slate-200/80 px-1 py-0.5 rounded text-slate-800 font-bold">admin1234</code> 또는 <code className="bg-slate-200/80 px-1 py-0.5 rounded text-slate-800 font-bold">admin</code>)</li>
+              </ul>
+            </div>
+
+            <form onSubmit={handleAdminSubmit} className="space-y-3 pt-1">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">관리자 아이디 / 이메일 *</label>
+                <input
+                  type="text"
+                  value={adminId}
+                  onChange={(e) => setAdminId(e.target.value)}
+                  placeholder="admin 또는 admin@kwater.or.kr"
+                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm font-semibold outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">관리 비밀번호 *</label>
+                <div className="relative">
+                  <input
+                    type={showAdminPass ? "text" : "password"}
+                    value={adminPass}
+                    onChange={(e) => setAdminPass(e.target.value)}
+                    placeholder="관리자 비밀번호 입력"
+                    className="w-full rounded-xl border border-slate-200 p-2.5 pr-10 text-sm font-semibold outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowAdminPass(!showAdminPass)}
+                    className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-700"
+                  >
+                    {showAdminPass ? "🙈" : "👁️"}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">담당 물문화관 지정</label>
+                <select
+                  value={adminCenter}
+                  onChange={(e) => setAdminCenter(e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 p-2.5 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-slate-900/20"
+                >
+                  <option value="all">🏛️ K-water 전 시설 (통합 관제)</option>
+                  {waterCenters.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      📍 {c.name} ({c.sido})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-xl bg-slate-900 py-3 text-sm font-black text-white hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center justify-center gap-1.5"
+              >
+                <span>🛡️</span> 관리자 콘솔 로그인
               </button>
             </form>
           </div>

@@ -14,12 +14,14 @@ export type UserProfile = {
   favoriteCenter?: string;
 };
 
+export type AuthTab = "login" | "signup" | "guest" | "admin";
+
 type AuthContextType = {
   user: UserProfile | null;
   isLoading: boolean;
   isAuthOpen: boolean;
-  authTab: "login" | "signup" | "guest";
-  openAuthModal: (tab?: "login" | "signup" | "guest") => void;
+  authTab: AuthTab;
+  openAuthModal: (tab?: AuthTab) => void;
   closeAuthModal: () => void;
   loginWithSocial: (provider: "kakao" | "naver") => void;
   loginWithEmail: (email: string, pass: string) => Promise<boolean>;
@@ -94,7 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
-  const [authTab, setAuthTab] = useState<"login" | "signup" | "guest">("login");
+  const [authTab, setAuthTab] = useState<AuthTab>("login");
 
   const saveUserSession = (u: UserProfile) => {
     setUser(u);
@@ -193,7 +195,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
   }, []);
 
-  const openAuthModal = (tab: "login" | "signup" | "guest" = "login") => {
+  const openAuthModal = (tab: AuthTab = "login") => {
     setAuthTab(tab);
     setIsAuthOpen(true);
   };

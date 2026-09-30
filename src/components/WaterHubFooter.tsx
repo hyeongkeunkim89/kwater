@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
+  const { user, openAuthModal } = useAuth();
   const familySites = [
     { name: "K-water 공식 홈페이지", url: "https://www.kwater.or.kr" },
     { name: "MyWater 물정보포털", url: "https://www.water.or.kr" },
@@ -114,9 +118,19 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
         <div className="mt-6 pt-5 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
           <p>© {new Date().getFullYear()} K-water 한국수자원공사. All rights reserved.</p>
           <div className="flex gap-x-4">
-            <Link href="/mypage" className="hover:text-white transition">
-              관리자 로그인
-            </Link>
+            {user?.role === "admin" ? (
+              <Link href="/mypage" className="hover:text-white transition font-bold text-amber-400">
+                🏛️ 통합 관리자 콘솔 바로가기
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => openAuthModal("admin")}
+                className="hover:text-white transition font-semibold"
+              >
+                🛡️ 관리자 로그인
+              </button>
+            )}
           </div>
         </div>
       </div>
