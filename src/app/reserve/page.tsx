@@ -39,31 +39,35 @@ export default async function ReservePage({ searchParams }: Props) {
 
       {/* 메인 2열 레이아웃 (왼쪽: 예약 접수, 오른쪽: 예약 조회) */}
       <main className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-1">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* 1. 왼쪽: 가이드 투어 예약 접수 */}
-          <section className="lg:col-span-7 space-y-4 min-w-0">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-white text-xs font-extrabold shadow-sm">
+          <section className="lg:col-span-7 space-y-6 min-w-0">
+            <div className="flex items-center gap-2.5 pb-3 border-b border-slate-200/80 mb-4">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-white text-xs font-extrabold shadow-sm shrink-0">
                 1
               </span>
               <h2 className="text-xl font-black text-slate-900 tracking-tight">
                 가이드 투어 예약 접수
               </h2>
             </div>
-            <ReservationForm defaultCenterId={center} reservationsLive={reservationsLive} />
+            <div className="pt-1">
+              <ReservationForm defaultCenterId={center} reservationsLive={reservationsLive} />
+            </div>
           </section>
 
           {/* 2. 오른쪽: 예약 신청 내역 조회 & 관리 */}
-          <section className="lg:col-span-5 space-y-4 min-w-0">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-extrabold shadow-sm">
+          <section className="lg:col-span-5 space-y-6 min-w-0">
+            <div className="flex items-center gap-2.5 pb-3 border-b border-slate-200/80 mb-4">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-extrabold shadow-sm shrink-0">
                 2
               </span>
               <h2 className="text-xl font-black text-slate-900 tracking-tight">
                 예약 내역 조회 & 취소
               </h2>
             </div>
-            <ReservationLookupCard />
+            <div className="pt-1">
+              <ReservationLookupCard />
+            </div>
           </section>
         </div>
       </main>
