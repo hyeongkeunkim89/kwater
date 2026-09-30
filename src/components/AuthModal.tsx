@@ -627,12 +627,9 @@ export function AuthModal() {
         {tab === "admin" && (
           <div className="space-y-4">
             <div className="text-center">
-              <span className="inline-block rounded-full bg-slate-900 px-3 py-0.5 text-[11px] font-black text-white mb-1 shadow-sm">
-                🛡️ K-water 운영진 / 수자원공사 관리자
-              </span>
               <h2 className="text-xl font-black text-slate-900">관리자 전용 로그인</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
-                통합 관제 및 물문화관 일선 담당자 전용 인증 공간입니다.
+                통합 관제 및 물문화관 담당자 전용 인증 공간입니다.
               </p>
             </div>
 
