@@ -32,7 +32,7 @@ export default async function ReservePage({ searchParams }: Props) {
             가이드 투어 예약 및 조회
           </h1>
           <p className="mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed font-semibold max-w-3xl">
-            원하시는 물문화관의 투어를 새롭게 예약 신청하거나, 기존에 신청하신 예약 내역을 조회·취소
+            원하시는 물문화관의 투어를 새롭게 예약 신청하거나, 기존에 신청하신 예약 내역을 조회·취소하실 수 있습니다.
           </p>
         </div>
       </div>
