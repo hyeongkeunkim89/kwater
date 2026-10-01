@@ -472,12 +472,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       document.cookie = "kakao_user_session=; path=/; max-age=0; SameSite=Lax";
       document.cookie = "naver_user_session=; path=/; max-age=0; SameSite=Lax";
       document.cookie = "kwm_staff_console_gate=; path=/; max-age=0; SameSite=Lax";
+      const supabase = createSupabaseBrowserClient();
+      void supabase.auth.signOut();
     } catch (e) {
       console.error("Logout cleanup error", e);
     }
     void fetch("/api/auth/logout", { method: "POST" });
     alert("로그아웃 되었습니다.");
-    window.location.href = "/";
+    window.location.href = "/main";
   };
 
   return (
