@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { createClient as createSupabaseBrowserClient } from "@/utils/supabase/client";
 
 export type UserRole = "user" | "admin" | "guide";
 
@@ -277,7 +278,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return true;
     }
 
-    // 2. 일반 회원 로그인 검증 (등록된 회원 DB 확인)
+    // 2. 일반 회원 로그인 검증 (Supabase Auth 연동 및 등록된 회원 DB 확인)
+    try {
+      const supabase = createSupabaseBrowserClient();
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: lowerId,
+        password: lowerPass,
+      });
+
+      if (!error && data?.user) {
+        const memberUser: UserProfile = {
+          id: data.user.id,
+          name: data.user.user_metadata?.name || lowerId.split("@")[0],
+          email: data.user.email || lowerId,
+          phone: data.user.user_metadata?.phone || "",
+          provider: "email",
+          role: "user",
+        };
+
+        saveUserSession(memberUser);
+        closeAuthModal();
+
+        alert(`👋 ${memberUser.name} 님, 환영합니다.`);
+        window.location.href = "/mypage";
+        return true;
+      }
+    } catch (e) {
+      console.error("Supabase signInWithPassword error", e);
+    }
+
     const users = getRegisteredUsers();
     const matched = users.find(
       (u) =>
@@ -321,11 +350,70 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     phone: string
   ): Promise<boolean> => {
     const lowerEmail = email.toLowerCase().trim();
-    if (!name.trim() || !lowerEmail || !pass.trim()) {
+    const trimmedName = name.trim();
+    const trimmedPass = pass.trim();
+    const trimmedPhone = phone.trim();
+
+    if (!trimmedName || !lowerEmail || !trimmedPass) {
       alert("모든 필수 항목을 입력해주세요.");
       return false;
     }
 
+    // 1. Supabase Auth 실연동가입
+    try {
+      const supabase = createSupabaseBrowserClient();
+      const { data, error } = await supabase.auth.signUp({
+        email: lowerEmail,
+        password: trimmedPass,
+        options: {
+          data: {
+            name: trimmedName,
+            ...(trimmedPhone ? { phone: trimmedPhone } : {}),
+          },
+        },
+      });
+
+      if (error) {
+        alert(`❌ Supabase 회원가입 실패: ${error.message}`);
+        return false;
+      }
+
+      if (data?.user) {
+        const userProfile: UserProfile = {
+          id: data.user.id,
+          name: data.user.user_metadata?.name || trimmedName,
+          email: data.user.email || lowerEmail,
+          phone: trimmedPhone || "",
+          provider: "email",
+          role: "user",
+        };
+
+        saveUserSession(userProfile);
+
+        // 로컬 사용자 DB 백업 저장
+        const users = getRegisteredUsers();
+        const newUser: RegisteredAccount = {
+          id: data.user.id,
+          name: userProfile.name,
+          email: userProfile.email,
+          pass: trimmedPass,
+          phone: userProfile.phone,
+          provider: "email",
+          role: "user",
+        };
+        saveRegisteredUsers([...users.filter((u) => u.email !== lowerEmail), newUser]);
+
+        closeAuthModal();
+
+        alert(`🎉 ${userProfile.name} 님의 회원가입이 완료되었습니다!\n마이페이지로 이동합니다.`);
+        window.location.href = "/mypage";
+        return true;
+      }
+    } catch (e) {
+      console.error("Supabase auth signUp error", e);
+    }
+
+    // 2. Supabase SDK/환경 미설정 시 로컬 회원가입 폴백
     const users = getRegisteredUsers();
     if (users.some((u) => u.email.toLowerCase() === lowerEmail)) {
       alert("❌ 이미 가입된 이메일 주소입니다. 로그인해 주세요.");
@@ -334,10 +422,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const newUser: RegisteredAccount = {
       id: `user_${Date.now()}`,
-      name: name.trim(),
+      name: trimmedName,
       email: lowerEmail,
-      pass: pass.trim(),
-      phone: phone.trim() || "",
+      pass: trimmedPass,
+      phone: trimmedPhone || "",
       provider: "email",
       role: "user",
     };
