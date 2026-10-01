@@ -84,6 +84,17 @@ export async function POST(req: NextRequest) {
   if (!DATE_RE.test(date)) {
     return NextResponse.json({ error: "날짜 형식이 올바르지 않습니다." }, { status: 400 });
   }
+
+  const [y, m, d] = date.split("-").map(Number);
+  const WEEKDAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"] as const;
+  const dayKo = WEEKDAY_NAMES[new Date(y, m - 1, d).getDay()];
+  if (center.weeklyClosedDays && center.weeklyClosedDays.includes(dayKo as any)) {
+    const closedList = center.weeklyClosedDays.map((w) => `${w}요일`).join(", ");
+    return NextResponse.json(
+      { error: `${center.name}은(는) 매주 ${closedList} 정기 휴무일입니다. 다른 방문 날짜를 선택해 주세요.` },
+      { status: 400 },
+    );
+  }
   if (!TOUR_SLOTS.includes(time as (typeof TOUR_SLOTS)[number])) {
     return NextResponse.json({ error: "유효하지 않은 시간 슬롯입니다." }, { status: 400 });
   }

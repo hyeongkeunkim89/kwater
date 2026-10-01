@@ -90,6 +90,20 @@ function initialCenterId(defaultId?: string) {
   return waterCenters[0].id;
 }
 
+function checkDateClosed(dateStr: string, center: (typeof waterCenters)[number]): string | null {
+  if (!dateStr) return null;
+  const [y, m, d] = dateStr.split("-").map(Number);
+  const dayIndex = new Date(y, m - 1, d).getDay();
+  const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"] as const;
+  const dayKo = WEEKDAYS[dayIndex];
+
+  if (center.weeklyClosedDays && center.weeklyClosedDays.includes(dayKo as any)) {
+    const closedList = center.weeklyClosedDays.map((w) => `${w}요일`).join(", ");
+    return `${center.name}은(는) 매주 ${closedList} 정기 휴무일입니다. 다른 방문 날짜를 선택해 주세요.`;
+  }
+  return null;
+}
+
 // ─── 메인 컴포넌트 ───────────────────────────────────────────
 export function ReservationForm({
   defaultCenterId,
@@ -106,6 +120,7 @@ export function ReservationForm({
   const [centerId, setCenterId] = useState(() => initialCenterId(defaultCenterId));
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [dateError, setDateError] = useState<string | null>(null);
 
   // Step 1
   const [name, setName] = useState(user?.name || "");
@@ -198,7 +213,7 @@ export function ReservationForm({
   const loadingSlots =
     reservationsLive && Boolean(date) && (availLoading || serverAvailMap === null) && !availError;
 
-  const step0Valid = centerId && date && time;
+  const step0Valid = centerId && date && time && !dateError;
   const maxForSelectedTime = reservationsLive
     ? (serverAvailMap?.[time] ?? 0)
     : (slotAvailability[time] ?? MAX_PER_SLOT);
@@ -366,8 +381,21 @@ export function ReservationForm({
             <select
               value={centerId}
               onChange={(e) => {
-                setCenterId(e.target.value);
+                const newCenterId = e.target.value;
+                setCenterId(newCenterId);
                 setTime("");
+                const newCenter = waterCenters.find((c) => c.id === newCenterId);
+                if (newCenter && date) {
+                  const err = checkDateClosed(date, newCenter);
+                  if (err) {
+                    setDate("");
+                    setDateError(err);
+                  } else {
+                    setDateError(null);
+                  }
+                } else {
+                  setDateError(null);
+                }
               }}
               className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
             >
@@ -377,6 +405,31 @@ export function ReservationForm({
                 </option>
               ))}
             </select>
+
+            {/* 선택된 물문화관 정기 휴관일 안내 뱃지 */}
+            {selectedCenter && (
+              <div className="space-y-1.5 pt-1">
+                {selectedCenter.weeklyClosedDays.length > 0 && (
+                  <div className="flex items-center gap-1.5 rounded-xl bg-slate-100/80 border border-slate-200/60 px-3.5 py-2 text-xs font-semibold text-slate-700">
+                    <span>🗓️ <strong>정기 휴관일:</strong> 매주 {selectedCenter.weeklyClosedDays.map((d) => `${d}요일`).join(", ")}</span>
+                    {selectedCenter.holidayClosureSummary && (
+                      <span className="text-slate-500 font-normal">({selectedCenter.holidayClosureSummary})</span>
+                    )}
+                  </div>
+                )}
+                {selectedCenter.status === "점검·휴관" && (
+                  <div className="flex items-start gap-2 rounded-xl bg-amber-50 border border-amber-200 px-3.5 py-2 text-xs font-bold text-amber-900 leading-relaxed">
+                    <span className="text-base leading-none">⚠️</span>
+                    <div>
+                      <span>현재 시설 점검 및 리뉴얼로 임시 휴관 중인 물문화관입니다.</span>
+                      {selectedCenter.statusNote && (
+                        <p className="mt-0.5 text-[11px] font-normal text-amber-800">{selectedCenter.statusNote}</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* 날짜 선택 */}
@@ -390,11 +443,37 @@ export function ReservationForm({
               max={MAX_DATE}
               value={date}
               onChange={(e) => {
-                setDate(e.target.value);
-                setTime("");
+                const selectedDateStr = e.target.value;
+                if (!selectedDateStr) {
+                  setDate("");
+                  setTime("");
+                  setDateError(null);
+                  return;
+                }
+                const err = checkDateClosed(selectedDateStr, selectedCenter);
+                if (err) {
+                  setDate("");
+                  setTime("");
+                  setDateError(err);
+                } else {
+                  setDate(selectedDateStr);
+                  setTime("");
+                  setDateError(null);
+                }
               }}
               className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
             />
+            {dateError && (
+              <div className="flex items-center gap-2 rounded-xl bg-rose-50 border border-rose-200 px-4 py-3 text-xs font-bold text-rose-800 shadow-sm">
+                <span className="text-base">🚫</span>
+                <span>{dateError}</span>
+              </div>
+            )}
+            {date && !dateError && (
+              <div className="text-xs font-semibold text-sky-700">
+                ✓ 선택한 날짜: {formatDateKo(date)}
+              </div>
+            )}
           </div>
 
           {/* 시간 선택 */}
