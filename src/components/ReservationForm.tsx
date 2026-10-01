@@ -37,7 +37,7 @@ const TODAY = toDateStr(new Date());
 const MAX_DATE = toDateStr(addDays(new Date(), 90));
 
 // ─── 단계 표시 ───────────────────────────────────────────────
-const STEPS = ["시설·일시 선택", "방문자 정보", "예약 확인"] as const;
+const STEPS = ["물문화관·날짜 선택", "방문자 정보", "예약 확인"] as const;
 type StepIndex = 0 | 1 | 2;
 
 function StepIndicator({ current }: { current: StepIndex }) {
@@ -299,7 +299,7 @@ export function ReservationForm({
               <dd className="font-mono font-semibold text-sky-700">{done.id}</dd>
             </div>
             <div className="flex justify-between gap-4">
-              <dt className="shrink-0 font-medium text-slate-500">문화관</dt>
+              <dt className="shrink-0 font-medium text-slate-500">물문화관</dt>
               <dd className="min-w-0 text-right">
                 <div className="font-semibold text-slate-900">{done.centerName}</div>
                 {doneCenter && (
@@ -353,15 +353,15 @@ export function ReservationForm({
         <StepIndicator current={step} />
       </div>
 
-      {/* ── STEP 0 : 시설·일시 선택 ── */}
+      {/* ── STEP 0 : 물문화관·날짜 선택 ── */}
       {step === 0 && (
         <section className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-lg font-bold text-slate-900">문화관 및 일시 선택</h2>
+          <h2 className="text-lg font-bold text-slate-900">물문화관 및 일시 선택</h2>
 
-          {/* 문화관 선택 */}
+          {/* 물문화관 선택 */}
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-700">
-              문화관 <span className="text-rose-500">*</span>
+              물문화관 <span className="text-rose-500">*</span>
             </label>
             <select
               value={centerId}
@@ -663,7 +663,7 @@ export function ReservationForm({
 
           <dl className="divide-y divide-slate-100 rounded-xl bg-slate-50 px-5 py-1 text-sm">
             {[
-              ["문화관", selectedCenter.name],
+              ["물문화관", selectedCenter.name],
               ["위치", formatCenterRegionLine(selectedCenter)],
               ["방문일", formatDateKo(date)],
               ["투어 시간", `${time} (약 60분)`],
