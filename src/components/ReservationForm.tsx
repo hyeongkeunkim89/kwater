@@ -126,6 +126,7 @@ export function ReservationForm({
   const [name, setName] = useState(user?.name || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [guestPin, setGuestPin] = useState("");
+  const [showGuestPin, setShowGuestPin] = useState(false);
   const [partySize, setPartySize] = useState(2);
   const [purpose, setPurpose] = useState<VisitPurpose>("개인·가족 관람");
   const [requests, setRequests] = useState("");
@@ -630,14 +631,34 @@ export function ReservationForm({
                 <label className="text-sm font-semibold text-slate-700">
                   비회원 조회 비밀번호 (숫자 4자리) <span className="text-rose-500">*</span>
                 </label>
-                <input
-                  type="password"
-                  maxLength={4}
-                  placeholder="예약 조회용 비밀번호 숫자 4자리 (예: 1234)"
-                  value={guestPin}
-                  onChange={(e) => setGuestPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
-                />
+                <div className="relative flex items-center">
+                  <input
+                    type={showGuestPin ? "text" : "password"}
+                    maxLength={4}
+                    placeholder="예약 조회용 비밀번호 숫자 4자리 (예: 1234)"
+                    value={guestPin}
+                    onChange={(e) => setGuestPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                    className="w-full rounded-xl border border-slate-200 px-4 py-3 pr-11 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowGuestPin(!showGuestPin)}
+                    className="absolute right-3 p-1 text-slate-400 hover:text-slate-600 transition"
+                    title={showGuestPin ? "비밀번호 숨기기" : "비밀번호 보기"}
+                  >
+                    {showGuestPin ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
                 <p className="text-[11px] text-slate-400 font-semibold">
                   💡 비회원 예약 조회 시 휴대폰 번호와 함께 본인 확인용으로 사용됩니다.
                 </p>
