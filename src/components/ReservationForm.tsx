@@ -418,44 +418,36 @@ export function ReservationForm({
               })}
             </select>
 
-            {/* 선택된 물문화관 정기 휴관일 & 임시 휴관 안내 뱃지 */}
-            {selectedCenter && (
-              <div className="space-y-2 pt-1">
-                {!isCenterClosed && selectedCenter.weeklyClosedDays.length > 0 && (
-                  <div className="flex items-center gap-1.5 rounded-xl bg-slate-100/80 border border-slate-200/60 px-3.5 py-2 text-xs font-semibold text-slate-700">
-                    <span>🗓️ <strong>정기 휴관일:</strong> 매주 {selectedCenter.weeklyClosedDays.map((d) => `${d}요일`).join(", ")}</span>
-                    {selectedCenter.holidayClosureSummary && (
-                      <span className="text-slate-500 font-normal">({selectedCenter.holidayClosureSummary})</span>
-                    )}
-                  </div>
-                )}
-                {isCenterClosed && (
-                  <div className="flex items-start gap-2.5 rounded-2xl bg-rose-50 border border-rose-200 p-4 text-xs text-rose-900 leading-relaxed shadow-sm">
-                    <span className="text-xl leading-none shrink-0">🚫</span>
-                    <div>
-                      <p className="font-extrabold text-sm text-rose-950 mb-1">
-                        {selectedCenter.name} 임시 휴관 안내 (예약 신청 불가)
-                      </p>
-                      <p className="text-rose-900 font-semibold">
-                        {selectedCenter.visitorNotice || selectedCenter.statusNote || "그린리모델링 공사 및 전시 리뉴얼로 인해 현재 임시 휴관 중입니다. 휴관 기간 동안은 온라인 가이드 투어 예약을 접수할 수 없습니다."}
-                      </p>
-                    </div>
-                  </div>
-                )}
+            {/* 선택된 물문화관 정기 휴관일 안내 뱃지 */}
+            {selectedCenter && !isCenterClosed && selectedCenter.weeklyClosedDays.length > 0 && (
+              <div className="pt-1">
+                <div className="flex items-center gap-1.5 rounded-xl bg-slate-100/80 border border-slate-200/60 px-3.5 py-2 text-xs font-semibold text-slate-700">
+                  <span>🗓️ <strong>정기 휴관일:</strong> 매주 {selectedCenter.weeklyClosedDays.map((d) => `${d}요일`).join(", ")}</span>
+                  {selectedCenter.holidayClosureSummary && (
+                    <span className="text-slate-500 font-normal">({selectedCenter.holidayClosureSummary})</span>
+                  )}
+                </div>
               </div>
             )}
           </div>
 
-          {/* 날짜 및 시간 선택 영역 (휴관 중인 경우 일시 선택 차단) */}
+          {/* 날짜 및 시간 선택 영역 (휴관 중인 경우 단일 통합 안내 카드만 표시) */}
           {isCenterClosed ? (
-            <div className="rounded-2xl border border-dashed border-rose-200 bg-rose-50/50 p-6 text-center space-y-2">
-              <p className="text-3xl">🛑</p>
-              <p className="text-sm font-extrabold text-rose-900">
-                임시 휴관 시설로 날짜 및 투어 시간 선택이 제한됩니다
-              </p>
-              <p className="text-xs text-slate-600 font-medium">
-                가이드 투어 관람을 희망하시는 경우, 정상 운영 중인 다른 물문화관을 선택해 주세요.
-              </p>
+            <div className="rounded-2xl border border-rose-200 bg-rose-50/80 p-6 text-center space-y-3 shadow-sm">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600 text-2xl">
+                🚫
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-base font-extrabold text-rose-950">
+                  {selectedCenter.name} 임시 휴관 안내 (예약 불가)
+                </h3>
+                <p className="text-xs font-medium text-rose-900 leading-relaxed max-w-lg mx-auto">
+                  {selectedCenter.visitorNotice || selectedCenter.statusNote || "시설 점검 및 리뉴얼 공사로 인해 현재 임시 휴관 중입니다. 휴관 기간 동안은 온라인 가이드 투어 예약이 제한됩니다."}
+                </p>
+              </div>
+              <div className="pt-2 text-xs font-semibold text-slate-600 border-t border-rose-200/60">
+                💡 가이드 투어 관람을 희망하시는 경우, 정상 운영 중인 다른 물문화관을 선택해 주세요.
+              </div>
             </div>
           ) : (
             <>
