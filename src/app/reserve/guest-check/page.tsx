@@ -17,6 +17,7 @@ type GuestReservation = {
   time: string;
   visitorCount: number;
   status: "승인완료" | "대기중" | "관람완료" | "취소됨";
+  createdAt?: string;
 };
 
 function formatPhone(val: string) {
@@ -27,6 +28,36 @@ function formatPhone(val: string) {
     return `${digits.slice(0, 3)}-${digits.slice(3)}`;
   }
   return digits;
+}
+
+function formatDateKo(dateStr: string) {
+  if (!dateStr) return "";
+  const parts = dateStr.split("-");
+  if (parts.length !== 3) return dateStr;
+  const [y, m, d] = parts.map(Number);
+  if (isNaN(y) || isNaN(m) || isNaN(d)) return dateStr;
+  const dt = new Date(y, m - 1, d);
+  const dow = ["일", "월", "화", "수", "목", "금", "토"][dt.getDay()];
+  return `${y}년 ${m}월 ${d}일 (${dow})`;
+}
+
+function formatCreatedAtKst(isoStr?: string) {
+  if (!isoStr) return "";
+  try {
+    const d = new Date(isoStr);
+    if (isNaN(d.getTime())) return isoStr;
+    return d.toLocaleString("ko-KR", {
+      timeZone: "Asia/Seoul",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  } catch {
+    return isoStr;
+  }
 }
 
 function GuestCheckContent() {
@@ -207,6 +238,19 @@ function GuestCheckContent() {
         </button>
       </form>
 
+      {/* 2. 예약 '변경' 정책 안내 배너 */}
+      <div className="rounded-2xl border border-sky-200/90 bg-sky-50/80 p-4 text-xs font-medium text-sky-950 leading-relaxed shadow-sm mb-8">
+        <div className="flex items-start gap-2.5">
+          <span className="text-base shrink-0 leading-none">ℹ️</span>
+          <div>
+            <p className="font-extrabold text-sky-900 mb-0.5">예약 변경 관련 안내</p>
+            <p>
+              ※ 관람 일시 및 방문 인원 변경이 필요하신 경우, 기존 예약을 취소하신 후 새로 신청해 주시거나 방문 예정인 해당 물문화관으로 문의해 주시기 바랍니다.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* 조회 결과 */}
       {isSearched && (
         <div className="space-y-4">
@@ -238,53 +282,103 @@ function GuestCheckContent() {
             </div>
           )}
 
-          {guestReservations.map((r) => (
-            <div
-              key={r.id}
-              className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-md"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-slate-400">{r.id}</span>
-                  <span
-                    className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-bold ${
-                      r.status === "승인완료"
-                        ? "bg-emerald-100 text-emerald-800"
-                        : r.status === "관람완료"
-                        ? "bg-slate-100 text-slate-700"
-                        : "bg-rose-100 text-rose-800"
-                    }`}
-                  >
-                    {r.status}
+          {guestReservations.map((r) => {
+            const isConfirmed = r.status === "승인완료";
+            const isPending = r.status === "대기중";
+            const isCancelled = r.status === "취소됨";
+
+            const cardBgClass = isCancelled
+              ? "bg-slate-50/90 border-slate-200 opacity-80 filter grayscale-[20%]"
+              : isConfirmed
+              ? "bg-white border-emerald-200 shadow-md"
+              : "bg-white border-amber-200/90 shadow-md";
+
+            const badgeBgClass = isCancelled
+              ? "bg-slate-200 text-slate-600 border border-slate-300 font-extrabold"
+              : isConfirmed
+              ? "bg-emerald-100 text-emerald-900 border border-emerald-300 font-extrabold"
+              : "bg-amber-100 text-amber-900 border border-amber-300 font-extrabold";
+
+            const badgeText = isCancelled
+              ? "[취소됨]"
+              : isConfirmed
+              ? "[예약 확정]"
+              : "[검토 대기중]";
+
+            const formattedDate = formatDateKo(r.date);
+            const createdKst = formatCreatedAtKst(r.createdAt);
+
+            return (
+              <div
+                key={r.id}
+                className={`rounded-2xl border p-6 space-y-3.5 transition-all ${cardBgClass}`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold text-slate-400">#{r.id.slice(-6)}</span>
+                    {createdKst && (
+                      <span className="text-[10px] text-slate-400 font-medium">
+                        (신청일시: {createdKst} KST)
+                      </span>
+                    )}
+                  </div>
+                  <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs ${badgeBgClass}`}>
+                    {badgeText}
                   </span>
                 </div>
-                <h3 className="text-lg font-black text-slate-900">{r.centerName}</h3>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600 font-semibold">
-                  <span>👤 예약자: {r.guestName}</span>
-                  <span>🗓️ 관람일: {r.date}</span>
-                  <span>⏰ 시간: {r.time}</span>
-                  <span>👥 인원: {r.visitorCount}명</span>
+
+                <div>
+                  <h3 className={`text-lg font-black ${isCancelled ? "text-slate-500" : "text-slate-900"}`}>{r.centerName}</h3>
+                  <div className={`mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs ${isCancelled ? "text-slate-400" : "text-slate-600 font-semibold"}`}>
+                    <span>👤 예약자: {r.guestName}</span>
+                    <span>🗓️ 관람일: {formattedDate || r.date}</span>
+                    <span>⏰ 시간: {r.time}</span>
+                    <span>👥 인원: {r.visitorCount}명</span>
+                  </div>
+                </div>
+
+                {isConfirmed && (
+                  <p className="text-[11px] font-bold text-emerald-800 bg-emerald-50/90 border border-emerald-200/80 rounded-xl p-2.5 flex items-center gap-1.5">
+                    <span>✅</span>
+                    <span>확정 완료된 예약입니다. 안내된 일시에 맞춰 방문해 주세요.</span>
+                  </p>
+                )}
+
+                <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                  {!isCancelled ? (
+                    <button
+                      type="button"
+                      onClick={() => handleCancel(r.id)}
+                      className={`rounded-xl px-3.5 py-2 text-xs font-bold transition ${
+                        isConfirmed
+                          ? "border border-slate-200 bg-slate-50 text-slate-600 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200"
+                          : "border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100"
+                      }`}
+                    >
+                      예약 취소
+                    </button>
+                  ) : (
+                    <span className="text-xs font-extrabold text-slate-400 bg-slate-200/70 px-3 py-1.5 rounded-lg cursor-not-allowed">
+                      취소 처리 완료
+                    </span>
+                  )}
+
+                  <Link
+                    href="/status"
+                    className={`rounded-xl px-4 py-2 text-xs font-bold transition shadow-sm ${
+                      isConfirmed
+                        ? "bg-emerald-600 text-white hover:bg-emerald-500 shadow-emerald-600/20 font-black"
+                        : isCancelled
+                        ? "border border-slate-300 bg-white text-slate-500 hover:bg-slate-100 opacity-80"
+                        : "border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
+                    }`}
+                  >
+                    오시는 길 🗺️
+                  </Link>
                 </div>
               </div>
-
-              <div className="flex items-center gap-2 self-end sm:self-center">
-                {r.status === "승인완료" && (
-                  <button
-                    onClick={() => handleCancel(r.id)}
-                    className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2 text-xs font-bold text-rose-700 hover:bg-rose-100 transition"
-                  >
-                    예약 취소
-                  </button>
-                )}
-                <Link
-                  href="/status"
-                  className="rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 transition"
-                >
-                  오시는 길 보기 🗺️
-                </Link>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
