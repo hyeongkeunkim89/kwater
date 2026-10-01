@@ -122,9 +122,18 @@ export function ReservationForm({
   const [time, setTime] = useState("");
   const [dateError, setDateError] = useState<string | null>(null);
 
+  const sanitizeUserPhone = (p?: string) => {
+    if (!p) return "";
+    const clean = p.trim();
+    if (clean === "010-0000-0000" || clean === "010-1234-5678" || clean === "010-9876-5432") {
+      return "";
+    }
+    return clean;
+  };
+
   // Step 1
   const [name, setName] = useState(user?.name || "");
-  const [phone, setPhone] = useState(user?.phone || "");
+  const [phone, setPhone] = useState(() => sanitizeUserPhone(user?.phone));
   const [guestPin, setGuestPin] = useState("");
   const [showGuestPin, setShowGuestPin] = useState(false);
   const [partySize, setPartySize] = useState(2);
@@ -134,7 +143,7 @@ export function ReservationForm({
   useEffect(() => {
     if (user) {
       if (user.name) setName(user.name);
-      if (user.phone) setPhone(user.phone);
+      setPhone(sanitizeUserPhone(user.phone));
     }
   }, [user]);
 

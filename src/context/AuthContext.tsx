@@ -218,7 +218,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       id: `user_${Date.now()}`,
       name: provider === "kakao" ? "카카오 회원" : "네이버 회원",
       email: `${provider}_user@kwater.or.kr`,
-      phone: "010-1234-5678",
+      phone: "",
       provider,
       role: "user",
       favoriteCenter: "daecheong",
@@ -301,7 +301,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       id: matched.id,
       name: matched.name,
       email: matched.email,
-      phone: matched.phone || "010-1234-5678",
+      phone: matched.phone || "",
       provider: matched.provider || "email",
       role: matched.role || "user",
     };
@@ -337,7 +337,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       name: name.trim(),
       email: lowerEmail,
       pass: pass.trim(),
-      phone: phone.trim() || "010-0000-0000",
+      phone: phone.trim() || "",
       provider: "email",
       role: "user",
     };
