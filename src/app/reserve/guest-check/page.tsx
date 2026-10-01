@@ -19,12 +19,22 @@ type GuestReservation = {
   status: "승인완료" | "대기중" | "관람완료" | "취소됨";
 };
 
+function formatPhone(val: string) {
+  const digits = val.replace(/\D/g, "").slice(0, 11);
+  if (digits.length > 7) {
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+  } else if (digits.length > 3) {
+    return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  }
+  return digits;
+}
+
 function GuestCheckContent() {
   const searchParams = useSearchParams();
   const initialPhone = searchParams.get("phone") || "";
   const initialPin = searchParams.get("pin") || "";
 
-  const [phone, setPhone] = useState(initialPhone);
+  const [phone, setPhone] = useState(() => formatPhone(initialPhone));
   const [pin, setPin] = useState(initialPin);
   const [isSearched, setIsSearched] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -32,7 +42,9 @@ function GuestCheckContent() {
 
   useEffect(() => {
     if (initialPhone && initialPin) {
-      void handleSearch(initialPhone, initialPin);
+      const formatted = formatPhone(initialPhone);
+      setPhone(formatted);
+      void handleSearch(formatted, initialPin);
     }
   }, [initialPhone, initialPin]);
 
@@ -140,8 +152,8 @@ function GuestCheckContent() {
             <input
               type="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="01012345678 (- 없이)"
+              onChange={(e) => setPhone(formatPhone(e.target.value))}
+              placeholder="010-0000-0000"
               className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>

@@ -16,6 +16,16 @@ type ReservationItem = {
   status: "승인완료" | "대기중" | "관람완료" | "취소됨";
 };
 
+function formatPhone(val: string) {
+  const digits = val.replace(/\D/g, "").slice(0, 11);
+  if (digits.length > 7) {
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+  } else if (digits.length > 3) {
+    return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  }
+  return digits;
+}
+
 export function ReservationLookupCard() {
   const { user, openAuthModal } = useAuth();
   const [phone, setPhone] = useState("");
@@ -27,8 +37,9 @@ export function ReservationLookupCard() {
   // 회원 로그인 상태인 경우 유저 전화번호 자동 세팅 및 회원 예약 자동 조회
   useEffect(() => {
     if (user?.phone) {
-      setPhone(user.phone);
-      void handleSearch(user.phone, "");
+      const formatted = formatPhone(user.phone);
+      setPhone(formatted);
+      void handleSearch(formatted, "");
     }
   }, [user]);
 
@@ -159,8 +170,8 @@ export function ReservationLookupCard() {
           <input
             type="tel"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="010-1234-5678 (숫자만 입력)"
+            onChange={(e) => setPhone(formatPhone(e.target.value))}
+            placeholder="010-0000-0000"
             className="w-full rounded-xl border border-slate-200 p-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
