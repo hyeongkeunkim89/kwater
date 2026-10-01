@@ -37,7 +37,7 @@ const TODAY = toDateStr(new Date());
 const MAX_DATE = toDateStr(addDays(new Date(), 90));
 
 // ─── 단계 표시 ───────────────────────────────────────────────
-const STEPS = ["물문화관·날짜 선택", "방문자 정보", "예약 확인"] as const;
+const STEPS = ["물문화관·일시 선택", "방문자 정보", "예약 확인"] as const;
 type StepIndex = 0 | 1 | 2;
 
 function StepIndicator({ current }: { current: StepIndex }) {
@@ -353,7 +353,7 @@ export function ReservationForm({
         <StepIndicator current={step} />
       </div>
 
-      {/* ── STEP 0 : 물문화관·날짜 선택 ── */}
+      {/* ── STEP 0 : 물문화관·일시 선택 ── */}
       {step === 0 && (
         <section className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <h2 className="text-lg font-bold text-slate-900">물문화관 및 일시 선택</h2>
