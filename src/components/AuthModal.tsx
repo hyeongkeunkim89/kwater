@@ -20,6 +20,7 @@ export function AuthModal() {
   // Login form state (아이디 또는 이메일)
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPass, setLoginPass] = useState("");
+  const [showLoginPass, setShowLoginPass] = useState(false);
 
   // Admin form state
   const [adminId, setAdminId] = useState("admin");
@@ -50,6 +51,7 @@ export function AuthModal() {
   // Guest lookup form state
   const [guestPhone, setGuestPhone] = useState("");
   const [guestPin, setGuestPin] = useState("");
+  const [showGuestModalPin, setShowGuestModalPin] = useState(false);
 
   if (!isAuthOpen) return null;
 
@@ -362,13 +364,33 @@ export function AuthModal() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">비밀번호</label>
-                <input
-                  type="password"
-                  value={loginPass}
-                  onChange={(e) => setLoginPass(e.target.value)}
-                  placeholder="비밀번호 입력"
-                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
-                />
+                <div className="relative flex items-center">
+                  <input
+                    type={showLoginPass ? "text" : "password"}
+                    value={loginPass}
+                    onChange={(e) => setLoginPass(e.target.value)}
+                    placeholder="비밀번호 입력"
+                    className="w-full rounded-xl border border-slate-200 p-2.5 pr-10 text-sm outline-none focus:border-sky-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowLoginPass(!showLoginPass)}
+                    className="absolute right-3 p-1 text-slate-400 hover:text-slate-600 transition"
+                    title={showLoginPass ? "비밀번호 숨기기" : "비밀번호 보기"}
+                  >
+                    {showLoginPass ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <button
@@ -450,7 +472,7 @@ export function AuthModal() {
               {/* 3. 비밀번호 + 표시/숨기기 토글 + 강도 측정 */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">비밀번호 * (최소 8자)</label>
-                <div className="relative">
+                <div className="relative flex items-center">
                   <input
                     type={showSignUpPass ? "text" : "password"}
                     value={signUpPass}
@@ -461,9 +483,20 @@ export function AuthModal() {
                   <button
                     type="button"
                     onClick={() => setShowSignUpPass(!showSignUpPass)}
-                    className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-700"
+                    className="absolute right-3 p-1 text-slate-400 hover:text-slate-600 transition"
+                    title={showSignUpPass ? "비밀번호 숨기기" : "비밀번호 보기"}
                   >
-                    {showSignUpPass ? "🙈" : "👁️"}
+                    {showSignUpPass ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    )}
                   </button>
                 </div>
                 {/* 비밀번호 강도 게이지 */}
@@ -490,7 +523,7 @@ export function AuthModal() {
               {/* 4. 비밀번호 재확인 + 실시간 일치 검증 */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">비밀번호 확인 *</label>
-                <div className="relative">
+                <div className="relative flex items-center">
                   <input
                     type={showSignUpPassConfirm ? "text" : "password"}
                     value={signUpPassConfirm}
@@ -501,9 +534,20 @@ export function AuthModal() {
                   <button
                     type="button"
                     onClick={() => setShowSignUpPassConfirm(!showSignUpPassConfirm)}
-                    className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-700"
+                    className="absolute right-3 p-1 text-slate-400 hover:text-slate-600 transition"
+                    title={showSignUpPassConfirm ? "비밀번호 숨기기" : "비밀번호 보기"}
                   >
-                    {showSignUpPassConfirm ? "🙈" : "👁️"}
+                    {showSignUpPassConfirm ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    )}
                   </button>
                 </div>
                 {signUpPassConfirm && (
@@ -603,14 +647,34 @@ export function AuthModal() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">비회원 비밀번호 (숫자 4자리)</label>
-                <input
-                  type="password"
-                  maxLength={4}
-                  value={guestPin}
-                  onChange={(e) => setGuestPin(e.target.value)}
-                  placeholder="예약 시 설정한 비밀번호 4자리"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-sky-500"
-                />
+                <div className="relative flex items-center">
+                  <input
+                    type={showGuestModalPin ? "text" : "password"}
+                    maxLength={4}
+                    value={guestPin}
+                    onChange={(e) => setGuestPin(e.target.value)}
+                    placeholder="예약 시 설정한 비밀번호 4자리"
+                    className="w-full rounded-xl border border-slate-200 p-3 pr-10 text-sm outline-none focus:border-sky-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowGuestModalPin(!showGuestModalPin)}
+                    className="absolute right-3 p-1 text-slate-400 hover:text-slate-600 transition"
+                    title={showGuestModalPin ? "비밀번호 숨기기" : "비밀번호 보기"}
+                  >
+                    {showGuestModalPin ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <button
@@ -647,7 +711,7 @@ export function AuthModal() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">관리 비밀번호 *</label>
-                <div className="relative">
+                <div className="relative flex items-center">
                   <input
                     type={showAdminPass ? "text" : "password"}
                     value={adminPass}
@@ -658,9 +722,20 @@ export function AuthModal() {
                   <button
                     type="button"
                     onClick={() => setShowAdminPass(!showAdminPass)}
-                    className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-700"
+                    className="absolute right-3 p-1 text-slate-400 hover:text-slate-600 transition"
+                    title={showAdminPass ? "비밀번호 숨기기" : "비밀번호 보기"}
                   >
-                    {showAdminPass ? "🙈" : "👁️"}
+                    {showAdminPass ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    )}
                   </button>
                 </div>
               </div>
