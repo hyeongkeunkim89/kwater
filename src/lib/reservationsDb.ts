@@ -317,18 +317,28 @@ export async function getUserReservationsFromDb(email?: string, phone?: string):
   return rows.map(rowToReservation);
 }
 
-/** 비회원 예약 취소 */
-export async function cancelGuestReservationInDb(id: string, phone: string, pin: string): Promise<boolean> {
+/** 예약 취소 (비회원/회원 공통) */
+export async function cancelGuestReservationInDb(
+  id: string,
+  phone: string = "",
+  pin: string = "",
+  email: string = ""
+): Promise<boolean> {
   const sql = getReservationsSql();
   if (!sql) return false;
   await ensureTourReservationsSchema(sql);
   const targetDigits = phone.replace(/\D/g, "");
+  const emailLower = email.trim().toLowerCase();
   const rows = await sql<{ id: string }[]>`
     UPDATE tour_reservations
     SET status = '취소'
     WHERE id = ${id}
-      AND (regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits} OR ${targetDigits} = '')
-      AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()})
+      AND (
+        ${emailLower} <> '' AND lower(user_email) = ${emailLower}
+        OR ${targetDigits} <> '' AND regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits}
+        OR (${targetDigits} = '' AND ${emailLower} = '')
+      )
+      AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()} OR ${emailLower} <> '')
     RETURNING id
   `;
   return rows.length > 0;

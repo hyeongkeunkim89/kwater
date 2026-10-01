@@ -24,13 +24,14 @@ export async function POST(req: NextRequest) {
   const id = typeof b.id === "string" ? b.id.trim() : "";
   const phone = typeof b.phone === "string" ? b.phone.trim() : "";
   const pin = typeof b.pin === "string" ? b.pin.trim() : "";
+  const email = typeof b.email === "string" ? b.email.trim() : "";
 
   if (!id) {
     return NextResponse.json({ error: "예약 번호가 필요합니다." }, { status: 400 });
   }
 
   try {
-    const ok = await cancelGuestReservationInDb(id, phone, pin);
+    const ok = await cancelGuestReservationInDb(id, phone, pin, email);
     if (!ok) {
       return NextResponse.json({ error: "예약 취소에 실패했거나 예약을 찾을 수 없습니다." }, { status: 404 });
     }

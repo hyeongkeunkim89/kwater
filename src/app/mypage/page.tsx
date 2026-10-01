@@ -127,12 +127,26 @@ function MyPageContent() {
     };
   }, [user]);
 
-  const handleCancelReservation = (id: string) => {
+  const handleCancelReservation = async (id: string) => {
     if (confirm("정말 예약을 취소하시겠습니까?")) {
       updateStatus(id, "취소");
       setReservations((prev) =>
         prev.map((r) => (r.id === id ? { ...r, status: "취소" } : r))
       );
+      try {
+        await fetch("/api/reservations/guest-cancel", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id,
+            phone: user?.phone || "",
+            email: user?.email || "",
+          }),
+        });
+      } catch (e) {
+        console.error("Cancel reservation fetch error", e);
+      }
+      alert("예약이 취소되었습니다.");
     }
   };
 
@@ -280,53 +294,93 @@ function MyPageContent() {
         {/* 1. 투어 예약 탭 */}
         {activeTab === "reservations" && (
           <div className="space-y-4">
-            {reservations.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md"
-              >
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-extrabold text-slate-400">{item.id}</span>
-                    <span
-                      className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-bold ${
-                        item.status === "확정"
-                          ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
-                          : item.status === "대기"
-                          ? "bg-amber-100 text-amber-900 border border-amber-300"
-                          : "bg-slate-100 text-slate-600 border border-slate-300"
-                      }`}
-                    >
-                      {item.status === "대기" ? "대기중" : item.status === "확정" ? "승인완료" : "취소됨"}
+            {reservations.map((item) => {
+              const st = item.status as string;
+              const isConfirmed = st === "확정" || st === "승인완료";
+              const isCancelled = st === "취소" || st === "취소됨";
+
+              const cardBgClass = isCancelled
+                ? "bg-slate-50/90 border-slate-200 opacity-80 filter grayscale-[20%]"
+                : isConfirmed
+                ? "bg-white border-emerald-200 shadow-md"
+                : "bg-white border-amber-200/90 shadow-md";
+
+              const badgeBgClass = isCancelled
+                ? "bg-slate-200 text-slate-600 border border-slate-300 font-extrabold"
+                : isConfirmed
+                ? "bg-emerald-100 text-emerald-900 border border-emerald-300 font-extrabold"
+                : "bg-amber-100 text-amber-900 border border-amber-300 font-extrabold";
+
+              const badgeText = isCancelled
+                ? "[취소됨]"
+                : isConfirmed
+                ? "[예약 확정]"
+                : "[검토 대기중]";
+
+              return (
+                <div
+                  key={item.id}
+                  className={`rounded-2xl border p-6 space-y-3.5 transition-all ${cardBgClass}`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-mono font-extrabold text-slate-400">#{item.id.slice(-6)}</span>
+                    <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs ${badgeBgClass}`}>
+                      {badgeText}
                     </span>
                   </div>
-                  <h3 className="text-lg font-black text-slate-900">{item.centerName}</h3>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600 font-semibold">
-                    <span>🗓️ 관람일: {item.date}</span>
-                    <span>⏰ 관람시간: {item.time}</span>
-                    <span>👥 인원: {item.partySize}명</span>
-                    <span>🎯 목적: {item.purpose}</span>
+
+                  <div>
+                    <h3 className={`text-lg font-black ${isCancelled ? "text-slate-500" : "text-slate-900"}`}>{item.centerName}</h3>
+                    <div className={`mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs ${isCancelled ? "text-slate-400" : "text-slate-600 font-semibold"}`}>
+                      <span>🗓️ 관람일: {item.date}</span>
+                      <span>⏰ 관람시간: {item.time}</span>
+                      <span>👥 인원: {item.partySize}명</span>
+                      <span>🎯 목적: {item.purpose}</span>
+                    </div>
+                  </div>
+
+                  {isConfirmed && (
+                    <p className="text-[11px] font-bold text-emerald-800 bg-emerald-50/90 border border-emerald-200/80 rounded-xl p-2.5 flex items-center gap-1.5">
+                      <span>✅</span>
+                      <span>확정 완료된 예약입니다. 안내된 일시에 맞춰 방문해 주세요.</span>
+                    </p>
+                  )}
+
+                  <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                    {!isCancelled ? (
+                      <button
+                        type="button"
+                        onClick={() => handleCancelReservation(item.id)}
+                        className={`rounded-xl px-3.5 py-2 text-xs font-bold transition ${
+                          isConfirmed
+                            ? "border border-slate-200 bg-slate-50 text-slate-600 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200"
+                            : "border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100"
+                        }`}
+                      >
+                        예약 취소
+                      </button>
+                    ) : (
+                      <span className="text-xs font-extrabold text-slate-400 bg-slate-200/70 px-3 py-1.5 rounded-lg cursor-not-allowed">
+                        취소 처리 완료
+                      </span>
+                    )}
+
+                    <Link
+                      href="/status"
+                      className={`rounded-xl px-4 py-2 text-xs font-bold transition shadow-sm ${
+                        isConfirmed
+                          ? "bg-emerald-600 text-white hover:bg-emerald-500 shadow-emerald-600/20 font-black"
+                          : isCancelled
+                          ? "border border-slate-300 bg-white text-slate-500 hover:bg-slate-100 opacity-80"
+                          : "border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
+                      }`}
+                    >
+                      오시는 길 🗺️
+                    </Link>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-2 self-end sm:self-center">
-                  {item.status !== "취소" && (
-                    <button
-                      onClick={() => handleCancelReservation(item.id)}
-                      className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2 text-xs font-bold text-rose-700 hover:bg-rose-100 transition"
-                    >
-                      예약 취소
-                    </button>
-                  )}
-                  <Link
-                    href="/status"
-                    className="rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 transition"
-                  >
-                    오시는 길 보기 🗺️
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
 
             {reservations.length === 0 && (
               <div className="rounded-2xl border border-dashed border-slate-300 py-16 text-center space-y-3">
