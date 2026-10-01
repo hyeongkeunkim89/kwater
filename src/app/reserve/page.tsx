@@ -47,7 +47,7 @@ export default async function ReservePage({ searchParams }: Props) {
                 1
               </span>
               <h2 className="text-xl font-black text-slate-900 tracking-tight">
-                가이드 투어 예약 접수
+                가이드 투어 예약 신청
               </h2>
             </div>
             <div className="pt-1">
