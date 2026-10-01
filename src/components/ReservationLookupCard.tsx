@@ -136,9 +136,6 @@ export function ReservationLookupCard() {
     <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-xl space-y-6">
       {/* 헤더 안내 */}
       <div className="border-b border-slate-100 pb-4">
-        <span className="inline-block rounded-full bg-emerald-100 px-3 py-0.5 text-[11px] font-black text-emerald-800 mb-1">
-          실시간 원스톱 조회
-        </span>
         <h3 className="text-lg font-black text-slate-900">투어 예약 내역 확인</h3>
         <p className="mt-1 text-xs text-slate-500 font-semibold leading-relaxed">
           접수 시 등록한 연락처와 비밀번호로 예약 상태를 바로 조회하고 관리하실 수 있습니다.
