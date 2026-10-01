@@ -81,6 +81,12 @@ export async function POST(req: NextRequest) {
   if (centerName !== center.name) {
     return NextResponse.json({ error: "문화관 정보가 일치하지 않습니다." }, { status: 400 });
   }
+  if (center.status === "점검·휴관" || center.status === "준비중") {
+    return NextResponse.json(
+      { error: `${center.name}은(는) 현재 시설 점검 및 리뉴얼(임시 휴관) 중으로 예약을 접수할 수 없습니다.` },
+      { status: 400 },
+    );
+  }
   if (!DATE_RE.test(date)) {
     return NextResponse.json({ error: "날짜 형식이 올바르지 않습니다." }, { status: 400 });
   }

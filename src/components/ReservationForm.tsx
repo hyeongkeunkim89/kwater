@@ -214,7 +214,10 @@ export function ReservationForm({
   const loadingSlots =
     reservationsLive && Boolean(date) && (availLoading || serverAvailMap === null) && !availError;
 
-  const step0Valid = centerId && date && time && !dateError;
+  const isCenterClosed =
+    selectedCenter.status === "점검·휴관" || selectedCenter.status === "준비중";
+
+  const step0Valid = centerId && !isCenterClosed && date && time && !dateError;
   const maxForSelectedTime = reservationsLive
     ? (serverAvailMap?.[time] ?? 0)
     : (slotAvailability[time] ?? MAX_PER_SLOT);
@@ -400,17 +403,25 @@ export function ReservationForm({
               }}
               className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
             >
-              {waterCenters.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name} ({formatCenterRegionLine(c)})
-                </option>
-              ))}
+              {waterCenters.map((c) => {
+                const closureTag =
+                  c.status === "점검·휴관"
+                    ? " [임시 휴관]"
+                    : c.status === "준비중"
+                    ? " [준비중]"
+                    : "";
+                return (
+                  <option key={c.id} value={c.id}>
+                    {c.name} ({formatCenterRegionLine(c)}){closureTag}
+                  </option>
+                );
+              })}
             </select>
 
-            {/* 선택된 물문화관 정기 휴관일 안내 뱃지 */}
+            {/* 선택된 물문화관 정기 휴관일 & 임시 휴관 안내 뱃지 */}
             {selectedCenter && (
-              <div className="space-y-1.5 pt-1">
-                {selectedCenter.weeklyClosedDays.length > 0 && (
+              <div className="space-y-2 pt-1">
+                {!isCenterClosed && selectedCenter.weeklyClosedDays.length > 0 && (
                   <div className="flex items-center gap-1.5 rounded-xl bg-slate-100/80 border border-slate-200/60 px-3.5 py-2 text-xs font-semibold text-slate-700">
                     <span>🗓️ <strong>정기 휴관일:</strong> 매주 {selectedCenter.weeklyClosedDays.map((d) => `${d}요일`).join(", ")}</span>
                     {selectedCenter.holidayClosureSummary && (
@@ -418,14 +429,16 @@ export function ReservationForm({
                     )}
                   </div>
                 )}
-                {selectedCenter.status === "점검·휴관" && (
-                  <div className="flex items-start gap-2 rounded-xl bg-amber-50 border border-amber-200 px-3.5 py-2 text-xs font-bold text-amber-900 leading-relaxed">
-                    <span className="text-base leading-none">⚠️</span>
+                {isCenterClosed && (
+                  <div className="flex items-start gap-2.5 rounded-2xl bg-rose-50 border border-rose-200 p-4 text-xs text-rose-900 leading-relaxed shadow-sm">
+                    <span className="text-xl leading-none shrink-0">🚫</span>
                     <div>
-                      <span>현재 시설 점검 및 리뉴얼로 임시 휴관 중인 물문화관입니다.</span>
-                      {selectedCenter.statusNote && (
-                        <p className="mt-0.5 text-[11px] font-normal text-amber-800">{selectedCenter.statusNote}</p>
-                      )}
+                      <p className="font-extrabold text-sm text-rose-950 mb-1">
+                        {selectedCenter.name} 임시 휴관 안내 (예약 신청 불가)
+                      </p>
+                      <p className="text-rose-900 font-semibold">
+                        {selectedCenter.visitorNotice || selectedCenter.statusNote || "그린리모델링 공사 및 전시 리뉴얼로 인해 현재 임시 휴관 중입니다. 휴관 기간 동안은 온라인 가이드 투어 예약을 접수할 수 없습니다."}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -433,117 +446,132 @@ export function ReservationForm({
             )}
           </div>
 
-          {/* 날짜 선택 */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700">
-              방문 날짜 <span className="text-rose-500">*</span>
-            </label>
-            <input
-              type="date"
-              min={TODAY}
-              max={MAX_DATE}
-              value={date}
-              onChange={(e) => {
-                const selectedDateStr = e.target.value;
-                if (!selectedDateStr) {
-                  setDate("");
-                  setTime("");
-                  setDateError(null);
-                  return;
-                }
-                const err = checkDateClosed(selectedDateStr, selectedCenter);
-                if (err) {
-                  setDate("");
-                  setTime("");
-                  setDateError(err);
-                } else {
-                  setDate(selectedDateStr);
-                  setTime("");
-                  setDateError(null);
-                }
-              }}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
-            />
-            {dateError && (
-              <div className="flex items-center gap-2 rounded-xl bg-rose-50 border border-rose-200 px-4 py-3 text-xs font-bold text-rose-800 shadow-sm">
-                <span className="text-base">🚫</span>
-                <span>{dateError}</span>
-              </div>
-            )}
-            {date && !dateError && (
-              <div className="text-xs font-semibold text-sky-700">
-                ✓ 선택한 날짜: {formatDateKo(date)}
-              </div>
-            )}
-          </div>
-
-          {/* 시간 선택 */}
-          {date && (
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700">
-                투어 시간 <span className="text-rose-500">*</span>
-              </label>
-              <p className="text-xs text-slate-500">
-                슬롯당 최대 {MAX_PER_SLOT}명 · 소요 약 60분
+          {/* 날짜 및 시간 선택 영역 (휴관 중인 경우 일시 선택 차단) */}
+          {isCenterClosed ? (
+            <div className="rounded-2xl border border-dashed border-rose-200 bg-rose-50/50 p-6 text-center space-y-2">
+              <p className="text-3xl">🛑</p>
+              <p className="text-sm font-extrabold text-rose-900">
+                임시 휴관 시설로 날짜 및 투어 시간 선택이 제한됩니다
               </p>
-              {availError && (
-                <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
-                  <p>{availError}</p>
-                  <button
-                    type="button"
-                    onClick={() => setAvailRetry((n) => n + 1)}
-                    className="mt-2 font-semibold text-amber-800 underline decoration-amber-600/60 hover:text-amber-950"
-                  >
-                    다시 시도
-                  </button>
+              <p className="text-xs text-slate-600 font-medium">
+                가이드 투어 관람을 희망하시는 경우, 정상 운영 중인 다른 물문화관을 선택해 주세요.
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* 날짜 선택 */}
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700">
+                  방문 날짜 <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  min={TODAY}
+                  max={MAX_DATE}
+                  value={date}
+                  onChange={(e) => {
+                    const selectedDateStr = e.target.value;
+                    if (!selectedDateStr) {
+                      setDate("");
+                      setTime("");
+                      setDateError(null);
+                      return;
+                    }
+                    const err = checkDateClosed(selectedDateStr, selectedCenter);
+                    if (err) {
+                      setDate("");
+                      setTime("");
+                      setDateError(err);
+                    } else {
+                      setDate(selectedDateStr);
+                      setTime("");
+                      setDateError(null);
+                    }
+                  }}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500/40"
+                />
+                {dateError && (
+                  <div className="flex items-center gap-2 rounded-xl bg-rose-50 border border-rose-200 px-4 py-3 text-xs font-bold text-rose-800 shadow-sm">
+                    <span className="text-base">🚫</span>
+                    <span>{dateError}</span>
+                  </div>
+                )}
+                {date && !dateError && (
+                  <div className="text-xs font-semibold text-sky-700">
+                    ✓ 선택한 날짜: {formatDateKo(date)}
+                  </div>
+                )}
+              </div>
+
+              {/* 시간 선택 */}
+              {date && (
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700">
+                    투어 시간 <span className="text-rose-500">*</span>
+                  </label>
+                  <p className="text-xs text-slate-500">
+                    슬롯당 최대 {MAX_PER_SLOT}명 · 소요 약 60분
+                  </p>
+                  {availError && (
+                    <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+                      <p>{availError}</p>
+                      <button
+                        type="button"
+                        onClick={() => setAvailRetry((n) => n + 1)}
+                        className="mt-2 font-semibold text-amber-800 underline decoration-amber-600/60 hover:text-amber-950"
+                      >
+                        다시 시도
+                      </button>
+                    </div>
+                  )}
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+                    {TOUR_SLOTS.map((t) => {
+                      const avail = reservationsLive
+                        ? (serverAvailMap?.[t] ?? 0)
+                        : (slotAvailability[t] ?? MAX_PER_SLOT);
+                      const full = !loadingSlots && !availError && avail <= 0;
+                      const disabled = loadingSlots || Boolean(availError) || full;
+                      return (
+                        <button
+                          key={t}
+                          type="button"
+                          disabled={disabled}
+                          onClick={() => setTime(t)}
+                          className={[
+                            "flex min-h-[44px] flex-col items-center justify-center rounded-xl border py-3 text-sm font-semibold transition focus:outline-none",
+                            disabled
+                              ? "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-300"
+                              : time === t
+                                ? "border-sky-500 bg-sky-600 text-white shadow"
+                                : "border-slate-200 bg-white text-slate-800 hover:border-sky-300 hover:text-sky-800",
+                          ].join(" ")}
+                        >
+                          {t}
+                          <span
+                            className={[
+                              "mt-0.5 text-[10px]",
+                              disabled
+                                ? "text-slate-300"
+                                : time === t
+                                  ? "text-sky-100"
+                                  : "text-slate-400",
+                            ].join(" ")}
+                          >
+                            {loadingSlots
+                              ? "확인 중"
+                              : availError
+                                ? "—"
+                                : full
+                                  ? "마감"
+                                  : `잔여 ${avail}명`}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
-              <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-                {TOUR_SLOTS.map((t) => {
-                  const avail = reservationsLive
-                    ? (serverAvailMap?.[t] ?? 0)
-                    : (slotAvailability[t] ?? MAX_PER_SLOT);
-                  const full = !loadingSlots && !availError && avail <= 0;
-                  const disabled = loadingSlots || Boolean(availError) || full;
-                  return (
-                    <button
-                      key={t}
-                      type="button"
-                      disabled={disabled}
-                      onClick={() => setTime(t)}
-                      className={[
-                        "flex min-h-[44px] flex-col items-center justify-center rounded-xl border py-3 text-sm font-semibold transition focus:outline-none",
-                        disabled
-                          ? "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-300"
-                          : time === t
-                            ? "border-sky-500 bg-sky-600 text-white shadow"
-                            : "border-slate-200 bg-white text-slate-800 hover:border-sky-300 hover:text-sky-800",
-                      ].join(" ")}
-                    >
-                      {t}
-                      <span
-                        className={[
-                          "mt-0.5 text-[10px]",
-                          disabled
-                            ? "text-slate-300"
-                            : time === t
-                              ? "text-sky-100"
-                              : "text-slate-400",
-                        ].join(" ")}
-                      >
-                        {loadingSlots
-                          ? "확인 중"
-                          : availError
-                            ? "—"
-                            : full
-                              ? "마감"
-                              : `잔여 ${avail}명`}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            </>
           )}
 
           <div className="flex justify-end pt-2">
