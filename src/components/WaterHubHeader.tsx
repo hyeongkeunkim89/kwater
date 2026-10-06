@@ -112,8 +112,8 @@ export function WaterHubHeader({
           dense ? "py-1.5" : "py-2",
         ].join(" ")}
       >
-        {/* 로고 영역 */}
-        <div className="shrink-0 flex items-center pr-4">
+        {/* 로고 영역 (좌측 230px 고정 슬롯) */}
+        <div className="w-[230px] shrink-0 flex items-center pr-2">
           <Link
             href="/main"
             className="flex items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
@@ -123,15 +123,15 @@ export function WaterHubHeader({
               alt="K-water 한국수자원공사 물문화관"
               width={1024}
               height={341}
-              className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[250px] shrink-0 object-contain"
+              className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[210px] shrink-0 object-contain"
               priority
             />
           </Link>
         </div>
 
-        {/* 데스크톱 메인 내비게이션 GNB (폭 확장 및 상단 탭-드롭다운 서브메뉴 좌측 시작선 100% 수직 일치) */}
+        {/* 데스크톱 메인 내비게이션 GNB (중앙 정렬 5열 그리드, 탭 제목 완벽 중앙 배치) */}
         <nav
-          className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-auto h-full px-4"
+          className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-auto h-full px-2"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
         >
           <div className="grid grid-cols-5 w-full h-full">
@@ -143,7 +143,7 @@ export function WaterHubHeader({
                 <div
                   key={item.key}
                   className={[
-                    "relative flex items-center justify-start h-full cursor-pointer px-5 text-left transition-colors duration-200",
+                    "relative flex items-center justify-center text-center h-full cursor-pointer px-2 transition-colors duration-200",
                     isHovered
                       ? "text-[#3054b0] font-black"
                       : isCurrentActive
@@ -157,7 +157,7 @@ export function WaterHubHeader({
                 >
                   <Link
                     href={item.href}
-                    className="w-full text-left py-2 text-base lg:text-[1.08rem] font-black tracking-tight truncate"
+                    className="w-full text-center py-2 text-base lg:text-[1.08rem] font-black tracking-tight truncate"
                   >
                     {item.label}
                   </Link>
@@ -167,8 +167,8 @@ export function WaterHubHeader({
           </div>
         </nav>
 
-        {/* 우측 회원/로그인 영역 */}
-        <div className="hidden lg:flex items-center justify-end shrink-0 pl-4 gap-x-3">
+        {/* 우측 회원/로그인 영역 (우측 230px 고정 슬롯으로 좌우 대칭 유지) */}
+        <div className="hidden lg:flex items-center justify-end w-[230px] shrink-0 pl-2 gap-x-2.5">
           {user ? (
             <div className="flex items-center gap-x-2.5">
               {user.role === "admin" ? (
@@ -269,13 +269,11 @@ export function WaterHubHeader({
         }}
       >
         <div className="mx-auto flex max-w-7xl items-stretch justify-between px-4 sm:px-8">
-          {/* 좌측 로고 영역 대응 투명 가이드 앵커 */}
-          <div className="shrink-0 pr-4 invisible pointer-events-none">
-            <div className="w-[250px] h-1" />
-          </div>
+          {/* 좌측 로고 영역 대응 투명 가이드 앵커 (230px 고정) */}
+          <div className="w-[230px] shrink-0 invisible pointer-events-none" />
 
           {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
-          <div className="grid grid-cols-5 w-full flex-1 max-w-4xl mx-auto divide-x divide-slate-100/90 px-4">
+          <div className="grid grid-cols-5 w-full flex-1 max-w-4xl mx-auto divide-x divide-slate-100/90 px-2">
             {menuItems.map((item) => {
               const isHovered = activeHoverKey === item.key;
               const isCurrentActive = isTabActive(item.key);
@@ -284,7 +282,7 @@ export function WaterHubHeader({
                 <div
                   key={item.key}
                   className={[
-                    "py-6 px-5 text-left min-h-[220px] transition-colors duration-200 flex flex-col justify-start",
+                    "py-6 px-3 text-center min-h-[220px] transition-colors duration-200 flex flex-col items-center justify-start",
                     isHovered
                       ? "bg-[#edf4fb]"
                       : isCurrentActive && !activeHoverKey
@@ -293,7 +291,7 @@ export function WaterHubHeader({
                   ].join(" ")}
                   onMouseEnter={() => setActiveHoverKey(item.key)}
                 >
-                  <ul className="space-y-3.5 text-sm">
+                  <ul className="space-y-3.5 text-sm w-full text-center">
                     {item.subItems.map((sub) => (
                       <li key={sub.href + sub.label}>
                         <Link
@@ -314,10 +312,8 @@ export function WaterHubHeader({
             })}
           </div>
 
-          {/* 우측 로그인 영역 대응 투명 가이드 앵커 */}
-          <div className="shrink-0 pl-4 invisible pointer-events-none">
-            <div className="w-[180px] h-1" />
-          </div>
+          {/* 우측 로그인 영역 대응 투명 가이드 앵커 (230px 고정) */}
+          <div className="w-[230px] shrink-0 invisible pointer-events-none" />
         </div>
       </div>
 
