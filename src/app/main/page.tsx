@@ -1,10 +1,26 @@
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { HeroSliderWrapper } from "@/components/HeroSliderWrapper";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { KwaterHighlightSection } from "@/components/KwaterHighlightSection";
 import { sidoList, waterCenters } from "@/data/centers";
+
+const KoreaMap = dynamic(
+  () => import("@/components/KoreaMap").then((m) => m.KoreaMap),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex min-h-[440px] items-center justify-center rounded-2xl border border-slate-200 bg-slate-50">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-sky-500 border-t-transparent" />
+          <p className="text-sm text-slate-400">전국 현황지도를 불러오는 중입니다...</p>
+        </div>
+      </div>
+    ),
+  },
+);
 
 export default function MainPage() {
   const QUICK_CARDS = [
@@ -138,12 +154,12 @@ export default function MainPage() {
           </section>
         </div>
 
-        {/* 하단 1컬럼: 전국 15대 댐 물문화관 거점 종합안내 (가로로 긴 직사각형 배너) */}
+        {/* 하단 1컬럼: 전국 15대 댐 물문화관 거점 종합안내 (K-WATER NETWORK 지도 포함) */}
         <section
           aria-label="물문화관 전국 현황 현황판"
-          className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300"
+          className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 space-y-6"
         >
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-100">
             <div className="flex-1 min-w-0">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
                 K-WATER NETWORK
@@ -181,11 +197,16 @@ export default function MainPage() {
                   href="/status"
                   className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-xs hover:shadow-md group whitespace-nowrap w-full sm:w-auto"
                 >
-                  <span>전국 현황지도 바로가기</span>
+                  <span>전체 상세 현황보기</span>
                   <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
                 </Link>
               </div>
             </div>
+          </div>
+
+          {/* 전국 인터랙티브 현황 지도 영역 */}
+          <div className="pt-2 min-w-0">
+            <KoreaMap />
           </div>
         </section>
       </main>
