@@ -179,7 +179,7 @@ export default function MainPage() {
               </div>
               <div className="w-full sm:w-auto sm:pl-6">
                 <Link
-                  href="/status"
+                  href="/status?view=list"
                   className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-xs hover:shadow-md group whitespace-nowrap w-full sm:w-auto"
                 >
                   <span>전체 상세 현황보기</span>

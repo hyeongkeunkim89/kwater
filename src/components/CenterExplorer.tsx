@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 import { memo, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { CenterTheme, WaterCenter, WeekdayHan } from "@/data/centers";
 import {
@@ -48,7 +49,17 @@ type TabView = "map" | "list";
 type ThemeFilter = "전체" | CenterTheme;
 
 export function CenterExplorer() {
-  const [view, setView] = useState<TabView>("map");
+  const searchParams = useSearchParams();
+  const initialParam = searchParams.get("view") || searchParams.get("tab");
+  const [view, setView] = useState<TabView>(initialParam === "list" ? "list" : "map");
+
+  useEffect(() => {
+    const p = searchParams.get("view") || searchParams.get("tab");
+    if (p === "list" || p === "map") {
+      setView(p);
+    }
+  }, [searchParams]);
+
   const [sido, setSido] = useState<string>(centerExplorerUi.allSido);
   const [themeFilter, setThemeFilter] = useState<ThemeFilter>("전체");
   const [query, setQuery] = useState<string>("");

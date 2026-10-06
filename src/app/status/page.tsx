@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { CenterExplorer } from "@/components/CenterExplorer";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 
@@ -31,7 +32,13 @@ export default function StatusPage() {
       </div>
 
       <main className="mx-auto max-w-7xl w-full px-6 py-10 sm:px-8 flex-1">
-        <CenterExplorer />
+        <Suspense fallback={
+          <div className="flex min-h-[400px] items-center justify-center">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-sky-500 border-t-transparent" />
+          </div>
+        }>
+          <CenterExplorer />
+        </Suspense>
       </main>
     </div>
   );
