@@ -129,7 +129,7 @@ export function WaterHubHeader({
           </Link>
         </div>
 
-        {/* 데스크톱 메인 내비게이션 GNB (공식 홈페이지 스타일컬러 & 수직 1:1 완벽 그리드) */}
+        {/* 데스크톱 메인 내비게이션 GNB */}
         <nav
           className="hidden lg:flex items-center justify-center flex-1 max-w-3xl mx-auto h-full px-4"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
@@ -143,7 +143,7 @@ export function WaterHubHeader({
                 <div
                   key={item.key}
                   className={[
-                    "relative flex items-center justify-center h-full cursor-pointer px-1 text-center transition-colors duration-150",
+                    "relative flex items-center justify-center h-full cursor-pointer px-1 text-center transition-colors duration-200",
                     isHovered
                       ? "bg-[#edf4fb] text-[#3054b0] font-bold"
                       : isCurrentActive
@@ -254,77 +254,72 @@ export function WaterHubHeader({
         </button>
       </div>
 
-      {/* 데스크톱 마우스 호버 드롭다운 패널 (K-water 공식 홈페이지 컬러 & 세로 컬럼 하이라이트 매칭) */}
-      {isMegaMenuOpen && (
-        <div
-          className="hidden lg:block absolute left-0 right-0 top-full bg-white border-b border-slate-200/80 shadow-lg z-40 animate-in fade-in duration-150"
-          onMouseEnter={() => setIsMegaMenuOpen(true)}
-          onMouseLeave={() => {
-            setIsMegaMenuOpen(false);
-            setActiveHoverKey(null);
-          }}
-        >
-          <div className="mx-auto flex max-w-7xl items-stretch justify-between px-4 sm:px-8">
-            {/* 좌측 로고 영역 대응 투명 가이드 앵커 */}
-            <div className="shrink-0 pr-4 invisible pointer-events-none">
-              <div className="w-[250px] h-1" />
-            </div>
+      {/* 데스크톱 마우스 호버 부드러운 펼침 슬라이드 애니메이션 패널 */}
+      <div
+        className={[
+          "hidden lg:block absolute left-0 right-0 top-full bg-white border-b border-slate-200/80 shadow-lg z-40 overflow-hidden transition-all duration-300 ease-out origin-top",
+          isMegaMenuOpen
+            ? "max-h-[320px] opacity-100 translate-y-0"
+            : "max-h-0 opacity-0 -translate-y-2 pointer-events-none",
+        ].join(" ")}
+        onMouseEnter={() => setIsMegaMenuOpen(true)}
+        onMouseLeave={() => {
+          setIsMegaMenuOpen(false);
+          setActiveHoverKey(null);
+        }}
+      >
+        <div className="mx-auto flex max-w-7xl items-stretch justify-between px-4 sm:px-8">
+          {/* 좌측 로고 영역 대응 투명 가이드 앵커 */}
+          <div className="shrink-0 pr-4 invisible pointer-events-none">
+            <div className="w-[250px] h-1" />
+          </div>
 
-            {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
-            <div className="grid grid-cols-5 w-full flex-1 max-w-3xl mx-auto divide-x divide-slate-100/90">
-              {menuItems.map((item) => {
-                const isHovered = activeHoverKey === item.key;
-                const isCurrentActive = isTabActive(item.key);
+          {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
+          <div className="grid grid-cols-5 w-full flex-1 max-w-3xl mx-auto divide-x divide-slate-100/90">
+            {menuItems.map((item) => {
+              const isHovered = activeHoverKey === item.key;
+              const isCurrentActive = isTabActive(item.key);
 
-                return (
-                  <div
-                    key={item.key}
-                    className={[
-                      "py-6 px-5 text-left min-h-[220px] transition-colors duration-150",
-                      isHovered
-                        ? "bg-[#edf4fb]"
-                        : isCurrentActive && !activeHoverKey
-                        ? "bg-[#edf4fb]/70"
-                        : "bg-white",
-                    ].join(" ")}
-                    onMouseEnter={() => setActiveHoverKey(item.key)}
-                  >
-                    <ul className="space-y-3.5 text-sm font-semibold">
-                      {item.subItems.map((sub, idx) => (
-                        <li key={sub.href + sub.label}>
-                          <Link
-                            href={sub.href}
-                            onClick={() => {
-                              setIsMegaMenuOpen(false);
-                              setActiveHoverKey(null);
-                            }}
-                            className={[
-                              "inline-block transition-colors py-0.5 text-[0.92rem]",
-                              "hover:text-[#3054b0] hover:font-bold hover:underline underline-offset-4 decoration-1",
-                              isHovered && idx === 0
-                                ? "text-[#3054b0] font-bold underline underline-offset-4 decoration-1"
-                                : isHovered
-                                ? "text-slate-800 font-semibold"
-                                : "text-slate-700 font-semibold",
-                            ].join(" ")}
-                          >
-                            {sub.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                );
-              })}
-            </div>
+              return (
+                <div
+                  key={item.key}
+                  className={[
+                    "py-6 px-5 text-left min-h-[220px] transition-colors duration-200",
+                    isHovered
+                      ? "bg-[#edf4fb]"
+                      : isCurrentActive && !activeHoverKey
+                      ? "bg-[#edf4fb]/70"
+                      : "bg-white",
+                  ].join(" ")}
+                  onMouseEnter={() => setActiveHoverKey(item.key)}
+                >
+                  <ul className="space-y-3.5 text-sm">
+                    {item.subItems.map((sub) => (
+                      <li key={sub.href + sub.label}>
+                        <Link
+                          href={sub.href}
+                          onClick={() => {
+                            setIsMegaMenuOpen(false);
+                            setActiveHoverKey(null);
+                          }}
+                          className="inline-block transition-colors duration-150 py-0.5 text-[0.92rem] text-slate-700 font-semibold hover:text-[#3054b0] hover:font-bold hover:underline underline-offset-4 decoration-1 decoration-[#3054b0]"
+                        >
+                          {sub.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
 
-            {/* 우측 로그인 영역 대응 투명 가이드 앵커 */}
-            <div className="shrink-0 pl-4 invisible pointer-events-none">
-              <div className="w-[180px] h-1" />
-            </div>
+          {/* 우측 로그인 영역 대응 투명 가이드 앵커 */}
+          <div className="shrink-0 pl-4 invisible pointer-events-none">
+            <div className="w-[180px] h-1" />
           </div>
         </div>
-      )}
+      </div>
 
       {/* 모바일 드로어 메뉴 */}
       {mobileMenuOpen && (
