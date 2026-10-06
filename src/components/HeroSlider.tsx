@@ -162,9 +162,6 @@ export function HeroSlider() {
 
         {/* 오른쪽: 물문화관 개요 (박스 없는 청량 타이포그래피) */}
         <div className="absolute bottom-16 right-6 hidden max-w-[280px] flex-col justify-end p-2 sm:flex md:max-w-sm md:right-12 lg:right-16 text-white drop-shadow-md">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-300">
-            K-water Water Culture Center
-          </p>
           <h3 className="mt-1.5 text-xl font-black leading-snug tracking-tight text-white sm:text-2xl">
             물은 흐르고,<br />
             <span className="bg-gradient-to-r from-sky-300 via-cyan-200 to-sky-100 bg-clip-text text-transparent">
