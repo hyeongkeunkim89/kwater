@@ -64,7 +64,49 @@ export default function MainPage() {
 
       {/* 메인 홈페이지 콘텐츠 영역 */}
       <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 space-y-8 flex-1">
-        {/* 상단 2컬럼 레이아웃 (동일 너비 50:50) */}
+        {/* 상단 1컬럼: 전국 15대 댐 물문화관 거점 종합안내 (K-WATER NETWORK 지도 포함) */}
+        <section
+          aria-label="물문화관 전국 현황 현황판"
+          className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 space-y-6"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
+                  K-WATER NETWORK
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">
+                  <span>전국 <strong className="text-sky-600 font-black">{waterCenters.length}개소</strong></span>
+                  <span className="text-slate-300">•</span>
+                  <span><strong className="text-sky-600 font-black">{sidoList.length}개</strong> 광역 시·도</span>
+                </span>
+              </div>
+              <h2 className="mt-2.5 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                전국 15대 댐 물문화관 거점 종합안내
+              </h2>
+              <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+                전국 댐 수역에 조성된 15개 물문화관의 운영시간, 관람 상태, 실시간 안내 정보를 지도로 경험해 보세요.
+              </p>
+            </div>
+
+            <div className="shrink-0 flex items-center justify-end">
+              <Link
+                href="/status?view=list"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-sm hover:shadow-md group whitespace-nowrap w-full sm:w-auto"
+              >
+                <span>전체 상세 현황보기</span>
+                <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* 전국 인터랙티브 현황 지도 영역 */}
+          <div className="pt-2 min-w-0">
+            <MainKoreaMap />
+          </div>
+        </section>
+
+        {/* 하단 2컬럼 레이아웃 (동일 너비 50:50) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">
           {/* 좌측 1/2컬럼: 주요 물문화 서비스 바로가기 (K-WATER GATEWAY) */}
           <div className="lg:col-span-1">
@@ -138,48 +180,6 @@ export default function MainPage() {
             <KwaterHighlightSection />
           </section>
         </div>
-
-        {/* 하단 1컬럼: 전국 15대 댐 물문화관 거점 종합안내 (K-WATER NETWORK 지도 포함) */}
-        <section
-          aria-label="물문화관 전국 현황 현황판"
-          className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 space-y-6"
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
-                  K-WATER NETWORK
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">
-                  <span>전국 <strong className="text-sky-600 font-black">{waterCenters.length}개소</strong></span>
-                  <span className="text-slate-300">•</span>
-                  <span><strong className="text-sky-600 font-black">{sidoList.length}개</strong> 광역 시·도</span>
-                </span>
-              </div>
-              <h2 className="mt-2.5 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                전국 15대 댐 물문화관 거점 종합안내
-              </h2>
-              <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
-                전국 댐 수역에 조성된 15개 물문화관의 운영시간, 관람 상태, 실시간 안내 정보를 지도로 경험해 보세요.
-              </p>
-            </div>
-
-            <div className="shrink-0 flex items-center justify-end">
-              <Link
-                href="/status?view=list"
-                className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-black text-white px-5 py-2.5 transition-all duration-200 shadow-sm hover:shadow-md group whitespace-nowrap w-full sm:w-auto"
-              >
-                <span>전체 상세 현황보기</span>
-                <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* 전국 인터랙티브 현황 지도 영역 */}
-          <div className="pt-2 min-w-0">
-            <MainKoreaMap />
-          </div>
-        </section>
       </main>
 
       <WaterHubFooter />
