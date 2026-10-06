@@ -319,9 +319,6 @@ export function AuthModal() {
         {tab === "login" && (
           <div className="space-y-5">
             <div className="text-center">
-              <span className="inline-block rounded-full bg-sky-100 px-3 py-0.5 text-[11px] font-black text-sky-800 mb-1">
-                통합 인증 원스톱 로그인
-              </span>
               <h2 className="text-xl font-black text-slate-900">물문화관 로그인</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
                 소셜 로그인 또는 아이디/이메일로 로그인하세요.
@@ -417,9 +414,6 @@ export function AuthModal() {
         {tab === "signup" && (
           <div className="space-y-4">
             <div className="text-center">
-              <span className="inline-block rounded-full bg-sky-100 px-3 py-0.5 text-[11px] font-black text-sky-800 mb-1">
-                안전한 신규 회원가입
-              </span>
               <h2 className="text-xl font-black text-slate-900">관람객 회원가입</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
                 가입 후 투어 예약 및 커뮤니티 서비스를 이용해 보세요.
