@@ -84,10 +84,10 @@ export default function MainPage() {
 
               <Link
                 href="/status?view=list"
-                className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-900 transition shrink-0 group"
+                className="group inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-900 transition shrink-0"
               >
                 <span>전체 상세 현황보기</span>
-                <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
+                <span className="transform group-hover:translate-x-1 transition-transform duration-200">→</span>
               </Link>
             </div>
 
