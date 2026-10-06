@@ -145,10 +145,10 @@ export function WaterHubHeader({
                   className={[
                     "relative flex items-center justify-center h-full cursor-pointer px-1 text-center transition-colors duration-200",
                     isHovered
-                      ? "bg-[#edf4fb] text-[#3054b0] font-black"
+                      ? "text-[#3054b0] font-black"
                       : isCurrentActive
                       ? "text-[#3054b0] font-black"
-                      : "text-slate-900 font-black hover:text-[#3054b0] hover:bg-[#edf4fb]",
+                      : "text-slate-900 font-black hover:text-[#3054b0]",
                   ].join(" ")}
                   onMouseEnter={() => {
                     setActiveHoverKey(item.key);
