@@ -220,7 +220,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             <span className="font-black text-sky-800 shrink-0">👆 지도 이용 안내</span>
             <span className="text-slate-300">|</span>
             <span className="font-bold text-slate-700 truncate">
-              방울이 아이콘을 선택하면 상세 정보를 볼 수 있습니다
+              방울이 아이콘을 선택하면 상세 정보를 볼 수 있습니다.
             </span>
           </div>
           <span className="hidden sm:inline-flex shrink-0 items-center rounded-full bg-sky-100 px-2.5 py-0.5 text-[11px] font-black text-sky-700 border border-sky-200/80">
