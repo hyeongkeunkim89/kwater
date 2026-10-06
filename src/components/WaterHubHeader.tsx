@@ -129,9 +129,9 @@ export function WaterHubHeader({
           </Link>
         </div>
 
-        {/* 데스크톱 메인 내비게이션 GNB */}
+        {/* 데스크톱 메인 내비게이션 GNB (폭 확장 및 상단 탭-드롭다운 서브메뉴 좌측 시작선 100% 수직 일치) */}
         <nav
-          className="hidden lg:flex items-center justify-center flex-1 max-w-3xl mx-auto h-full px-4"
+          className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-auto h-full px-4"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
         >
           <div className="grid grid-cols-5 w-full h-full">
@@ -143,7 +143,7 @@ export function WaterHubHeader({
                 <div
                   key={item.key}
                   className={[
-                    "relative flex items-center justify-center h-full cursor-pointer px-1 text-center transition-colors duration-200",
+                    "relative flex items-center justify-start h-full cursor-pointer px-5 text-left transition-colors duration-200",
                     isHovered
                       ? "text-[#3054b0] font-black"
                       : isCurrentActive
@@ -157,7 +157,7 @@ export function WaterHubHeader({
                 >
                   <Link
                     href={item.href}
-                    className="w-full text-center py-2 text-base lg:text-[1.08rem] font-black tracking-tight truncate"
+                    className="w-full text-left py-2 text-base lg:text-[1.08rem] font-black tracking-tight truncate"
                   >
                     {item.label}
                   </Link>
@@ -275,7 +275,7 @@ export function WaterHubHeader({
           </div>
 
           {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
-          <div className="grid grid-cols-5 w-full flex-1 max-w-3xl mx-auto divide-x divide-slate-100/90">
+          <div className="grid grid-cols-5 w-full flex-1 max-w-4xl mx-auto divide-x divide-slate-100/90 px-4">
             {menuItems.map((item) => {
               const isHovered = activeHoverKey === item.key;
               const isCurrentActive = isTabActive(item.key);
@@ -284,7 +284,7 @@ export function WaterHubHeader({
                 <div
                   key={item.key}
                   className={[
-                    "py-6 px-5 text-left min-h-[220px] transition-colors duration-200",
+                    "py-6 px-5 text-left min-h-[220px] transition-colors duration-200 flex flex-col justify-start",
                     isHovered
                       ? "bg-[#edf4fb]"
                       : isCurrentActive && !activeHoverKey
