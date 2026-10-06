@@ -80,20 +80,20 @@ export default function IntroPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans break-keep">
       <WaterHubHeader activeNav="intro" />
 
-      {/* 1. 상단 히어로 영역 (밝은 라이트 모드 스타일) */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-sky-50 via-blue-50/40 to-slate-50 border-b border-slate-200/80 text-slate-900 py-16 sm:py-24 lg:py-28">
-        {/* 배경 은은한 풍경 사진 */}
+      {/* 1. 상단 히어로 영역 (선명한 댐 풍경 라이트 모드) */}
+      <section className="relative overflow-hidden bg-sky-50/50 border-b border-slate-200/80 text-slate-900 py-16 sm:py-24 lg:py-28">
+        {/* 배경 대표 풍경 사진 */}
         <Image
           src="/images/intro-bg.jpg"
           alt="K-water 물문화관 대표 전경"
           fill
           priority
-          className="object-cover object-center opacity-15 mix-blend-multiply"
+          className="object-cover object-center opacity-40 brightness-105 contrast-[1.05]"
         />
 
-        {/* 은은한 수평/수직 밝은 오버레이 */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-sky-50/50 to-slate-50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-sky-50/60 via-transparent to-sky-50/60" />
+        {/* 가독성을 높이는 화이트/스카이블루 비넷 오버레이 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/45 via-sky-50/35 to-slate-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/50 via-transparent to-white/50" />
 
         <div className="relative mx-auto max-w-4xl px-6 text-center">
           {/* 공식 슬로건 로고 */}
@@ -104,18 +104,18 @@ export default function IntroPage() {
               width={380}
               height={95}
               priority
-              className="h-auto w-auto max-w-[240px] sm:max-w-[320px] md:max-w-[360px] object-contain filter drop-shadow-xs"
+              className="h-auto w-auto max-w-[240px] sm:max-w-[320px] md:max-w-[360px] object-contain filter drop-shadow-sm"
             />
           </div>
 
           {/* 메인 타이틀 */}
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug text-slate-900 mb-6 break-keep">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug text-slate-900 mb-6 break-keep drop-shadow-xs">
             물(水)과 사람이 함께하는<br className="hidden sm:inline" />
             <span className="text-[#004D95]"> 따뜻한 수변 문화 공간</span>
           </h1>
 
           {/* 서브 타이틀 카피 */}
-          <p className="text-sm sm:text-base md:text-lg font-medium text-slate-600 leading-relaxed sm:leading-loose max-w-2xl mx-auto break-keep">
+          <p className="text-sm sm:text-base md:text-lg font-bold text-slate-700 leading-relaxed sm:leading-loose max-w-2xl mx-auto break-keep drop-shadow-2xs">
             전국 15개 댐 유역에 위치한 K-water 물문화관은 물의 가치를 기록하고,<br className="hidden sm:inline" />
             지역 주민과 방문객이 소중한 추억을 나누는 복합 문화 쉼터입니다.
           </p>
