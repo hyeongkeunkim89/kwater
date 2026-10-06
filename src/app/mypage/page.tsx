@@ -233,12 +233,6 @@ function MyPageContent() {
             >
               📅 새 투어 예약하기
             </Link>
-            <button
-              onClick={logout}
-              className="rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-xs font-bold text-slate-300 hover:bg-white/20 hover:text-white transition"
-            >
-              로그아웃
-            </button>
           </div>
         </div>
       </div>
