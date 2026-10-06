@@ -96,12 +96,6 @@ export default function IntroPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-sky-50/60 via-transparent to-sky-50/60" />
 
         <div className="relative mx-auto max-w-4xl px-6 text-center">
-          {/* 상단 뱃지 */}
-          <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-sky-100/80 px-4 py-1 text-xs font-black text-[#004D95] border border-sky-200/80 shadow-2xs">
-            <span>🌊</span>
-            <span>K-water 물문화관 소개</span>
-          </div>
-
           {/* 공식 슬로건 로고 */}
           <div className="mb-6 sm:mb-8 flex justify-center">
             <Image
@@ -141,7 +135,7 @@ export default function IntroPage() {
                 인사말
               </h2>
               <p className="mt-1 text-xs sm:text-sm font-semibold text-slate-500">
-                한국수자원공사 공간경관처 문화공간부
+                한국수자원공사 공간경관처
               </p>
             </div>
 
@@ -183,7 +177,7 @@ export default function IntroPage() {
                   </span>
                 </div>
                 <span className="text-xs sm:text-sm font-bold text-sky-800">
-                  한국수자원공사 공간경관처 문화공간부
+                  한국수자원공사 공간경관처
                 </span>
               </div>
             </div>
