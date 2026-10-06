@@ -160,8 +160,8 @@ export function HeroSlider() {
           </p>
         </div>
 
-        {/* 오른쪽: 물문화관 개요 (박스 없는 청량 타이포그래피) */}
-        <div className="absolute bottom-16 right-6 hidden max-w-[280px] flex-col justify-end p-2 sm:flex md:max-w-sm md:right-12 lg:right-16 text-white drop-shadow-md">
+        {/* 오른쪽: 물문화관 개요 (대형 화면에서만 표시하여 모바일/태블릿 글씨 겹침 100% 방지) */}
+        <div className="absolute bottom-16 right-6 hidden max-w-sm flex-col justify-end p-2 xl:flex xl:right-16 text-white drop-shadow-md">
           <h3 className="mt-1.5 text-xl font-black leading-snug tracking-tight text-white sm:text-2xl">
             물은 흐르고,<br />
             <span className="bg-gradient-to-r from-sky-300 via-cyan-200 to-sky-100 bg-clip-text text-transparent">
