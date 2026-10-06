@@ -65,12 +65,7 @@ export default function MainPage() {
       <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 space-y-8 flex-1">
         {/* 상단 2컬럼 레이아웃 (동일 너비 50:50) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">
-          {/* 좌측 1/2컬럼: K-water 미디어 하이라이트 */}
-          <section className="lg:col-span-1">
-            <KwaterHighlightSection />
-          </section>
-
-          {/* 우측 1/2컬럼: 주요 물문화 서비스 바로가기 */}
+          {/* 좌측 1/2컬럼: 주요 물문화 서비스 바로가기 (K-WATER GATEWAY) */}
           <div className="lg:col-span-1">
             <section
               aria-label="주요 물문화 서비스 바로가기"
@@ -136,6 +131,11 @@ export default function MainPage() {
               </div>
             </section>
           </div>
+
+          {/* 우측 1/2컬럼: K-water 미디어 하이라이트 (K-WATER HIGHLIGHT) */}
+          <section className="lg:col-span-1">
+            <KwaterHighlightSection />
+          </section>
         </div>
 
         {/* 하단 1컬럼: 전국 15대 댐 물문화관 거점 종합안내 (가로로 긴 직사각형 배너) */}
