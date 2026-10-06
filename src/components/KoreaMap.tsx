@@ -122,11 +122,9 @@ const CENTER_LABEL_POSITIONS: Record<string, LabelPosition> = {
 function BangulPin({
   color,
   selected,
-  animDelay,
 }: {
   color: string;
   selected: boolean;
-  animDelay?: number;
 }) {
   const size = selected ? 42 : 32;
   const offset = selected ? -21 : -16;
@@ -139,7 +137,7 @@ function BangulPin({
       {selected && (
         <circle cx={size / 2} cy={size / 2} r={size / 2 + 4} fill={color} opacity="0.28" />
       )}
-      {/* 바깥 링 (운영 현황 색상 및 순차적 반짝임 효과) */}
+      {/* 바깥 링 (운영 현황 색상 표시) */}
       <circle
         cx={size / 2}
         cy={size / 2}
@@ -147,12 +145,7 @@ function BangulPin({
         fill="white"
         stroke={color}
         strokeWidth={selected ? 3.5 : 2.5}
-        className={selected ? "transition-all duration-200" : "pin-sparkle-ring"}
-        style={
-          !selected && animDelay !== undefined
-            ? { animationDelay: `${animDelay}s` }
-            : undefined
-        }
+        className="transition-all duration-200"
       />
       {/* 캐릭터 사진 (public/character.png) */}
       <image
@@ -162,12 +155,6 @@ function BangulPin({
         width={imgSize}
         height={imgSize}
         preserveAspectRatio="xMidYMid meet"
-        className={selected ? "" : "pin-sparkle-img"}
-        style={
-          !selected && animDelay !== undefined
-            ? { animationDelay: `${animDelay}s` }
-            : undefined
-        }
         onError={(e) => {
           // 이미지 미존재 시 기본 아이콘 표출
           (e.currentTarget as SVGElement).style.display = "none";
@@ -210,37 +197,6 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
       <div id="korea-map-container" className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-md border border-slate-200 scroll-mt-20 bg-white">
-        {/* 번갈아가며 살짝 반짝이는 스타일 정의 */}
-        <style>{`
-          @keyframes pinRingGlow {
-            0%, 20%, 100% {
-              stroke-width: 2.5px;
-              filter: drop-shadow(0 0 0px transparent);
-            }
-            10% {
-              stroke-width: 4px;
-              filter: drop-shadow(0 0 6px #38bdf8);
-            }
-          }
-          @keyframes pinImgSparkle {
-            0%, 20%, 100% {
-              opacity: 0.95;
-              transform: scale(1);
-            }
-            10% {
-              opacity: 1;
-              transform: scale(1.12);
-            }
-          }
-          .pin-sparkle-ring {
-            animation: pinRingGlow 4.5s ease-in-out infinite;
-          }
-          .pin-sparkle-img {
-            transform-origin: center;
-            animation: pinImgSparkle 4.5s ease-in-out infinite;
-          }
-        `}</style>
-
         {/* 지도를 가리지 않는 전용 상단 안내 팁 바 */}
         <div className="flex items-center justify-between gap-2 border-b border-sky-200/70 bg-gradient-to-r from-sky-50 via-indigo-50/40 to-sky-50 px-3.5 py-2.5 sm:px-4 text-xs sm:text-sm">
           <div className="flex items-center gap-2 min-w-0">
@@ -297,12 +253,11 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             }
           </Geographies>
 
-          {mapCenters.map((center, index) => {
+          {mapCenters.map((center) => {
             const display = resolveDisplayStatus(center, todaySeoul);
             const isSelected = selected?.id === center.id;
             const shortName = getCenterShortName(center.name);
             const color = PIN_COLORS[display];
-            const animDelay = (index * 0.3) % 4.5;
 
             const fontSize = isSelected ? 13 : 12;
             const textWidth = measureTextWidth(shortName, fontSize);
@@ -324,8 +279,8 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                 coordinates={center.coordinates as [number, number]}
                 onClick={() => setSelected(isSelected ? null : center)}
               >
-                <g className="cursor-pointer group transition-transform duration-200 hover:scale-110">
-                  <BangulPin color={color} selected={isSelected} animDelay={animDelay} />
+                <g className="cursor-pointer group">
+                  <BangulPin color={color} selected={isSelected} />
 
                   {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 (선명하고 큼직한 댐 이름 라벨) */}
                   <g transform={`translate(${badgeX}, ${badgeY})`}>
@@ -412,7 +367,7 @@ function EmptyPanel() {
     <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-dashed border-sky-300 bg-gradient-to-b from-sky-50 via-white to-sky-50/50 p-6 lg:min-h-[600px]">
       <div className="space-y-3 max-w-sm text-center">
         <div className="relative mx-auto flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-full bg-white p-3 shadow-md ring-4 ring-sky-300/80">
-          <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-sky-500 text-white text-xs font-black animate-bounce shadow-md">
+          <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-sky-500 text-white text-xs font-black shadow-md">
             👆
           </span>
           <img src="/character.png" alt="방울이 캐릭터" className="h-full w-full object-contain" />
