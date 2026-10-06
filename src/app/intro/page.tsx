@@ -164,16 +164,8 @@ export default function IntroPage() {
               </p>
 
               {/* 정갈한 하단 서명란 */}
-              <div className="pt-8 border-t border-slate-100 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-full bg-[#004D95] text-white flex items-center justify-center font-black text-xs shadow-sm">
-                    K
-                  </div>
-                  <span className="text-xs sm:text-sm font-bold text-slate-800">
-                    K-water 물문화관
-                  </span>
-                </div>
-                <span className="text-xs sm:text-sm font-bold text-sky-800">
+              <div className="pt-8 border-t border-slate-100 flex items-center justify-end">
+                <span className="text-sm sm:text-base font-black text-slate-900">
                   한국수자원공사 공간경관처
                 </span>
               </div>
