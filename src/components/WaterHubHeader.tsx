@@ -134,7 +134,7 @@ export function WaterHubHeader({
           className="hidden lg:flex items-center justify-center flex-1 max-w-3xl h-full px-2"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
         >
-          <div className="grid grid-cols-5 w-full h-full divide-x divide-slate-100 border-x border-slate-100">
+          <div className="grid grid-cols-5 w-full h-full">
             {menuItems.map((item) => {
               const isHovered = activeHoverKey === item.key;
               const isCurrentActive = isTabActive(item.key);
@@ -269,7 +269,7 @@ export function WaterHubHeader({
             <div className="w-[260px] shrink-0" />
 
             {/* GNB 5개 탭의 가로 영역과 1:1로 세로 라인이 정확히 일치하는 드롭다운 그리드 컬럼 */}
-            <div className="grid grid-cols-5 w-full max-w-3xl divide-x divide-slate-100 border-x border-slate-100">
+            <div className="grid grid-cols-5 w-full max-w-3xl">
               {menuItems.map((item) => {
                 const isHovered = activeHoverKey === item.key;
                 const isCurrentActive = isTabActive(item.key);
