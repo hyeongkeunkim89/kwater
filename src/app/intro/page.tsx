@@ -13,34 +13,22 @@ export default function IntroPage() {
   // 물문화관이 함께 가꿔가는 3가지 주요 가치
   const culturalValues = [
     {
+      num: "01",
       title: "역사와 삶의 기록",
       subtitle: "수자원 발자취 보존",
       desc: "대한민국 50년 치수와 이수의 역사를 차곡차곡 기록하여, 댐 건설과 물 관리의 귀중한 가치를 후대에 전달합니다.",
-      icon: (
-        <svg className="w-6 h-6 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      ),
     },
     {
+      num: "02",
       title: "자연 속 휴식과 상생",
       subtitle: "수변 문화 쉼터",
       desc: "아름다운 댐 호수 경관을 조망하는 수변 산책로와 북카페를 조성하여, 지역 주민과 방문객이 편안히 쉬어가는 공간을 만들어갑니다.",
-      icon: (
-        <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      ),
     },
     {
+      num: "03",
       title: "체험과 생태 교육",
       subtitle: "물 사랑 디지털 체험",
       desc: "어린이와 가족이 즐길 수 있는 미디어 체험존과 전문 해설 투어를 통해 물의 소중함과 환경 가치를 배웁니다.",
-      icon: (
-        <svg className="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.597 15.1a2 2 0 00-1.879 1.158L2.3 19.1A2 2 0 004.135 22h15.73a2 2 0 001.835-2.9l-2.272-3.672zM12 3v9m0 0l-3-3m3 3l3-3" />
-        </svg>
-      ),
     },
   ];
 
@@ -51,28 +39,24 @@ export default function IntroPage() {
       desc: "수도권, 강원, 충청, 호남, 영남 15개 물문화관의 실시간 관람 상태와 운영시간을 확인하세요.",
       btnLabel: "지도 현황보기",
       path: "/status",
-      icon: "🗺️",
     },
     {
       title: "무료 가이드 투어 예약",
       desc: "전문 도슨트 해설사와 함께 물문화관 전시장과 대표 시설을 둘러보는 해설 프로그램을 신청하세요.",
       btnLabel: "투어 예약하기",
       path: "/reserve",
-      icon: "📅",
     },
     {
       title: "층별 시설 & 전시 안내",
       desc: "각 물문화관별 실내 전시 공간 구성, 층별 주요 시설, 힐링 쉼터 안내 정보를 살펴보세요.",
       btnLabel: "시설안내 보기",
       path: "/centers",
-      icon: "🏛️",
     },
     {
       title: "물문화 소식 & 행사",
       desc: "물문화관에서 진행되는 최신 문화 행사 소식과 공지사항, 시민 소통 소식을 확인하세요.",
       btnLabel: "소식 바로가기",
       path: "/news",
-      icon: "📣",
     },
   ];
 
@@ -173,9 +157,6 @@ export default function IntroPage() {
         {/* 3. 물문화관이 만들어가는 3가지 가치 */}
         <section aria-label="물문화관 핵심 가치" className="space-y-6">
           <div className="text-center max-w-xl mx-auto space-y-1.5">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-0.5 text-xs font-bold text-sky-700 uppercase tracking-wider">
-              OUR VALUES
-            </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               물문화관이 가꿔가는 세 가지 가치
             </h2>
@@ -191,9 +172,9 @@ export default function IntroPage() {
                 className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs hover:border-sky-300 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center mb-5">
-                    {v.icon}
-                  </div>
+                  <span className="text-xs font-black tracking-widest text-[#004D95] uppercase block mb-3">
+                    {v.num}
+                  </span>
                   <h3 className="text-lg font-black text-slate-900 mb-1">
                     {v.title}
                   </h3>
@@ -213,9 +194,6 @@ export default function IntroPage() {
         <section aria-label="웹사이트 서비스 안내" className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-sky-700 block mb-1">
-                SERVICES
-              </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 통합 웹사이트 이용 안내
               </h2>
@@ -238,11 +216,10 @@ export default function IntroPage() {
               <Link
                 key={s.title}
                 href={s.path}
-                className="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 hover:border-sky-400 hover:shadow-md transition-all duration-200"
+                className="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 hover:border-sky-400 hover:shadow-md transition-all duration-200"
               >
                 <div>
-                  <div className="text-2xl mb-3">{s.icon}</div>
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors mb-1.5">
+                  <h3 className="text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors mb-2">
                     {s.title}
                   </h3>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium mb-4">
@@ -257,8 +234,6 @@ export default function IntroPage() {
             ))}
           </div>
         </section>
-
-
       </main>
 
       <WaterHubFooter />
