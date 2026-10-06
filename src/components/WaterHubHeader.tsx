@@ -113,7 +113,7 @@ export function WaterHubHeader({
         ].join(" ")}
       >
         {/* 로고 영역 */}
-        <div className="w-[260px] shrink-0 flex items-center">
+        <div className="shrink-0 flex items-center pr-4">
           <Link
             href="/main"
             className="flex items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
@@ -123,15 +123,15 @@ export function WaterHubHeader({
               alt="K-water 한국수자원공사 물문화관"
               width={1024}
               height={341}
-              className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[260px] shrink-0 object-contain"
+              className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[250px] shrink-0 object-contain"
               priority
             />
           </Link>
         </div>
 
-        {/* 데스크톱 메인 내비게이션 GNB (K-water 공식 홈페이지 1:1 그리드 구조) */}
+        {/* 데스크톱 메인 내비게이션 GNB (상단 탭과 하단 드롭다운 완벽 정렬) */}
         <nav
-          className="hidden lg:flex items-center justify-center flex-1 max-w-3xl h-full px-2"
+          className="hidden lg:flex items-center justify-center flex-1 max-w-3xl mx-auto h-full px-4"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
         >
           <div className="grid grid-cols-5 w-full h-full">
@@ -142,14 +142,7 @@ export function WaterHubHeader({
               return (
                 <div
                   key={item.key}
-                  className={[
-                    "relative flex items-center justify-center h-full transition-colors duration-150 cursor-pointer px-1 text-center",
-                    isHovered
-                      ? "bg-[#eef5fc] text-[#004D95] font-black"
-                      : isCurrentActive
-                      ? "text-[#004D95] font-black"
-                      : "text-slate-800 font-extrabold hover:text-[#004D95] hover:bg-[#eef5fc]/60",
-                  ].join(" ")}
+                  className="relative flex items-center justify-center h-full cursor-pointer px-1 text-center"
                   onMouseEnter={() => {
                     setActiveHoverKey(item.key);
                     setIsMegaMenuOpen(true);
@@ -157,7 +150,13 @@ export function WaterHubHeader({
                 >
                   <Link
                     href={item.href}
-                    className="w-full text-center py-2 text-base lg:text-[1.05rem] tracking-tight truncate"
+                    className={[
+                      "relative py-3 text-base lg:text-[1.05rem] tracking-tight truncate transition-colors duration-200",
+                      "after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:h-[2.5px] after:bg-[#004D95] after:rounded-full after:transition-all after:duration-300",
+                      isHovered || isCurrentActive
+                        ? "text-[#004D95] font-black after:w-full"
+                        : "text-slate-800 font-extrabold hover:text-[#004D95] after:w-0 hover:after:w-full",
+                    ].join(" ")}
                   >
                     {item.label}
                   </Link>
@@ -168,7 +167,7 @@ export function WaterHubHeader({
         </nav>
 
         {/* 우측 회원/로그인 영역 */}
-        <div className="hidden lg:flex items-center justify-end w-[220px] shrink-0 gap-x-3">
+        <div className="hidden lg:flex items-center justify-end shrink-0 pl-4 gap-x-3">
           {user ? (
             <div className="flex items-center gap-x-2.5">
               {user.role === "admin" ? (
@@ -254,40 +253,34 @@ export function WaterHubHeader({
         </button>
       </div>
 
-      {/* 데스크톱 마우스 호버 전체 메가 메뉴 드롭다운 패널 (K-water 공식 홈페이지 1:1 완벽 컬럼 일치 매칭) */}
+      {/* 데스크톱 마우스 호버 드롭다운 패널 (1:1 픽셀 정렬 + 텍스트 컬러/밑줄 효과 적용) */}
       {isMegaMenuOpen && (
         <div
-          className="hidden lg:block absolute left-0 right-0 top-full bg-white border-b-2 border-slate-200 shadow-xl z-40 animate-in fade-in slide-in-from-top-1 duration-150"
+          className="hidden lg:block absolute left-0 right-0 top-full bg-white border-b border-slate-200 shadow-xl z-40 animate-in fade-in slide-in-from-top-1 duration-150"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
           onMouseLeave={() => {
             setIsMegaMenuOpen(false);
             setActiveHoverKey(null);
           }}
         >
-          <div className="mx-auto max-w-7xl flex justify-between px-4 sm:px-8">
-            {/* 좌측 로고 너비 일치용 여백 */}
-            <div className="w-[260px] shrink-0" />
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-8">
+            {/* 좌측 로고 영역 대응 투명 가이드 앵커 */}
+            <div className="shrink-0 pr-4 invisible pointer-events-none">
+              <div className="w-[250px] h-1" />
+            </div>
 
-            {/* GNB 5개 탭의 가로 영역과 1:1로 세로 라인이 정확히 일치하는 드롭다운 그리드 컬럼 */}
-            <div className="grid grid-cols-5 w-full max-w-3xl">
+            {/* GNB 5개 탭과 동일한 flex-1 max-w-3xl 그리드로 1:1 위치 수직 완벽 정렬 */}
+            <div className="grid grid-cols-5 w-full flex-1 max-w-3xl mx-auto py-6 px-4">
               {menuItems.map((item) => {
                 const isHovered = activeHoverKey === item.key;
-                const isCurrentActive = isTabActive(item.key);
 
                 return (
                   <div
                     key={item.key}
-                    className={[
-                      "py-6 px-4 space-y-3 transition-colors duration-150 min-h-[210px]",
-                      isHovered
-                        ? "bg-[#eef5fc]"
-                        : isCurrentActive && !activeHoverKey
-                        ? "bg-slate-50/70"
-                        : "bg-white",
-                    ].join(" ")}
+                    className="py-2 px-1 text-center min-h-[170px]"
                     onMouseEnter={() => setActiveHoverKey(item.key)}
                   >
-                    <ul className="space-y-2.5 text-sm font-semibold">
+                    <ul className="space-y-3 text-sm font-semibold inline-block text-left">
                       {item.subItems.map((sub) => (
                         <li key={sub.href + sub.label}>
                           <Link
@@ -296,7 +289,11 @@ export function WaterHubHeader({
                               setIsMegaMenuOpen(false);
                               setActiveHoverKey(null);
                             }}
-                            className="block text-slate-700 hover:text-[#004D95] hover:font-bold transition-colors py-1 px-1 rounded-sm hover:bg-white/80"
+                            className={[
+                              "inline-block transition-all duration-150 py-0.5",
+                              "hover:text-[#004D95] hover:font-bold hover:underline underline-offset-4 decoration-2 decoration-[#004D95]",
+                              isHovered ? "text-slate-800" : "text-slate-600",
+                            ].join(" ")}
                           >
                             {sub.label}
                           </Link>
@@ -308,8 +305,10 @@ export function WaterHubHeader({
               })}
             </div>
 
-            {/* 우측 영역 너비 일치용 여백 */}
-            <div className="w-[220px] shrink-0" />
+            {/* 우측 로그인 영역 대응 투명 가이드 앵커 */}
+            <div className="shrink-0 pl-4 invisible pointer-events-none">
+              <div className="w-[180px] h-1" />
+            </div>
           </div>
         </div>
       )}
