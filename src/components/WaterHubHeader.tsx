@@ -78,11 +78,6 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
-const navInactive =
-  "relative text-slate-700 hover:text-[#004D95] font-extrabold text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap py-3 px-2 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-0 after:bg-[#004D95] after:rounded-full after:transition-all after:duration-300 hover:after:w-full";
-const navActive =
-  "relative text-[#004D95] font-black text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap py-3 px-2 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-full after:bg-[#004D95] after:rounded-full";
-
 export function WaterHubHeader({
   activeNav = "none",
   dense = false,
@@ -113,49 +108,67 @@ export function WaterHubHeader({
     >
       <div
         className={[
-          "mx-auto flex max-w-7xl items-center justify-between gap-4 h-[84px] sm:h-[92px] md:h-[98px]",
-          dense ? "px-4 py-1.5 sm:px-8" : "px-4 py-2 sm:px-8",
+          "mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-8 h-[84px] sm:h-[92px] md:h-[98px]",
+          dense ? "py-1.5" : "py-2",
         ].join(" ")}
       >
         {/* 로고 영역 */}
-        <Link
-          href="/main"
-          className="flex shrink-0 items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
-        >
-          <Image
-            src="/images/kwater_waterhub_logo.png"
-            alt="K-water 한국수자원공사 물문화관"
-            width={1024}
-            height={341}
-            className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[280px] sm:max-w-none shrink-0 object-contain"
-            priority
-          />
-        </Link>
+        <div className="w-[260px] shrink-0 flex items-center">
+          <Link
+            href="/main"
+            className="flex items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
+          >
+            <Image
+              src="/images/kwater_waterhub_logo.png"
+              alt="K-water 한국수자원공사 물문화관"
+              width={1024}
+              height={341}
+              className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[260px] shrink-0 object-contain"
+              priority
+            />
+          </Link>
+        </div>
 
-        {/* 데스크톱 메인 내비게이션 (GNB) */}
+        {/* 데스크톱 메인 내비게이션 GNB (K-water 공식 홈페이지 1:1 그리드 구조) */}
         <nav
-          className="hidden lg:flex items-center gap-x-5 lg:gap-x-7 xl:gap-x-9 text-base lg:text-[1.05rem] font-extrabold h-full"
+          className="hidden lg:flex items-center justify-center flex-1 max-w-3xl h-full px-2"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
         >
-          {menuItems.map((item) => (
-            <div
-              key={item.key}
-              className="relative flex items-center h-full"
-              onMouseEnter={() => setActiveHoverKey(item.key)}
-            >
-              <Link
-                href={item.href}
-                className={isTabActive(item.key) ? navActive : navInactive}
-                aria-current={isTabActive(item.key) ? "page" : undefined}
-              >
-                {item.label}
-              </Link>
-            </div>
-          ))}
+          <div className="grid grid-cols-5 w-full h-full divide-x divide-slate-100 border-x border-slate-100">
+            {menuItems.map((item) => {
+              const isHovered = activeHoverKey === item.key;
+              const isCurrentActive = isTabActive(item.key);
+
+              return (
+                <div
+                  key={item.key}
+                  className={[
+                    "relative flex items-center justify-center h-full transition-colors duration-150 cursor-pointer px-1 text-center",
+                    isHovered
+                      ? "bg-[#eef5fc] text-[#004D95] font-black"
+                      : isCurrentActive
+                      ? "text-[#004D95] font-black"
+                      : "text-slate-800 font-extrabold hover:text-[#004D95] hover:bg-[#eef5fc]/60",
+                  ].join(" ")}
+                  onMouseEnter={() => {
+                    setActiveHoverKey(item.key);
+                    setIsMegaMenuOpen(true);
+                  }}
+                >
+                  <Link
+                    href={item.href}
+                    className="w-full text-center py-2 text-base lg:text-[1.05rem] tracking-tight truncate"
+                  >
+                    {item.label}
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
         </nav>
 
         {/* 우측 회원/로그인 영역 */}
-        <div className="hidden lg:flex items-center gap-x-3">
+        <div className="hidden lg:flex items-center justify-end w-[220px] shrink-0 gap-x-3">
           {user ? (
             <div className="flex items-center gap-x-2.5">
               {user.role === "admin" ? (
@@ -171,7 +184,7 @@ export function WaterHubHeader({
                     href="/mypage"
                     className="rounded-full bg-amber-600 px-4 py-2 text-xs sm:text-sm font-black text-white hover:bg-amber-500 transition shadow-sm shadow-amber-600/20"
                   >
-                    관리자 콘솔
+                    관리자
                   </Link>
                 </>
               ) : (
@@ -199,7 +212,7 @@ export function WaterHubHeader({
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-x-2.5">
+            <div className="flex items-center gap-x-2">
               <button
                 onClick={() => openAuthModal("login")}
                 className="text-sm font-extrabold text-slate-700 transition hover:text-sky-600 px-2.5 py-2"
@@ -210,19 +223,6 @@ export function WaterHubHeader({
                 onClick={() => openAuthModal("signup")}
                 className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-4 py-2 text-sm font-black text-sky-700 border border-sky-200/80 transition hover:bg-sky-100 hover:border-sky-300 shadow-2xs"
               >
-                <svg
-                  className="h-3.5 w-3.5 text-sky-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                  />
-                </svg>
                 <span>회원가입</span>
               </button>
             </div>
@@ -243,113 +243,80 @@ export function WaterHubHeader({
           aria-label="메뉴 토글"
         >
           {mobileMenuOpen ? (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M6 18L18 6M6 6l12 12"
-              />
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
         </button>
       </div>
 
-      {/* 데스크톱 마우스 호버 전체 메가 메뉴 드롭다운 패널 (K-water 공식 홈페이지 벤치마킹) */}
+      {/* 데스크톱 마우스 호버 전체 메가 메뉴 드롭다운 패널 (K-water 공식 홈페이지 1:1 완벽 컬럼 일치 매칭) */}
       {isMegaMenuOpen && (
         <div
-          className="hidden lg:block absolute left-0 right-0 top-full bg-white/98 backdrop-blur-md border-b-2 border-[#004D95]/80 shadow-xl z-40 transition-all duration-200 animate-in fade-in slide-in-from-top-1"
+          className="hidden lg:block absolute left-0 right-0 top-full bg-white border-b-2 border-slate-200 shadow-xl z-40 animate-in fade-in slide-in-from-top-1 duration-150"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
           onMouseLeave={() => {
             setIsMegaMenuOpen(false);
             setActiveHoverKey(null);
           }}
         >
-          <div className="mx-auto max-w-7xl px-8 py-7 grid grid-cols-5 gap-8">
-            {menuItems.map((item) => {
-              const isHovered = activeHoverKey === item.key;
-              const isCurrentActive = isTabActive(item.key);
+          <div className="mx-auto max-w-7xl flex justify-between px-4 sm:px-8">
+            {/* 좌측 로고 너비 일치용 여백 */}
+            <div className="w-[260px] shrink-0" />
 
-              return (
-                <div
-                  key={item.key}
-                  className={[
-                    "space-y-4 p-3.5 rounded-2xl transition-all duration-200 border",
-                    isHovered
-                      ? "bg-sky-50/70 border-sky-200/80 shadow-2xs"
-                      : isCurrentActive
-                      ? "bg-slate-50/70 border-slate-200/60"
-                      : "border-transparent",
-                  ].join(" ")}
-                  onMouseEnter={() => setActiveHoverKey(item.key)}
-                >
-                  {/* 상위 메뉴 헤더 */}
-                  <div className="border-b border-slate-200/80 pb-2.5 flex items-center justify-between">
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsMegaMenuOpen(false)}
-                      className={[
-                        "text-base font-black transition-colors flex items-center gap-1.5",
-                        isHovered || isCurrentActive ? "text-[#004D95]" : "text-slate-900",
-                      ].join(" ")}
-                    >
-                      <span>{item.label}</span>
-                      <span className="text-xs opacity-60">→</span>
-                    </Link>
+            {/* GNB 5개 탭의 가로 영역과 1:1로 세로 라인이 정확히 일치하는 드롭다운 그리드 컬럼 */}
+            <div className="grid grid-cols-5 w-full max-w-3xl divide-x divide-slate-100 border-x border-slate-100">
+              {menuItems.map((item) => {
+                const isHovered = activeHoverKey === item.key;
+                const isCurrentActive = isTabActive(item.key);
+
+                return (
+                  <div
+                    key={item.key}
+                    className={[
+                      "py-6 px-4 space-y-3 transition-colors duration-150 min-h-[210px]",
+                      isHovered
+                        ? "bg-[#eef5fc]"
+                        : isCurrentActive && !activeHoverKey
+                        ? "bg-slate-50/70"
+                        : "bg-white",
+                    ].join(" ")}
+                    onMouseEnter={() => setActiveHoverKey(item.key)}
+                  >
+                    <ul className="space-y-2.5 text-sm font-semibold">
+                      {item.subItems.map((sub) => (
+                        <li key={sub.href + sub.label}>
+                          <Link
+                            href={sub.href}
+                            onClick={() => {
+                              setIsMegaMenuOpen(false);
+                              setActiveHoverKey(null);
+                            }}
+                            className="block text-slate-700 hover:text-[#004D95] hover:font-bold transition-colors py-1 px-1 rounded-sm hover:bg-white/80"
+                          >
+                            {sub.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
+                );
+              })}
+            </div>
 
-                  {/* 하부 2차 서브 메뉴 리스트 */}
-                  <ul className="space-y-1 text-sm font-medium">
-                    {item.subItems.map((sub) => (
-                      <li key={sub.href + sub.label}>
-                        <Link
-                          href={sub.href}
-                          onClick={() => setIsMegaMenuOpen(false)}
-                          className="group flex flex-col px-3 py-2 rounded-xl hover:bg-white hover:shadow-2xs transition-all duration-150"
-                        >
-                          <span className="font-bold text-slate-800 group-hover:text-[#004D95] transition-colors flex items-center gap-1">
-                            <span>•</span>
-                            <span>{sub.label}</span>
-                          </span>
-                          {sub.desc && (
-                            <span className="text-[11px] text-slate-400 group-hover:text-sky-700 font-medium truncate mt-0.5 pl-3">
-                              {sub.desc}
-                            </span>
-                          )}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
+            {/* 우측 영역 너비 일치용 여백 */}
+            <div className="w-[220px] shrink-0" />
           </div>
         </div>
       )}
 
-      {/* 모바일 전체 화면 드로어 메뉴 (100% 모바일 대응) */}
+      {/* 모바일 드로어 메뉴 */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[100] flex flex-col bg-white lg:hidden overflow-hidden animate-in fade-in duration-200">
-          {/* 모바일 드로어 전용 상단 헤더 바 */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 bg-slate-900 text-white shrink-0">
             <div className="flex items-center gap-2">
               <span className="text-lg">🌊</span>
@@ -368,9 +335,7 @@ export function WaterHubHeader({
             </button>
           </div>
 
-          {/* 메뉴 리스트 영역 */}
           <div className="flex-1 px-5 py-6 overflow-y-auto bg-white flex flex-col justify-between">
-            {/* 모바일 사용자 계정 영역 */}
             <div className="mb-6 rounded-2xl bg-slate-50 border border-slate-200 p-4">
               {user ? (
                 <div className="space-y-3">
@@ -427,19 +392,6 @@ export function WaterHubHeader({
                       }}
                       className="flex items-center justify-center gap-1.5 rounded-xl bg-sky-50 border border-sky-200 py-2.5 text-xs font-black text-sky-700 hover:bg-sky-100 transition shadow-2xs"
                     >
-                      <svg
-                        className="h-3.5 w-3.5 text-sky-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                        />
-                      </svg>
                       <span>회원가입</span>
                     </button>
                   </div>
@@ -447,7 +399,6 @@ export function WaterHubHeader({
               )}
             </div>
 
-            {/* 모바일 2단계 메뉴 영역 */}
             <div className="flex flex-col gap-3">
               {menuItems.map((item) => (
                 <div key={item.key} className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-2">
@@ -482,7 +433,6 @@ export function WaterHubHeader({
               ))}
             </div>
 
-            {/* 하단 링크 영역 */}
             <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col gap-3 shrink-0">
               <a
                 href="https://www.kwater.or.kr"
