@@ -451,7 +451,7 @@ export function WaterStoriesClient({
             </p>
           )}
 
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap justify-end gap-3">
             <button
               type="submit"
               disabled={uploading || uploadBlocked}
