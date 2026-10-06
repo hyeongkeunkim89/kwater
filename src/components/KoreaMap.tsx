@@ -209,17 +209,22 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
 
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
-      <div id="korea-map-container" className="relative min-w-0 flex-1 overflow-hidden rounded-2xl shadow-lg border border-slate-200 scroll-mt-20">
-        {/* 상단 터치/클릭 유도 안내 배너 */}
-        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none flex items-center gap-2 rounded-full bg-slate-900/85 px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-bold text-white shadow-lg backdrop-blur-md border border-white/20">
-          <span className="relative flex h-2.5 w-2.5 shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500" />
-          </span>
-          <span className="text-sky-300 font-black tracking-tight">👆 TOUCH & CLICK</span>
-          <span className="text-slate-400 hidden sm:inline">|</span>
-          <span className="text-slate-100 font-medium truncate max-w-[190px] sm:max-w-none">
-            지도의 방울이 아이콘을 누르면 세부 정보를 보실 수 있습니다
+      <div id="korea-map-container" className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-md border border-slate-200 scroll-mt-20 bg-white">
+        {/* 지도를 가리지 않는 전용 상단 안내 팁 바 */}
+        <div className="flex items-center justify-between gap-2 border-b border-sky-200/70 bg-gradient-to-r from-sky-50 via-indigo-50/40 to-sky-50 px-3.5 py-2.5 sm:px-4 text-xs sm:text-sm">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="relative flex h-2.5 w-2.5 shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500" />
+            </span>
+            <span className="font-black text-sky-800 shrink-0">👆 지도 이용 안내</span>
+            <span className="text-slate-300">|</span>
+            <span className="font-bold text-slate-700 truncate">
+              방울이 아이콘을 선택하면 상세 정보를 볼 수 있습니다
+            </span>
+          </div>
+          <span className="hidden sm:inline-flex shrink-0 items-center rounded-full bg-sky-100 px-2.5 py-0.5 text-[11px] font-black text-sky-700 border border-sky-200/80">
+            터치 / 클릭
           </span>
         </div>
 
