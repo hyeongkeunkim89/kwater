@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
-
 import { useAuth } from "@/context/AuthContext";
 
 export type ActiveNav =
@@ -17,15 +16,72 @@ export type ActiveNav =
   | "feedback"
   | "none";
 
-const navInactive =
-  "relative text-slate-700 hover:text-sky-600 font-extrabold text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap py-2 px-1 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[2.5px] after:w-0 after:bg-sky-500 after:rounded-full after:transition-all after:duration-300 hover:after:w-full";
-const navActive =
-  "relative text-sky-600 font-black text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap py-2 px-1 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[2.5px] after:w-full after:bg-sky-500 after:rounded-full";
+export type SubItem = {
+  label: string;
+  href: string;
+  desc?: string;
+};
 
-const mobileNavInactive =
-  "flex items-center justify-between text-slate-800 hover:text-sky-600 font-extrabold text-base py-3.5 px-3 rounded-xl hover:bg-slate-100/70 border-b border-slate-100/80 transition duration-150";
-const mobileNavActive =
-  "flex items-center justify-between text-white bg-sky-500 font-black text-base py-3.5 px-4 rounded-xl shadow-md shadow-sky-500/20 transition duration-150";
+export type MenuItem = {
+  key: ActiveNav;
+  label: string;
+  href: string;
+  subItems: SubItem[];
+};
+
+export const menuItems: MenuItem[] = [
+  {
+    key: "intro",
+    label: "문화관 소개",
+    href: "/intro",
+    subItems: [
+      { label: "인사말 & 목적", href: "/intro", desc: "한국수자원공사 물문화관 소개" },
+      { label: "물문화관 3대 가치", href: "/intro#values", desc: "역사, 휴식, 생태 체험 가치" },
+    ],
+  },
+  {
+    key: "status",
+    label: "문화관 현황",
+    href: "/status",
+    subItems: [
+      { label: "전국 거점 현황", href: "/status", desc: "전국 15개관 실시간 관람 상태" },
+      { label: "층별 시설 & 전시 안내", href: "/centers", desc: "실내 공간 및 쉼터 시설 안내" },
+    ],
+  },
+  {
+    key: "news",
+    label: "새소식",
+    href: "/news",
+    subItems: [
+      { label: "공지·소식", href: "/news", desc: "최신 공지 및 물문화관 이슈" },
+      { label: "행사·이벤트", href: "/events", desc: "수변 문화 축제 및 대시민 행사" },
+      { label: "물문화 이야기", href: "/mul-iyagi", desc: "카드뉴스 및 탐방 스토리" },
+    ],
+  },
+  {
+    key: "reserve",
+    label: "예약",
+    href: "/reserve",
+    subItems: [
+      { label: "가이드 투어 예약", href: "/reserve", desc: "전문 도슨트 해설 신청" },
+      { label: "예약 조회 & 취소", href: "/reserve/guest-check", desc: "신청 내역 확인 및 관리" },
+    ],
+  },
+  {
+    key: "feedback",
+    label: "소통창구",
+    href: "/feedback",
+    subItems: [
+      { label: "대시민 소통 게시판", href: "/feedback", desc: "의견 제안 및 칭찬하기" },
+      { label: "자주 묻는 질문 (FAQ)", href: "/feedback#faq", desc: "방문/주차/예약 문의" },
+    ],
+  },
+];
+
+const navInactive =
+  "relative text-slate-700 hover:text-[#004D95] font-extrabold text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap py-3 px-2 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-0 after:bg-[#004D95] after:rounded-full after:transition-all after:duration-300 hover:after:w-full";
+const navActive =
+  "relative text-[#004D95] font-black text-base lg:text-[1.05rem] tracking-tight whitespace-nowrap py-3 px-2 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-full after:bg-[#004D95] after:rounded-full";
 
 export function WaterHubHeader({
   activeNav = "none",
@@ -37,55 +93,68 @@ export function WaterHubHeader({
   showStaffConsoleLink?: boolean;
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [activeHoverKey, setActiveHoverKey] = useState<ActiveNav | null>(null);
   const { user, openAuthModal, logout } = useAuth();
 
-  const menuItems = [
-    { href: "/intro", key: "intro", label: "문화관 소개", icon: "🏛️" },
-    { href: "/status", key: "status", label: "문화관 현황", icon: "🗺️" },
-    { href: "/news", key: "news", label: "소식", icon: "📢" },
-    { href: "/events", key: "events", label: "이벤트", icon: "🎈" },
-    { href: "/reserve", key: "reserve", label: "예약", icon: "📅" },
-    { href: "/feedback", key: "feedback", label: "소통창구", icon: "💬" },
-  ] as const;
+  const isTabActive = (itemKey: ActiveNav) => {
+    if (activeNav === itemKey) return true;
+    if (itemKey === "news" && (activeNav === "events" || activeNav === "stories")) return true;
+    return false;
+  };
 
   return (
-    <header className="sticky top-0 z-50 shrink-0 border-b border-slate-200 bg-white shadow-sm">
+    <header
+      className="sticky top-0 z-50 shrink-0 border-b border-slate-200 bg-white shadow-xs"
+      onMouseLeave={() => {
+        setIsMegaMenuOpen(false);
+        setActiveHoverKey(null);
+      }}
+    >
       <div
         className={[
-          "mx-auto flex max-w-7xl items-center justify-between gap-4 h-[88px] sm:h-[96px] md:h-[102px]",
+          "mx-auto flex max-w-7xl items-center justify-between gap-4 h-[84px] sm:h-[92px] md:h-[98px]",
           dense ? "px-4 py-1.5 sm:px-8" : "px-4 py-2 sm:px-8",
         ].join(" ")}
       >
         {/* 로고 영역 */}
         <Link
           href="/main"
-          className="flex shrink-0 items-center transition-transform duration-300 ease-out hover:scale-[1.04] active:scale-[0.98]"
+          className="flex shrink-0 items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
         >
           <Image
             src="/images/kwater_waterhub_logo.png"
             alt="K-water 한국수자원공사 물문화관"
             width={1024}
             height={341}
-            className="h-[64px] sm:h-[76px] md:h-[84px] w-auto max-w-[280px] sm:max-w-none shrink-0 object-contain"
+            className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[280px] sm:max-w-none shrink-0 object-contain"
             priority
           />
         </Link>
 
-        {/* 데스크톱 내비게이션 */}
-        <nav className="hidden lg:flex items-center gap-x-4 lg:gap-x-6 xl:gap-x-8 text-base lg:text-[1.05rem] font-extrabold">
+        {/* 데스크톱 메인 내비게이션 (GNB) */}
+        <nav
+          className="hidden lg:flex items-center gap-x-5 lg:gap-x-7 xl:gap-x-9 text-base lg:text-[1.05rem] font-extrabold h-full"
+          onMouseEnter={() => setIsMegaMenuOpen(true)}
+        >
           {menuItems.map((item) => (
-            <Link
+            <div
               key={item.key}
-              href={item.href}
-              className={activeNav === item.key ? navActive : navInactive}
-              aria-current={activeNav === item.key ? "page" : undefined}
+              className="relative flex items-center h-full"
+              onMouseEnter={() => setActiveHoverKey(item.key)}
             >
-              {item.label}
-            </Link>
+              <Link
+                href={item.href}
+                className={isTabActive(item.key) ? navActive : navInactive}
+                aria-current={isTabActive(item.key) ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            </div>
           ))}
         </nav>
 
-        {/* 우측 회원/로그인 & 공통 링크 버튼 (데스크톱) */}
+        {/* 우측 회원/로그인 영역 */}
         <div className="hidden lg:flex items-center gap-x-3">
           {user ? (
             <div className="flex items-center gap-x-2.5">
@@ -139,7 +208,7 @@ export function WaterHubHeader({
               </button>
               <button
                 onClick={() => openAuthModal("signup")}
-                className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-4 py-2 text-sm font-black text-sky-700 border border-sky-200/80 transition hover:bg-sky-100 hover:border-sky-300 shadow-sm"
+                className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-4 py-2 text-sm font-black text-sky-700 border border-sky-200/80 transition hover:bg-sky-100 hover:border-sky-300 shadow-2xs"
               >
                 <svg
                   className="h-3.5 w-3.5 text-sky-600"
@@ -160,12 +229,12 @@ export function WaterHubHeader({
           )}
         </div>
 
-        {/* 모바일 햄버거 토글 버튼 (선명한 고대비 디자인 적용) */}
+        {/* 모바일 햄버거 토글 버튼 */}
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className={[
-            "inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl p-2.5 transition duration-200 lg:hidden shadow-sm",
+            "inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl p-2.5 transition duration-200 lg:hidden shadow-xs",
             mobileMenuOpen
               ? "bg-slate-900 text-white border-2 border-slate-900 ring-2 ring-slate-900/20"
               : "bg-white text-slate-800 border border-slate-300 hover:bg-slate-100",
@@ -179,7 +248,6 @@ export function WaterHubHeader({
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -194,7 +262,6 @@ export function WaterHubHeader({
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -207,7 +274,79 @@ export function WaterHubHeader({
         </button>
       </div>
 
-      {/* 모바일 전체 화면 100% 불투명 드로어 메뉴 */}
+      {/* 데스크톱 마우스 호버 전체 메가 메뉴 드롭다운 패널 (K-water 공식 홈페이지 벤치마킹) */}
+      {isMegaMenuOpen && (
+        <div
+          className="hidden lg:block absolute left-0 right-0 top-full bg-white/98 backdrop-blur-md border-b-2 border-[#004D95]/80 shadow-xl z-40 transition-all duration-200 animate-in fade-in slide-in-from-top-1"
+          onMouseEnter={() => setIsMegaMenuOpen(true)}
+          onMouseLeave={() => {
+            setIsMegaMenuOpen(false);
+            setActiveHoverKey(null);
+          }}
+        >
+          <div className="mx-auto max-w-7xl px-8 py-7 grid grid-cols-5 gap-8">
+            {menuItems.map((item) => {
+              const isHovered = activeHoverKey === item.key;
+              const isCurrentActive = isTabActive(item.key);
+
+              return (
+                <div
+                  key={item.key}
+                  className={[
+                    "space-y-4 p-3.5 rounded-2xl transition-all duration-200 border",
+                    isHovered
+                      ? "bg-sky-50/70 border-sky-200/80 shadow-2xs"
+                      : isCurrentActive
+                      ? "bg-slate-50/70 border-slate-200/60"
+                      : "border-transparent",
+                  ].join(" ")}
+                  onMouseEnter={() => setActiveHoverKey(item.key)}
+                >
+                  {/* 상위 메뉴 헤더 */}
+                  <div className="border-b border-slate-200/80 pb-2.5 flex items-center justify-between">
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsMegaMenuOpen(false)}
+                      className={[
+                        "text-base font-black transition-colors flex items-center gap-1.5",
+                        isHovered || isCurrentActive ? "text-[#004D95]" : "text-slate-900",
+                      ].join(" ")}
+                    >
+                      <span>{item.label}</span>
+                      <span className="text-xs opacity-60">→</span>
+                    </Link>
+                  </div>
+
+                  {/* 하부 2차 서브 메뉴 리스트 */}
+                  <ul className="space-y-1 text-sm font-medium">
+                    {item.subItems.map((sub) => (
+                      <li key={sub.href + sub.label}>
+                        <Link
+                          href={sub.href}
+                          onClick={() => setIsMegaMenuOpen(false)}
+                          className="group flex flex-col px-3 py-2 rounded-xl hover:bg-white hover:shadow-2xs transition-all duration-150"
+                        >
+                          <span className="font-bold text-slate-800 group-hover:text-[#004D95] transition-colors flex items-center gap-1">
+                            <span>•</span>
+                            <span>{sub.label}</span>
+                          </span>
+                          {sub.desc && (
+                            <span className="text-[11px] text-slate-400 group-hover:text-sky-700 font-medium truncate mt-0.5 pl-3">
+                              {sub.desc}
+                            </span>
+                          )}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* 모바일 전체 화면 드로어 메뉴 (100% 모바일 대응) */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[100] flex flex-col bg-white lg:hidden overflow-hidden animate-in fade-in duration-200">
           {/* 모바일 드로어 전용 상단 헤더 바 */}
@@ -308,20 +447,38 @@ export function WaterHubHeader({
               )}
             </div>
 
-            <div className="flex flex-col gap-2">
+            {/* 모바일 2단계 메뉴 영역 */}
+            <div className="flex flex-col gap-3">
               {menuItems.map((item) => (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={activeNav === item.key ? mobileNavActive : mobileNavInactive}
-                >
-                  <span className="flex items-center gap-3">
-                    <span className="text-lg">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </span>
-                  <span className="text-xs font-bold opacity-60">→</span>
-                </Link>
+                <div key={item.key} className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="font-black text-base text-slate-900 hover:text-sky-600 flex items-center gap-2"
+                    >
+                      <span>{item.label}</span>
+                      {isTabActive(item.key) && (
+                        <span className="rounded-full bg-[#004D95] px-2 py-0.5 text-[10px] font-bold text-white">
+                          현재위치
+                        </span>
+                      )}
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-1 gap-1 pt-2 border-t border-slate-200/80">
+                    {item.subItems.map((sub) => (
+                      <Link
+                        key={sub.href + sub.label}
+                        href={sub.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-between text-xs font-bold text-slate-700 hover:text-sky-600 py-2 px-2.5 rounded-lg hover:bg-white transition"
+                      >
+                        <span>• {sub.label}</span>
+                        <span className="text-[10px] opacity-40">→</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
 
@@ -351,4 +508,3 @@ export function WaterHubHeader({
     </header>
   );
 }
-
