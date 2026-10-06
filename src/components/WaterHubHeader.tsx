@@ -112,8 +112,8 @@ export function WaterHubHeader({
           dense ? "py-1.5" : "py-2",
         ].join(" ")}
       >
-        {/* 로고 영역 (좌측 230px 고정 슬롯) */}
-        <div className="w-[230px] shrink-0 flex items-center pr-2">
+        {/* 로고 영역 (좌측 180px 고정 슬롯) */}
+        <div className="w-[180px] shrink-0 flex items-center pr-2">
           <Link
             href="/main"
             className="flex items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
@@ -123,7 +123,7 @@ export function WaterHubHeader({
               alt="K-water 한국수자원공사 물문화관"
               width={1024}
               height={341}
-              className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[210px] shrink-0 object-contain"
+              className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[170px] shrink-0 object-contain"
               priority
             />
           </Link>
@@ -131,7 +131,7 @@ export function WaterHubHeader({
 
         {/* 데스크톱 메인 내비게이션 GNB (중앙 정렬 5열 그리드, 탭 제목 완벽 중앙 배치) */}
         <nav
-          className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-auto h-full px-2"
+          className="hidden lg:flex items-center justify-center flex-1 max-w-5xl mx-auto h-full px-2"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
         >
           <div className="grid grid-cols-5 w-full h-full">
@@ -167,22 +167,22 @@ export function WaterHubHeader({
           </div>
         </nav>
 
-        {/* 우측 회원/로그인 영역 (우측 230px 고정 슬롯으로 좌우 대칭 유지) */}
-        <div className="hidden lg:flex items-center justify-end w-[230px] shrink-0 pl-2 gap-x-2.5">
+        {/* 우측 회원/로그인 영역 (우측 180px 고정 슬롯으로 좌우 대칭 유지) */}
+        <div className="hidden lg:flex items-center justify-end w-[180px] shrink-0 pl-2 gap-x-2">
           {user ? (
-            <div className="flex items-center gap-x-2.5">
+            <div className="flex items-center gap-x-2">
               {user.role === "admin" ? (
                 <>
                   <Link
                     href="/mypage"
-                    className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3.5 py-2 text-xs sm:text-sm font-black text-amber-900 border border-amber-300 transition hover:bg-amber-100"
+                    className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1.5 text-xs sm:text-sm font-black text-amber-900 border border-amber-300 transition hover:bg-amber-100"
                   >
                     <span>🏛️</span>
                     <span>{user.name}</span>
                   </Link>
                   <Link
                     href="/mypage"
-                    className="rounded-full bg-amber-600 px-4 py-2 text-xs sm:text-sm font-black text-white hover:bg-amber-500 transition shadow-sm shadow-amber-600/20"
+                    className="rounded-full bg-amber-600 px-3 py-1.5 text-xs sm:text-sm font-black text-white hover:bg-amber-500 transition shadow-sm shadow-amber-600/20"
                   >
                     관리자
                   </Link>
@@ -191,14 +191,14 @@ export function WaterHubHeader({
                 <>
                   <Link
                     href="/mypage"
-                    className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3.5 py-2 text-xs sm:text-sm font-black text-sky-800 border border-sky-200 transition hover:bg-sky-100"
+                    className="inline-flex items-center gap-1 rounded-full bg-sky-50 px-3 py-1.5 text-xs sm:text-sm font-black text-sky-800 border border-sky-200 transition hover:bg-sky-100"
                   >
                     <span>👤</span>
                     <span>{user.name} 님</span>
                   </Link>
                   <Link
                     href="/mypage"
-                    className="rounded-full bg-slate-900 px-4 py-2 text-xs sm:text-sm font-black text-white hover:bg-slate-800 transition"
+                    className="rounded-full bg-slate-900 px-3 py-1.5 text-xs sm:text-sm font-black text-white hover:bg-slate-800 transition"
                   >
                     마이페이지
                   </Link>
@@ -206,22 +206,22 @@ export function WaterHubHeader({
               )}
               <button
                 onClick={logout}
-                className="text-xs sm:text-sm font-extrabold text-slate-500 hover:text-slate-900 transition px-1.5"
+                className="text-xs sm:text-sm font-extrabold text-slate-500 hover:text-slate-900 transition px-1"
               >
                 로그아웃
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-x-2">
+            <div className="flex items-center gap-x-1.5">
               <button
                 onClick={() => openAuthModal("login")}
-                className="text-sm font-extrabold text-slate-700 transition hover:text-sky-600 px-2.5 py-2"
+                className="text-xs sm:text-sm font-extrabold text-slate-700 transition hover:text-sky-600 px-2 py-1.5"
               >
                 로그인
               </button>
               <button
                 onClick={() => openAuthModal("signup")}
-                className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-4 py-2 text-sm font-black text-sky-700 border border-sky-200/80 transition hover:bg-sky-100 hover:border-sky-300 shadow-2xs"
+                className="inline-flex items-center gap-1 rounded-full bg-sky-50 px-3.5 py-1.5 text-xs sm:text-sm font-black text-sky-700 border border-sky-200/80 transition hover:bg-sky-100 hover:border-sky-300 shadow-2xs"
               >
                 <span>회원가입</span>
               </button>
@@ -269,11 +269,11 @@ export function WaterHubHeader({
         }}
       >
         <div className="mx-auto flex max-w-7xl items-stretch justify-between px-4 sm:px-8">
-          {/* 좌측 로고 영역 대응 투명 가이드 앵커 (230px 고정) */}
-          <div className="w-[230px] shrink-0 invisible pointer-events-none" />
+          {/* 좌측 로고 영역 대응 투명 가이드 앵커 (180px 고정) */}
+          <div className="w-[180px] shrink-0 invisible pointer-events-none" />
 
           {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
-          <div className="grid grid-cols-5 w-full flex-1 max-w-4xl mx-auto divide-x divide-slate-100/90 px-2">
+          <div className="grid grid-cols-5 w-full flex-1 max-w-5xl mx-auto divide-x divide-slate-100/90 px-2">
             {menuItems.map((item) => {
               const isHovered = activeHoverKey === item.key;
               const isCurrentActive = isTabActive(item.key);
@@ -282,7 +282,7 @@ export function WaterHubHeader({
                 <div
                   key={item.key}
                   className={[
-                    "py-6 px-3 text-center min-h-[220px] transition-colors duration-200 flex flex-col items-center justify-start",
+                    "py-6 px-2 text-center min-h-[220px] transition-colors duration-200 flex flex-col items-center justify-start",
                     isHovered
                       ? "bg-[#edf4fb]"
                       : isCurrentActive && !activeHoverKey
@@ -300,7 +300,7 @@ export function WaterHubHeader({
                             setIsMegaMenuOpen(false);
                             setActiveHoverKey(null);
                           }}
-                          className="inline-block transition-colors duration-150 py-0.5 text-[0.92rem] text-slate-700 font-semibold hover:text-[#3054b0] hover:font-bold hover:underline underline-offset-4 decoration-1 decoration-[#3054b0]"
+                          className="inline-block whitespace-nowrap transition-colors duration-150 py-0.5 text-[0.88rem] sm:text-[0.92rem] text-slate-700 font-semibold hover:text-[#3054b0] hover:font-bold hover:underline underline-offset-4 decoration-1 decoration-[#3054b0]"
                         >
                           {sub.label}
                         </Link>
@@ -312,8 +312,8 @@ export function WaterHubHeader({
             })}
           </div>
 
-          {/* 우측 로그인 영역 대응 투명 가이드 앵커 (230px 고정) */}
-          <div className="w-[230px] shrink-0 invisible pointer-events-none" />
+          {/* 우측 로그인 영역 대응 투명 가이드 앵커 (180px 고정) */}
+          <div className="w-[180px] shrink-0 invisible pointer-events-none" />
         </div>
       </div>
 
