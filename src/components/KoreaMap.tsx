@@ -410,24 +410,21 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
 function EmptyPanel() {
   return (
     <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-dashed border-sky-300 bg-gradient-to-b from-sky-50 via-white to-sky-50/50 p-6 lg:min-h-[600px]">
-      <div className="space-y-4 max-w-sm text-center">
-        <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-white p-3.5 shadow-md ring-4 ring-sky-300/80">
-          <span className="absolute -top-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-white text-xs font-black animate-bounce shadow-md">
+      <div className="space-y-3 max-w-sm text-center">
+        <div className="relative mx-auto flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-full bg-white p-3 shadow-md ring-4 ring-sky-300/80">
+          <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-sky-500 text-white text-xs font-black animate-bounce shadow-md">
             👆
           </span>
           <img src="/character.png" alt="방울이 캐릭터" className="h-full w-full object-contain" />
         </div>
-        <div>
-          <span className="inline-block rounded-full bg-sky-100 px-3 py-1 text-xs font-black text-sky-700 tracking-wide uppercase mb-2">
+        <div className="space-y-1.5">
+          <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
             지도의 방울이를 선택해 보세요
-          </span>
-          <h3 className="text-xl font-black text-slate-900 tracking-tight">
-            {koreaMapUi.emptyTitle}
           </h3>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600 font-semibold">
-            {koreaMapUi.emptyBodyLine1}
+          <p className="text-xs sm:text-sm leading-relaxed text-slate-600 font-medium">
+            원하시는 물문화관의 실시간 관람 정보와
             <br />
-            {koreaMapUi.emptyBodyLine2}
+            층별 시설안내를 확인하실 수 있습니다.
           </p>
         </div>
       </div>
