@@ -133,6 +133,19 @@ function BangulPin({
 
   return (
     <g transform={`translate(${offset}, ${offset})`} style={{ cursor: "pointer" }}>
+      {/* 기본 상태일 때 터치를 유도하는 은은한 펄스 링 */}
+      {!selected && (
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={size / 2 + 5}
+          fill="none"
+          stroke={color}
+          strokeWidth="2"
+          opacity="0.5"
+          className="animate-ping"
+        />
+      )}
       {/* 선택 시 그림자 효과 */}
       {selected && (
         <circle cx={size / 2} cy={size / 2} r={size / 2 + 4} fill={color} opacity="0.28" />
@@ -196,7 +209,20 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
 
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
-      <div id="korea-map-container" className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-lg border border-slate-200 scroll-mt-20">
+      <div id="korea-map-container" className="relative min-w-0 flex-1 overflow-hidden rounded-2xl shadow-lg border border-slate-200 scroll-mt-20">
+        {/* 상단 터치/클릭 유도 안내 배너 */}
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none flex items-center gap-2 rounded-full bg-slate-900/85 px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-bold text-white shadow-lg backdrop-blur-md border border-white/20">
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500" />
+          </span>
+          <span className="text-sky-300 font-black tracking-tight">👆 TOUCH & CLICK</span>
+          <span className="text-slate-400 hidden sm:inline">|</span>
+          <span className="text-slate-100 font-medium truncate max-w-[190px] sm:max-w-none">
+            지도의 방울이 아이콘을 누르면 세부 정보를 보실 수 있습니다
+          </span>
+        </div>
+
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{ center: [127.75, 36.35], scale: 5750 }}
@@ -261,7 +287,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                 coordinates={center.coordinates as [number, number]}
                 onClick={() => setSelected(isSelected ? null : center)}
               >
-                <g className="cursor-pointer group">
+                <g className="cursor-pointer group transition-transform duration-200 hover:scale-110">
                   <BangulPin color={color} selected={isSelected} />
 
                   {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 (선명하고 큼직한 댐 이름 라벨) */}
@@ -346,16 +372,22 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
 
 function EmptyPanel() {
   return (
-    <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white lg:min-h-[600px]">
-      <div className="space-y-4 p-8 text-center">
-        <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-white p-3.5 shadow-md ring-4 ring-sky-300/80">
+    <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-dashed border-sky-300 bg-gradient-to-b from-sky-50 via-white to-sky-50/50 p-6 lg:min-h-[600px]">
+      <div className="space-y-4 max-w-sm text-center">
+        <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-white p-3.5 shadow-md ring-4 ring-sky-300/80">
+          <span className="absolute -top-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-sky-500 text-white text-xs font-black animate-bounce shadow-md">
+            👆
+          </span>
           <img src="/character.png" alt="방울이 캐릭터" className="h-full w-full object-contain" />
         </div>
         <div>
-          <p className="text-lg font-bold text-slate-800">
+          <span className="inline-block rounded-full bg-sky-100 px-3 py-1 text-xs font-black text-sky-700 tracking-wide uppercase mb-2">
+            지도의 방울이를 선택해 보세요
+          </span>
+          <h3 className="text-xl font-black text-slate-900 tracking-tight">
             {koreaMapUi.emptyTitle}
-          </p>
-          <p className="mt-1.5 text-base leading-relaxed text-slate-600">
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600 font-semibold">
             {koreaMapUi.emptyBodyLine1}
             <br />
             {koreaMapUi.emptyBodyLine2}
