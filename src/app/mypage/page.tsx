@@ -202,17 +202,17 @@ function MyPageContent() {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between text-slate-900">
       <WaterHubHeader activeNav="none" />
 
-      {/* 헤더 히어로 */}
-      <div className="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white py-10 px-6 border-b border-white/10">
+      {/* 헤더 히어로 (라이트 모드 톤 앤 매너 적용) */}
+      <div className="bg-gradient-to-r from-sky-50/90 via-white to-sky-50/60 py-8 sm:py-10 px-6 border-b border-sky-100/90 shadow-2xs">
         <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 text-center sm:text-left">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-sky-500/20 text-2xl font-black text-sky-400 border border-sky-400/30">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-2xl font-black text-[#3054b0] border border-sky-200/80 shadow-xs">
               {user.role === "admin" ? "🏛️" : "👤"}
             </div>
             <div>
               <div className="flex items-center gap-2 justify-center sm:justify-start">
-                <h1 className="text-2xl font-black text-white">{user.name} 님의 마이페이지</h1>
-                <span className="rounded-full bg-sky-500/20 px-2.5 py-0.5 text-xs font-bold text-sky-300 border border-sky-400/30">
+                <h1 className="text-2xl font-black text-slate-900">{user.name} 님의 마이페이지</h1>
+                <span className="rounded-full bg-sky-100/80 px-3 py-0.5 text-xs font-black text-[#3054b0] border border-sky-200/80">
                   {user.role === "admin"
                     ? "통합 관리자"
                     : user.provider === "kakao"
@@ -222,16 +222,17 @@ function MyPageContent() {
                     : "이메일 회원"}
                 </span>
               </div>
-              <p className="mt-1 text-xs text-slate-300 font-semibold">{user.email}</p>
+              <p className="mt-1 text-xs text-slate-500 font-semibold">{user.email}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <Link
               href="/reserve"
-              className="rounded-xl bg-sky-500 px-4 py-2.5 text-xs font-black text-slate-950 hover:bg-sky-400 transition shadow-md shadow-sky-500/20"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#3054b0] px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-black text-white hover:bg-[#244290] transition shadow-md shadow-[#3054b0]/20"
             >
-              📅 새 투어 예약하기
+              <span>📅</span>
+              <span>새 투어 예약하기</span>
             </Link>
           </div>
         </div>
