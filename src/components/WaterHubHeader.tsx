@@ -129,7 +129,7 @@ export function WaterHubHeader({
           </Link>
         </div>
 
-        {/* 데스크톱 메인 내비게이션 GNB (상단 탭과 하단 드롭다운 완벽 정렬) */}
+        {/* 데스크톱 메인 내비게이션 GNB (공식 홈페이지 스타일컬러 & 수직 1:1 완벽 그리드) */}
         <nav
           className="hidden lg:flex items-center justify-center flex-1 max-w-3xl mx-auto h-full px-4"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
@@ -142,7 +142,14 @@ export function WaterHubHeader({
               return (
                 <div
                   key={item.key}
-                  className="relative flex items-center justify-center h-full cursor-pointer px-1 text-center"
+                  className={[
+                    "relative flex items-center justify-center h-full cursor-pointer px-1 text-center transition-colors duration-150",
+                    isHovered
+                      ? "bg-[#edf4fb] text-[#3054b0] font-bold"
+                      : isCurrentActive
+                      ? "text-[#3054b0] font-bold"
+                      : "text-slate-800 font-bold hover:text-[#3054b0] hover:bg-[#edf4fb]",
+                  ].join(" ")}
                   onMouseEnter={() => {
                     setActiveHoverKey(item.key);
                     setIsMegaMenuOpen(true);
@@ -150,13 +157,7 @@ export function WaterHubHeader({
                 >
                   <Link
                     href={item.href}
-                    className={[
-                      "relative py-3 text-base lg:text-[1.05rem] tracking-tight truncate transition-colors duration-200",
-                      "after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:h-[2.5px] after:bg-[#004D95] after:rounded-full after:transition-all after:duration-300",
-                      isHovered || isCurrentActive
-                        ? "text-[#004D95] font-black after:w-full"
-                        : "text-slate-800 font-extrabold hover:text-[#004D95] after:w-0 hover:after:w-full",
-                    ].join(" ")}
+                    className="w-full text-center py-2 text-base lg:text-[1.05rem] tracking-tight truncate"
                   >
                     {item.label}
                   </Link>
@@ -253,35 +254,43 @@ export function WaterHubHeader({
         </button>
       </div>
 
-      {/* 데스크톱 마우스 호버 드롭다운 패널 (1:1 픽셀 정렬 + 텍스트 컬러/밑줄 효과 적용) */}
+      {/* 데스크톱 마우스 호버 드롭다운 패널 (K-water 공식 홈페이지 컬러 & 세로 컬럼 하이라이트 매칭) */}
       {isMegaMenuOpen && (
         <div
-          className="hidden lg:block absolute left-0 right-0 top-full bg-white border-b border-slate-200 shadow-xl z-40 animate-in fade-in slide-in-from-top-1 duration-150"
+          className="hidden lg:block absolute left-0 right-0 top-full bg-white border-b border-slate-200/80 shadow-lg z-40 animate-in fade-in duration-150"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
           onMouseLeave={() => {
             setIsMegaMenuOpen(false);
             setActiveHoverKey(null);
           }}
         >
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-8">
+          <div className="mx-auto flex max-w-7xl items-stretch justify-between px-4 sm:px-8">
             {/* 좌측 로고 영역 대응 투명 가이드 앵커 */}
             <div className="shrink-0 pr-4 invisible pointer-events-none">
               <div className="w-[250px] h-1" />
             </div>
 
-            {/* GNB 5개 탭과 동일한 flex-1 max-w-3xl 그리드로 1:1 위치 수직 완벽 정렬 */}
-            <div className="grid grid-cols-5 w-full flex-1 max-w-3xl mx-auto py-6 px-4">
+            {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
+            <div className="grid grid-cols-5 w-full flex-1 max-w-3xl mx-auto divide-x divide-slate-100/90">
               {menuItems.map((item) => {
                 const isHovered = activeHoverKey === item.key;
+                const isCurrentActive = isTabActive(item.key);
 
                 return (
                   <div
                     key={item.key}
-                    className="py-2 px-1 text-center min-h-[170px]"
+                    className={[
+                      "py-6 px-5 text-left min-h-[220px] transition-colors duration-150",
+                      isHovered
+                        ? "bg-[#edf4fb]"
+                        : isCurrentActive && !activeHoverKey
+                        ? "bg-[#edf4fb]/70"
+                        : "bg-white",
+                    ].join(" ")}
                     onMouseEnter={() => setActiveHoverKey(item.key)}
                   >
-                    <ul className="space-y-3 text-sm font-semibold inline-block text-left">
-                      {item.subItems.map((sub) => (
+                    <ul className="space-y-3.5 text-sm font-semibold">
+                      {item.subItems.map((sub, idx) => (
                         <li key={sub.href + sub.label}>
                           <Link
                             href={sub.href}
@@ -290,9 +299,13 @@ export function WaterHubHeader({
                               setActiveHoverKey(null);
                             }}
                             className={[
-                              "inline-block transition-all duration-150 py-0.5",
-                              "hover:text-[#004D95] hover:font-bold hover:underline underline-offset-4 decoration-2 decoration-[#004D95]",
-                              isHovered ? "text-slate-800" : "text-slate-600",
+                              "inline-block transition-colors py-0.5 text-[0.92rem]",
+                              "hover:text-[#3054b0] hover:font-bold hover:underline underline-offset-4 decoration-1",
+                              isHovered && idx === 0
+                                ? "text-[#3054b0] font-bold underline underline-offset-4 decoration-1"
+                                : isHovered
+                                ? "text-slate-800 font-semibold"
+                                : "text-slate-700 font-semibold",
                             ].join(" ")}
                           >
                             {sub.label}
