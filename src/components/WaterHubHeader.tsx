@@ -145,10 +145,10 @@ export function WaterHubHeader({
                   className={[
                     "relative flex items-center justify-center h-full cursor-pointer px-1 text-center transition-colors duration-200",
                     isHovered
-                      ? "bg-[#edf4fb] text-[#3054b0] font-bold"
+                      ? "bg-[#edf4fb] text-[#3054b0] font-black"
                       : isCurrentActive
-                      ? "text-[#3054b0] font-bold"
-                      : "text-slate-800 font-bold hover:text-[#3054b0] hover:bg-[#edf4fb]",
+                      ? "text-[#3054b0] font-black"
+                      : "text-slate-900 font-black hover:text-[#3054b0] hover:bg-[#edf4fb]",
                   ].join(" ")}
                   onMouseEnter={() => {
                     setActiveHoverKey(item.key);
@@ -157,7 +157,7 @@ export function WaterHubHeader({
                 >
                   <Link
                     href={item.href}
-                    className="w-full text-center py-2 text-base lg:text-[1.05rem] tracking-tight truncate"
+                    className="w-full text-center py-2 text-base lg:text-[1.08rem] font-black tracking-tight truncate"
                   >
                     {item.label}
                   </Link>
