@@ -131,9 +131,6 @@ export default function IntroPage() {
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 인사말
               </h2>
-              <p className="mt-1 text-xs sm:text-sm font-semibold text-slate-500">
-                한국수자원공사 공간경관처
-              </p>
             </div>
 
             {/* 자연스럽고 따뜻한 인사말 본문 글 */}
