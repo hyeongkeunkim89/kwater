@@ -6,30 +6,26 @@ import { WaterHubFooter } from "@/components/WaterHubFooter";
 export const metadata = {
   title: "문화관 소개 & 인사말 | K-water 물문화관",
   description:
-    "한국수자원공사 공간경관처 문화공간부에서 전하는 물문화관 웹사이트 구축 취지와 인사말입니다. 전국 15개 물문화관에서 국민과 물을 잇는 가치를 만들어갑니다.",
+    "사람과 물, 문화가 어우러지는 수변 공간. 한국수자원공사 물문화관 웹사이트를 찾아주신 국민 여러분께 전하는 인사말입니다.",
 };
 
 export default function IntroPage() {
-  // 공간경관처 문화공간부 3대 추진 방향
-  const coreMissions = [
+  // 물문화관이 함께 가꿔가는 3가지 주요 가치
+  const culturalValues = [
     {
-      number: "01",
-      title: "수자원 역사의 체계적 보존 & 전파",
-      subtitle: "50년 치수·이수 역사 사료",
-      desc: "대한민국 수자원 개발과 댐 건설의 50년 역사를 디지털 사료와 전시로 기록하여, 물의 소중함과 수자원의 가치를 미래 세대에 전달합니다.",
-      tag: "역사 & 보존",
+      title: "역사와 삶의 기록",
+      subtitle: "수자원 발자취 보존",
+      desc: "대한민국 50년 치수와 이수의 역사를 차곡차곡 기록하여, 댐 건설과 물 관리의 귀중한 가치를 후대에 전달합니다.",
       icon: (
-        <svg className="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
         </svg>
       ),
     },
     {
-      number: "02",
-      title: "친환경 수변 공간경관 조성 & 상생",
-      subtitle: "지역과 호흡하는 문화 쉼터",
-      desc: "댐 유역 수변 경관에 지역 고유의 인문·자연 요소를 입혀, 단순한 치수 시설을 넘어 지역 주민과 방문객이 휴식하는 복합 수변 문화공간을 가꿉니다.",
-      tag: "경관 & 상생",
+      title: "자연 속 휴식과 상생",
+      subtitle: "수변 문화 쉼터",
+      desc: "아름다운 댐 호수 경관을 조망하는 수변 산책로와 북카페를 조성하여, 지역 주민과 방문객이 편안히 쉬어가는 공간을 만들어갑니다.",
       icon: (
         <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -37,14 +33,12 @@ export default function IntroPage() {
       ),
     },
     {
-      number: "03",
-      title: "국민 중심의 디지털 통합 소통",
-      subtitle: "실시간 정보 & 원스톱 서비스",
-      desc: "전국 15개 거점 물문화관의 운영 현황, 가이드 투어 사전 예약, 층별 도면 및 행사를 한눈에 조회할 수 있는 디지털 허브를 운영합니다.",
-      tag: "디지털 소통",
+      title: "체험과 생태 교육",
+      subtitle: "물 사랑 디지털 체험",
+      desc: "어린이와 가족이 즐길 수 있는 미디어 체험존과 전문 해설 투어를 통해 물의 소중함과 환경 가치를 배웁니다.",
       icon: (
-        <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        <svg className="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.597 15.1a2 2 0 00-1.879 1.158L2.3 19.1A2 2 0 004.135 22h15.73a2 2 0 001.835-2.9l-2.272-3.672zM12 3v9m0 0l-3-3m3 3l3-3" />
         </svg>
       ),
     },
@@ -54,29 +48,29 @@ export default function IntroPage() {
   const hubServices = [
     {
       title: "전국 15개 거점 현황 지도",
-      desc: "수도권부터 강원, 충청, 호남, 영남 15개 물문화관의 실시간 관람 가능 상태와 운영시간을 확인하세요.",
-      btnLabel: "현황지도 조회",
+      desc: "수도권, 강원, 충청, 호남, 영남 15개 물문화관의 실시간 관람 상태와 운영시간을 확인하세요.",
+      btnLabel: "지도 현황보기",
       path: "/status",
       icon: "🗺️",
     },
     {
-      title: "무료 가이드 투어 사전 예약",
-      desc: "전문 도슨트 해설사와 함께 물문화관 전시장과 시설을 깊이 있게 체험하는 해설 프로그램을 예약하세요.",
+      title: "무료 가이드 투어 예약",
+      desc: "전문 도슨트 해설사와 함께 물문화관 전시장과 대표 시설을 둘러보는 해설 프로그램을 신청하세요.",
       btnLabel: "투어 예약하기",
       path: "/reserve",
       icon: "📅",
     },
     {
-      title: "층별 시설 & 대표 전시 안내",
-      desc: "각 물문화관별 실내 공간 구성, 층별 주요 전시물, 힐링 북카페 및 편의시설 안내를 살펴보세요.",
+      title: "층별 시설 & 전시 안내",
+      desc: "각 물문화관별 실내 전시 공간 구성, 층별 주요 시설, 힐링 쉼터 안내 정보를 살펴보세요.",
       btnLabel: "시설안내 보기",
       path: "/centers",
       icon: "🏛️",
     },
     {
-      title: "물문화 소식 & 시민 참여",
-      desc: "물문화관에서 펼쳐지는 다채로운 문화 행사, 생태 체험 클래스, 현장 방문 후기를 공유해 보세요.",
-      btnLabel: "소식 & 소통하기",
+      title: "물문화 소식 & 행사",
+      desc: "물문화관에서 진행되는 최신 문화 행사 소식과 공지사항, 시민 소통 소식을 확인하세요.",
+      btnLabel: "소식 바로가기",
       path: "/news",
       icon: "📣",
     },
@@ -86,185 +80,141 @@ export default function IntroPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans break-keep">
       <WaterHubHeader activeNav="intro" />
 
-      {/* 1. 히어로 비주얼 배너 */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-[#003870] to-[#004D95] text-white">
-        {/* 히어로 배경 패턴 및 은은한 광원 효과 */}
-        <div className="pointer-events-none absolute inset-0 opacity-20 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px]" />
-        <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-sky-400/20 blur-[120px]" />
-        <div className="pointer-events-none absolute right-0 bottom-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-[140px]" />
+      {/* 1. 상단 히어로 영역 */}
+      <section className="relative overflow-hidden bg-slate-900 text-white">
+        {/* 배경 대표 사진 이미지 */}
+        <Image
+          src="/images/intro-bg.jpg"
+          alt="K-water 물문화관 대표 전경"
+          fill
+          priority
+          className="object-cover object-center opacity-40 brightness-95"
+        />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8 lg:py-24 text-center sm:text-left">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* 좌측 메인 타이틀 & 부서 뱃지 */}
-            <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full bg-sky-400/15 border border-sky-300/30 px-4 py-1.5 backdrop-blur-md">
-                <span className="h-2 w-2 rounded-full bg-sky-400 animate-pulse" />
-                <span className="text-xs font-bold text-sky-200 tracking-wide uppercase">
-                  한국수자원공사 공간경관처 문화공간부
-                </span>
-              </div>
+        {/* 은은한 그라데이션 오버레이 */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-950/40" />
 
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white drop-shadow-md">
-                사람과 물, 문화가 만나는 수변 공간 —<br className="hidden sm:inline" />
-                <span className="text-sky-300">K-water 물문화관</span>이 함께합니다.
-              </h1>
-
-              <p className="text-xs sm:text-sm md:text-base font-medium text-slate-200 leading-relaxed max-w-2xl">
-                전국 15개 댐 유역의 물문화관을 하나의 네트워크로 연결하여,<br className="hidden sm:inline" />
-                국민 여러분께 더욱 가까이 다가가는 문화·체험 공간을 가꾸어 나가겠습니다.
-              </p>
+        <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8 lg:py-24">
+          <div className="max-w-2xl space-y-4">
+            {/* 공식 슬로건 로고 */}
+            <div>
+              <Image
+                src="/images/slogan.png"
+                alt="세상에 행복을 水 놓다"
+                width={360}
+                height={90}
+                priority
+                className="h-auto w-auto max-w-[240px] sm:max-w-[300px] object-contain filter drop-shadow-md mb-2 brightness-110"
+              />
             </div>
 
-            {/* 우측 공식 슬로건 이미지 카체 */}
-            <div className="lg:col-span-4 flex justify-center lg:justify-end">
-              <div className="rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-md shadow-2xl text-center max-w-xs w-full">
-                <Image
-                  src="/images/slogan.png"
-                  alt="세상에 행복을 水 놓다"
-                  width={320}
-                  height={90}
-                  priority
-                  className="h-auto w-auto max-w-[220px] sm:max-w-[260px] object-contain mx-auto filter drop-shadow-md mb-3 brightness-110"
-                />
-                <p className="text-[11px] font-bold text-sky-200 tracking-wider uppercase">
-                  K-water Spatial Landscape &amp; Culture
-                </p>
-              </div>
-            </div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white drop-shadow-md">
+              물(水)과 사람이 함께하는<br />
+              따뜻한 수변 문화 공간
+            </h1>
+
+            <p className="text-xs sm:text-sm md:text-base font-medium text-slate-200 leading-relaxed drop-shadow-sm">
+              전국 15개 댐 유역에 위치한 K-water 물문화관은 물의 가치를 기록하고,<br className="hidden sm:inline" />
+              지역 주민과 방문객이 소중한 추억을 나누는 복합 문화 쉼터입니다.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* 2. 공간경관처 문화공간부 공식 인사말 & 웹사이트 구축 취지 (CEO/부서장 서한 스타일) */}
+      {/* 2. 인사말 및 웹사이트 안내 (공식 서한 스타일) */}
       <main className="mx-auto max-w-7xl w-full px-6 py-12 sm:py-16 space-y-16 flex-1">
-        <section aria-label="한국수자원공사 공간경관처 문화공간부 인사말">
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 lg:p-14 shadow-lg">
-            {/* 상단 장식 구역 */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-slate-150">
-              <div>
-                <span className="text-xs font-black uppercase tracking-widest text-sky-700 block mb-1">
-                  GREETING &amp; PURPOSE
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
-                  문화공간부 인사말 및 홍보 허브 구축 취지
-                </h2>
-              </div>
-
-              <div className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-slate-100 border border-slate-200/80 px-4 py-2 text-xs font-bold text-slate-700">
-                <svg className="h-4 w-4 text-[#004D95]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h6m-6 0V11m0 0h6" />
-                </svg>
-                <span>K-water 공간경관처 문화공간부</span>
-              </div>
+        <section aria-label="K-water 물문화관 인사말">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 lg:p-12 shadow-sm space-y-8">
+            {/* 인사말 상단 헤더 */}
+            <div className="border-b border-slate-100 pb-6">
+              <span className="text-xs font-bold uppercase tracking-wider text-sky-700 block mb-1">
+                GREETINGS &amp; PURPOSE
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                인사말
+              </h2>
+              <p className="mt-1 text-xs sm:text-sm font-semibold text-slate-500">
+                한국수자원공사 공간경관처 문화공간부
+              </p>
             </div>
 
-            {/* 인사말 본문 서한 */}
-            <div className="mt-8 sm:mt-10 space-y-6 text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
-              {/* 메인 쿼트 인용구 */}
-              <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-indigo-50/50 to-sky-50 p-5 sm:p-6 border-l-4 border-[#004D95] font-semibold text-slate-800 text-base sm:text-lg">
-                &ldquo;안녕하십니까, 국민 여러분. 한국수자원공사(K-water) 공간경관처 문화공간부 홈페이지를 찾아주셔서 진심으로 감사드립니다.&rdquo;
-              </div>
-
-              <p className="break-keep">
-                대한민국 주요 댐 수역에 조성된 <strong>전국 15개 K-water 물문화관</strong>은 수자원 개발 50년의 역사 사료를 보존하는 가치 있는 기록관이자, 생태 교육과 아름다운 수변 휴식을 제공하는 국민 복합문화공간입니다.
+            {/* 자연스럽고 따뜻한 인사말 본문 글 */}
+            <div className="space-y-6 text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
+              <p className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed">
+                안녕하십니까, 국민 여러분.<br />
+                K-water 물문화관 통합 웹사이트를 방문해 주셔서 진심으로 감사드립니다.
               </p>
 
-              <p className="break-keep">
-                그동안 각 지역 물문화관별로 흩어져 있던 관람 정보, 가이드 투어 신청, 층별 시설 안내를 국민 여러분께서 보다 편리하고 쉽게 이용하실 수 있도록, 저희 <strong>공간경관처 문화공간부에서는 전국 물문화관 통합 홍보 허브 웹사이트를 새롭게 구축</strong>하게 되었습니다.
+              <p>
+                대한민국의 맑은 물이 흐르는 주요 댐 유역에는 물의 소중함과 수자원 관리의 역사를 나누는 <strong>전국 15개의 K-water 물문화관</strong>이 자리하고 있습니다. 물문화관은 지난 50년 치수와 이수의 발자취를 보존하는 기록관이자, 사계절 아름다운 댐 호수 풍경 속에서 자연과 사람이 호흡하는 휴식처입니다.
               </p>
 
-              {/* 3대 핵심 역할 서술 서브 카드 */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
-                <div className="rounded-xl bg-slate-50 border border-slate-200/90 p-4 space-y-1.5">
-                  <span className="text-xs font-bold text-sky-700 block uppercase">1. 정보의 파편화 해소</span>
-                  <p className="text-xs sm:text-sm font-semibold text-slate-800">
-                    전국 15개 거점의 운영시간, 관람 상태, 휴관일 정보를 한눈에 실시간 확인
-                  </p>
-                </div>
-                <div className="rounded-xl bg-slate-50 border border-slate-200/90 p-4 space-y-1.5">
-                  <span className="text-xs font-bold text-sky-700 block uppercase">2. 예약 편의성 대폭 강화</span>
-                  <p className="text-xs sm:text-sm font-semibold text-slate-800">
-                    전문 도슨트 해설사의 무료 가이드 투어 프로그램을 원스톱 온라인 사전 예약
-                  </p>
-                </div>
-                <div className="rounded-xl bg-slate-50 border border-slate-200/90 p-4 space-y-1.5">
-                  <span className="text-xs font-bold text-sky-700 block uppercase">3. 수변 문화 가치 창출</span>
-                  <p className="text-xs sm:text-sm font-semibold text-slate-800">
-                    댐 시설 경관과 어우러지는 수변 생태·문화 콘텐츠를 지속적으로 공유
-                  </p>
-                </div>
-              </div>
-
-              <p className="break-keep">
-                저희 문화공간부는 단순히 건물을 관리하는 것을 넘어, 댐이라는 웅장한 수자원 인프라에 <strong>친환경 공간 경관 가치</strong>와 <strong>주민 상생의 스토리</strong>를 입히고 있습니다. 물의 소중함을 배우는 생태 교육 공간이자, 가족과 이웃이 부담 없이 쉬어갈 수 있는 따뜻한 쉼터가 되도록 가꾸어 나가겠습니다.
+              <p>
+                그동안 각 현장별로 나뉘어 있던 관람 시간, 주차 안내, 가이드 해설 예약 소식을 한곳에서 편리하게 확인하실 수 있도록 이 온라인 공간을 준비했습니다. 방문을 계획하시는 순간부터 현장에 머무시는 시간까지, 더욱 편안하고 유익한 경험이 되기를 바라는 마음을 담았습니다.
               </p>
 
-              <p className="break-keep">
-                언제든 전국 15개 물문화관을 찾으셔서 물과 사람이 함께 만드는 행복한 순간을 경험해 보시길 바라며, 늘 국민의 목소리에 귀 기울이는 공간경관처 문화공간부가 되겠습니다. 감사합니다.
+              <p>
+                저희는 댐 시설이라는 고유의 인프라가 차가운 구조물에 머물지 않고, 자연 경관과 어우러져 지역 주민과 방문객 모두에게 온기를 전하는 수변 문화 공간이 되길 소망합니다. 아이들에게는 재미있는 생태 배움터가 되고, 지친 일상 속 어른들에게는 고즈넉한 쉼터가 될 수 있도록 정성껏 가꿔 나가겠습니다.
               </p>
 
-              {/* 하단 서명란 */}
-              <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <p>
+                사계절 빛깔이 달라지는 전국 물문화관에서 사랑하는 가족, 이웃과 함께 물이 주는 평온함을 만끽해 보시길 권해드립니다. 늘 국민 곁에서 가치 있는 공간으로 답하겠습니다.
+              </p>
+
+              <p className="font-semibold text-slate-800">
+                감사합니다.
+              </p>
+
+              {/* 정갈한 하단 서명란 */}
+              <div className="pt-8 border-t border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-[#004D95] text-white flex items-center justify-center font-black text-sm shadow-md">
+                  <div className="h-9 w-9 rounded-full bg-[#004D95] text-white flex items-center justify-center font-black text-xs shadow-sm">
                     K
                   </div>
-                  <div>
-                    <span className="text-xs font-bold text-slate-500 block">K-water 수자원 문화공간 통합 관리</span>
-                    <span className="text-sm font-black text-slate-900">한국수자원공사 공간경관처 문화공간부</span>
-                  </div>
+                  <span className="text-xs sm:text-sm font-bold text-slate-800">
+                    K-water 물문화관
+                  </span>
                 </div>
-
-                <div className="text-right">
-                  <span className="text-xs text-slate-400 font-semibold block">Spatial Landscape &amp; Cultural Space Dept.</span>
-                  <span className="text-sm font-bold text-sky-800">임직원 일동 敬上</span>
-                </div>
+                <span className="text-xs sm:text-sm font-bold text-sky-800">
+                  한국수자원공사 공간경관처 문화공간부
+                </span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 3. 공간경관처 문화공간부 3대 핵심 추진 방향 */}
-        <section aria-label="문화공간부 3대 핵심 추진 방향" className="space-y-6">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black tracking-wider uppercase text-sky-700">
-              OUR CORE MISSIONS
+        {/* 3. 물문화관이 만들어가는 3가지 가치 */}
+        <section aria-label="물문화관 핵심 가치" className="space-y-6">
+          <div className="text-center max-w-xl mx-auto space-y-1.5">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-0.5 text-xs font-bold text-sky-700 uppercase tracking-wider">
+              OUR VALUES
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              문화공간부가 만들어가는 3대 가치
+              물문화관이 가꿔가는 세 가지 가치
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 font-medium">
-              대한민국 수자원의 역사를 보존하고 친환경 수변 경관으로 국민과 소통합니다.
+              자연과 역사, 사람이 수변 공간에서 함께 어우러집니다.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {coreMissions.map((m) => (
+            {culturalValues.map((v) => (
               <div
-                key={m.title}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-400 hover:shadow-xl"
+                key={v.title}
+                className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs hover:border-sky-300 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-3xl font-black text-sky-200 group-hover:text-sky-500 transition-colors">
-                      {m.number}
-                    </span>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 border border-slate-200/80 group-hover:bg-sky-50 group-hover:border-sky-200 transition-colors">
-                      {m.icon}
-                    </div>
+                  <div className="w-12 h-12 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center mb-5">
+                    {v.icon}
                   </div>
-
-                  <span className="inline-block rounded-md bg-sky-50 px-2.5 py-0.5 text-xs font-bold text-sky-700 mb-2 border border-sky-100">
-                    {m.tag}
-                  </span>
-                  <h3 className="text-lg font-black text-slate-900 tracking-tight mb-1 group-hover:text-[#004D95] transition-colors">
-                    {m.title}
+                  <h3 className="text-lg font-black text-slate-900 mb-1">
+                    {v.title}
                   </h3>
-                  <p className="text-xs font-bold text-slate-400 mb-3">
-                    {m.subtitle}
+                  <p className="text-xs font-bold text-sky-600 mb-3">
+                    {v.subtitle}
                   </p>
                   <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                    {m.desc}
+                    {v.desc}
                   </p>
                 </div>
               </div>
@@ -272,26 +222,26 @@ export default function IntroPage() {
           </div>
         </section>
 
-        {/* 4. 물문화관 통합 홍보 허브 주요 제공 서비스 */}
-        <section aria-label="통합 웹사이트 주요 제공 서비스" className="rounded-3xl bg-slate-900 text-white p-8 sm:p-12 space-y-8 shadow-xl">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-6">
+        {/* 4. 웹사이트 주요 이용 안내 */}
+        <section aria-label="웹사이트 서비스 안내" className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-sky-400 block mb-1">
-                INTEGRATED SERVICES
+              <span className="text-xs font-bold uppercase tracking-wider text-sky-700 block mb-1">
+                SERVICES
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-                웹사이트 주요 이용 안내
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                통합 웹사이트 이용 안내
               </h2>
-              <p className="mt-1 text-xs sm:text-sm text-slate-400 font-medium">
-                국민 여러분의 편리한 방문을 돕기 위해 제공되는 4가지 핵심 기능입니다.
+              <p className="mt-1 text-xs sm:text-sm text-slate-500 font-medium">
+                국민 여러분의 편리한 방문을 지원하는 4가지 핵심 기능입니다.
               </p>
             </div>
 
             <Link
               href="/status"
-              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-xs sm:text-sm font-bold text-white px-5 py-2.5 transition shadow-sm"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-bold text-white px-5 py-2.5 transition shadow-xs whitespace-nowrap"
             >
-              <span>전국 거점 현황지도 바로가기</span>
+              <span>전국 거점 현황지도</span>
               <span>→</span>
             </Link>
           </div>
@@ -301,18 +251,18 @@ export default function IntroPage() {
               <Link
                 key={s.title}
                 href={s.path}
-                className="group flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-800/60 p-5 transition hover:bg-slate-800 hover:border-sky-500/50 hover:shadow-lg"
+                className="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 hover:border-sky-400 hover:shadow-md transition-all duration-200"
               >
                 <div>
                   <div className="text-2xl mb-3">{s.icon}</div>
-                  <h3 className="text-base font-bold text-white group-hover:text-sky-300 transition-colors mb-2">
+                  <h3 className="text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors mb-1.5">
                     {s.title}
                   </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed font-medium mb-4">
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium mb-4">
                     {s.desc}
                   </p>
                 </div>
-                <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs font-bold text-sky-400 group-hover:text-sky-300">
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-sky-600 group-hover:text-sky-700">
                   <span>{s.btnLabel}</span>
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </div>
@@ -321,31 +271,28 @@ export default function IntroPage() {
           </div>
         </section>
 
-        {/* 5. 하단 CTA 바로가기 섹션 */}
-        <section aria-label="방문 권유 하단 CTA" className="rounded-3xl bg-gradient-to-r from-sky-50 via-indigo-50 to-sky-50 border border-sky-200/70 p-8 sm:p-12 text-center space-y-6">
-          <div className="max-w-2xl mx-auto space-y-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black tracking-wider uppercase text-sky-800">
-              K-WATER WATER CULTURE HUB
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              전국 15개 물문화관에서 소중한 추억을 만드세요
+        {/* 5. 하단 둘러보기 CTA 섹션 */}
+        <section aria-label="방문 안내 하단 혜택" className="rounded-3xl bg-gradient-to-r from-sky-50 via-indigo-50/60 to-sky-50 border border-sky-200/80 p-8 sm:p-12 text-center space-y-6">
+          <div className="max-w-xl mx-auto space-y-2">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              가까운 K-water 물문화관을 탐방해 보세요
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-medium">
-              한국수자원공사 공간경관처 문화공간부가 국민 여러분의 따뜻하고 유익한 방문을 정성껏 준비하겠습니다.
+              전국 15개 물문화관에서 물의 가치와 수변 풍경이 주는 평온함을 느껴보실 수 있습니다.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link
               href="/status"
-              className="w-full sm:w-auto inline-flex min-h-12 items-center justify-center rounded-xl bg-[#004D95] hover:bg-[#003870] text-white font-bold text-sm px-8 transition shadow-md gap-2"
+              className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl bg-[#004D95] hover:bg-[#003870] text-white font-bold text-xs sm:text-sm px-7 transition shadow-sm gap-1.5"
             >
-              <span>전국 거점 지도 둘러보기</span>
+              <span>전국 거점 현황지도</span>
               <span>→</span>
             </Link>
             <Link
               href="/reserve"
-              className="w-full sm:w-auto inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm px-8 transition shadow-xs gap-2"
+              className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs sm:text-sm px-7 transition shadow-xs gap-1.5"
             >
               <span>가이드 해설 투어 예약</span>
               <span>📅</span>
