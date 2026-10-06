@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
+import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { WaterStoriesClient } from "@/components/WaterStoriesClient";
 import { editorialPhotoOfMonth } from "@/data/water-stories-spotlight";
 import { isGalleryUploadBlockedOnVercel, isWaterStoriesLive } from "@/lib/storiesConfig";
@@ -65,39 +65,28 @@ export default async function MulIyagiPage({ searchParams }: Props) {
       : null;
 
   return (
-    <div className="min-h-screen bg-slate-50/50 text-slate-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between">
       <WaterHubHeader activeNav="news" />
 
-      {/* 서브페이지 대표 헤더 배너 (라이트 모드 톤 앤 매너 통일) */}
-      <div className="bg-gradient-to-r from-sky-50/90 via-white to-blue-50/50 border-b border-sky-100/90 py-10 sm:py-14 px-6 sm:px-10 shadow-2xs">
-        <div className="mx-auto max-w-7xl">
-          {/* 브레드크럼 */}
-          <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-500 mb-4">
-            <Link href="/main" className="text-[#3054b0] hover:text-sky-900 transition">
-              ← 홈으로
-            </Link>
-            <span>/</span>
-            <span className="text-slate-500">새소식</span>
-            <span>/</span>
-            <span className="text-slate-900 font-bold">물 이야기 갤러리</span>
-          </div>
-
-          <div className="max-w-3xl">
-            <span className="inline-block rounded-full bg-sky-100/90 px-3 py-1 text-xs font-black text-[#3054b0] mb-3 border border-sky-200/80">
-              COMMUNITY & GALLERY
-            </span>
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              물 이야기 갤러리
-            </h1>
-            <p className="mt-3.5 text-base sm:text-lg leading-relaxed text-slate-600 font-medium">
-              둘레길·전망대·호반 산책로에서 마주친 풍경을 사진과 짧은 글로 남겨 주세요.
-              방문객들의 진솔한 추억과 생생한 후기가 모이는 수변 문화 소통 공간입니다.
-            </p>
-          </div>
+      {/* 히어로 타이틀 (소식/공지사항 페이지와 100% 동일한 헤더 디자인 적용) */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-sky-50 to-indigo-50 border-b border-slate-200/80 shrink-0">
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="absolute right-1/4 top-0 h-48 w-48 rounded-full bg-sky-500/5 blur-[80px]" />
+        </div>
+        <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 text-center sm:text-left">
+          <span className="text-xs font-bold uppercase tracking-widest text-sky-600">
+            COMMUNITY &amp; GALLERY
+          </span>
+          <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+            물 이야기 갤러리
+          </h1>
+          <p className="mt-2 text-sm text-slate-500 leading-relaxed max-w-xl font-semibold">
+            K-water 물문화관 및 각 지점 담당자가 전하는 생생한 방문 이야기와 풍경을 공유합니다.
+          </p>
         </div>
       </div>
 
-      <main className="mx-auto max-w-7xl px-6 py-10 sm:px-10 sm:py-14">
+      <main className="mx-auto max-w-7xl w-full px-6 py-10 sm:px-8 flex-1">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPage) }}
@@ -117,6 +106,8 @@ export default async function MulIyagiPage({ searchParams }: Props) {
           initialStories={initialStories}
         />
       </main>
+
+      <WaterHubFooter />
     </div>
   );
 }
