@@ -261,26 +261,26 @@ export function WaterStoriesClient({
 
   return (
     <div className="space-y-12 sm:space-y-16">
-      {/* 이달의 사진 */}
+      {/* 이달의 사진 (라이트 톤 대표 스포트라이트 카드) */}
       <section
-        className="overflow-hidden rounded-2xl border border-amber-200/80 bg-gradient-to-br from-amber-50 via-white to-sky-50/60 shadow-sm"
+        className="overflow-hidden rounded-2xl border border-sky-200/90 bg-gradient-to-br from-sky-50/80 via-white to-blue-50/40 shadow-xs"
         aria-labelledby="pom-heading"
       >
-        <div className="border-b border-amber-100/90 bg-white/80 px-5 py-4 sm:px-8 sm:py-5">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-amber-700/90 sm:text-xs">
-            Event
-          </p>
-          <h2 id="pom-heading" className="mt-1 text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
+        <div className="border-b border-sky-100/90 bg-white/90 px-6 py-4 sm:px-8 sm:py-5">
+          <span className="inline-block rounded-full bg-sky-100/90 px-2.5 py-0.5 text-xs font-black text-[#3054b0] border border-sky-200/80">
+            EVENT
+          </span>
+          <h2 id="pom-heading" className="mt-1.5 text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
             이달의 사진
           </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 font-medium">
             매월 말 운영진이 갤러리 후보 중 한 작품을 선정합니다. 선정되신 분께는 작은 기념품을 드리는 이벤트와
             연동할 수 있어요.
           </p>
         </div>
 
         <div className="grid gap-0 lg:grid-cols-2 lg:items-stretch">
-          <div className="relative aspect-[4/3] min-h-[200px] w-full max-w-full bg-slate-900 lg:aspect-auto lg:min-h-[280px]">
+          <div className="relative aspect-[4/3] min-h-[220px] w-full max-w-full bg-slate-900 lg:aspect-auto lg:min-h-[280px]">
             {editorialSpotlight ? (
               <Image
                 src={editorialSpotlight.imageSrc}
@@ -298,26 +298,26 @@ export function WaterStoriesClient({
                 className="h-full w-full object-cover"
               />
             ) : (
-              <div className="flex h-full min-h-[200px] flex-col items-center justify-center gap-2 px-6 text-center text-white/80 lg:min-h-[280px]">
-                <span className="text-3xl" aria-hidden>
+              <div className="flex h-full min-h-[220px] flex-col items-center justify-center gap-2.5 px-6 text-center text-white/90 lg:min-h-[280px] bg-gradient-to-br from-sky-950 via-slate-900 to-sky-900">
+                <span className="text-4xl" aria-hidden>
                   📷
                 </span>
-                <p className="text-sm font-medium text-white/90">
+                <p className="text-sm font-bold text-white">
                   아직 공개된 이달의 사진이 없습니다.
                 </p>
-                <p className="max-w-xs text-xs text-white/60">
-                  아래 갤러리에 올려 주신 사진이 후보가 됩니다.
+                <p className="max-w-xs text-xs text-sky-200/80 font-medium">
+                  아래 갤러리에 올려 주신 방문객 사진이 후보가 됩니다.
                 </p>
               </div>
             )}
           </div>
-          <div className="flex flex-col justify-center gap-3 px-5 py-6 sm:px-8 sm:py-8">
+          <div className="flex flex-col justify-center gap-3.5 px-6 py-6 sm:px-8 sm:py-8 bg-white/60">
             {editorialSpotlight ? (
               <>
-                <p className="text-xs font-bold text-amber-800">{editorialSpotlight.monthLabel}</p>
-                <p className="text-lg font-bold text-slate-900">{editorialSpotlight.title}</p>
-                <p className="text-sm leading-relaxed text-slate-600">{editorialSpotlight.caption}</p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs font-black text-[#3054b0]">{editorialSpotlight.monthLabel}</p>
+                <p className="text-lg font-black text-slate-900">{editorialSpotlight.title}</p>
+                <p className="text-sm leading-relaxed text-slate-600 font-medium">{editorialSpotlight.caption}</p>
+                <p className="text-xs text-slate-500 font-medium">
                   촬영 거점 · {editorialSpotlight.facilityName}
                   {editorialSpotlight.photographerCredit
                     ? ` · ${editorialSpotlight.photographerCredit}`
@@ -326,22 +326,31 @@ export function WaterStoriesClient({
               </>
             ) : pomStory ? (
               <>
-                <p className="text-xs font-bold text-amber-800">이달의 사진</p>
-                <p className="text-lg font-bold text-slate-900">{pomStory.centerName}</p>
-                <p className="text-sm leading-relaxed text-slate-600">{pomStory.caption}</p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs font-black text-[#3054b0]">이달의 대표 사진</p>
+                <p className="text-lg font-black text-slate-900">{pomStory.centerName}</p>
+                <p className="text-sm leading-relaxed text-slate-600 font-medium">{pomStory.caption}</p>
+                <p className="text-xs text-slate-500 font-medium">
                   {pomStory.nickname} · {formatDateKo(pomStory.createdAt)}
                 </p>
               </>
             ) : (
-              <ul className="list-inside list-disc space-y-2 text-sm text-slate-600">
-                <li>문화관 주변 산책로, 전망, 계절 풍경 등 방문의 기록을 남겨 주세요.</li>
-                <li>타인의 초상·차량 번호판 등 식별 정보가 보이지 않게 올려 주세요.</li>
-                <li>운영진이 선정한 이달의 사진은 상단에 소개될 수 있습니다.</li>
+              <ul className="space-y-2.5 text-sm text-slate-600 font-medium">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#3054b0] font-black">✓</span>
+                  <span>문화관 주변 산책로, 전망, 계절 풍경 등 방문의 기록을 남겨 주세요.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#3054b0] font-black">✓</span>
+                  <span>타인의 초상·차량 번호판 등 식별 정보가 보이지 않게 올려 주세요.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#3054b0] font-black">✓</span>
+                  <span>운영진이 선정한 이달의 사진은 상단에 명예롭게 소개됩니다.</span>
+                </li>
               </ul>
             )}
-            <p className="mt-2 text-xs text-slate-500">
-              이달의 사진은 운영 정책에 따라 선정·교체됩니다.
+            <p className="mt-2 text-xs text-slate-400 font-medium">
+              ※ 이달의 사진은 운영 정책에 따라 공정하게 선정·교체됩니다.
             </p>
           </div>
         </div>
@@ -351,12 +360,12 @@ export function WaterStoriesClient({
       <section aria-labelledby="upload-heading">
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-sky-600">Community</p>
-            <h2 id="upload-heading" className="mt-1 text-2xl font-black text-slate-900 sm:text-3xl">
+            <p className="text-xs font-black uppercase tracking-widest text-[#3054b0]">Community</p>
+            <h2 id="upload-heading" className="mt-1 text-2xl font-black text-slate-900 sm:text-3xl tracking-tight">
               나의 한 컷 올리기
             </h2>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-slate-500">{uploadHint}</p>
+          <p className="max-w-md text-xs sm:text-sm leading-relaxed text-slate-500 font-medium">{uploadHint}</p>
         </div>
 
         {uploadBlocked && (
@@ -375,7 +384,7 @@ export function WaterStoriesClient({
         <form
           onSubmit={handleSubmit}
           className={[
-            "rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8",
+            "rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-8",
             uploadBlocked ? "pointer-events-none opacity-60" : "",
           ].join(" ")}
         >
@@ -385,7 +394,7 @@ export function WaterStoriesClient({
               <select
                 value={centerId}
                 onChange={(e) => setCenterId(e.target.value)}
-                className="mt-1.5 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none ring-sky-400/40 focus:border-sky-400 focus:ring-2"
+                className="mt-1.5 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm font-medium text-slate-900 outline-none ring-[#3054b0]/20 focus:border-[#3054b0] focus:ring-2"
               >
                 <option value="">선택…</option>
                 {waterCenters.map((c) => (
@@ -403,7 +412,7 @@ export function WaterStoriesClient({
                 maxLength={NICK_MAX}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="예: 호수산책러"
-                className="mt-1.5 w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none ring-sky-400/40 focus:border-sky-400 focus:ring-2"
+                className="mt-1.5 w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm font-medium outline-none ring-[#3054b0]/20 focus:border-[#3054b0] focus:ring-2"
               />
             </label>
             <label className="block min-w-0">
@@ -412,7 +421,7 @@ export function WaterStoriesClient({
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/gif"
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                className="mt-1.5 w-full min-w-0 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-sky-50 file:px-3 file:py-2 file:text-xs file:font-bold file:text-sky-800"
+                className="mt-1.5 w-full min-w-0 text-sm file:mr-3 file:rounded-xl file:border-0 file:bg-sky-50 file:px-3.5 file:py-2.5 file:text-xs file:font-black file:text-[#3054b0]"
               />
             </label>
             <label className="block min-w-0 sm:col-span-2">
@@ -423,21 +432,21 @@ export function WaterStoriesClient({
                 onChange={(e) => setCaption(e.target.value)}
                 rows={4}
                 placeholder="예: 둘레길 벚꽃이 막 피기 시작했고, 저수지 쪽 바람이 시원했어요."
-                className="mt-1.5 w-full min-w-0 resize-y rounded-xl border border-slate-200 px-4 py-3 text-sm leading-relaxed outline-none ring-sky-400/40 focus:border-sky-400 focus:ring-2"
+                className="mt-1.5 w-full min-w-0 resize-y rounded-xl border border-slate-200 px-4 py-3 text-sm leading-relaxed outline-none ring-[#3054b0]/20 focus:border-[#3054b0] focus:ring-2"
               />
-              <span className="mt-1 block text-right text-[11px] text-slate-400">
+              <span className="mt-1 block text-right text-[11px] text-slate-400 font-medium">
                 {caption.length} / {CAPTION_MAX}
               </span>
             </label>
           </div>
 
           {formError && (
-            <p className="mt-4 rounded-xl bg-rose-50 px-4 py-3 text-sm text-rose-800" role="alert">
+            <p className="mt-4 rounded-xl bg-rose-50 px-4 py-3 text-sm text-rose-800 font-medium" role="alert">
               {formError}
             </p>
           )}
           {formOk && (
-            <p className="mt-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800" role="status">
+            <p className="mt-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800 font-medium" role="status">
               {formOk}
             </p>
           )}
@@ -446,9 +455,9 @@ export function WaterStoriesClient({
             <button
               type="submit"
               disabled={uploading || uploadBlocked}
-              className="min-h-11 min-w-[44px] rounded-full bg-sky-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-sky-500/25 transition hover:bg-sky-400 disabled:opacity-60"
+              className="min-h-11 rounded-xl bg-[#3054b0] px-8 py-3 text-sm font-black text-white shadow-md shadow-[#3054b0]/20 transition hover:bg-[#244290] disabled:opacity-60"
             >
-              {uploadBlocked ? "등록 비활성" : uploading ? "올리는 중…" : "갤러리에 등록"}
+              {uploadBlocked ? "등록 비활성" : uploading ? "올리는 중…" : "📷 갤러리에 등록"}
             </button>
           </div>
         </form>
@@ -457,7 +466,7 @@ export function WaterStoriesClient({
       {/* 갤러리 */}
       <section aria-labelledby="gallery-heading">
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <h2 id="gallery-heading" className="text-2xl font-black text-slate-900 sm:text-3xl">
+          <h2 id="gallery-heading" className="text-2xl font-black text-slate-900 sm:text-3xl tracking-tight">
             모두의 물 이야기
           </h2>
           <label className="flex min-w-0 flex-col gap-1 text-xs font-bold text-slate-600 sm:min-w-[200px]">
@@ -465,9 +474,9 @@ export function WaterStoriesClient({
             <select
               value={filterCenter}
               onChange={(e) => setFilterCenter(e.target.value)}
-              className="min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium outline-none ring-sky-400/40 focus:border-sky-400 focus:ring-2"
+              className="min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-bold text-slate-800 outline-none ring-[#3054b0]/20 focus:border-[#3054b0] focus:ring-2 shadow-2xs"
             >
-              <option value="전체">전체</option>
+              <option value="전체">전체 보기</option>
               {waterCenters.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}
@@ -478,7 +487,7 @@ export function WaterStoriesClient({
         </div>
 
         {filtered.length === 0 ? (
-          <p className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-6 py-16 text-center text-sm text-slate-500">
+          <p className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-16 text-center text-sm font-medium text-slate-500">
             아직 등록된 사진이 없습니다. 첫 주인공이 되어 보세요!
           </p>
         ) : (
@@ -486,7 +495,7 @@ export function WaterStoriesClient({
             {filtered.map((s) => (
               <li
                 key={s.id}
-                className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-sky-200 hover:shadow-md"
+                className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xs transition duration-200 hover:border-[#3054b0]/40 hover:shadow-md"
               >
                 <div className="relative aspect-[4/3] w-full max-w-full bg-slate-100">
                   {/* eslint-disable-next-line @next/next/no-img-element -- 업로드 이미지 동적 URL */}
@@ -502,15 +511,15 @@ export function WaterStoriesClient({
                     </span>
                   )}
                 </div>
-                <div className="flex min-w-0 flex-1 flex-col gap-2 p-4">
-                  <p className="truncate text-xs font-bold text-sky-700">{s.centerName}</p>
+                <div className="flex min-w-0 flex-1 flex-col gap-2 p-5">
+                  <p className="truncate text-xs font-black text-[#3054b0]">{s.centerName}</p>
                   <p className="text-sm font-bold text-slate-900">{s.nickname}</p>
-                  <p className="line-clamp-3 text-sm leading-relaxed text-slate-600">{s.caption}</p>
-                  <p className="mt-auto text-[11px] text-slate-400">{formatDateKo(s.createdAt)}</p>
-                  <div className="flex flex-wrap gap-2 pt-1">
+                  <p className="line-clamp-3 text-sm leading-relaxed text-slate-600 font-medium">{s.caption}</p>
+                  <p className="mt-auto text-[11px] text-slate-400 font-medium pt-2">{formatDateKo(s.createdAt)}</p>
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100 mt-2">
                     <Link
                       href={`/centers/${s.centerId}`}
-                      className="text-xs font-bold text-sky-600 hover:underline"
+                      className="text-xs font-black text-[#3054b0] hover:underline"
                     >
                       시설 안내 →
                     </Link>

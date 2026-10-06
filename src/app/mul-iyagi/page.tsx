@@ -65,18 +65,35 @@ export default async function MulIyagiPage({ searchParams }: Props) {
       : null;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <WaterHubHeader activeNav="stories" />
+    <div className="min-h-screen bg-slate-50/50 text-slate-900">
+      <WaterHubHeader activeNav="news" />
 
-      <div className="border-b border-slate-200 bg-slate-50/80">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-6 py-3 text-sm text-slate-600 sm:px-10">
-          <Link href="/main" className="font-medium text-sky-700 transition hover:text-sky-900">
-            ← 홈으로
-          </Link>
-          <span className="text-slate-300" aria-hidden>
-            /
-          </span>
-          <span className="text-slate-500">물 이야기</span>
+      {/* 서브페이지 대표 헤더 배너 (라이트 모드 톤 앤 매너 통일) */}
+      <div className="bg-gradient-to-r from-sky-50/90 via-white to-blue-50/50 border-b border-sky-100/90 py-10 sm:py-14 px-6 sm:px-10 shadow-2xs">
+        <div className="mx-auto max-w-7xl">
+          {/* 브레드크럼 */}
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-500 mb-4">
+            <Link href="/main" className="text-[#3054b0] hover:text-sky-900 transition">
+              ← 홈으로
+            </Link>
+            <span>/</span>
+            <span className="text-slate-500">새소식</span>
+            <span>/</span>
+            <span className="text-slate-900 font-bold">물 이야기 갤러리</span>
+          </div>
+
+          <div className="max-w-3xl">
+            <span className="inline-block rounded-full bg-sky-100/90 px-3 py-1 text-xs font-black text-[#3054b0] mb-3 border border-sky-200/80">
+              COMMUNITY & GALLERY
+            </span>
+            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              물 이야기 갤러리
+            </h1>
+            <p className="mt-3.5 text-base sm:text-lg leading-relaxed text-slate-600 font-medium">
+              둘레길·전망대·호반 산책로에서 마주친 풍경을 사진과 짧은 글로 남겨 주세요.
+              방문객들의 진솔한 추억과 생생한 후기가 모이는 수변 문화 소통 공간입니다.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -91,21 +108,6 @@ export default async function MulIyagiPage({ searchParams }: Props) {
             dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
           />
         )}
-
-        <header className="mb-10 max-w-3xl sm:mb-12">
-          <p className="text-xs font-bold uppercase tracking-widest text-sky-600">User stories</p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-            물 이야기 갤러리
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
-            둘레길·전망대·호반 산책로에서 마주친 풍경을 사진과 짧은 글로 남겨 주세요. 다른 방문객의 동선과
-            계절감을 참고할 수 있고, 진솔한 후기는 어떤 홍보보다 설득력 있습니다.
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-slate-500">
-            방문객이 남긴 사진과 짧은 이야기가 이곳에 모입니다. 타인을 식별할 수 있는 정보가 담기지 않게 올려 주시고,
-            저작권·초상권을 존중해 주세요. 운영 정책에 맞지 않는 게시물은 안내 없이 삭제될 수 있습니다.
-          </p>
-        </header>
 
         <WaterStoriesClient
           editorialSpotlight={editorialPhotoOfMonth}
