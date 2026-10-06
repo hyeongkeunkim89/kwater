@@ -175,16 +175,16 @@ export function WaterHubHeader({
                 <>
                   <Link
                     href="/mypage"
-                    className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3.5 py-2 text-xs sm:text-sm font-black text-amber-900 border border-amber-300 transition hover:bg-amber-100"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs sm:text-sm font-black text-amber-900 border border-amber-300/80 transition hover:bg-amber-100 whitespace-nowrap"
                   >
                     <span>🏛️</span>
-                    <span>{user.name}</span>
+                    <span>K-water 관리자</span>
                   </Link>
                   <Link
                     href="/mypage"
-                    className="rounded-full bg-amber-600 px-4 py-2 text-xs sm:text-sm font-black text-white hover:bg-amber-500 transition shadow-sm shadow-amber-600/20"
+                    className="rounded-full bg-amber-600 px-3.5 py-1.5 text-xs sm:text-sm font-black text-white hover:bg-amber-500 transition shadow-xs whitespace-nowrap"
                   >
-                    관리자
+                    관리자 콘솔
                   </Link>
                 </>
               ) : (
