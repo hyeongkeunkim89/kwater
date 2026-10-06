@@ -128,9 +128,6 @@ export default function IntroPage() {
           <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 lg:p-12 shadow-sm space-y-8">
             {/* 인사말 상단 헤더 */}
             <div className="border-b border-slate-100 pb-6">
-              <span className="text-xs font-bold uppercase tracking-wider text-sky-700 block mb-1">
-                GREETINGS &amp; PURPOSE
-              </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 인사말
               </h2>
