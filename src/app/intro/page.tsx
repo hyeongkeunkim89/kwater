@@ -81,43 +81,44 @@ export default function IntroPage() {
       <WaterHubHeader activeNav="intro" />
 
       {/* 1. 상단 히어로 영역 */}
-      <section className="relative overflow-hidden bg-slate-900 text-white">
+      <section className="relative overflow-hidden bg-slate-950 text-white py-16 sm:py-24 lg:py-28">
         {/* 배경 대표 사진 이미지 */}
         <Image
           src="/images/intro-bg.jpg"
           alt="K-water 물문화관 대표 전경"
           fill
           priority
-          className="object-cover object-center opacity-40 brightness-95"
+          className="object-cover object-center opacity-35 brightness-95"
         />
 
-        {/* 은은한 그라데이션 오버레이 */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-950/40" />
+        {/* 수직 및 수평 상하 은은한 그라데이션 오버레이 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/50 to-slate-950/90" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-transparent to-slate-950/60" />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8 lg:py-24">
-          <div className="max-w-2xl space-y-4">
-            {/* 공식 슬로건 로고 */}
-            <div>
-              <Image
-                src="/images/slogan.png"
-                alt="세상에 행복을 水 놓다"
-                width={360}
-                height={90}
-                priority
-                className="h-auto w-auto max-w-[240px] sm:max-w-[300px] object-contain filter drop-shadow-md mb-2 brightness-110"
-              />
-            </div>
-
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white drop-shadow-md">
-              물(水)과 사람이 함께하는<br />
-              따뜻한 수변 문화 공간
-            </h1>
-
-            <p className="text-xs sm:text-sm md:text-base font-medium text-slate-200 leading-relaxed drop-shadow-sm">
-              전국 15개 댐 유역에 위치한 K-water 물문화관은 물의 가치를 기록하고,<br className="hidden sm:inline" />
-              지역 주민과 방문객이 소중한 추억을 나누는 복합 문화 쉼터입니다.
-            </p>
+        <div className="relative mx-auto max-w-4xl px-6 text-center">
+          {/* 공식 슬로건 로고 */}
+          <div className="mb-6 sm:mb-8 flex justify-center">
+            <Image
+              src="/images/slogan.png"
+              alt="세상에 행복을 水 놓다"
+              width={380}
+              height={95}
+              priority
+              className="h-auto w-auto max-w-[240px] sm:max-w-[320px] md:max-w-[360px] object-contain filter drop-shadow-md brightness-110"
+            />
           </div>
+
+          {/* 타이틀 */}
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug text-white drop-shadow-lg mb-6 break-keep">
+            물(水)과 사람이 함께하는<br className="hidden sm:inline" />
+            따뜻한 수변 문화 공간
+          </h1>
+
+          {/* 서브 타이틀 카피 */}
+          <p className="text-sm sm:text-base md:text-lg font-medium text-slate-200 leading-relaxed sm:leading-loose max-w-2xl mx-auto break-keep opacity-95 drop-shadow-sm">
+            전국 15개 댐 유역에 위치한 K-water 물문화관은 물의 가치를 기록하고,<br className="hidden sm:inline" />
+            지역 주민과 방문객이 소중한 추억을 나누는 복합 문화 쉼터입니다.
+          </p>
         </div>
       </section>
 
@@ -271,34 +272,7 @@ export default function IntroPage() {
           </div>
         </section>
 
-        {/* 5. 하단 둘러보기 CTA 섹션 */}
-        <section aria-label="방문 안내 하단 혜택" className="rounded-3xl bg-gradient-to-r from-sky-50 via-indigo-50/60 to-sky-50 border border-sky-200/80 p-8 sm:p-12 text-center space-y-6">
-          <div className="max-w-xl mx-auto space-y-2">
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-              가까운 K-water 물문화관을 탐방해 보세요
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
-              전국 15개 물문화관에서 물의 가치와 수변 풍경이 주는 평온함을 느껴보실 수 있습니다.
-            </p>
-          </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-            <Link
-              href="/status"
-              className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl bg-[#004D95] hover:bg-[#003870] text-white font-bold text-xs sm:text-sm px-7 transition shadow-sm gap-1.5"
-            >
-              <span>전국 거점 현황지도</span>
-              <span>→</span>
-            </Link>
-            <Link
-              href="/reserve"
-              className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs sm:text-sm px-7 transition shadow-xs gap-1.5"
-            >
-              <span>가이드 해설 투어 예약</span>
-              <span>📅</span>
-            </Link>
-          </div>
-        </section>
       </main>
 
       <WaterHubFooter />
