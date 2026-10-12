@@ -107,12 +107,12 @@ export function WaterHubHeader({
     >
       <div
         className={[
-          "mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-8 h-[84px] sm:h-[92px] md:h-[98px]",
+          "w-full max-w-[1920px] mx-auto flex items-center justify-between px-4 sm:px-8 lg:px-10 xl:px-14 h-[84px] sm:h-[92px] md:h-[98px]",
           dense ? "py-1.5" : "py-2",
         ].join(" ")}
       >
-        {/* 로고 영역 (원래 큰 로고 사이즈 복원) */}
-        <div className="w-[240px] shrink-0 flex items-center pr-2">
+        {/* 로고 영역 (화면 좌측 끝으로 시원하게 배치) */}
+        <div className="flex items-center shrink-0 w-[220px] lg:w-[260px] xl:w-[280px]">
           <Link
             href="/main"
             className="flex items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
@@ -122,15 +122,15 @@ export function WaterHubHeader({
               alt="K-water 한국수자원공사 물문화관"
               width={1024}
               height={341}
-              className="h-[60px] sm:h-[72px] md:h-[80px] w-auto max-w-[250px] shrink-0 object-contain"
+              className="h-[56px] sm:h-[68px] md:h-[76px] w-auto max-w-[240px] shrink-0 object-contain"
               priority
             />
           </Link>
         </div>
 
-        {/* 데스크톱 메인 내비게이션 GNB (중앙 정렬 5열 그리드, 탭 제목 완벽 중앙 배치) */}
+        {/* 데스크톱 메인 내비게이션 GNB (탭 구간별 정확히 1/5 균등 분할 및 동일한 간격 유지) */}
         <nav
-          className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-auto h-full px-2"
+          className="hidden lg:flex items-center justify-center flex-1 max-w-3xl xl:max-w-4xl 2xl:max-w-5xl mx-auto h-full px-2"
           onMouseEnter={() => setIsMegaMenuOpen(true)}
         >
           <div className="grid grid-cols-5 w-full h-full">
@@ -166,14 +166,14 @@ export function WaterHubHeader({
           </div>
         </nav>
 
-        {/* 우측 회원/로그인 영역 (우측 240px 고정 슬롯으로 좌우 대칭 유지) */}
-        <div className="hidden lg:flex items-center justify-end w-[240px] shrink-0 pl-2 gap-x-2.5">
+        {/* 우측 회원/로그인 영역 (화면 우측 끝으로 정렬 및 대칭 너비 슬롯) */}
+        <div className="hidden lg:flex items-center justify-end shrink-0 w-[220px] lg:w-[260px] xl:w-[280px]">
           {user ? (
-            <div className="flex items-center gap-x-2.5">
+            <div className="flex items-center gap-x-2">
               {user.role === "admin" ? (
                 <Link
                   href="/mypage"
-                  className="inline-flex items-center gap-1.5 rounded-full bg-amber-600 px-4 py-2 text-xs sm:text-sm font-black text-white hover:bg-amber-500 transition shadow-sm shadow-amber-600/20 whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-amber-600 px-3.5 py-1.5 text-xs sm:text-sm font-black text-white hover:bg-amber-500 transition shadow-sm shadow-amber-600/20 whitespace-nowrap"
                 >
                   <span>🏛️</span>
                   <span>관리자 콘솔</span>
@@ -182,14 +182,14 @@ export function WaterHubHeader({
                 <>
                   <Link
                     href="/mypage"
-                    className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3.5 py-2 text-xs sm:text-sm font-black text-sky-800 border border-sky-200 transition hover:bg-sky-100"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1.5 text-xs sm:text-sm font-black text-sky-800 border border-sky-200 transition hover:bg-sky-100 whitespace-nowrap"
                   >
                     <span>👤</span>
                     <span>{user.name} 님</span>
                   </Link>
                   <Link
                     href="/mypage"
-                    className="rounded-full bg-slate-900 px-4 py-2 text-xs sm:text-sm font-black text-white hover:bg-slate-800 transition"
+                    className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs sm:text-sm font-black text-white hover:bg-slate-800 transition whitespace-nowrap"
                   >
                     마이페이지
                   </Link>
@@ -197,7 +197,7 @@ export function WaterHubHeader({
               )}
               <button
                 onClick={logout}
-                className="text-xs sm:text-sm font-extrabold text-slate-500 hover:text-slate-900 transition px-1.5"
+                className="text-xs sm:text-sm font-extrabold text-slate-500 hover:text-slate-900 transition px-1.5 whitespace-nowrap"
               >
                 로그아웃
               </button>
@@ -206,13 +206,13 @@ export function WaterHubHeader({
             <div className="flex items-center gap-x-2">
               <button
                 onClick={() => openAuthModal("login")}
-                className="text-sm font-extrabold text-slate-700 transition hover:text-sky-600 px-2.5 py-2"
+                className="text-sm font-extrabold text-slate-700 transition hover:text-sky-600 px-2.5 py-2 whitespace-nowrap"
               >
                 로그인
               </button>
               <button
                 onClick={() => openAuthModal("signup")}
-                className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-4 py-2 text-sm font-black text-sky-700 border border-sky-200/80 transition hover:bg-sky-100 hover:border-sky-300 shadow-2xs"
+                className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-4 py-2 text-sm font-black text-sky-700 border border-sky-200/80 transition hover:bg-sky-100 hover:border-sky-300 shadow-2xs whitespace-nowrap"
               >
                 <span>회원가입</span>
               </button>
@@ -259,12 +259,12 @@ export function WaterHubHeader({
           setActiveHoverKey(null);
         }}
       >
-        <div className="mx-auto flex max-w-7xl items-stretch justify-between px-4 sm:px-8">
-          {/* 좌측 로고 영역 대응 투명 가이드 앵커 (240px 고정) */}
-          <div className="w-[240px] shrink-0 invisible pointer-events-none" />
+        <div className="w-full max-w-[1920px] mx-auto flex items-stretch justify-between px-4 sm:px-8 lg:px-10 xl:px-14">
+          {/* 좌측 로고 영역 대응 투명 가이드 앵커 (너비 완벽 일치) */}
+          <div className="w-[220px] lg:w-[260px] xl:w-[280px] shrink-0 invisible pointer-events-none" />
 
           {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
-          <div className="grid grid-cols-5 w-full flex-1 max-w-4xl mx-auto divide-x divide-slate-100/90 px-2">
+          <div className="grid grid-cols-5 w-full flex-1 max-w-3xl xl:max-w-4xl 2xl:max-w-5xl mx-auto divide-x divide-slate-100/90 px-2">
             {menuItems.map((item) => {
               const isHovered = activeHoverKey === item.key;
               const isCurrentActive = isTabActive(item.key);
@@ -303,8 +303,8 @@ export function WaterHubHeader({
             })}
           </div>
 
-          {/* 우측 로그인 영역 대응 투명 가이드 앵커 (240px 고정) */}
-          <div className="w-[240px] shrink-0 invisible pointer-events-none" />
+          {/* 우측 로그인 영역 대응 투명 가이드 앵커 (너비 완벽 일치) */}
+          <div className="w-[220px] lg:w-[260px] xl:w-[280px] shrink-0 invisible pointer-events-none" />
         </div>
       </div>
 
