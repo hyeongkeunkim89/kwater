@@ -98,23 +98,25 @@ export default async function CenterDetailPage({ params }: Props) {
 
   try {
     const supabase = await createClient();
-    const [floorsRes, facilitiesRes] = await Promise.all([
-      supabase
-        .from("center_floors")
-        .select("*")
-        .eq("center_id", id)
-        .order("sort_order", { ascending: true }),
-      supabase
-        .from("center_facilities")
-        .select("*")
-        .eq("center_id", id)
-        .order("sort_order", { ascending: true }),
-    ]);
+    if (supabase) {
+      const [floorsRes, facilitiesRes] = await Promise.all([
+        supabase
+          .from("center_floors")
+          .select("*")
+          .eq("center_id", id)
+          .order("sort_order", { ascending: true }),
+        supabase
+          .from("center_facilities")
+          .select("*")
+          .eq("center_id", id)
+          .order("sort_order", { ascending: true }),
+      ]);
 
-    if (floorsRes.data) dbFloors = floorsRes.data;
-    if (facilitiesRes.data) dbFacilities = facilitiesRes.data;
+      if (floorsRes?.data) dbFloors = floorsRes.data;
+      if (facilitiesRes?.data) dbFacilities = facilitiesRes.data;
+    }
   } catch (err) {
-    console.error("Supabase fetch error for center details:", err);
+    console.warn("Supabase fetch notice for center details (using local fallback):", err);
   }
 
   // 데이터가 없을 경우 정적 데이터를 기반으로 폴백

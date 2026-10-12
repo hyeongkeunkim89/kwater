@@ -281,30 +281,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 2. 일반 회원 로그인 검증 (Supabase Auth 연동 및 등록된 회원 DB 확인)
     try {
       const supabase = createSupabaseBrowserClient();
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: lowerId,
-        password: lowerPass,
-      });
+      if (supabase) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: lowerId,
+          password: lowerPass,
+        });
 
-      if (!error && data?.user) {
-        const memberUser: UserProfile = {
-          id: data.user.id,
-          name: data.user.user_metadata?.name || lowerId.split("@")[0],
-          email: data.user.email || lowerId,
-          phone: data.user.user_metadata?.phone || "",
-          provider: "email",
-          role: "user",
-        };
+        if (!error && data?.user) {
+          const memberUser: UserProfile = {
+            id: data.user.id,
+            name: data.user.user_metadata?.name || lowerId.split("@")[0],
+            email: data.user.email || lowerId,
+            phone: data.user.user_metadata?.phone || "",
+            provider: "email",
+            role: "user",
+          };
 
-        saveUserSession(memberUser);
-        closeAuthModal();
+          saveUserSession(memberUser);
+          closeAuthModal();
 
-        alert(`👋 ${memberUser.name} 님, 환영합니다.`);
-        window.location.href = "/mypage";
-        return true;
+          alert(`👋 ${memberUser.name} 님, 환영합니다.`);
+          window.location.href = "/mypage";
+          return true;
+        }
       }
     } catch (e) {
-      console.error("Supabase signInWithPassword error", e);
+      console.warn("Supabase signInWithPassword notice (falling back to local accounts):", e);
     }
 
     const users = getRegisteredUsers();
@@ -362,55 +364,57 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 1. Supabase Auth 실연동가입
     try {
       const supabase = createSupabaseBrowserClient();
-      const { data, error } = await supabase.auth.signUp({
-        email: lowerEmail,
-        password: trimmedPass,
-        options: {
-          data: {
-            name: trimmedName,
-            ...(trimmedPhone ? { phone: trimmedPhone } : {}),
+      if (supabase) {
+        const { data, error } = await supabase.auth.signUp({
+          email: lowerEmail,
+          password: trimmedPass,
+          options: {
+            data: {
+              name: trimmedName,
+              ...(trimmedPhone ? { phone: trimmedPhone } : {}),
+            },
           },
-        },
-      });
+        });
 
-      if (error) {
-        alert(`❌ Supabase 회원가입 실패: ${error.message}`);
-        return false;
-      }
+        if (error) {
+          alert(`❌ Supabase 회원가입 실패: ${error.message}`);
+          return false;
+        }
 
-      if (data?.user) {
-        const userProfile: UserProfile = {
-          id: data.user.id,
-          name: data.user.user_metadata?.name || trimmedName,
-          email: data.user.email || lowerEmail,
-          phone: trimmedPhone || "",
-          provider: "email",
-          role: "user",
-        };
+        if (data?.user) {
+          const userProfile: UserProfile = {
+            id: data.user.id,
+            name: data.user.user_metadata?.name || trimmedName,
+            email: data.user.email || lowerEmail,
+            phone: trimmedPhone || "",
+            provider: "email",
+            role: "user",
+          };
 
-        saveUserSession(userProfile);
+          saveUserSession(userProfile);
 
-        // 로컬 사용자 DB 백업 저장
-        const users = getRegisteredUsers();
-        const newUser: RegisteredAccount = {
-          id: data.user.id,
-          name: userProfile.name,
-          email: userProfile.email,
-          pass: trimmedPass,
-          phone: userProfile.phone,
-          provider: "email",
-          role: "user",
-        };
-        saveRegisteredUsers([...users.filter((u) => u.email !== lowerEmail), newUser]);
+          // 로컬 사용자 DB 백업 저장
+          const users = getRegisteredUsers();
+          const newUser: RegisteredAccount = {
+            id: data.user.id,
+            name: userProfile.name,
+            email: userProfile.email,
+            pass: trimmedPass,
+            phone: userProfile.phone,
+            provider: "email",
+            role: "user",
+          };
+          saveRegisteredUsers([...users.filter((u) => u.email !== lowerEmail), newUser]);
 
-        closeAuthModal();
+          closeAuthModal();
 
-        alert(`🎉 ${userProfile.name} 님의 회원가입이 완료되었습니다!\n마이페이지로 이동합니다.`);
-        window.location.href = "/mypage";
-        return true;
+          alert(`🎉 ${userProfile.name} 님의 회원가입이 완료되었습니다!\n마이페이지로 이동합니다.`);
+          window.location.href = "/mypage";
+          return true;
+        }
       }
     } catch (e) {
-      console.error("Supabase auth signUp error", e);
+      console.warn("Supabase auth signUp notice (falling back to local accounts):", e);
     }
 
     // 2. Supabase SDK/환경 미설정 시 로컬 회원가입 폴백
@@ -473,7 +477,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       document.cookie = "naver_user_session=; path=/; max-age=0; SameSite=Lax";
       document.cookie = "kwm_staff_console_gate=; path=/; max-age=0; SameSite=Lax";
       const supabase = createSupabaseBrowserClient();
-      void supabase.auth.signOut();
+      if (supabase) {
+        void supabase.auth.signOut();
+      }
     } catch (e) {
       console.error("Logout cleanup error", e);
     }
