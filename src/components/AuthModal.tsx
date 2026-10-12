@@ -244,7 +244,7 @@ export function AuthModal() {
       return;
     }
     closeAuthModal();
-    router.push(`/reserve/guest-check?phone=${encodeURIComponent(guestPhone)}&pin=${encodeURIComponent(guestPin)}`);
+    router.push(`/reserve?tab=lookup&phone=${encodeURIComponent(guestPhone)}&pin=${encodeURIComponent(guestPin)}`);
   };
 
   return (

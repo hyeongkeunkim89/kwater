@@ -63,7 +63,7 @@ export const menuItems: MenuItem[] = [
     href: "/reserve",
     subItems: [
       { label: "가이드 투어 예약", href: "/reserve", desc: "전문 도슨트 해설 신청" },
-      { label: "예약 조회 & 취소", href: "/reserve/guest-check", desc: "신청 내역 확인 및 관리" },
+      { label: "예약 조회 & 취소", href: "/reserve?tab=lookup", desc: "신청 내역 확인 및 관리" },
     ],
   },
   {

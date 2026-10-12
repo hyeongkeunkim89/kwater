@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { getAllReservations, updateStatus } from "@/lib/reservations";
 
@@ -59,21 +60,34 @@ function formatCreatedAtKst(isoStr?: string) {
 
 export function ReservationLookupCard() {
   const { user, openAuthModal } = useAuth();
-  const [phone, setPhone] = useState("");
-  const [pin, setPin] = useState("");
+  const searchParams = useSearchParams();
+  const queryPhone = searchParams.get("phone") || "";
+  const queryPin = searchParams.get("pin") || "";
+
+  const [phone, setPhone] = useState(() => (queryPhone ? formatPhone(queryPhone) : ""));
+  const [pin, setPin] = useState(queryPin);
   const [showPin, setShowPin] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [results, setResults] = useState<ReservationItem[]>([]);
 
+  useEffect(() => {
+    if (queryPhone && queryPin) {
+      const formatted = formatPhone(queryPhone);
+      setPhone(formatted);
+      setPin(queryPin);
+      void handleSearch(formatted, queryPin);
+    }
+  }, [queryPhone, queryPin]);
+
   // 회원 로그인 상태인 경우 유저 전화번호 자동 세팅 및 회원 예약 자동 조회
   useEffect(() => {
-    if (user?.phone && user.phone !== "010-0000-0000" && user.phone !== "010-1234-5678" && user.phone !== "010-9876-5432") {
+    if (!queryPhone && user?.phone && user.phone !== "010-0000-0000" && user.phone !== "010-1234-5678" && user.phone !== "010-9876-5432") {
       const formatted = formatPhone(user.phone);
       setPhone(formatted);
       void handleSearch(formatted, "");
     }
-  }, [user]);
+  }, [user, queryPhone]);
 
   const handleSearch = async (targetPhone: string, targetPin: string) => {
     const digits = targetPhone.replace(/\D/g, "");
