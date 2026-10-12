@@ -18,6 +18,8 @@ import { createClient } from "@/utils/supabase/server";
 import { FloorGuideAccordion } from "@/components/FloorGuideAccordion";
 import { FacilityTabs } from "@/components/FacilityTabs";
 import type { CenterFloor, CenterFacility, FloorAmenity } from "@/types/database";
+import { WaterHubHeader } from "@/components/WaterHubHeader";
+import { WaterHubFooter } from "@/components/WaterHubFooter";
 import {
   LOCAL_FLOOR_MAPS,
   LOCAL_FLOOR_PHOTOS_MANIFEST,
@@ -212,68 +214,50 @@ export default async function CenterDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between">
+      <WaterHubHeader activeNav="status" />
 
-      {/* ── 헤더 (다크) ── */}
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0b111e]/98">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-4 sm:px-10">
+      {/* ── 라이트 타이틀 히어로 ── */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-sky-50 via-indigo-50/50 to-blue-50/70 border-b border-slate-200/80 shrink-0">
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="absolute right-1/4 top-0 h-56 w-56 rounded-full bg-sky-500/5 blur-[80px]" />
+          <div className="absolute left-10 bottom-0 h-40 w-40 rounded-full bg-indigo-500/5 blur-[60px]" />
+        </div>
+        <div className="relative mx-auto max-w-5xl px-6 py-10 sm:px-10 sm:py-14">
           <Link
             href="/status"
-            className="flex items-center gap-2 text-sm font-medium text-white/60 transition hover:text-white"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-700 hover:text-sky-900 transition mb-4 group"
           >
-            <span aria-hidden>←</span> 문화관 목록
+            <span className="group-hover:-translate-x-0.5 transition-transform" aria-hidden>←</span>
+            <span>문화관 목록으로 돌아가기</span>
           </Link>
-          <div className="flex items-center gap-3">
-            <Link
-              href={`/reserve?center=${center.id}`}
-              className="rounded-full bg-sky-500 px-5 py-1.5 text-sm font-bold text-white shadow shadow-sky-500/30 transition hover:bg-sky-400"
-            >
-              투어 예약
-            </Link>
-            <a
-              href="https://www.kwater.or.kr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-white/20 px-4 py-1.5 text-sm text-white/60 transition hover:border-white/50 hover:text-white"
-            >
-              K-water
-            </a>
-          </div>
-        </div>
-      </header>
 
-      {/* ── 다크 타이틀 히어로 ── */}
-      <div className="relative overflow-hidden bg-[#0b111e]">
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute left-0 top-0 h-64 w-64 rounded-full bg-sky-600/15 blur-[80px]" />
-          <div className="absolute right-0 bottom-0 h-48 w-48 rounded-full bg-blue-700/10 blur-[60px]" />
-        </div>
-        <div className="relative mx-auto max-w-5xl px-6 py-14 sm:px-10 sm:py-20">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-sm font-bold uppercase tracking-widest text-sky-400">
-                {center.kind}
-              </p>
-              <div className="mt-2 flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-extrabold text-sky-800 border border-sky-200/80">
+                  {center.kind}
+                </span>
                 {center.themes.slice(0, 1).map((t) => (
                   <span
                     key={t}
-                    className={`inline-flex rounded-full px-3 py-1 text-sm font-bold ring-1 ring-inset ring-white/25 ${centerThemeBadgeClass[t]}`}
+                    className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ring-1 ring-inset ${centerThemeBadgeClass[t]}`}
                   >
                     {t}
                   </span>
                 ))}
               </div>
-              <h1 className="mt-3 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+              <h1 className="mt-3 text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
                 {center.name}
               </h1>
-              <p className="mt-3 text-sm font-medium text-white/70">
-                {formatCenterRegionLine(center)}
+              <p className="mt-2.5 text-sm font-semibold text-slate-500 flex items-center gap-1.5">
+                <span>📍</span>
+                <span>{formatCenterRegionLine(center)}</span>
               </p>
             </div>
             <Link
               href={`/reserve?center=${center.id}`}
-              className="shrink-0 inline-flex items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-sky-500/30 transition hover:bg-sky-400"
+              className="shrink-0 inline-flex items-center gap-2 rounded-2xl bg-sky-600 px-6 py-3.5 text-sm font-black text-white shadow-md shadow-sky-600/20 transition hover:bg-sky-500 active:scale-95"
             >
               <span>🗓</span> 가이드 투어 예약
             </Link>
@@ -281,7 +265,7 @@ export default async function CenterDetailPage({ params }: Props) {
         </div>
       </div>
 
-      <main className="mx-auto max-w-5xl px-6 py-12 sm:px-10">
+      <main className="mx-auto max-w-5xl w-full px-6 py-12 sm:px-10 flex-1">
 
         {center.visitorNotice && (
           <div
@@ -424,19 +408,20 @@ export default async function CenterDetailPage({ params }: Props) {
               href={naverMapSearchHref(center)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 shadow-xs"
             >
-              지도에서 위치 열기
+              지도에서 위치 열기 ↗
             </a>
             <Link
               href={`/reserve?center=${center.id}`}
-              className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white transition hover:bg-slate-700"
+              className="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-sm font-black text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20 active:scale-95"
             >
               <span>🗓</span> 가이드 투어 예약하기
             </Link>
           </div>
         </section>
       </main>
+      <WaterHubFooter />
     </div>
   );
 }

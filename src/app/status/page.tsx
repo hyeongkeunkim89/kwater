@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { CenterExplorer } from "@/components/CenterExplorer";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
+import { WaterHubFooter } from "@/components/WaterHubFooter";
 
 export const metadata = {
   title: "문화관 현황 | 물문화관 홍보 허브",
@@ -40,6 +41,7 @@ export default function StatusPage() {
           <CenterExplorer />
         </Suspense>
       </main>
+      <WaterHubFooter />
     </div>
   );
 }
