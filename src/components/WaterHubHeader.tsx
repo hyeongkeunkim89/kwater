@@ -361,7 +361,7 @@ export function WaterHubHeader({
                   <Link
                     href="/mypage"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex w-full items-center justify-center rounded-xl bg-slate-900 py-2.5 text-xs font-black text-white hover:bg-slate-800 transition"
+                    className="flex w-full items-center justify-center rounded-xl border border-slate-300 bg-white py-2.5 text-xs font-black text-slate-700 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 transition shadow-2xs"
                   >
                     {user.role === "admin" ? "🏛️ 통합 관리자 콘솔 바로가기" : "👤 마이페이지 바로가기"}
                   </Link>
