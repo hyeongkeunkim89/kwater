@@ -225,54 +225,66 @@ function MyPageContent() {
               <p className="mt-1 text-xs text-slate-500 font-semibold">{user.email}</p>
             </div>
           </div>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/reserve"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#3054b0] px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-black text-white hover:bg-[#244290] transition shadow-md shadow-[#3054b0]/20"
-            >
-              <span>📅</span>
-              <span>새 투어 예약하기</span>
-            </Link>
-          </div>
         </div>
       </div>
 
       <main className="mx-auto max-w-7xl w-full px-6 py-10 flex-1">
         {/* 탭 헤더 */}
-        <div className="flex border-b border-slate-200 mb-8 overflow-x-auto">
-          {user.role === "admin" && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 mb-8 gap-4">
+          <div className="flex overflow-x-auto">
+            {user.role === "admin" && (
+              <button
+                onClick={() => setActiveTab("admin")}
+                className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
+                  activeTab === "admin"
+                    ? "border-sky-600 text-sky-600 font-black"
+                    : "border-transparent text-slate-400 hover:text-slate-700"
+                }`}
+              >
+                🏛️ 통합 관리자 콘솔
+              </button>
+            )}
             <button
-              onClick={() => setActiveTab("admin")}
+              onClick={() => setActiveTab("reservations")}
               className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
-                activeTab === "admin"
-                  ? "border-sky-600 text-sky-600 font-black"
+                activeTab === "reservations"
+                  ? "border-sky-600 text-sky-600"
                   : "border-transparent text-slate-400 hover:text-slate-700"
               }`}
             >
-              🏛️ 통합 관리자 콘솔
+              내 가이드 투어 예약 ({reservations.length})
             </button>
+            <button
+              onClick={() => setActiveTab("qna")}
+              className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
+                activeTab === "qna"
+                  ? "border-sky-600 text-sky-600 font-bold"
+                  : "border-transparent text-slate-400 hover:text-slate-700"
+              }`}
+            >
+              내 문의 및 Q&A ({myFeedbacks.length})
+            </button>
+          </div>
+
+          {/* 예약 내역이 1건 이상 있을 때만 우측에 노출되는 새 투어 예약 추가 버튼 */}
+          {activeTab === "reservations" && reservations.length > 0 && (
+            <Link
+              href="/reserve"
+              className="inline-flex items-center gap-1.5 self-end sm:self-auto mb-2 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 border border-sky-200/80 px-3.5 py-1.5 rounded-xl transition shadow-2xs whitespace-nowrap"
+            >
+              <span>+ 새 투어 예약</span>
+            </Link>
           )}
-          <button
-            onClick={() => setActiveTab("reservations")}
-            className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
-              activeTab === "reservations"
-                ? "border-sky-600 text-sky-600"
-                : "border-transparent text-slate-400 hover:text-slate-700"
-            }`}
-          >
-            내 가이드 투어 예약 ({reservations.length})
-          </button>
-          <button
-            onClick={() => setActiveTab("qna")}
-            className={`pb-3 px-6 text-sm font-black transition border-b-2 whitespace-nowrap ${
-              activeTab === "qna"
-                ? "border-sky-600 text-sky-600 font-bold"
-                : "border-transparent text-slate-400 hover:text-slate-700"
-            }`}
-          >
-            내 문의 및 Q&A ({myFeedbacks.length})
-          </button>
+
+          {/* Q&A 탭이고 문의 내역이 1건 이상 있을 때 우측에 노출되는 새 문의 작성 버튼 */}
+          {activeTab === "qna" && myFeedbacks.length > 0 && (
+            <Link
+              href="/feedback"
+              className="inline-flex items-center gap-1.5 self-end sm:self-auto mb-2 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 border border-sky-200/80 px-3.5 py-1.5 rounded-xl transition shadow-2xs whitespace-nowrap"
+            >
+              <span>+ 새 문의 작성</span>
+            </Link>
+          )}
         </div>
 
         {/* 0. 통합 관리자 콘솔 탭 (관리자 전용) */}
@@ -378,14 +390,18 @@ function MyPageContent() {
             })}
 
             {reservations.length === 0 && (
-              <div className="rounded-2xl border border-dashed border-slate-300 py-16 text-center space-y-3">
-                <p className="text-3xl">📅</p>
-                <p className="text-sm font-semibold text-slate-500">예약된 가이드 투어가 없습니다.</p>
+              <div className="rounded-2xl border border-dashed border-slate-300 py-16 text-center space-y-4 bg-white/70">
+                <p className="text-4xl">📅</p>
+                <div>
+                  <p className="text-base font-bold text-slate-800">예약된 가이드 투어가 없습니다.</p>
+                  <p className="mt-1 text-xs text-slate-500 font-medium">전국 15대 물문화관에서 제공하는 다채로운 도슨트 투어를 지금 경험해 보세요.</p>
+                </div>
                 <Link
                   href="/reserve"
-                  className="inline-block rounded-xl bg-sky-600 px-4 py-2 text-xs font-bold text-white hover:bg-sky-500 transition"
+                  className="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-5 py-2.5 text-xs sm:text-sm font-black text-white hover:bg-sky-500 transition shadow-md shadow-sky-600/20 active:scale-95"
                 >
-                  가이드 투어 신청하기
+                  <span>🗓</span>
+                  <span>가이드 투어 신청하기</span>
                 </Link>
               </div>
             )}
