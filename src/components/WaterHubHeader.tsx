@@ -45,7 +45,6 @@ export const menuItems: MenuItem[] = [
     href: "/status",
     subItems: [
       { label: "전국 거점 현황", href: "/status", desc: "전국 15개관 실시간 관람 상태" },
-      { label: "층별 시설 & 전시 안내", href: "/centers", desc: "실내 공간 및 쉼터 시설 안내" },
     ],
   },
   {
