@@ -44,7 +44,7 @@ export function FourCoreSections() {
             {
               title: "시설 및 층별 전시 안내",
               desc: "기술 전시관 실내 도면, 층별 시설 안내 및 대표 전경 확인",
-              path: "/status",
+              path: "/centers",
               tag: "시설 안내 메인",
             },
           ].map((item) => (
