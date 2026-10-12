@@ -189,7 +189,7 @@ export function WaterHubHeader({
                   </Link>
                   <Link
                     href="/mypage"
-                    className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs sm:text-sm font-black text-white hover:bg-slate-800 transition whitespace-nowrap"
+                    className="rounded-full border border-slate-300 bg-white px-3.5 py-1.5 text-xs sm:text-sm font-black text-slate-700 transition hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 shadow-2xs whitespace-nowrap"
                   >
                     마이페이지
                   </Link>
