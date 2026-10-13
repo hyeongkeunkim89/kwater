@@ -296,4 +296,10 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
     "/images/surroundings/gimcheon/매점.PNG",
     "/images/surroundings/gimcheon/주차장.PNG",
   ],
+  hapcheon: [
+    "/images/surroundings/hapcheon/공원.PNG",
+    "/images/surroundings/hapcheon/광장.PNG",
+    "/images/surroundings/hapcheon/야외데크.PNG",
+    "/images/surroundings/hapcheon/주차장.PNG",
+  ],
 };
