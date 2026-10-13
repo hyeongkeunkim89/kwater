@@ -124,8 +124,7 @@ export function WaterHubHeader({
             onClick={(e) => {
               if (window.location.pathname === "/main") {
                 e.preventDefault();
-                window.scrollTo(0, 0);
-                window.location.href = "/main";
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
             className="flex items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
