@@ -230,6 +230,7 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
     floors: [
       { floorLabel: "1층", highlights: ["다목적전시실"] },
       { floorLabel: "2층", highlights: ["부항 이야기"] },
+      { floorLabel: "3층", highlights: ["옥상"] },
       { floorLabel: "4층", highlights: ["전망대"] },
     ],
   },
