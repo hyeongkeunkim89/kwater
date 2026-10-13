@@ -413,46 +413,40 @@ export function WaterHubHeader({
                         : "border-slate-200/90 bg-white"
                     }`}
                   >
-                    {/* 대메뉴 헤더 (클릭 시 아코디언 토글) */}
-                    <div className="flex items-center justify-between">
-                      <Link
-                        href={item.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className={`flex-1 flex items-center gap-2.5 py-3.5 px-4 font-black text-base transition ${
-                          isCurrentActive ? "text-[#3054b0]" : "text-slate-900 hover:text-[#3054b0]"
-                        }`}
-                      >
+                    {/* 대메뉴 헤더 (탭 전체 클릭 시 아코디언 토글) */}
+                    <button
+                      type="button"
+                      onClick={() => toggleMenu(item.key)}
+                      className={`w-full flex items-center justify-between py-3.5 px-4 font-black text-base transition ${
+                        isCurrentActive ? "text-[#3054b0]" : "text-slate-900 hover:text-[#3054b0]"
+                      }`}
+                      aria-expanded={isExpanded}
+                      aria-label={`${item.label} 하위 메뉴 ${isExpanded ? "닫기" : "열기"}`}
+                    >
+                      <span className="flex items-center gap-2.5">
                         <span>{item.label}</span>
                         {isCurrentActive && (
                           <span className="rounded-full bg-[#3054b0] px-2 py-0.5 text-[10px] font-bold text-white">
                             현재위치
                           </span>
                         )}
-                      </Link>
-
-                      <button
-                        type="button"
-                        onClick={() => toggleMenu(item.key)}
-                        className="p-3.5 text-slate-400 hover:text-[#3054b0] transition flex items-center justify-center"
-                        aria-label={`${item.label} 하위 메뉴 토글`}
+                      </span>
+                      <svg
+                        className={`h-5 w-5 shrink-0 transform transition-transform duration-200 ${
+                          isExpanded ? "rotate-180 text-[#3054b0]" : "text-slate-400"
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <svg
-                          className={`h-5 w-5 transform transition-transform duration-200 ${
-                            isExpanded ? "rotate-180 text-[#3054b0] font-bold" : "text-slate-400"
-                          }`}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2.5}
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2.5}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
 
                     {/* 아코디언 하위 메뉴 리스트 (최대한 축약된 간결한 명칭) */}
                     {isExpanded && (
