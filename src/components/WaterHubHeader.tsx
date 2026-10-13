@@ -121,6 +121,13 @@ export function WaterHubHeader({
         <div className="flex items-center shrink-0 w-[220px] lg:w-[260px] xl:w-[280px]">
           <Link
             href="/main"
+            onClick={(e) => {
+              if (window.location.pathname === "/main") {
+                e.preventDefault();
+                window.scrollTo(0, 0);
+                window.location.href = "/main";
+              }
+            }}
             className="flex items-center transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[0.98]"
           >
             <Image
