@@ -56,6 +56,7 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
   },
   gimcheon: {
     "1층": "/gimcheon-1f.PNG",
+    "2층": "/gimcheon-2f.PNG",
     "3층": "/gimcheon-3f.PNG",
     "4층": "/gimcheon-4f.PNG",
   },
