@@ -50,6 +50,9 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "2층": "/soyang-2f.PNG",
     "3층": "/soyang-3f.PNG",
   },
+  andong: {
+    "1층": "/andong-1f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
