@@ -73,7 +73,7 @@ export const menuItems: MenuItem[] = [
     href: "/feedback",
     subItems: [
       { label: "문의·건의", href: "/feedback" },
-      { label: "FAQ", href: "/main#faq" },
+      { label: "FAQ", href: "/feedback#faq" },
     ],
   },
 ];

@@ -225,7 +225,7 @@ export default function FeedbackPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* 1. 좌측: 자주 묻는 질문 FAQ (QuickFAQAccordion) */}
-          <section aria-label="자주 묻는 질문 FAQ" className="lg:col-span-5">
+          <section id="faq" aria-label="자주 묻는 질문 FAQ" className="lg:col-span-5 scroll-mt-24">
             <QuickFAQAccordion />
           </section>
 
