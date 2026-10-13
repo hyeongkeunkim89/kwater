@@ -225,10 +225,8 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
     ],
   },
   gimcheon: {
-    "1층": [
-      "/images/floors/gimcheon/1층/다목적전시실.PNG",
-    ],
     "2층": [
+      "/images/floors/gimcheon/2층/다목적전시실.PNG",
       "/images/floors/gimcheon/2층/부항 이야기.PNG",
     ],
     "4층": [

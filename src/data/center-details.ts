@@ -228,8 +228,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "익스트림 수변 레저 및 동적인 관광 문화를 즐기는 청년·가족" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["다목적전시실"] },
-      { floorLabel: "2층", highlights: ["부항 이야기"] },
+      { floorLabel: "1층", highlights: ["로비"] },
+      { floorLabel: "2층", highlights: ["다목적전시실", "부항 이야기"] },
       { floorLabel: "3층", highlights: ["옥상"] },
       { floorLabel: "4층", highlights: ["전망대"] },
     ],
