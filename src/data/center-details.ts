@@ -228,9 +228,9 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "익스트림 수변 레저 및 동적인 관광 문화를 즐기는 청년·가족" },
     ],
     floors: [
-      { floorLabel: "지하 1층", highlights: ["부대 공간(시설별)"] },
-      { floorLabel: "1~3층", highlights: ["상설전시", "항·댐 운영 해설"] },
-      { floorLabel: "4층·전망", highlights: ["전망대", "낙동강·부항 조망"] },
+      { floorLabel: "1층", highlights: ["다목적전시실"] },
+      { floorLabel: "2층", highlights: ["부항 이야기"] },
+      { floorLabel: "4층", highlights: ["전망대"] },
     ],
   },
   yongdam: {

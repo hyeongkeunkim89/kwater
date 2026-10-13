@@ -219,6 +219,17 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/andong/2층/카페.PNG",
     ],
   },
+  gimcheon: {
+    "1층": [
+      "/images/floors/gimcheon/1층/다목적전시실.PNG",
+    ],
+    "2층": [
+      "/images/floors/gimcheon/2층/부항 이야기.PNG",
+    ],
+    "4층": [
+      "/images/floors/gimcheon/4층/전망대.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -276,5 +287,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
   andong: [
     "/images/surroundings/andong/공원.PNG",
     "/images/surroundings/andong/주차장.PNG",
+  ],
+  gimcheon: [
+    "/images/surroundings/gimcheon/매점.PNG",
+    "/images/surroundings/gimcheon/주차장.PNG",
   ],
 };
