@@ -52,6 +52,7 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
   },
   andong: {
     "1층": "/andong-1f.PNG",
+    "2층": "/andong-2f.PNG",
   },
 };
 
