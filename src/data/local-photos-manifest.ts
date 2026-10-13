@@ -206,6 +206,15 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/soyang/3층/워터클래스.PNG",
     ],
   },
+  andong: {
+    "1층": [
+      "/images/floors/andong/1층/대강당.PNG",
+      "/images/floors/andong/1층/자료실.PNG",
+    ],
+    "2층": [
+      "/images/floors/andong/2층/카페.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
@@ -259,5 +268,9 @@ export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {
   soyang: [
     "/images/surroundings/soyang/다목적카페.PNG",
     "/images/surroundings/soyang/야외데크.PNG",
+  ],
+  andong: [
+    "/images/surroundings/andong/공원.PNG",
+    "/images/surroundings/andong/주차장.PNG",
   ],
 };

@@ -355,8 +355,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "전통 역사·문화재 보존 및 안동의 역사적 가치를 탐방하는 방문객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비", "안동 수몰 문화재 보존관", "유교 역사 사료실"] },
-      { floorLabel: "2층", highlights: ["안동호 수계 전시관", "영상 상영실", "전망대"] },
+      { floorLabel: "1층", highlights: ["대강당", "자료실"] },
+      { floorLabel: "2층", highlights: ["카페"] },
     ],
   },
   geumgang: {
