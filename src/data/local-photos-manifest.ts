@@ -234,6 +234,16 @@ export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]
       "/images/floors/gimcheon/4층/전망대.PNG",
     ],
   },
+  hapcheon: {
+    "1층": [
+      "/images/floors/hapcheon/1층/다목적전시실.PNG",
+    ],
+    "2층": [
+      "/images/floors/hapcheon/2층/로비.PNG",
+      "/images/floors/hapcheon/2층/복합문화공간.PNG",
+      "/images/floors/hapcheon/2층/옥외전망대.PNG",
+    ],
+  },
 };
 
 export const LOCAL_SURROUNDINGS_MANIFEST: Record<string, string[]> = {

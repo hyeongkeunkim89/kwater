@@ -140,9 +140,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "친환경 에너지·탄소중립 기술에 관심 있는 학생·전문가·가족" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["안내", "호수 형성·역할 소개"] },
-      { floorLabel: "2층", highlights: ["전시·영상", "지역 상생 스토리"] },
-      { floorLabel: "전망·옥외", highlights: ["전망 공간(시설별)"] },
+      { floorLabel: "1층", highlights: ["다목적전시실"] },
+      { floorLabel: "2층", highlights: ["로비", "복합문화공간", "옥외전망대"] },
     ],
   },
   juam: {
