@@ -35,8 +35,8 @@ export const menuItems: MenuItem[] = [
     label: "문화관 소개",
     href: "/intro",
     subItems: [
-      { label: "인사말 & 목적", href: "/intro", desc: "한국수자원공사 물문화관 소개" },
-      { label: "물문화관 3대 가치", href: "/intro#values", desc: "역사, 휴식, 생태 체험 가치" },
+      { label: "개요·목적", href: "/intro" },
+      { label: "3대 가치", href: "/intro#values" },
     ],
   },
   {
@@ -44,7 +44,8 @@ export const menuItems: MenuItem[] = [
     label: "문화관 현황",
     href: "/status",
     subItems: [
-      { label: "전국 거점 현황", href: "/status", desc: "전국 15개관 실시간 관람 상태" },
+      { label: "전국 지도", href: "/status" },
+      { label: "15개 문화관", href: "/status?view=list" },
     ],
   },
   {
@@ -52,9 +53,9 @@ export const menuItems: MenuItem[] = [
     label: "새소식",
     href: "/news",
     subItems: [
-      { label: "공지·소식", href: "/news", desc: "최신 공지 및 물문화관 이슈" },
-      { label: "행사·이벤트", href: "/events", desc: "수변 문화 축제 및 대시민 행사" },
-      { label: "물문화 이야기", href: "/mul-iyagi", desc: "카드뉴스 및 탐방 스토리" },
+      { label: "공지사항", href: "/news" },
+      { label: "행사·이벤트", href: "/events" },
+      { label: "물이야기", href: "/mul-iyagi" },
     ],
   },
   {
@@ -62,8 +63,8 @@ export const menuItems: MenuItem[] = [
     label: "예약",
     href: "/reserve",
     subItems: [
-      { label: "가이드 투어 예약", href: "/reserve", desc: "전문 도슨트 해설 신청" },
-      { label: "예약 조회 & 취소", href: "/reserve?tab=lookup", desc: "신청 내역 확인 및 관리" },
+      { label: "투어 예약", href: "/reserve" },
+      { label: "조회·취소", href: "/reserve/guest-check" },
     ],
   },
   {
@@ -71,8 +72,8 @@ export const menuItems: MenuItem[] = [
     label: "소통창구",
     href: "/feedback",
     subItems: [
-      { label: "대시민 소통 게시판", href: "/feedback", desc: "의견 제안 및 칭찬하기" },
-      { label: "자주 묻는 질문 (FAQ)", href: "/feedback#faq", desc: "방문/주차/예약 문의" },
+      { label: "문의·건의", href: "/feedback" },
+      { label: "FAQ", href: "/main#faq" },
     ],
   },
 ];
@@ -87,9 +88,14 @@ export function WaterHubHeader({
   showStaffConsoleLink?: boolean;
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [expandedMenu, setExpandedMenu] = useState<ActiveNav | null>(null);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [activeHoverKey, setActiveHoverKey] = useState<ActiveNav | null>(null);
   const { user, openAuthModal, logout } = useAuth();
+
+  const toggleMenu = (key: ActiveNav) => {
+    setExpandedMenu((prev) => (prev === key ? null : key));
+  };
 
   const isTabActive = (itemKey: ActiveNav) => {
     if (activeNav === itemKey) return true;
@@ -393,38 +399,80 @@ export function WaterHubHeader({
               )}
             </div>
 
-            <div className="flex flex-col gap-3">
-              {menuItems.map((item) => (
-                <div key={item.key} className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Link
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="font-black text-base text-slate-900 hover:text-sky-600 flex items-center gap-2"
-                    >
-                      <span>{item.label}</span>
-                      {isTabActive(item.key) && (
-                        <span className="rounded-full bg-[#004D95] px-2 py-0.5 text-[10px] font-bold text-white">
-                          현재위치
-                        </span>
-                      )}
-                    </Link>
-                  </div>
-                  <div className="grid grid-cols-1 gap-1 pt-2 border-t border-slate-200/80">
-                    {item.subItems.map((sub) => (
+            <div className="flex flex-col gap-2.5">
+              {menuItems.map((item) => {
+                const isExpanded = expandedMenu === item.key;
+                const isCurrentActive = isTabActive(item.key);
+
+                return (
+                  <div
+                    key={item.key}
+                    className={`rounded-2xl border transition duration-200 overflow-hidden ${
+                      isExpanded
+                        ? "border-[#3054b0]/40 bg-sky-50/30 shadow-xs"
+                        : "border-slate-200/90 bg-white"
+                    }`}
+                  >
+                    {/* 대메뉴 헤더 (클릭 시 아코디언 토글) */}
+                    <div className="flex items-center justify-between">
                       <Link
-                        key={sub.href + sub.label}
-                        href={sub.href}
+                        href={item.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-between text-xs font-bold text-slate-700 hover:text-sky-600 py-2 px-2.5 rounded-lg hover:bg-white transition"
+                        className={`flex-1 flex items-center gap-2.5 py-3.5 px-4 font-black text-base transition ${
+                          isCurrentActive ? "text-[#3054b0]" : "text-slate-900 hover:text-[#3054b0]"
+                        }`}
                       >
-                        <span>• {sub.label}</span>
-                        <span className="text-[10px] opacity-40">→</span>
+                        <span>{item.label}</span>
+                        {isCurrentActive && (
+                          <span className="rounded-full bg-[#3054b0] px-2 py-0.5 text-[10px] font-bold text-white">
+                            현재위치
+                          </span>
+                        )}
                       </Link>
-                    ))}
+
+                      <button
+                        type="button"
+                        onClick={() => toggleMenu(item.key)}
+                        className="p-3.5 text-slate-400 hover:text-[#3054b0] transition flex items-center justify-center"
+                        aria-label={`${item.label} 하위 메뉴 토글`}
+                      >
+                        <svg
+                          className={`h-5 w-5 transform transition-transform duration-200 ${
+                            isExpanded ? "rotate-180 text-[#3054b0] font-bold" : "text-slate-400"
+                          }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2.5}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* 아코디언 하위 메뉴 리스트 (최대한 축약된 간결한 명칭) */}
+                    {isExpanded && (
+                      <div className="border-t border-slate-100 bg-slate-50/80 p-3 grid grid-cols-2 gap-2 animate-in slide-in-from-top-1 duration-150">
+                        {item.subItems.map((sub) => (
+                          <Link
+                            key={sub.href + sub.label}
+                            href={sub.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center gap-2 rounded-xl bg-white px-3 py-2.5 text-xs font-bold text-slate-700 border border-slate-200/80 shadow-2xs hover:border-[#3054b0]/40 hover:bg-[#edf4fb] hover:text-[#3054b0] transition"
+                          >
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#3054b0] shrink-0" />
+                            <span className="truncate">{sub.label}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col gap-3 shrink-0">
