@@ -155,7 +155,7 @@ export default function IntroPage() {
         </section>
 
         {/* 3. 물문화관이 만들어가는 3가지 가치 */}
-        <section aria-label="물문화관 핵심 가치" className="space-y-6">
+        <section id="values" aria-label="물문화관 핵심 가치" className="space-y-6 scroll-mt-24">
           <div className="text-center max-w-xl mx-auto space-y-1.5">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               물문화관이 가꿔가는 세 가지 가치
