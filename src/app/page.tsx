@@ -39,7 +39,7 @@ export default function GatewayLandingPage() {
           </p>
         </div>
 
-        {/* 3. 하단: 전국 물문화관 둘러보기 버튼 */}
+        {/* 3. 하단: 전국 물문화관 둘러보기 버튼 및 개인정보처리방침 */}
         <div className="w-full pt-5 border-t border-white/10 px-1">
           <Link
             href="/main"
@@ -48,6 +48,23 @@ export default function GatewayLandingPage() {
             <span>전국 물문화관 둘러보기</span>
             <span className="ml-1.5 transform group-hover:translate-x-1 transition duration-200">→</span>
           </Link>
+          <div className="mt-3 flex items-center justify-center gap-2.5 text-[11px] text-white/50">
+            <Link
+              href="/privacy"
+              className="font-bold text-yellow-400 hover:text-yellow-300 underline underline-offset-2 transition"
+            >
+              개인정보처리방침
+            </Link>
+            <span className="text-white/20">|</span>
+            <a
+              href="https://www.riverguide.go.kr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition"
+            >
+              우리강이용도우미
+            </a>
+          </div>
         </div>
       </div>
 

@@ -30,6 +30,13 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-white/50">
+            <Link
+              href="/privacy"
+              className="font-bold text-yellow-400 hover:text-yellow-300 underline underline-offset-2 transition"
+            >
+              개인정보처리방침
+            </Link>
+            <span className="text-white/20">|</span>
             <a
               href="https://www.kwater.or.kr"
               target="_blank"
@@ -114,10 +121,49 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
           </div>
         </div>
 
-        {/* 저작권 표시 */}
-        <div className="mt-6 pt-5 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
-          <p>© {new Date().getFullYear()} K-water 한국수자원공사. All rights reserved.</p>
-          <div className="flex gap-x-4">
+        {/* 주요 정책 및 법적 고지 바 (riverguide 스타일 반영) */}
+        <div className="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+          <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+            <li>
+              <Link
+                href="/privacy"
+                className="font-black text-amber-300 sm:text-yellow-400 hover:text-yellow-300 underline underline-offset-4 tracking-tight"
+              >
+                개인정보처리방침
+              </Link>
+            </li>
+            <li className="text-white/20">|</li>
+            <li>
+              <Link
+                href="/privacy#step10"
+                className="text-white/70 hover:text-white transition"
+              >
+                이메일무단수집거부
+              </Link>
+            </li>
+            <li className="text-white/20">|</li>
+            <li>
+              <Link
+                href="/feedback"
+                className="text-white/70 hover:text-white transition"
+              >
+                제안ㆍ건의센터
+              </Link>
+            </li>
+            <li className="text-white/20">|</li>
+            <li>
+              <a
+                href="https://www.riverguide.go.kr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 hover:text-white transition"
+              >
+                우리강이용도우미
+              </a>
+            </li>
+          </ul>
+
+          <div className="flex items-center gap-3 text-xs">
             {user?.role === "admin" ? (
               <Link href="/mypage" className="hover:text-white transition font-bold text-amber-400">
                 🏛️ 통합 관리자 콘솔 바로가기
@@ -126,12 +172,20 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
               <button
                 type="button"
                 onClick={() => openAuthModal("admin")}
-                className="hover:text-white transition font-semibold"
+                className="text-white/50 hover:text-white transition font-semibold"
               >
                 🛡️ 관리자 로그인
               </button>
             )}
           </div>
+        </div>
+
+        {/* 주소 및 저작권 표시 */}
+        <div className="mt-4 pt-4 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs text-white/40">
+          <address className="not-italic leading-relaxed">
+            (우)34350 대전광역시 대덕구 신탄진로 200 · K-water 한국수자원공사 / 우리강이용도우미 콜센터 <strong>1577-4359</strong>
+          </address>
+          <p>© {new Date().getFullYear()} K-water 한국수자원공사. All rights reserved.</p>
         </div>
       </div>
     </footer>
