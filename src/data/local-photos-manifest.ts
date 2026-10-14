@@ -62,6 +62,7 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
   },
   hapcheon: {
     "1층": "/hapcheon-1f.PNG",
+    "2층": "/hapcheon-2f.PNG",
   },
 };
 
