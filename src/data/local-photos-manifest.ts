@@ -60,6 +60,9 @@ export const LOCAL_FLOOR_MAPS: Record<string, Record<string, string>> = {
     "3층": "/gimcheon-3f.PNG",
     "4층": "/gimcheon-4f.PNG",
   },
+  hapcheon: {
+    "1층": "/hapcheon-1f.PNG",
+  },
 };
 
 export const LOCAL_FLOOR_PHOTOS_MANIFEST: Record<string, Record<string, string[]>> = {
