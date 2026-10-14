@@ -6,7 +6,11 @@
 
 export type FacilityProfileItem = { label: string; value: string };
 
-export type FloorPlan = { floorLabel: string; highlights: string[] };
+export type FloorPlan = {
+  floorLabel: string;
+  highlights: string[];
+  description?: string;
+};
 
 export type CenterDetailFields = {
   imageSrc: string;
@@ -33,12 +37,21 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       {
         floorLabel: "1층",
         highlights: ["안내·로비", "조력 원리 입문 전시", "어린이 체험 코너"],
+        description:
+          "종합 안내 데스크와 함께 조력발전의 기초 원리를 배우는 입문 전시 및 어린이 체험 코너가 마련된 1층입니다.",
       },
       {
         floorLabel: "2층",
         highlights: ["심화 전시", "에너지·환경 스토리", "영상·디지털 해설"],
+        description:
+          "시화호의 역사와 청정에너지·환경 스토리를 심도 있게 탐구할 수 있는 심화 전시실과 디지털 영상 해설관이 위치한 2층 공간입니다.",
       },
-      { floorLabel: "옥외·연계", highlights: ["전망 동선 안내", "사진 존(시설별)"] },
+      {
+        floorLabel: "옥외·연계",
+        highlights: ["전망 동선 안내", "사진 존(시설별)"],
+        description:
+          "시화호와 서해의 수려한 경관을 한눈에 조망할 수 있는 전망 동선과 기념 사진 존으로 이어지는 옥외 연계 공간입니다.",
+      },
     ],
   },
   chungju: {
@@ -55,10 +68,14 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       {
         floorLabel: "1층",
         highlights: ["다목적전시실", "휴게공간"],
+        description:
+          "충주댐의 건설 역사와 수자원 관리 스토리를 만나는 다목적전시실과 편안한 휴게공간이 마련되어 있는 1층입니다.",
       },
       {
         floorLabel: "2층",
         highlights: ["물전시관", "로비 기획전시", "로비 동요동시 체험", "안내데스크", "매점"],
+        description:
+          "첨단 스마트 수자원 물전시관, 기획전시, 동요동시 체험공간 및 매점과 안내데스크가 조성된 2층 공간입니다.",
       },
     ],
   },
@@ -73,9 +90,24 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "자연 생태 체험 및 생물 다양성 학습을 희망하는 어린이·가족" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비", "제1전시(입문)", "안내 데스크"] },
-      { floorLabel: "2층", highlights: ["제2전시", "호수·수계 심화 콘텐츠"] },
-      { floorLabel: "3층", highlights: ["제3전시", "영상·요약 전시"] },
+      {
+        floorLabel: "1층",
+        highlights: ["로비", "제1전시(입문)", "안내 데스크"],
+        description:
+          "종합 안내데스크와 로비, 대청호의 수생태계와 금강의 물길을 소개하는 제1전시실이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["제2전시", "호수·수계 심화 콘텐츠"],
+        description:
+          "대청호 수중 생태계와 금강 민물고기 생태를 생생하게 관찰할 수 있는 제2전시실과 심화 콘텐츠 공간이 마련된 2층입니다.",
+      },
+      {
+        floorLabel: "3층",
+        highlights: ["제3전시", "영상·요약 전시"],
+        description:
+          "물과 인간의 공존을 다룬 제3전시실과 실감영상 및 대청호의 수려한 풍광을 조망할 수 있는 3층 공간입니다.",
+      },
     ],
   },
   buan: {
@@ -91,10 +123,14 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       {
         floorLabel: "1층",
         highlights: ["로비", "제1전시실(물과 생명)", "기획전시실"],
+        description:
+          "변산반도 국립공원의 생태와 물의 소중함을 다루는 제1전시실 및 다채로운 기획전시실이 위치한 1층입니다.",
       },
       {
         floorLabel: "2층",
         highlights: ["제2전시실(부안댐 스토리)", "전망대"],
+        description:
+          "부안댐의 역할과 수몰 역사, 생활 물 문화를 소개하는 제2전시실과 부안호를 조망하는 전망대가 마련된 2층 공간입니다.",
       },
     ],
   },
@@ -109,9 +145,24 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "근대사·치수 역사에 관심 있는 학생·성인 및 수몰민 가구" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비", "OT전시실", "수몰전시관"] },
-      { floorLabel: "2층", highlights: ["제1전시실", "제2전시실"] },
-      { floorLabel: "3층", highlights: ["워터갤러리", "워터클래스"] },
+      {
+        floorLabel: "1층",
+        highlights: ["로비", "OT전시실", "수몰전시관"],
+        description:
+          "소양강댐 오리엔테이션 전시실과 댐 축조로 수몰된 마을 주민들의 기억과 사료를 보존한 수몰전시관이 자리한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["제1전시실", "제2전시실"],
+        description:
+          "대한민국 근대 치수 역사와 동양 최대 사급댐의 축조 기술 및 생태 환경을 다루는 제1·제2전시실이 위치한 2층입니다.",
+      },
+      {
+        floorLabel: "3층",
+        highlights: ["워터갤러리", "워터클래스"],
+        description:
+          "소양호의 수려한 전경을 감상할 수 있는 워터갤러리와 다양한 물 문화 교육 및 체험 프로그램이 열리는 3층 공간입니다.",
+      },
     ],
   },
   hantan: {
@@ -125,8 +176,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "지질 생태 체험 및 화산암 협곡 지형을 학습하려는 탐방객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["연천군 홍보관", "큰여울 놀이터"] },
-      { floorLabel: "2층", highlights: ["기획전시실", "복합문화공간", "어린이놀이터"] },
+      {
+        floorLabel: "1층",
+        highlights: ["연천군 홍보관", "큰여울 놀이터"],
+        description:
+          "연천의 역사와 관광을 소개하는 연천군 홍보관과 어린이들이 안전하고 즐겁게 뛰어놀 수 있는 큰여울 놀이터가 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["기획전시실", "복합문화공간", "어린이놀이터"],
+        description:
+          "한탄강 UNESCO 세계지질공원의 주상절리 생태를 다루는 기획전시실, 복합문화공간 및 어린이 체험놀이터가 조성된 2층입니다.",
+      },
     ],
   },
   hapcheon: {
@@ -140,8 +201,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "친환경 에너지·탄소중립 기술에 관심 있는 학생·전문가·가족" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["다목적전시실"] },
-      { floorLabel: "2층", highlights: ["로비", "복합문화공간", "옥외전망대"] },
+      {
+        floorLabel: "1층",
+        highlights: ["다목적전시실"],
+        description:
+          "합천호의 자연과 세계 최대 수상태양광, 친환경 신재생 물 에너지 기술을 한눈에 살펴보는 다목적전시실이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["로비", "복합문화공간", "옥외전망대"],
+        description:
+          "방문객을 맞이하는 로비와 주민 참여형 복합문화공간, 합천호의 수려한 풍광을 조망할 수 있는 옥외전망대가 마련된 2층입니다.",
+      },
     ],
   },
   juam: {
@@ -154,8 +225,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "청정 물 환경 교육 및 호수 생태를 경험하고 싶은 학생·학부모" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["안내데스크", "물전시관1", "영상실"] },
-      { floorLabel: "2층", highlights: ["물전시관2", "기획전시실", "야외데크"] },
+      {
+        floorLabel: "1층",
+        highlights: ["안내데스크", "물전시관1", "영상실"],
+        description:
+          "종합 안내데스크와 주암호의 청정 수생태계를 입문하는 제1물전시관, 몰입형 시청각 영상실이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["물전시관2", "기획전시실", "야외데크"],
+        description:
+          "순천만과 연결되는 물길의 가치를 배우는 제2물전시관, 기획전시실 및 주암호 전망을 즐길 수 있는 야외 데크가 마련된 2층입니다.",
+      },
     ],
   },
   jangheung: {
@@ -168,8 +249,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "탐진강 생태 관찰 및 맑은 물 자연 교육을 희망하는 가족·유아" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["역사문화실", "영상실", "화장실"] },
-      { floorLabel: "2층", highlights: ["물전시실", "전망대", "화장실"] },
+      {
+        floorLabel: "1층",
+        highlights: ["역사문화실", "영상실", "화장실"],
+        description:
+          "탐진강 유역의 역사와 수몰지의 옛 삶을 담은 역사문화실과 생생한 시청각 영상실이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["물전시실", "전망대", "화장실"],
+        description:
+          "탐진강의 맑은 물과 수생태계를 관찰하는 물전시실 및 장흥호의 시원한 풍광을 조망하는 전망대가 위치한 2층 공간입니다.",
+      },
     ],
   },
   yeongju: {
@@ -183,8 +274,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "생태숲 산책 및 자연 탐방을 즐기는 탐방객·가족" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비", "영주댐·낙동강 상류 소개"] },
-      { floorLabel: "2층", highlights: ["전시·전망 연계 공간"] },
+      {
+        floorLabel: "1층",
+        highlights: ["로비", "영주댐·낙동강 상류 소개"],
+        description:
+          "영주댐의 건설 배경과 낙동강 상류 수생태계 및 청정 자연환경을 소개하는 로비와 입문 전시실이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["전시·전망 연계 공간"],
+        description:
+          "영주호 생태숲 및 출렁다리와 연계된 심화 전시와 수려한 호수 경관을 감상할 수 있는 전망 연계 공간이 마련된 2층입니다.",
+      },
     ],
   },
   seomjin: {
@@ -198,8 +299,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "섬진강 수생태 관찰 및 환경 습지 교육 방문객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["안내", "섬진강·댐 입문"] },
-      { floorLabel: "2층", highlights: ["전시·영상", "수계 보전 스토리"] },
+      {
+        floorLabel: "1층",
+        highlights: ["안내", "섬진강·댐 입문"],
+        description:
+          "종합 안내 데스크와 대한민국 최초의 다목적댐인 섬진강댐의 역사 및 강 유역을 소개하는 입문 전시가 마련된 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["전시·영상", "수계 보전 스토리"],
+        description:
+          "청정 섬진강의 수생태계 보전 스토리와 다양한 시청각 영상 콘텐츠를 만날 수 있는 2층 공간입니다.",
+      },
     ],
   },
   imha: {
@@ -213,8 +324,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "낙동강 수생태 보전 및 자연 환경 교육 관심층" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비", "임하호 개요"] },
-      { floorLabel: "2층", highlights: ["복합 기능 전시", "영상·사진 자료"] },
+      {
+        floorLabel: "1층",
+        highlights: ["로비", "임하호 개요"],
+        description:
+          "영남권 맑은 물 공급원인 임하댐의 개요와 낙동강 수계의 가치를 한눈에 조망할 수 있는 로비 및 안내 공간이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["복합 기능 전시", "영상·사진 자료"],
+        description:
+          "임하호 주변의 자연 생태와 댐 수몰 사료를 담은 복합 기능 전시실과 영상·사진 아카이브가 마련된 2층입니다.",
+      },
     ],
   },
   gimcheon: {
@@ -227,10 +348,30 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "익스트림 수변 레저 및 동적인 관광 문화를 즐기는 청년·가족" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비"] },
-      { floorLabel: "2층", highlights: ["다목적전시실", "부항 이야기"] },
-      { floorLabel: "3층", highlights: ["옥상"] },
-      { floorLabel: "4층", highlights: ["전망대"] },
+      {
+        floorLabel: "1층",
+        highlights: ["로비"],
+        description:
+          "방문객을 친절하게 맞이하는 안내 데스크와 쾌적한 쉼터가 마련되어 있는 1층 로비 공간입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["다목적전시실", "부항 이야기"],
+        description:
+          "부항댐의 건설 과정과 부항호의 역사·문화를 한눈에 살펴보는 다목적전시실과 부항 이야기 코너가 위치한 2층입니다.",
+      },
+      {
+        floorLabel: "3층",
+        highlights: ["옥상"],
+        description:
+          "부항호의 맑은 공기와 수려한 주변 산세를 감상하며 휴식을 취할 수 있는 옥상 쉼터 공간입니다.",
+      },
+      {
+        floorLabel: "4층",
+        highlights: ["전망대"],
+        description:
+          "부항호와 부항댐 출렁다리, 짚와이어의 역동적인 파노라마 전경을 360도로 조망할 수 있는 전망대입니다.",
+      },
     ],
   },
   yongdam: {
@@ -243,8 +384,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "자연 습지 관찰 및 생태 힐링 탐방을 즐기는 관람객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["다목적 전시실", "기획전시", "영상실", "화장실"] },
-      { floorLabel: "2층", highlights: ["북카페", "키즈존", "휴식공간"] },
+      {
+        floorLabel: "1층",
+        highlights: ["다목적 전시실", "기획전시", "영상실", "화장실"],
+        description:
+          "용담호의 사계와 수생태계를 담은 다목적전시실, 테마 기획전시 및 시청각 영상실이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["북카페", "키즈존", "휴식공간"],
+        description:
+          "용담호를 바라보며 독서와 여유를 즐길 수 있는 북카페, 어린이 키즈존 및 편안한 휴식공간이 조성된 2층입니다.",
+      },
     ],
   },
   "hangang-yeoju": {
@@ -258,10 +409,30 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "수변 예술 감상 및 기획 문화를 선호하는 주말 나들이객" },
     ],
     floors: [
-      { floorLabel: "지하 1층", highlights: ["다목적·교육 공간(시설별)"] },
-      { floorLabel: "1층", highlights: ["로비", "한강 역사·정책 입문 전시"] },
-      { floorLabel: "2~3층", highlights: ["갤러리", "기획전·문화 프로그램"] },
-      { floorLabel: "전망타워", highlights: ["강천보·한강 조망", "사진 포인트"] },
+      {
+        floorLabel: "지하 1층",
+        highlights: ["다목적·교육 공간(시설별)"],
+        description:
+          "지역 주민과 청소년을 위한 다양한 물 문화 교육 및 세미나, 체험 프로그램이 열리는 다목적 교육 공간입니다.",
+      },
+      {
+        floorLabel: "1층",
+        highlights: ["로비", "한강 역사·정책 입문 전시"],
+        description:
+          "남한강의 유구한 역사와 한강 물길의 가치를 배우는 종합 로비 및 입문 상설전시실이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2~3층",
+        highlights: ["갤러리", "기획전·문화 프로그램"],
+        description:
+          "남한강 수변 갤러리와 다채로운 현대미술 기획전, 시민 문화예술 프로그램이 펼쳐지는 문화 예술 공간입니다.",
+      },
+      {
+        floorLabel: "전망타워",
+        highlights: ["강천보·한강 조망", "사진 포인트"],
+        description:
+          "여주 강천보와 남한강의 웅장한 수변경관을 360도 파노라마로 감상할 수 있는 대표 전망타워입니다.",
+      },
     ],
   },
   namgang: {
@@ -274,8 +445,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "수변 문화예술 전시 및 여가를 즐기는 지역 주민·관광객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["다목적전시실"] },
-      { floorLabel: "2층", highlights: ["영상실", "남강정원"] },
+      {
+        floorLabel: "1층",
+        highlights: ["다목적전시실"],
+        description:
+          "진양호와 남강의 유역사, 맑은 물 공급 기술 및 남강 유등 축제의 문화를 함께 살펴보는 다목적전시실이 마련된 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["영상실", "남강정원"],
+        description:
+          "몰입감 넘치는 시청각 영상실과 진양호의 아름다운 호수 풍경 및 노을을 조망할 수 있는 남강정원이 위치한 2층 공간입니다.",
+      },
     ],
   },
   miryang: {
@@ -288,8 +469,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "수변 공원 피크닉 및 소소한 문화 행사를 즐기는 가족·연인" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["로비", "주제관", "체험관"] },
-      { floorLabel: "2층", highlights: ["영상실", "휴게실"] },
+      {
+        floorLabel: "1층",
+        highlights: ["로비", "주제관", "체험관"],
+        description:
+          "밀양댐의 역할과 물의 소중함을 체험하는 주제관 및 어린이 체험관, 로비가 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["영상실", "휴게실"],
+        description:
+          "밀양댐 주변 생태를 담은 홍보 영상실과 밀양호의 절경을 감상하며 쉴 수 있는 편안한 휴게실이 마련된 2층입니다.",
+      },
     ],
   },
   hoengseong: {
@@ -305,10 +496,14 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       {
         floorLabel: "1층",
         highlights: ["주제관", "물 순환 전시", "영상상영관"],
+        description:
+          "물의 소중함과 순환 과정을 다룬 주제관, 어린이 체험관, 안내데스크 및 휴게실이 위치한 1층입니다.",
       },
       {
         floorLabel: "2층",
         highlights: ["체험관", "어린이 참여형 코너", "화성의 옛터 전시관"],
+        description:
+          "홍보 영상물 상영이 이루어지는 영상실과 수몰지의 옛 삶을 기리는 기획전시가 펼쳐지는 2층 공간입니다.",
       },
       {
         floorLabel: "옥외·연계",
@@ -316,6 +511,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
           "화성의 옛터(수몰 지역 문화·역사 보존관)",
           "횡성호수길 연계",
         ],
+        description:
+          "수몰민의 망향의 한을 달래는 화성의 옛터와 아름다운 횡성호수길로 이어지는 옥외 연계 코스입니다.",
       },
     ],
   },
@@ -333,14 +530,20 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       {
         floorLabel: "1층",
         highlights: ["로비·안내", "평화의댐 역사 소개", "안보·통일 메시지"],
+        description:
+          "평화의댐의 건립 배경과 역사, 평화·안보의 소중함을 되새기는 로비 및 다목적 전시실이 위치한 1층입니다.",
       },
       {
         floorLabel: "2층",
         highlights: ["북한강 상류 수계 전시", "물 안보 스토리", "영상 상영"],
+        description:
+          "북한강 상류의 청정 수생태계와 물 안보 스토리를 담은 전시실 및 영상 상영관이 위치한 2층 공간입니다.",
       },
       {
         floorLabel: "옥외·연계",
         highlights: ["세계종공원", "비목공원 산책로", "댐 마루 전망 동선"],
+        description:
+          "세계평화의 종, 비목공원 및 댐 마루를 따라 평화의 염원을 느끼며 산책할 수 있는 옥외 연계 공간입니다.",
       },
     ],
   },
@@ -355,8 +558,18 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "전통 역사·문화재 보존 및 안동의 역사적 가치를 탐방하는 방문객" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["대강당", "자료실"] },
-      { floorLabel: "2층", highlights: ["카페"] },
+      {
+        floorLabel: "1층",
+        highlights: ["대강당", "자료실"],
+        description:
+          "안동댐의 역사와 수몰 문화재 보존 사료를 열람할 수 있는 자료실과 다양한 문화 행사가 열리는 대강당이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["카페"],
+        description:
+          "안동호의 시원한 수변 경관을 감상하며 여유로운 티타임과 휴식을 즐길 수 있는 카페 공간입니다.",
+      },
     ],
   },
   geumgang: {
@@ -370,9 +583,24 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "백제권 여행객·가족, 전망·예술(빛의 공간)을 즐기려는 성인" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["안내데스크", "기념품샵", "상설전시실(금강·4대강)"] },
-      { floorLabel: "2층", highlights: ["기획전시실", "북카페·체험실", "학예실"] },
-      { floorLabel: "3층·전망대", highlights: ["전망대(금강 파노라마)", "교육실·회의실"] },
+      {
+        floorLabel: "1층",
+        highlights: ["안내데스크", "기념품샵", "상설전시실(금강·4대강)"],
+        description:
+          "안내데스크와 함께 금강 물길의 역사와 생태, 백제 문화의 흐름을 조명하는 상설전시실이 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["기획전시실", "북카페·체험실", "학예실"],
+        description:
+          "다채로운 예술 기획전시와 어린이 교육 체험, 금강을 바라보며 쉴 수 있는 북카페가 마련된 2층 복합문화공간입니다.",
+      },
+      {
+        floorLabel: "3층·전망대",
+        highlights: ["전망대(금강 파노라마)", "교육실·회의실"],
+        description:
+          "백제보와 금강의 장엄한 물길을 360도 파노라마로 감상할 수 있는 전망대와 교육실이 마련된 3층 공간입니다.",
+      },
     ],
   },
   yeongsangang: {
@@ -386,9 +614,24 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "부모 동반 가족, 남도 생태·역사·산책을 함께 계획하는 층" },
     ],
     floors: [
-      { floorLabel: "1층", highlights: ["안내데스크", "기념품샵", "상설전시실(영산강·생태)"] },
-      { floorLabel: "2층", highlights: ["기획전시실", "북카페(체험실)", "학예실"] },
-      { floorLabel: "3층·옥상", highlights: ["전망대", "교육실·회의실", "옥상 경사 산책로"] },
+      {
+        floorLabel: "1층",
+        highlights: ["안내데스크", "기념품샵", "상설전시실(영산강·생태)"],
+        description:
+          "남도 젖줄 영산강의 역사와 수생태계를 체험하는 상설전시실 및 방문객 안내데스크가 위치한 1층입니다.",
+      },
+      {
+        floorLabel: "2층",
+        highlights: ["기획전시실", "북카페(체험실)", "학예실"],
+        description:
+          "지역 예술가들의 기획전시실과 독서·체험을 즐길 수 있는 북카페 쉼터가 자리한 2층 공간입니다.",
+      },
+      {
+        floorLabel: "3층·옥상",
+        highlights: ["전망대", "교육실·회의실", "옥상 경사 산책로"],
+        description:
+          "승촌보와 영산강 유역의 수려한 풍광을 조망할 수 있는 전망대와 옥상 경사 산책로가 이어지는 3층 공간입니다.",
+      },
     ],
   },
   diarc: {
@@ -405,14 +648,20 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       {
         floorLabel: "지하 1층",
         highlights: ["4대강 문화관", "강 문화 역사 전시"],
+        description:
+          "낙동강과 금호강이 만나는 합수지점의 역사와 4대강 수변 문화를 몰입형으로 탐구할 수 있는 지하 1층 강문화전시실입니다.",
       },
       {
         floorLabel: "1~2층",
         highlights: ["서클영상존(생명의 순환)", "The River 갤러리", "미디어월"],
+        description:
+          "생명의 순환을 담은 360도 서클영상존, The River 갤러리 및 첨단 미디어월 전시가 펼쳐지는 1~2층 복합 전시공간입니다.",
       },
       {
         floorLabel: "3층·전망대",
         highlights: ["낙동강·금호강 조망 전망대", "야경 감상 포인트"],
+        description:
+          "낙동강과 금호강이 빚어내는 절경과 화려한 야경을 파노라마로 감상할 수 있는 3층 전망대와 카페 테라스입니다.",
       },
     ],
   },
@@ -436,6 +685,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
           "배리어프리 체험 콘텐츠",
           "강당(250석)·강의실",
         ],
+        description:
+          "세계 3,400여 종의 생수를 만나는 워터바, 서클 파노라마 영상관(워터볼), 워터갤러리 및 대강당이 위치한 1층입니다.",
       },
       {
         floorLabel: "2층·전망대",
@@ -444,6 +695,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
           "안동호·안동댐 파노라마 전망",
           "기획전시실·상설전시실",
         ],
+        description:
+          "하늘을 비추는 야외 수공간 '수천지'와 안동호의 장엄한 비경을 파노라마로 감상하는 전망대 및 상설·기획전시실이 마련된 2층입니다.",
       },
       {
         floorLabel: "야외 시설",
@@ -453,6 +706,8 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
           "야외공연장·치유의 숲",
           "전망카페·산책로",
         ],
+        description:
+          "물의 정원, 생명의 못, 야외공연장 및 치유의 숲 산책로가 조성되어 자연 속 힐링을 선사하는 야외 테마 공간입니다.",
       },
     ],
   },
@@ -467,7 +722,12 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
       { label: "대상", value: "유아·가족 중심, 미디어·체험과 을숙도 생태 나들이 연계" },
     ],
     floors: [
-      { floorLabel: "지하1층", highlights: ["관리 시설"] },
+      {
+        floorLabel: "지하1층",
+        highlights: ["관리 시설"],
+        description:
+          "문화관의 안정적인 운영과 시설 관리를 지원하는 지하 1층 관리 시설 공간입니다.",
+      },
       {
         floorLabel: "지상1층",
         highlights: [
@@ -475,8 +735,15 @@ export const centerDetailsById: Record<string, CenterDetailFields> = {
           "새물결 꿈 전시실",
           "어린이 물길여행·감동소통 전시실",
         ],
+        description:
+          "안내데스크와 함께 낙동강 물길의 역사와 가치를 배우는 새물결꿈 전시실 및 어린이 물길여행 체험존이 위치한 지상 1층입니다.",
       },
-      { floorLabel: "옥상정원", highlights: ["낙동강·을숙도 조망 정원"] },
+      {
+        floorLabel: "옥상정원",
+        highlights: ["낙동강·을숙도 조망 정원"],
+        description:
+          "을숙도 철새 도래지와 낙동강 하구의 천혜 자연을 시원하게 조망할 수 있는 옥상 힐링 정원입니다.",
+      },
     ],
   },
 };

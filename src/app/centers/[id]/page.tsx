@@ -148,7 +148,7 @@ export default async function CenterDetailPage({ params }: Props) {
           floor_key: f.floorLabel,
           floor_name: f.floorLabel,
           floor_map_url: fallbackMapUrl,
-          description: null,
+          description: f.description || null,
           rooms,
           amenities: resolveFloorAmenities(f.floorLabel, rawRooms, undefined, id),
           sort_order: i,
@@ -156,7 +156,7 @@ export default async function CenterDetailPage({ params }: Props) {
         };
       });
 
-  // DB에 층 정보가 일부 있더라도 floor_map_url 또는 amenities 보완
+  // DB에 층 정보가 일부 있더라도 floor_map_url, description 또는 amenities 보완
   const floors: CenterFloor[] = rawFloors.map((f) => {
     const floor_map_url = !f.floor_map_url && LOCAL_FLOOR_MAPS[id]?.[f.floor_key]
       ? LOCAL_FLOOR_MAPS[id][f.floor_key]
@@ -167,9 +167,15 @@ export default async function CenterDetailPage({ params }: Props) {
     );
     const amenities = resolveFloorAmenities(f.floor_key, f.rooms, f.amenities, id);
 
+    const staticFloor = center.floors.find(
+      (sf) => sf.floorLabel === f.floor_key || sf.floorLabel === f.floor_name
+    );
+    const description = f.description || staticFloor?.description || null;
+
     return {
       ...f,
       floor_map_url,
+      description,
       rooms,
       amenities,
     };
