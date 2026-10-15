@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
             개인정보처리방침
           </h1>
-          <p className="mt-2.5 text-sm sm:text-base text-sky-100 max-w-2xl leading-relaxed">
+          <p className="mt-2.5 text-sm sm:text-base text-sky-100 max-w-none leading-relaxed break-keep">
             K-water 물문화관 통합 포털은 이용자의 소중한 개인정보를 안전하게 보호하며 관련 법령을 철저히 준수합니다.
           </p>
         </div>
