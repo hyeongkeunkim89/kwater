@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * K-water 공식 웹사이트 스타일 탑(TOP) 버튼
+ * K-water 물문화관 통합 포털 탑(TOP) 버튼
  * - 스크롤 300px 이상 시 플로팅 표출
  * - 클릭 시 맨 위로 부드러운 스크롤 (smooth scroll)
  */

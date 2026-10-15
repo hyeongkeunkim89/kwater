@@ -6,7 +6,7 @@ import { WaterHubFooter } from "@/components/WaterHubFooter";
 export const metadata = {
   title: "문화관 소개 & 인사말 | K-water 물문화관",
   description:
-    "사람과 물, 문화가 어우러지는 수변 공간. 한국수자원공사 물문화관 웹사이트를 찾아주신 모든 분께 전하는 인사말입니다.",
+    "사람과 물, 문화가 어우러지는 수변 공간. K-water 물문화관 통합 포털을 찾아주신 모든 분께 전하는 인사말입니다.",
 };
 
 export default function IntroPage() {
@@ -32,7 +32,7 @@ export default function IntroPage() {
     },
   ];
 
-  // 통합 웹사이트 주요 제공 서비스
+  // K-water 물문화관 통합 포털 주요 제공 서비스
   const hubServices = [
     {
       title: "전국 15개 거점 현황 지도",
@@ -106,7 +106,7 @@ export default function IntroPage() {
         </div>
       </section>
 
-      {/* 2. 인사말 및 웹사이트 안내 (공식 서한 스타일) */}
+      {/* 2. 인사말 및 포털 안내 (공식 서한 스타일) */}
       <main className="mx-auto max-w-7xl w-full px-6 py-12 sm:py-16 space-y-16 flex-1">
         <section aria-label="K-water 물문화관 인사말">
           <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 lg:p-12 shadow-sm space-y-8">
@@ -121,7 +121,7 @@ export default function IntroPage() {
             <div className="space-y-6 text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
               <p className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed">
                 안녕하세요, 물문화관을 찾아주신 여러분.<br />
-                K-water 물문화관 통합 웹사이트를 방문해 주셔서 진심으로 감사드립니다.
+                K-water 물문화관 통합 포털을 방문해 주셔서 진심으로 감사드립니다.
               </p>
 
               <p>
@@ -190,12 +190,12 @@ export default function IntroPage() {
           </div>
         </section>
 
-        {/* 4. 웹사이트 주요 이용 안내 */}
-        <section aria-label="웹사이트 서비스 안내" className="space-y-6">
+        {/* 4. 포털 주요 이용 안내 */}
+        <section aria-label="통합 포털 서비스 안내" className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200">
             <div>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                통합 웹사이트 이용 안내
+                통합 포털 이용 안내
               </h2>
               <p className="mt-1 text-xs sm:text-sm text-slate-500 font-medium">
                 방문하시는 모든 분의 편리한 이용을 위한 4가지 핵심 기능입니다.
