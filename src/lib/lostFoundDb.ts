@@ -122,9 +122,37 @@ export async function listLostFoundItems(centerId?: string, type?: string, searc
   return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
+function maskName(name: string): string {
+  const trimmed = name.trim();
+  if (!trimmed || trimmed === "안내데스크") return trimmed;
+  if (trimmed.length <= 1) return trimmed;
+  if (trimmed.length === 2) return `${trimmed[0]}*`;
+  return `${trimmed[0]}${"*".repeat(trimmed.length - 2)}${trimmed[trimmed.length - 1]}`;
+}
+
+function maskContact(contact?: string): string | undefined {
+  if (!contact) return undefined;
+  const digits = contact.replace(/\D/g, "");
+  if (digits.length === 11) {
+    return `${digits.slice(0, 3)}-****-${digits.slice(7)}`;
+  }
+  if (digits.length === 10) {
+    return `${digits.slice(0, 3)}-***-${digits.slice(6)}`;
+  }
+  if (contact.includes("-")) {
+    const parts = contact.split("-");
+    if (parts.length === 3) {
+      return `${parts[0]}-****-${parts[2]}`;
+    }
+  }
+  return contact;
+}
+
 export async function insertLostFoundItem(item: Omit<LostFoundItem, "id" | "createdAt" | "status">): Promise<LostFoundItem> {
   const newItem: LostFoundItem = {
     ...item,
+    writerName: maskName(item.writerName),
+    contact: maskContact(item.contact),
     id: `lf-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
     status: item.type === "습득" ? "보관중" : "접수",
     createdAt: new Date().toISOString(),

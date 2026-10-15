@@ -7,12 +7,37 @@ import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { waterCenters } from "@/data/centers";
 import type { LostFoundItem, LostFoundType } from "@/types/lostFound";
 
+// 강문화관 5개소 + 댐 물문화관 15개소 통합 목록
+export const LOST_FOUND_CENTERS = [
+  { id: "the-arc", name: "디아크 문화관" },
+  { id: "han-river", name: "한강물문화관" },
+  { id: "geum-river", name: "금강문화관" },
+  { id: "yeongsan-river", name: "영산강문화관" },
+  { id: "nakdong-river", name: "낙동강문화관" },
+  ...waterCenters.map((c) => ({ id: c.id, name: c.name })),
+];
+
 const CENTER_TEL_MAP: Record<string, string> = {
   "the-arc": "053-667-2700",
   "han-river": "031-880-6200",
   "geum-river": "041-830-0600",
   "yeongsan-river": "061-335-0866",
   "nakdong-river": "051-201-0884",
+  soyang: "033-240-1500",
+  chungju: "043-840-2266",
+  daecheong: "042-930-7332",
+  andong: "054-850-4203",
+  "peace-dam": "033-440-1604",
+  hoengseong: "033-340-0250",
+  hapcheon: "055-930-5205",
+  yongdam: "063-430-4204",
+  juam: "061-750-4205",
+  jangheung: "061-860-3204",
+  buan: "063-580-3204",
+  hantan: "031-839-4204",
+  namgang: "055-760-2204",
+  miryang: "055-350-6204",
+  gimcheon: "054-420-9204",
 };
 
 function getCenterPhone(centerId?: string, centerName?: string) {
@@ -22,6 +47,10 @@ function getCenterPhone(centerId?: string, centerName?: string) {
   if (centerName?.includes("영산강")) return "061-335-0866";
   if (centerName?.includes("디아크")) return "053-667-2700";
   if (centerName?.includes("낙동강")) return "051-201-0884";
+  if (centerName?.includes("소양강")) return "033-240-1500";
+  if (centerName?.includes("충주")) return "043-840-2266";
+  if (centerName?.includes("대청")) return "042-930-7332";
+  if (centerName?.includes("안동")) return "054-850-4203";
   return "1577-0600";
 }
 
@@ -44,7 +73,7 @@ export default function LostFoundPage() {
   // Write Modal State
   const [showWriteModal, setShowWriteModal] = useState(false);
   const [postType, setPostType] = useState<LostFoundType>("분실");
-  const [centerId, setCenterId] = useState(waterCenters[0]?.id ?? "han-river");
+  const [centerId, setCenterId] = useState(LOST_FOUND_CENTERS[0]?.id ?? "the-arc");
   const [title, setTitle] = useState("");
   const [itemName, setItemName] = useState("");
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
@@ -86,6 +115,10 @@ export default function LostFoundPage() {
   };
 
   useEffect(() => {
+    document.title = "분실물찾기 | K-water 물문화관 통합 포털";
+  }, []);
+
+  useEffect(() => {
     void fetchItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCenter, selectedType]);
@@ -98,7 +131,7 @@ export default function LostFoundPage() {
   // Open write modal with clean reset
   const handleOpenWriteModal = () => {
     setPostType("분실");
-    setCenterId(waterCenters[0]?.id ?? "han-river");
+    setCenterId(LOST_FOUND_CENTERS[0]?.id ?? "the-arc");
     setTitle("");
     setItemName("");
     setDate(new Date().toISOString().slice(0, 10));
@@ -136,8 +169,13 @@ export default function LostFoundPage() {
       return;
     }
 
+    if (password.trim().length < 4) {
+      setFormError("비밀번호는 숫자 4자리 이상 입력해 주세요.");
+      return;
+    }
+
     setSubmitting(true);
-    const centerObj = waterCenters.find((w) => w.id === centerId);
+    const centerObj = LOST_FOUND_CENTERS.find((w) => w.id === centerId);
     const centerName = centerObj ? centerObj.name : "K-water 물문화관";
 
     try {
@@ -198,6 +236,8 @@ export default function LostFoundPage() {
 
       setDetailItem(null);
       setDeletePassword("");
+      setShowDeletePassword(false);
+      setDeleteError("");
       void fetchItems();
     } catch (err: unknown) {
       setDeleteError(err instanceof Error ? err.message : "삭제 중 오류가 발생했습니다.");
@@ -208,7 +248,7 @@ export default function LostFoundPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-sky-500 selection:text-white">
-      <WaterHubHeader activeNav="intro" />
+      <WaterHubHeader activeNav="feedback" />
 
       {/* 상단 배너 헤더 */}
       <section className="relative overflow-hidden bg-gradient-to-r from-[#003876] via-[#004D95] to-[#1E6BBA] text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -286,7 +326,7 @@ export default function LostFoundPage() {
                 className="text-xs sm:text-sm font-semibold rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-700 focus:outline-none focus:border-[#004D95]"
               >
                 <option value="all">전체 물문화관</option>
-                {waterCenters.map((c) => (
+                {LOST_FOUND_CENTERS.map((c) => (
                   <option key={c.id} value={c.id}>{c.name}</option>
                 ))}
               </select>
@@ -479,6 +519,18 @@ export default function LostFoundPage() {
                 <a href="tel:051-201-0884" className="text-[#004D95] font-bold hover:underline">051-201-0884</a>
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
+                <span className="font-semibold text-slate-800">소양강댐 물문화관</span>
+                <a href="tel:033-240-1500" className="text-[#004D95] font-bold hover:underline">033-240-1500</a>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
+                <span className="font-semibold text-slate-800">충주댐 물문화관</span>
+                <a href="tel:043-840-2266" className="text-[#004D95] font-bold hover:underline">043-840-2266</a>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
+                <span className="font-semibold text-slate-800">대청댐 물문화관</span>
+                <a href="tel:042-930-7332" className="text-[#004D95] font-bold hover:underline">042-930-7332</a>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">K-water 고객센터</span>
                 <a href="tel:1577-0600" className="text-[#004D95] font-bold hover:underline">1577-0600</a>
               </div>
@@ -549,7 +601,7 @@ export default function LostFoundPage() {
                   onChange={(e) => setCenterId(e.target.value)}
                   className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-800 focus:outline-none focus:border-[#004D95]"
                 >
-                  {waterCenters.map((c) => (
+                  {LOST_FOUND_CENTERS.map((c) => (
                     <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
                 </select>
@@ -747,6 +799,7 @@ export default function LostFoundPage() {
                 onClick={() => {
                   setDetailItem(null);
                   setDeletePassword("");
+                  setShowDeletePassword(false);
                   setDeleteError("");
                 }}
                 className="text-slate-400 hover:text-slate-600 text-lg p-1 shrink-0"
