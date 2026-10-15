@@ -7,6 +7,24 @@ import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { waterCenters } from "@/data/centers";
 import type { LostFoundItem, LostFoundType } from "@/types/lostFound";
 
+const CENTER_TEL_MAP: Record<string, string> = {
+  "the-arc": "053-667-2700",
+  "han-river": "031-880-6200",
+  "geum-river": "041-830-0600",
+  "yeongsan-river": "061-335-0866",
+  "nakdong-river": "051-201-0884",
+};
+
+function getCenterPhone(centerId?: string, centerName?: string) {
+  if (centerId && CENTER_TEL_MAP[centerId]) return CENTER_TEL_MAP[centerId];
+  if (centerName?.includes("한강")) return "031-880-6200";
+  if (centerName?.includes("금강")) return "041-830-0600";
+  if (centerName?.includes("영산강")) return "061-335-0866";
+  if (centerName?.includes("디아크")) return "053-667-2700";
+  if (centerName?.includes("낙동강")) return "051-201-0884";
+  return "1577-0600";
+}
+
 export default function LostFoundPage() {
   const [items, setItems] = useState<LostFoundItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -582,7 +600,12 @@ export default function LostFoundPage() {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">연락처 (선택)</label>
+                  <label className="block font-bold text-slate-700 mb-1">
+                    연락처 (선택)
+                    <span className="text-[10px] font-normal text-slate-400 ml-1.5">
+                      ※ 안심 마스킹
+                    </span>
+                  </label>
                   <input
                     type="text"
                     placeholder="010-0000-0000"
@@ -590,6 +613,9 @@ export default function LostFoundPage() {
                     onChange={(e) => setContact(e.target.value)}
                     className="w-full rounded-lg border border-slate-300 p-2.5 focus:outline-none focus:border-[#004D95]"
                   />
+                  <p className="text-[10px] text-slate-400 mt-1 leading-tight">
+                    * 게시판 등록 시 마스킹되며, 습득 시 안내데스크 확인용으로 안전하게 보호됩니다.
+                  </p>
                 </div>
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">비밀번호 <span className="text-rose-500">*</span></label>
@@ -678,16 +704,63 @@ export default function LostFoundPage() {
                 <span className="text-slate-700">{detailItem.writerName}</span>
               </div>
               {detailItem.contact && (
-                <div className="flex">
-                  <span className="w-24 text-slate-400 font-medium">연락처</span>
+                <div className="flex items-center">
+                  <span className="w-24 text-slate-400 font-medium shrink-0">연락처</span>
                   <span className="text-slate-700">{detailItem.contact}</span>
+                  <span className="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-slate-200 text-slate-600 font-medium">
+                    개인정보 안심 마스킹
+                  </span>
                 </div>
               )}
             </div>
 
             {/* 본문 내용 */}
-            <div className="p-4 rounded-xl border border-slate-200 bg-white min-h-[100px] text-xs sm:text-sm text-slate-800 leading-relaxed whitespace-pre-wrap mb-6">
+            <div className="p-4 rounded-xl border border-slate-200 bg-white min-h-[90px] text-xs sm:text-sm text-slate-800 leading-relaxed whitespace-pre-wrap mb-4">
               {detailItem.content}
+            </div>
+
+            {/* 안전 인계 및 안내데스크 직통 연결 안내 박스 (1번 방향) */}
+            <div
+              className={`p-4 rounded-xl border mb-5 text-xs sm:text-sm leading-relaxed ${
+                detailItem.type === "분실"
+                  ? "bg-amber-50/80 border-amber-200 text-amber-950"
+                  : "bg-sky-50/80 border-sky-200 text-sky-950"
+              }`}
+            >
+              <div className="font-bold flex items-center gap-1.5 mb-1.5 text-xs sm:text-sm">
+                <span>
+                  {detailItem.type === "분실"
+                    ? "💡 이 물건을 습득하셨거나 보관 중이신가요?"
+                    : "💡 본인의 분실물이 맞으신가요?"}
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 mb-3 break-keep leading-relaxed">
+                {detailItem.type === "분실" ? (
+                  <>
+                    개인정보 보호 및 사적 직거래 사기 피해 예방을 위해, 물품을 습득하신 경우{" "}
+                    <strong>{detailItem.centerName} 안내데스크</strong>로 인계해 주시거나 전화로 알려주시면, 분실자 본인 확인 후 안전하게 전달해 드립니다.
+                  </>
+                ) : (
+                  <>
+                    습득된 물품은 <strong>{detailItem.centerName} 안내데스크</strong>에서 안전하게 보관 중입니다. 방문 전 전화로 본인 확인 및 수령 일정을 확인하신 후, 신분증을 지참하여 방문해 주시기 바랍니다.
+                  </>
+                )}
+              </p>
+              <div className="pt-2.5 border-t border-slate-200/70 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-[11px] text-slate-500 font-medium">
+                  {detailItem.centerName} 안내데스크 직통 유선 문의
+                </span>
+                <a
+                  href={`tel:${getCenterPhone(detailItem.centerId, detailItem.centerName)}`}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-xs text-white shadow-xs transition ${
+                    detailItem.type === "분실"
+                      ? "bg-amber-700 hover:bg-amber-800"
+                      : "bg-[#004D95] hover:bg-[#003876]"
+                  }`}
+                >
+                  <span>📞 전화 걸기 ({getCenterPhone(detailItem.centerId, detailItem.centerName)})</span>
+                </a>
+              </div>
             </div>
 
             {/* 삭제 및 닫기 바 */}
