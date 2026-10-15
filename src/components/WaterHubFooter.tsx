@@ -135,7 +135,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
             <li className="text-white/20">|</li>
             <li>
               <Link
-                href="/privacy#step10"
+                href="/email-rejection"
                 className="text-white/70 hover:text-white transition"
               >
                 이메일무단수집거부
