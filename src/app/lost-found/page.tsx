@@ -25,6 +25,13 @@ function getCenterPhone(centerId?: string, centerName?: string) {
   return "1577-0600";
 }
 
+function formatPhoneNumber(val: string): string {
+  const digits = val.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+}
+
 export default function LostFoundPage() {
   const [items, setItems] = useState<LostFoundItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -607,10 +614,12 @@ export default function LostFoundPage() {
                     </span>
                   </label>
                   <input
-                    type="text"
+                    type="tel"
+                    inputMode="numeric"
+                    maxLength={13}
                     placeholder="010-0000-0000"
                     value={contact}
-                    onChange={(e) => setContact(e.target.value)}
+                    onChange={(e) => setContact(formatPhoneNumber(e.target.value))}
                     className="w-full rounded-lg border border-slate-300 p-2.5 focus:outline-none focus:border-[#004D95]"
                   />
                   <p className="text-[10px] text-slate-400 mt-1 leading-tight">
