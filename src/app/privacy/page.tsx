@@ -249,37 +249,30 @@ export default function PrivacyPolicyPage() {
 
         /* 6. 표 (Table) 반응형 및 디자인 */
         .privacy-policy-body .scrollTable {
+          width: 100%;
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
           margin: 1.25rem 0 2rem 0;
           border-radius: 0.75rem;
           border: 1px solid #cbd5e1;
+          background-color: #ffffff;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
         .privacy-policy-body table.basic_board_table {
           width: 100%;
-          min-width: 520px;
+          min-width: 640px;
           border-collapse: collapse;
+          table-layout: fixed;
           margin: 0;
-          font-size: 13px;
-        }
-        /* 감싸는 div가 없는 테이블을 위한 자동 가로 스크롤 지원 */
-        .privacy-policy-body ol > table.basic_board_table,
-        .privacy-policy-body li > table.basic_board_table {
-          display: block;
-          max-width: 100%;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-          margin: 1.25rem 0 2rem 0;
-          border-radius: 0.75rem;
-          border: 1px solid #cbd5e1;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+          font-size: 13.5px;
+          background-color: #ffffff;
         }
         .privacy-policy-body table.basic_board_table caption {
           text-align: left;
-          font-size: 11.5px;
-          color: #64748b;
-          padding: 0.5rem 0.75rem;
+          font-size: 12px;
+          font-weight: 500;
+          color: #475569;
+          padding: 0.65rem 1rem;
           background-color: #f8fafc;
           border-bottom: 1px solid #e2e8f0;
         }
@@ -288,20 +281,60 @@ export default function PrivacyPolicyPage() {
           border: 1px solid #e2e8f0;
           padding: 0.75rem 0.9rem;
           line-height: 1.6;
+          vertical-align: middle;
+          word-break: keep-all;
         }
         .privacy-policy-body table.basic_board_table thead th {
           background-color: #f1f5f9;
           color: #0f172a;
           font-weight: 700;
           text-align: center;
+          white-space: nowrap;
         }
         .privacy-policy-body table.basic_board_table tbody th {
           background-color: #f8fafc;
-          color: #334155;
+          color: #1e293b;
+          font-weight: 600;
           text-align: center;
+          white-space: nowrap;
+        }
+        .privacy-policy-body table.basic_board_table tbody td {
+          color: #334155;
         }
         .privacy-policy-body table.basic_board_table tbody tr:hover {
           background-color: #f8fafc;
+        }
+        /* 표 내부 목록 여백 초기화 */
+        .privacy-policy-body table.basic_board_table ul,
+        .privacy-policy-body table.basic_board_table ol {
+          padding-left: 0 !important;
+          margin: 0 !important;
+          list-style: none !important;
+        }
+        .privacy-policy-body table.basic_board_table li {
+          margin-bottom: 0.2rem !important;
+          font-size: 13px;
+        }
+        .privacy-policy-body table.basic_board_table li:last-child {
+          margin-bottom: 0 !important;
+        }
+
+        /* 제3조 추가 설명 박스 */
+        .privacy-policy-body .item_desc_box {
+          margin: 1.5rem 0 2rem 0;
+          padding: 1.25rem 1.5rem;
+          background-color: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-left: 4px solid #004D95;
+          border-radius: 0.75rem;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .privacy-policy-body .item_desc_box h2 {
+          font-size: 15px;
+          font-weight: 700;
+          color: #0f172a;
+          margin-bottom: 0.75rem;
+          padding: 0 !important;
         }
 
         /* 7. 이미지 반응형 및 중앙 정렬 */
