@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { listNewsFromDb, getNewsDetailFromDb } from "@/lib/newsDb";
 import { NewsBoard } from "@/components/NewsBoard";
+
+export const metadata: Metadata = {
+  title: "공지사항 & 새소식",
+  description: "전국 K-water 물문화관 및 강문화관의 주요 공지사항과 새로운 소식을 전해드립니다.",
+};
 
 export const revalidate = 0; // Disable caching to ensure admins/staff see changes instantly
 

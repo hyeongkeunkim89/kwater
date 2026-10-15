@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 import { listEventsFromDb, getEventDetailFromDb } from "@/lib/eventsDb";
 import { isWaterStoriesLive } from "@/lib/storiesConfig";
 import { EventBoard } from "@/components/EventBoard";
+
+export const metadata: Metadata = {
+  title: "문화 행사 & 이벤트",
+  description: "전국 K-water 물문화관에서 펼쳐지는 다채로운 문화 행사 및 참여형 이벤트를 확인하세요.",
+};
 
 export const revalidate = 0; // Disable caching to ensure admins see changes instantly
 
