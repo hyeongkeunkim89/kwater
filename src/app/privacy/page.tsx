@@ -220,7 +220,10 @@ export default function PrivacyPolicyPage() {
         }
 
         /* 5. 각 조항 헤더 및 본문 */
-        .privacy-policy-body > div[id^="step"] {
+        .privacy-policy-body [id^="step"] {
+          scroll-margin-top: 100px;
+        }
+        .privacy-policy-body .policy_list > li {
           scroll-margin-top: 100px;
         }
         .privacy-policy-body li > strong {
@@ -247,6 +250,7 @@ export default function PrivacyPolicyPage() {
         /* 6. 표 (Table) 반응형 및 디자인 */
         .privacy-policy-body .scrollTable {
           overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
           margin: 1.25rem 0 2rem 0;
           border-radius: 0.75rem;
           border: 1px solid #cbd5e1;
@@ -254,9 +258,22 @@ export default function PrivacyPolicyPage() {
         }
         .privacy-policy-body table.basic_board_table {
           width: 100%;
+          min-width: 520px;
           border-collapse: collapse;
           margin: 0;
           font-size: 13px;
+        }
+        /* 감싸는 div가 없는 테이블을 위한 자동 가로 스크롤 지원 */
+        .privacy-policy-body ol > table.basic_board_table,
+        .privacy-policy-body li > table.basic_board_table {
+          display: block;
+          max-width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          margin: 1.25rem 0 2rem 0;
+          border-radius: 0.75rem;
+          border: 1px solid #cbd5e1;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
         .privacy-policy-body table.basic_board_table caption {
           text-align: left;
@@ -299,6 +316,42 @@ export default function PrivacyPolicyPage() {
         .privacy-policy-body .river_road {
           text-align: center;
           margin: 1.5rem 0;
+        }
+
+        /* 8. QR 코드 안내 박스 반응형 */
+        .privacy-policy-body .imgDis2Li02 {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.25rem;
+          padding: 1rem 1.25rem;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 0.75rem;
+          margin: 1rem 0 1.5rem 0;
+          list-style: none;
+        }
+        .privacy-policy-body .imgDis2Li02 li.txt {
+          width: auto !important;
+          flex: 1 1 260px;
+          border-right: none !important;
+          padding: 0 !important;
+          font-size: 13px;
+          color: #475569;
+          line-height: 1.6;
+        }
+        .privacy-policy-body .imgDis2Li02 li.photo {
+          width: auto !important;
+          flex: 0 0 auto;
+          padding: 0 !important;
+        }
+        .privacy-policy-body .imgDis2Li02 li.photo img {
+          width: 80px;
+          height: 80px;
+          margin: 0 auto;
+          border-radius: 0.5rem;
+          border: 1px solid #cbd5e1;
         }
       `}</style>
     </div>
