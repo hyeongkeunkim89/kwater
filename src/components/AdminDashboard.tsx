@@ -6,6 +6,7 @@ import {
   getAllReservations,
   updateStatus,
   deleteReservation,
+  purgeExpiredReservations,
 } from "@/lib/reservations";
 import { waterCenters } from "@/data/centers";
 import { AdminWaterStoriesPanel } from "@/components/AdminWaterStoriesPanel";
@@ -48,6 +49,44 @@ export function AdminDashboard({
   const [adminSecret, setAdminSecret] = useState("admin");
   const [storiesRefreshKey, setStoriesRefreshKey] = useState(0);
   const [listLoadError, setListLoadError] = useState<string | null>(null);
+  const [purging, setPurging] = useState(false);
+
+  const handlePurgeExpired = async () => {
+    const ok = window.confirm(
+      "【개인정보보호법 제21조에 따른 개인정보 파기】\n\n" +
+      "관람 완료일(또는 예약 취소일)로부터 30일이 경과한 예약 건의 개인식별정보(성명, 연락처, 이메일, PIN, 요청사항)를 영구 파기(익명화)하시겠습니까?\n\n" +
+      "※ 방문일자, 방문센터, 방문인원, 방문목적 등 방문 실적 통계 데이터는 안전하게 보존됩니다."
+    );
+    if (!ok) return;
+
+    setPurging(true);
+    try {
+      if (reservationsLive) {
+        const secret = adminSecret.trim() || "admin";
+        const res = await fetch("/api/reservations/purge?days=30", {
+          method: "POST",
+          headers: {
+            "x-admin-secret": secret,
+          },
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.error || "파기 처리에 실패했습니다.");
+          return;
+        }
+        alert(`✅ ${data.message}`);
+        await reload();
+      } else {
+        const count = purgeExpiredReservations(30);
+        alert(`✅ 30일 경과 예약 ${count}건의 개인정보가 익명화 파기되었습니다.`);
+        setList(getAllReservations());
+      }
+    } catch {
+      alert("파기 처리 중 오류가 발생했습니다.");
+    } finally {
+      setPurging(false);
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -203,6 +242,26 @@ export function AdminDashboard({
       <div className="rounded-2xl bg-white border border-slate-200 p-5 shadow-sm">
         {activeTab === "reservations" && (
           <div className="space-y-6">
+            {/* 개인정보 파기 정책 안내 및 수동 파기 실행 배너 */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-sky-50/70 border border-sky-100 rounded-2xl">
+              <div>
+                <h3 className="text-sm font-bold text-sky-950 flex items-center gap-1.5">
+                  <span className="text-sky-600">🛡️</span> 개인정보 파기 기준 (관람 완료 후 30일 보관)
+                </h3>
+                <p className="text-xs text-sky-800/80 mt-0.5">
+                  개인정보보호법 제21조에 따라 관람일(또는 취소일)로부터 30일이 경과한 개인식별정보는 매일 자동 배치로 익명화되며, 필요 시 즉시 수동 파기할 수 있습니다.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handlePurgeExpired}
+                disabled={purging}
+                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 shadow-xs transition shrink-0 disabled:opacity-50"
+              >
+                <span>{purging ? "파기 처리 중..." : "30일 경과 개인정보 즉시 파기"}</span>
+              </button>
+            </div>
+
             {/* 요약 카드 */}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[

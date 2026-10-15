@@ -59,3 +59,35 @@ export function getBookedCount(centerId: string, date: string, time: string): nu
 export function getAvailableCount(centerId: string, date: string, time: string): number {
   return MAX_PER_SLOT - getBookedCount(centerId, date, time);
 }
+
+/** 로컬 스토리지 모드용: 30일 경과 예약 개인정보 파기(익명화) */
+export function purgeExpiredReservations(retentionDays: number = 30): number {
+  const list = loadAll();
+  const cutoffDate = new Date();
+  cutoffDate.setDate(cutoffDate.getDate() - retentionDays);
+  const cutoffStr = cutoffDate.toISOString().slice(0, 10);
+  const cutoffIso = cutoffDate.toISOString();
+
+  let purgedCount = 0;
+  const updated = list.map((r) => {
+    const isExpired = r.date < cutoffStr || (r.status === "취소" && r.createdAt < cutoffIso);
+    if (r.name !== "[파기완료]" && isExpired) {
+      purgedCount++;
+      return {
+        ...r,
+        name: "[파기완료]",
+        phone: "010-0000-0000",
+        userEmail: undefined,
+        guestPin: undefined,
+        requests: "",
+      };
+    }
+    return r;
+  });
+
+  if (purgedCount > 0) {
+    saveAll(updated);
+  }
+  return purgedCount;
+}
+

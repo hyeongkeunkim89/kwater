@@ -163,6 +163,7 @@ export function ReservationForm({
   const [availLoading, setAvailLoading] = useState(false);
   const [availError, setAvailError] = useState<string | null>(null);
   const [availRetry, setAvailRetry] = useState(0);
+  const [privacyConsent, setPrivacyConsent] = useState(false);
 
   useEffect(() => {
     if (!reservationsLive || !date) {
@@ -237,6 +238,7 @@ export function ReservationForm({
     (!user ? /^\d{4}$/.test(guestPin.trim()) : true) &&
     partySize >= 1 &&
     partySize <= maxForSelectedTime &&
+    privacyConsent &&
     (!reservationsLive || Boolean(serverAvailMap));
 
   const [submitting, setSubmitting] = useState(false);
@@ -767,6 +769,34 @@ export function ReservationForm({
             />
           </div>
 
+          {/* 개인정보 수집 및 이용 동의 (보유기간: 관람 완료 후 30일) */}
+          <div className="rounded-xl border border-sky-100 bg-sky-50/70 p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold text-sky-950 flex items-center gap-1.5">
+                <span>📋</span> 개인정보 수집 및 이용 동의 <span className="text-rose-500">*</span>
+              </h3>
+              <span className="text-[11px] font-bold text-sky-700 bg-sky-100/90 px-2 py-0.5 rounded-full">
+                보관기간: 30일
+              </span>
+            </div>
+            <div className="text-xs text-slate-600 leading-relaxed bg-white/90 p-3 rounded-xl border border-slate-200/70 space-y-1.5">
+              <p>• <strong>수집 항목:</strong> 예약자 성명, 휴대전화번호, 비회원 조회 비밀번호{user ? ", 회원 이메일" : ""}</p>
+              <p>• <strong>수집 목적:</strong> 물문화관 가이드 투어 예약 접수, 본인 확인 및 예약 확인·안내</p>
+              <p className="text-sky-900 font-bold">• <strong>보유 및 이용 기간:</strong> 관람 완료일(또는 예약 취소일)로부터 30일간 보관 후 지체 없이 영구 파기(익명화)</p>
+            </div>
+            <label className="flex items-center gap-2.5 cursor-pointer pt-0.5">
+              <input
+                type="checkbox"
+                checked={privacyConsent}
+                onChange={(e) => setPrivacyConsent(e.target.checked)}
+                className="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500 cursor-pointer"
+              />
+              <span className="text-xs font-bold text-slate-800 select-none">
+                개인정보 수집 및 이용(관람 완료 후 30일 보관 및 파기)에 동의합니다.
+              </span>
+            </label>
+          </div>
+
           <div className="flex justify-between pt-2">
             <button
               onClick={() => setStep(0)}
@@ -809,10 +839,15 @@ export function ReservationForm({
             ))}
           </dl>
 
-          <p className="rounded-xl bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900 ring-1 ring-amber-200/80">
-            예약 접수 후 담당자 검토를 거쳐 확정됩니다. 취소·변경이 필요하면
-            예약 현황 페이지에서 직접 취소하거나 해당 문화관으로 연락하세요.
-          </p>
+          <div className="space-y-2">
+            <p className="rounded-xl bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900 ring-1 ring-amber-200/80">
+              예약 접수 후 담당자 검토를 거쳐 확정됩니다. 취소·변경이 필요하면
+              예약 현황 페이지에서 직접 취소하거나 해당 문화관으로 연락하세요.
+            </p>
+            <p className="rounded-xl bg-sky-50/80 px-4 py-2.5 text-xs text-sky-900 ring-1 ring-sky-200/60 flex items-center gap-1.5">
+              <span>🛡️</span> <strong>개인정보 파기 기준:</strong> 개인정보보호법에 따라 관람 완료(또는 취소) 후 30일이 경과하면 개인정보는 자동으로 안전하게 영구 파기(익명화)됩니다.
+            </p>
+          </div>
 
           {submitError && (
             <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">

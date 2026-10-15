@@ -369,3 +369,33 @@ export async function deleteTourReservationDb(id: string): Promise<boolean> {
   `;
   return rows.length > 0;
 }
+
+/**
+ * 관람 완료(또는 취소) 후 N일이 지난 예약의 개인식별정보 파기 (개인정보보호법 제21조에 따른 익명화 조치)
+ * 통계용 메타데이터(방문센터, 방문일시, 방문인원, 방문목적 등)는 유지하고 개인식별정보만 영구 제거합니다.
+ */
+export async function purgeExpiredTourReservationsDb(retentionDays: number = 30): Promise<number> {
+  const sql = getReservationsSql();
+  if (!sql) return 0;
+  await ensureTourReservationsSchema(sql);
+
+  const days = Math.max(1, retentionDays);
+  const rows = await sql<{ id: string }[]>`
+    UPDATE tour_reservations
+    SET
+      name = '[파기완료]',
+      phone = '010-0000-0000',
+      user_email = NULL,
+      guest_pin = NULL,
+      requests = ''
+    WHERE
+      name <> '[파기완료]'
+      AND (
+        visit_date < (CURRENT_DATE - (${days} || ' days')::interval)::date
+        OR (status = '취소' AND created_at < (now() - (${days} || ' days')::interval))
+      )
+    RETURNING id
+  `;
+  return rows.length;
+}
+
