@@ -95,6 +95,37 @@ export default function LostFoundPage() {
     void fetchItems();
   };
 
+  // Open write modal with clean reset
+  const handleOpenWriteModal = () => {
+    setPostType("분실");
+    setCenterId(waterCenters[0]?.id ?? "han-river");
+    setTitle("");
+    setItemName("");
+    setDate(new Date().toISOString().slice(0, 10));
+    setPlace("");
+    setContent("");
+    setWriterName("");
+    setContact("");
+    setPassword("");
+    setShowPassword(false);
+    setFormError("");
+    setShowWriteModal(true);
+  };
+
+  // Close write modal and purge all form state
+  const handleCloseWriteModal = () => {
+    setShowWriteModal(false);
+    setTitle("");
+    setItemName("");
+    setPlace("");
+    setContent("");
+    setWriterName("");
+    setContact("");
+    setPassword("");
+    setShowPassword(false);
+    setFormError("");
+  };
+
   // Submit new item
   const handleWriteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,14 +165,7 @@ export default function LostFoundPage() {
       }
 
       // Success
-      setShowWriteModal(false);
-      setTitle("");
-      setItemName("");
-      setPlace("");
-      setContent("");
-      setWriterName("");
-      setContact("");
-      setPassword("");
+      handleCloseWriteModal();
       void fetchItems();
     } catch (err: unknown) {
       setFormError(err instanceof Error ? err.message : "등록에 실패했습니다.");
@@ -288,7 +312,7 @@ export default function LostFoundPage() {
 
               <button
                 type="button"
-                onClick={() => setShowWriteModal(true)}
+                onClick={handleOpenWriteModal}
                 className="px-4 py-2 rounded-lg bg-[#004D95] text-white text-xs sm:text-sm font-bold hover:bg-[#003876] transition shadow-xs shrink-0 flex items-center gap-1"
               >
                 <span>✏️ 글쓰기</span>
@@ -474,10 +498,7 @@ export default function LostFoundPage() {
               </h3>
               <button
                 type="button"
-                onClick={() => {
-                  setShowWriteModal(false);
-                  setShowPassword(false);
-                }}
+                onClick={handleCloseWriteModal}
                 className="text-slate-400 hover:text-slate-600 text-lg p-1"
               >
                 ✕
@@ -490,7 +511,7 @@ export default function LostFoundPage() {
               </div>
             )}
 
-            <form onSubmit={handleWriteSubmit} className="space-y-4 text-xs sm:text-sm">
+            <form onSubmit={handleWriteSubmit} autoComplete="off" className="space-y-4 text-xs sm:text-sm">
               {/* 구분 선택 */}
               <div>
                 <label className="block font-bold text-slate-700 mb-1.5">구분 <span className="text-rose-500">*</span></label>
@@ -539,6 +560,7 @@ export default function LostFoundPage() {
                 <label className="block font-bold text-slate-700 mb-1">제목 <span className="text-rose-500">*</span></label>
                 <input
                   type="text"
+                  autoComplete="off"
                   placeholder="예: 디아크 2층 카페테리아 지갑 분실"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -553,6 +575,7 @@ export default function LostFoundPage() {
                   <label className="block font-bold text-slate-700 mb-1">물품명 <span className="text-rose-500">*</span></label>
                   <input
                     type="text"
+                    autoComplete="off"
                     placeholder="예: 검정색 가죽 지갑"
                     value={itemName}
                     onChange={(e) => setItemName(e.target.value)}
@@ -577,6 +600,7 @@ export default function LostFoundPage() {
                 <label className="block font-bold text-slate-700 mb-1">발생 장소 <span className="text-rose-500">*</span></label>
                 <input
                   type="text"
+                  autoComplete="off"
                   placeholder="예: 2층 전망대 벤치, 야외 자전거 거치대 등"
                   value={place}
                   onChange={(e) => setPlace(e.target.value)}
@@ -607,6 +631,7 @@ export default function LostFoundPage() {
                     </label>
                     <input
                       type="text"
+                      autoComplete="off"
                       placeholder="예: 홍길동"
                       value={writerName}
                       onChange={(e) => setWriterName(e.target.value)}
@@ -662,6 +687,7 @@ export default function LostFoundPage() {
                   <input
                     type="tel"
                     inputMode="numeric"
+                    autoComplete="off"
                     maxLength={13}
                     placeholder="010-0000-0000"
                     value={contact}
@@ -677,10 +703,7 @@ export default function LostFoundPage() {
               <div className="pt-4 flex items-center justify-end gap-2">
                 <button
                   type="button"
-                  onClick={() => {
-                    setShowWriteModal(false);
-                    setShowPassword(false);
-                  }}
+                  onClick={handleCloseWriteModal}
                   className="px-4 py-2.5 rounded-lg border border-slate-300 text-slate-700 font-semibold hover:bg-slate-50 transition"
                 >
                   취소
