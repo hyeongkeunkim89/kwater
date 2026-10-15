@@ -172,7 +172,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
         {/* 주소 및 저작권 표시 */}
         <div className="mt-4 pt-4 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs text-white/40">
           <address className="not-italic leading-relaxed flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span>주소 : (우)34350 대전광역시 대덕구 신탄진로 200</span>
+            <span>주소 : 34350 대전광역시 대덕구 신탄진로 200</span>
             <span className="hidden sm:inline text-white/20">·</span>
             <span>대표전화 : <strong>042-629-3114</strong></span>
             <span className="text-white/20">/</span>
