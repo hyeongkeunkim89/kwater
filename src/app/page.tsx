@@ -55,15 +55,6 @@ export default function GatewayLandingPage() {
             >
               개인정보처리방침
             </Link>
-            <span className="text-white/20">|</span>
-            <a
-              href="https://www.riverguide.go.kr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition"
-            >
-              우리강이용도우미
-            </a>
           </div>
         </div>
       </div>

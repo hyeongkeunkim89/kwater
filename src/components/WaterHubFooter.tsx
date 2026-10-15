@@ -150,17 +150,6 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
                 제안ㆍ건의센터
               </Link>
             </li>
-            <li className="text-white/20">|</li>
-            <li>
-              <a
-                href="https://www.riverguide.go.kr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/70 hover:text-white transition"
-              >
-                우리강이용도우미
-              </a>
-            </li>
           </ul>
 
           <div className="flex items-center gap-3 text-xs">
@@ -183,7 +172,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
         {/* 주소 및 저작권 표시 */}
         <div className="mt-4 pt-4 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs text-white/40">
           <address className="not-italic leading-relaxed">
-            (우)34350 대전광역시 대덕구 신탄진로 200 · K-water 한국수자원공사 / 우리강이용도우미 콜센터 <strong>1577-4359</strong>
+            (우)34350 대전광역시 대덕구 신탄진로 200 · K-water 한국수자원공사 / 물문화관 콜센터 <strong>1577-4359</strong>
           </address>
           <p>© {new Date().getFullYear()} K-water 한국수자원공사. All rights reserved.</p>
         </div>
