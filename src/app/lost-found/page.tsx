@@ -53,12 +53,14 @@ export default function LostFoundPage() {
   const [writerName, setWriterName] = useState("");
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
 
   // Detail Modal State
   const [detailItem, setDetailItem] = useState<LostFoundItem | null>(null);
   const [deletePassword, setDeletePassword] = useState("");
+  const [showDeletePassword, setShowDeletePassword] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const [deleting, setDeleting] = useState(false);
 
@@ -472,7 +474,10 @@ export default function LostFoundPage() {
               </h3>
               <button
                 type="button"
-                onClick={() => setShowWriteModal(false)}
+                onClick={() => {
+                  setShowWriteModal(false);
+                  setShowPassword(false);
+                }}
                 className="text-slate-400 hover:text-slate-600 text-lg p-1"
               >
                 ✕
@@ -627,22 +632,47 @@ export default function LostFoundPage() {
                   </p>
                 </div>
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">비밀번호 <span className="text-rose-500">*</span></label>
-                  <input
-                    type="password"
-                    placeholder="삭제용 숫자 4자리"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 focus:outline-none focus:border-[#004D95]"
-                    required
-                  />
+                  <label className="block font-bold text-slate-700 mb-1">
+                    비밀번호 <span className="text-rose-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="삭제용 숫자 4자리"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full rounded-lg border border-slate-300 p-2.5 pr-10 focus:outline-none focus:border-[#004D95]"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 focus:outline-none transition"
+                      title={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+                      aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+                    >
+                      {showPassword ? (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
 
               <div className="pt-4 flex items-center justify-end gap-2">
                 <button
                   type="button"
-                  onClick={() => setShowWriteModal(false)}
+                  onClick={() => {
+                    setShowWriteModal(false);
+                    setShowPassword(false);
+                  }}
                   className="px-4 py-2.5 rounded-lg border border-slate-300 text-slate-700 font-semibold hover:bg-slate-50 transition"
                 >
                   취소
@@ -776,13 +806,33 @@ export default function LostFoundPage() {
             <div className="pt-4 border-t border-slate-100">
               <form onSubmit={handleDeleteSubmit} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-1.5 flex-1">
-                  <input
-                    type="password"
-                    placeholder="비밀번호 입력 시 삭제"
-                    value={deletePassword}
-                    onChange={(e) => setDeletePassword(e.target.value)}
-                    className="w-full sm:w-40 text-xs rounded-lg border border-slate-300 p-2 focus:outline-none focus:border-rose-500"
-                  />
+                  <div className="relative w-full sm:w-44">
+                    <input
+                      type={showDeletePassword ? "text" : "password"}
+                      placeholder="비밀번호 입력 시 삭제"
+                      value={deletePassword}
+                      onChange={(e) => setDeletePassword(e.target.value)}
+                      className="w-full text-xs rounded-lg border border-slate-300 p-2 pr-7 focus:outline-none focus:border-rose-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowDeletePassword(!showDeletePassword)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-slate-400 hover:text-slate-600 focus:outline-none transition"
+                      title={showDeletePassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+                      aria-label={showDeletePassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+                    >
+                      {showDeletePassword ? (
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                   <button
                     type="submit"
                     disabled={deleting || !deletePassword}
@@ -796,6 +846,7 @@ export default function LostFoundPage() {
                   onClick={() => {
                     setDetailItem(null);
                     setDeletePassword("");
+                    setShowDeletePassword(false);
                     setDeleteError("");
                   }}
                   className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-50 transition"
