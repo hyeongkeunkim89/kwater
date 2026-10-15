@@ -150,6 +150,15 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
                 제안ㆍ건의센터
               </Link>
             </li>
+            <li className="text-white/20">|</li>
+            <li>
+              <Link
+                href="/lost-found"
+                className="text-white/70 hover:text-white transition"
+              >
+                분실물찾기
+              </Link>
+            </li>
           </ul>
 
           <div className="flex items-center gap-3 text-xs">
