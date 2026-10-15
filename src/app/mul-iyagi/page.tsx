@@ -8,11 +8,11 @@ import { listWaterStoriesFromDb } from "@/lib/waterStoriesDb";
 import type { WaterStory } from "@/types/waterStory";
 
 export const metadata: Metadata = {
-  title: "물 이야기 갤러리 | K-water 물문화관 홍보 허브",
+  title: "물 이야기 갤러리",
   description:
     "물문화관 주변 산책로와 풍경 사진을 방문객이 나누는 참여형 갤러리입니다. 이달의 사진 이벤트·생생한 후기로 검색과 홍보에 도움이 됩니다.",
   openGraph: {
-    title: "물 이야기 갤러리 | 물문화관 홍보 허브",
+    title: "물 이야기 갤러리 | K-water 물문화관 통합 포털",
     description:
       "전국 물문화관 주변의 걸음과 풍경을 사진과 짧은 글로 남겨 보세요. 이달의 사진 이벤트와 연동할 수 있습니다.",
   },

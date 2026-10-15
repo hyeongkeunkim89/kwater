@@ -5,7 +5,7 @@ import { WaterHubFooter } from "@/components/WaterHubFooter";
 import ReservePageClient from "./ReservePageClient";
 
 export const metadata = {
-  title: "가이드 투어 예약 & 조회 | K-water 물문화관",
+  title: "가이드 투어 예약 & 조회",
   description: "K-water 물문화관 가이드 투어 예약 신청 및 실시간 예약 내역 조회를 한번에 이용하세요.",
 };
 

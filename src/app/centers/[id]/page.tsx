@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: Props) {
   const center = getCenterById(id);
   if (!center) return { title: "시설을 찾을 수 없습니다" };
   return {
-    title: `${center.name} | 물문화관 안내`,
+    title: `${center.name} - 시설 안내`,
     description: center.summary,
   };
 }

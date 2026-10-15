@@ -4,7 +4,7 @@ import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 
 export const metadata = {
-  title: "문화관 소개 & 인사말 | K-water 물문화관",
+  title: "문화관 소개 & 인사말",
   description:
     "사람과 물, 문화가 어우러지는 수변 공간. K-water 물문화관 통합 포털을 찾아주신 모든 분께 전하는 인사말입니다.",
 };

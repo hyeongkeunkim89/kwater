@@ -4,7 +4,7 @@ import { WaterHubHeader } from "@/components/WaterHubHeader";
 import { WaterHubFooter } from "@/components/WaterHubFooter";
 
 export const metadata = {
-  title: "문화관 현황 | 물문화관 홍보 허브",
+  title: "전국 거점 현황 지도",
   description:
     "전국 K-water 물문화관을 지도·목록으로 확인하고, 시·도별로 찾아보세요.",
 };
