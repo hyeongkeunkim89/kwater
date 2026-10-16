@@ -130,3 +130,39 @@ CREATE POLICY "Public Read water-stories" ON storage.objects FOR SELECT USING (b
 
 DROP POLICY IF EXISTS "Public Read center-floor-photos" ON storage.objects;
 CREATE POLICY "Public Read center-floor-photos" ON storage.objects FOR SELECT USING (bucket_id = 'center-floor-photos');
+
+
+-- 8. 분실·습득물 센터 (lost_found)
+CREATE TABLE IF NOT EXISTS public.lost_found (
+  id text PRIMARY KEY,
+  type text NOT NULL CHECK (type IN ('분실', '습득')),
+  center_id text NOT NULL,
+  center_name text NOT NULL,
+  title text NOT NULL,
+  item_name text NOT NULL,
+  date text NOT NULL,
+  place text NOT NULL,
+  content text NOT NULL,
+  writer_name text NOT NULL,
+  contact text,
+  password text,
+  status text NOT NULL DEFAULT '접수' CHECK (status IN ('접수', '보관중', '수령완료')),
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS lost_found_created_idx ON public.lost_found (created_at DESC);
+CREATE INDEX IF NOT EXISTS lost_found_center_idx ON public.lost_found (center_id);
+ALTER TABLE public.lost_found ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public Read LostFound" ON public.lost_found;
+CREATE POLICY "Public Read LostFound" ON public.lost_found FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Insert LostFound" ON public.lost_found;
+CREATE POLICY "Public Insert LostFound" ON public.lost_found FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public Update LostFound" ON public.lost_found;
+CREATE POLICY "Public Update LostFound" ON public.lost_found FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Public Delete LostFound" ON public.lost_found;
+CREATE POLICY "Public Delete LostFound" ON public.lost_found FOR DELETE USING (true);
+

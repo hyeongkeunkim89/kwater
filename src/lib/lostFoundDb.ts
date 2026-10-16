@@ -1,4 +1,6 @@
+import { getStoriesSql, skipDatabaseRuntimeSchemaDdl } from "./waterStoriesDb";
 import type { LostFoundItem, LostFoundType, LostFoundStatus } from "@/types/lostFound";
+import type postgres from "postgres";
 
 // 기본 초기 샘플 데이터 (리버가이드 분실물찾기 실제 사례를 물문화관에 맞추어 탑재)
 export const initialLostFoundItems: LostFoundItem[] = [
@@ -93,34 +95,99 @@ export const initialLostFoundItems: LostFoundItem[] = [
   },
 ];
 
-let inMemoryItems: LostFoundItem[] = [...initialLostFoundItems];
+type LostFoundRow = {
+  id: string;
+  type: string;
+  center_id: string;
+  center_name: string;
+  title: string;
+  item_name: string;
+  date: string;
+  place: string;
+  content: string;
+  writer_name: string;
+  contact: string | null;
+  password: string | null;
+  status: string;
+  created_at: Date | string;
+};
 
-export async function listLostFoundItems(centerId?: string, type?: string, search?: string): Promise<LostFoundItem[]> {
-  let list = [...inMemoryItems];
-
-  if (centerId && centerId !== "all") {
-    list = list.filter((item) => item.centerId === centerId);
-  }
-
-  if (type && type !== "all") {
-    list = list.filter((item) => item.type === type || (type === "수령완료" && item.status === "수령완료"));
-  }
-
-  if (search && search.trim()) {
-    const q = search.trim().toLowerCase();
-    list = list.filter(
-      (item) =>
-        item.title.toLowerCase().includes(q) ||
-        item.itemName.toLowerCase().includes(q) ||
-        item.content.toLowerCase().includes(q) ||
-        item.writerName.toLowerCase().includes(q) ||
-        item.place.toLowerCase().includes(q)
-    );
-  }
-
-  // 최신순 정렬
-  return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+function rowToLostFound(r: LostFoundRow): LostFoundItem {
+  return {
+    id: r.id,
+    type: r.type as LostFoundType,
+    centerId: r.center_id,
+    centerName: r.center_name,
+    title: r.title,
+    itemName: r.item_name,
+    date: r.date,
+    place: r.place,
+    content: r.content,
+    writerName: r.writer_name,
+    contact: r.contact ?? undefined,
+    password: r.password ?? undefined,
+    status: r.status as LostFoundStatus,
+    createdAt: r.created_at instanceof Date ? r.created_at.toISOString() : String(r.created_at),
+  };
 }
+
+let lostFoundSchemaPromise: Promise<void> | null = null;
+
+async function ensureLostFoundSchema(sql: ReturnType<typeof postgres>) {
+  if (!lostFoundSchemaPromise) {
+    if (skipDatabaseRuntimeSchemaDdl()) {
+      lostFoundSchemaPromise = Promise.resolve();
+      return lostFoundSchemaPromise;
+    }
+    lostFoundSchemaPromise = (async () => {
+      await sql`
+        CREATE TABLE IF NOT EXISTS public.lost_found (
+          id text PRIMARY KEY,
+          type text NOT NULL CHECK (type IN ('분실', '습득')),
+          center_id text NOT NULL,
+          center_name text NOT NULL,
+          title text NOT NULL,
+          item_name text NOT NULL,
+          date text NOT NULL,
+          place text NOT NULL,
+          content text NOT NULL,
+          writer_name text NOT NULL,
+          contact text,
+          password text,
+          status text NOT NULL DEFAULT '접수' CHECK (status IN ('접수', '보관중', '수령완료')),
+          created_at timestamptz NOT NULL DEFAULT now()
+        )
+      `;
+      await sql`
+        CREATE INDEX IF NOT EXISTS lost_found_created_idx ON public.lost_found (created_at DESC)
+      `;
+      await sql`
+        CREATE INDEX IF NOT EXISTS lost_found_center_idx ON public.lost_found (center_id)
+      `;
+
+      // 데이터가 없는 초기 상태면 기본 6개 샘플 데이터 자동 시드 주입
+      const [{ count }] = await sql`SELECT count(*)::int as count FROM public.lost_found`;
+      if (count === 0) {
+        for (const item of initialLostFoundItems) {
+          await sql`
+            INSERT INTO public.lost_found (
+              id, type, center_id, center_name, title, item_name, date, place, content, writer_name, contact, status, created_at
+            ) VALUES (
+              ${item.id}, ${item.type}, ${item.centerId}, ${item.centerName}, ${item.title}, ${item.itemName},
+              ${item.date}, ${item.place}, ${item.content}, ${item.writerName}, ${item.contact ?? null},
+              ${item.status}, ${item.createdAt}
+            )
+            ON CONFLICT (id) DO NOTHING
+          `;
+        }
+      }
+    })();
+  }
+  return lostFoundSchemaPromise;
+}
+
+// ── 로컬 메모리 폴백 저장소 (DB 연결 없을 시 작동) ──
+let inMemoryItems: LostFoundItem[] = [...initialLostFoundItems];
 
 function maskName(name: string): string {
   const trimmed = name.trim();
@@ -148,25 +215,159 @@ function maskContact(contact?: string): string | undefined {
   return contact;
 }
 
-export async function insertLostFoundItem(item: Omit<LostFoundItem, "id" | "createdAt" | "status">): Promise<LostFoundItem> {
+/**
+ * 분실·습득물 목록 조회 (Supabase DB 연동 + 폴백)
+ */
+export async function listLostFoundItems(
+  centerId?: string,
+  type?: string,
+  search?: string
+): Promise<LostFoundItem[]> {
+  const sql = getStoriesSql();
+
+  if (sql) {
+    try {
+      await ensureLostFoundSchema(sql);
+
+      const hasCenter = Boolean(centerId && centerId !== "all");
+      const hasType = Boolean(type && type !== "all");
+      const isCompletedType = type === "수령완료";
+      const hasSearch = Boolean(search && search.trim());
+      const searchPattern = hasSearch ? `%${search!.trim().toLowerCase()}%` : "";
+
+      const rows = (await sql<LostFoundRow[]>`
+        SELECT id, type, center_id, center_name, title, item_name, date, place, content, writer_name, contact, password, status, created_at
+        FROM public.lost_found
+        WHERE 1 = 1
+          ${hasCenter ? sql`AND center_id = ${centerId!}` : sql``}
+          ${hasType && !isCompletedType ? sql`AND type = ${type!}` : sql``}
+          ${isCompletedType ? sql`AND status = '수령완료'` : sql``}
+          ${
+            hasSearch
+              ? sql`AND (
+                  LOWER(title) LIKE ${searchPattern} OR
+                  LOWER(item_name) LIKE ${searchPattern} OR
+                  LOWER(content) LIKE ${searchPattern} OR
+                  LOWER(writer_name) LIKE ${searchPattern} OR
+                  LOWER(place) LIKE ${searchPattern}
+                )`
+              : sql``
+          }
+        ORDER BY created_at DESC
+      `) as LostFoundRow[];
+
+      return rows.map(rowToLostFound);
+    } catch (err) {
+      console.error("Supabase lost_found fetch failed, using fallback:", err);
+    }
+  }
+
+  // Fallback: 인메모리 필터링
+  let list = [...inMemoryItems];
+
+  if (centerId && centerId !== "all") {
+    list = list.filter((item) => item.centerId === centerId);
+  }
+
+  if (type && type !== "all") {
+    list = list.filter((item) => item.type === type || (type === "수령완료" && item.status === "수령완료"));
+  }
+
+  if (search && search.trim()) {
+    const q = search.trim().toLowerCase();
+    list = list.filter(
+      (item) =>
+        item.title.toLowerCase().includes(q) ||
+        item.itemName.toLowerCase().includes(q) ||
+        item.content.toLowerCase().includes(q) ||
+        item.writerName.toLowerCase().includes(q) ||
+        item.place.toLowerCase().includes(q)
+    );
+  }
+
+  return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+}
+
+/**
+ * 분실·습득물 등록 (Supabase DB 연동 + 폴백)
+ */
+export async function insertLostFoundItem(
+  item: Omit<LostFoundItem, "id" | "createdAt" | "status">
+): Promise<LostFoundItem> {
+  const maskedWriter = maskName(item.writerName);
+  const maskedPhone = maskContact(item.contact);
+  const id = `lf-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
+  const status: LostFoundStatus = item.type === "습득" ? "보관중" : "접수";
+  const nowIso = new Date().toISOString();
+
+  const sql = getStoriesSql();
+  if (sql) {
+    try {
+      await ensureLostFoundSchema(sql);
+
+      const [row] = (await sql<LostFoundRow[]>`
+        INSERT INTO public.lost_found (
+          id, type, center_id, center_name, title, item_name, date, place, content, writer_name, contact, password, status, created_at
+        ) VALUES (
+          ${id}, ${item.type}, ${item.centerId}, ${item.centerName}, ${item.title}, ${item.itemName},
+          ${item.date}, ${item.place}, ${item.content}, ${maskedWriter}, ${maskedPhone ?? null},
+          ${item.password ?? null}, ${status}, ${nowIso}
+        )
+        RETURNING id, type, center_id, center_name, title, item_name, date, place, content, writer_name, contact, password, status, created_at
+      `) as LostFoundRow[];
+
+      return rowToLostFound(row);
+    } catch (err) {
+      console.error("Supabase lost_found insert failed, fallback to memory:", err);
+    }
+  }
+
   const newItem: LostFoundItem = {
     ...item,
-    writerName: maskName(item.writerName),
-    contact: maskContact(item.contact),
-    id: `lf-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-    status: item.type === "습득" ? "보관중" : "접수",
-    createdAt: new Date().toISOString(),
+    id,
+    writerName: maskedWriter,
+    contact: maskedPhone,
+    status,
+    createdAt: nowIso,
   };
 
   inMemoryItems = [newItem, ...inMemoryItems];
   return newItem;
 }
 
+/**
+ * 분실·습득물 삭제 (Supabase DB 연동 + 폴백)
+ */
 export async function deleteLostFoundItem(id: string, password?: string): Promise<boolean> {
+  const sql = getStoriesSql();
+
+  if (sql) {
+    try {
+      await ensureLostFoundSchema(sql);
+
+      const [existing] = (await sql<LostFoundRow[]>`
+        SELECT id, password FROM public.lost_found WHERE id = ${id}
+      `) as LostFoundRow[];
+
+      if (!existing) return false;
+
+      if (existing.password && existing.password !== password) {
+        throw new Error("비밀번호가 일치하지 않습니다.");
+      }
+
+      await sql`DELETE FROM public.lost_found WHERE id = ${id}`;
+      return true;
+    } catch (err) {
+      if ((err as Error).message === "비밀번호가 일치하지 않습니다.") {
+        throw err;
+      }
+      console.error("Supabase lost_found delete failed, fallback to memory:", err);
+    }
+  }
+
   const target = inMemoryItems.find((i) => i.id === id);
   if (!target) return false;
 
-  // 비밀번호가 설정된 게시물인 경우 확인
   if (target.password && target.password !== password) {
     throw new Error("비밀번호가 일치하지 않습니다.");
   }
