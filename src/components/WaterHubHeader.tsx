@@ -74,6 +74,7 @@ export const menuItems: MenuItem[] = [
     subItems: [
       { label: "문의·건의", href: "/feedback" },
       { label: "FAQ", href: "/feedback#faq" },
+      { label: "분실·습득물 센터", href: "/lost-found" },
       { label: "개인정보처리방침", href: "/privacy" },
       { label: "이메일무단수집거부", href: "/email-rejection" },
     ],

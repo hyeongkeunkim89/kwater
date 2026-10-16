@@ -257,6 +257,8 @@ export default function LostFoundPage() {
           <div className="flex items-center gap-2 text-xs font-semibold text-sky-200 mb-3">
             <Link href="/" className="hover:text-white transition">홈</Link>
             <span>›</span>
+            <Link href="/feedback" className="hover:text-white transition">소통창구</Link>
+            <span>›</span>
             <span className="text-white">분실물찾기</span>
           </div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
