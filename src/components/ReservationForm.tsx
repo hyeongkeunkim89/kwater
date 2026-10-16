@@ -42,7 +42,7 @@ type StepIndex = 0 | 1 | 2;
 
 function StepIndicator({ current }: { current: StepIndex }) {
   return (
-    <ol className="flex items-center gap-0">
+    <ol className="flex items-center justify-center w-full gap-0">
       {STEPS.map((label, i) => {
         const done = i < current;
         const active = i === current;
@@ -51,7 +51,7 @@ function StepIndicator({ current }: { current: StepIndex }) {
             <div className="flex flex-col items-center gap-1">
               <span
                 className={[
-                  "flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold transition-colors",
+                  "flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-xs sm:text-sm font-bold transition-colors",
                   done
                     ? "bg-sky-600 text-white"
                     : active
@@ -63,8 +63,8 @@ function StepIndicator({ current }: { current: StepIndex }) {
               </span>
               <span
                 className={[
-                  "text-[11px] font-medium whitespace-nowrap",
-                  active ? "text-sky-700" : done ? "text-slate-600" : "text-slate-400",
+                  "text-[10px] sm:text-[11px] font-medium whitespace-nowrap",
+                  active ? "text-sky-700 font-bold" : done ? "text-slate-600" : "text-slate-400",
                 ].join(" ")}
               >
                 {label}
@@ -73,7 +73,7 @@ function StepIndicator({ current }: { current: StepIndex }) {
             {i < STEPS.length - 1 && (
               <div
                 className={[
-                  "mx-2 mt-[-14px] h-0.5 w-12 sm:w-20 transition-colors",
+                  "mx-1 sm:mx-2 mt-[-14px] h-0.5 w-4 sm:w-16 md:w-20 transition-colors",
                   done ? "bg-sky-500" : "bg-slate-200",
                 ].join(" ")}
               />

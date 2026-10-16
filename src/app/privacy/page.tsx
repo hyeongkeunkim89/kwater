@@ -31,8 +31,8 @@ export default function PrivacyPolicyPage() {
       </section>
 
       {/* 본문 콘텐츠 컨테이너 */}
-      <main className="flex-1 py-10 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl bg-white rounded-2xl shadow-xs border border-slate-200/80 p-6 sm:p-10 lg:p-12">
+      <main className="flex-1 py-6 sm:py-10 px-3 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl bg-white rounded-2xl shadow-xs border border-slate-200/80 p-4 sm:p-8 lg:p-12">
           
           {/* 개인정보처리방침 상세 렌더링 영역 */}
           <div
@@ -251,6 +251,7 @@ export default function PrivacyPolicyPage() {
 
         /* 6. 표 (Table) 반응형 및 디자인 */
         .privacy-policy-body .scrollTable {
+          position: relative;
           width: 100%;
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
@@ -259,6 +260,20 @@ export default function PrivacyPolicyPage() {
           border: 1px solid #cbd5e1;
           background-color: #ffffff;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        @media (max-width: 640px) {
+          .privacy-policy-body .scrollTable:before {
+            content: "👉 좌우로 밀어서(스크롤) 표 전체 내용을 확인하세요 👈";
+            display: block;
+            background: #f0f9ff;
+            color: #0284c7;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            padding: 7px 10px;
+            border-bottom: 1px dashed #bae6fd;
+            letter-spacing: -0.02em;
+          }
         }
         .privacy-policy-body table.basic_board_table {
           width: 100%;

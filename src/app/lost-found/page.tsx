@@ -349,18 +349,18 @@ export default function LostFoundPage() {
             </div>
 
             {/* 검색 및 글쓰기 버튼 */}
-            <div className="flex items-center gap-2">
-              <form onSubmit={handleSearchSubmit} className="flex items-center gap-1.5 flex-1 sm:flex-initial">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <form onSubmit={handleSearchSubmit} className="flex items-center gap-1.5 flex-1 min-w-0 sm:flex-initial">
                 <input
                   type="text"
-                  placeholder="제목, 물품명, 작성자 검색"
+                  placeholder="제목, 물품명 검색"
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
-                  className="w-full sm:w-56 text-xs sm:text-sm rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:border-[#004D95]"
+                  className="w-full min-w-0 sm:w-56 text-xs sm:text-sm rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:border-[#004D95]"
                 />
                 <button
                   type="submit"
-                  className="px-3.5 py-2 rounded-lg bg-slate-800 text-white text-xs font-bold hover:bg-slate-700 transition shrink-0"
+                  className="px-3.5 py-2 rounded-lg bg-slate-800 text-white text-xs font-bold hover:bg-slate-700 transition shrink-0 min-h-[38px]"
                 >
                   검색
                 </button>
@@ -369,7 +369,7 @@ export default function LostFoundPage() {
               <button
                 type="button"
                 onClick={handleOpenWriteModal}
-                className="px-4 py-2 rounded-lg bg-[#004D95] text-white text-xs sm:text-sm font-bold hover:bg-[#003876] transition shadow-xs shrink-0 flex items-center gap-1"
+                className="px-3.5 sm:px-4 py-2 rounded-lg bg-[#004D95] text-white text-xs sm:text-sm font-bold hover:bg-[#003876] transition shadow-xs shrink-0 flex items-center gap-1 min-h-[38px]"
               >
                 <span>✏️ 글쓰기</span>
               </button>
