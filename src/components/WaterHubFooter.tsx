@@ -26,7 +26,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
               className="h-8 w-auto object-contain shrink-0"
             />
             <p className="text-xs text-white/55">
-              © {new Date().getFullYear()} K-water 물문화관 · 내부 활용 자료
+              © {new Date().getFullYear()} K-water 온라인 물문화관 · 내부 활용 자료
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-white/50">
@@ -83,7 +83,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
               전국 물문화관에서 깨끗한 환경과 미래의 물 문화를 체험해 보세요.
             </p>
             <p className="mt-3 text-xs text-white/35">
-              본 홈페이지는 전국 K-water 물문화관의 홍보 및 가이드 투어 예약 관리를 위한 통합 포털입니다.
+              본 홈페이지는 전국 K-water 물문화관의 홍보 및 가이드 투어 예약 관리를 위한 온라인 물문화관입니다.
             </p>
           </div>
 

@@ -131,7 +131,7 @@ export function WaterHubHeader({
           >
             <Image
               src="/images/kwater_waterhub_logo.png"
-              alt="K-water 한국수자원공사 물문화관"
+              alt="K-water 온라인 물문화관"
               width={1024}
               height={341}
               className="h-[56px] sm:h-[68px] md:h-[76px] w-auto max-w-[240px] shrink-0 object-contain"
@@ -380,7 +380,7 @@ export function WaterHubHeader({
                 </div>
               ) : (
                 <div className="space-y-2.5">
-                  <p className="text-xs font-bold text-slate-500">물문화관 방문을 환영합니다!</p>
+                  <p className="text-xs font-bold text-slate-500">K-water 온라인 물문화관 방문을 환영합니다!</p>
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       onClick={() => {

@@ -22,7 +22,7 @@ export default function EmailRejectionPage() {
             이메일무단수집거부
           </h1>
           <p className="mt-2.5 text-sm sm:text-base text-sky-100 max-w-none leading-relaxed break-keep">
-            K-water 물문화관 통합 포털은 이용자의 소중한 개인정보와 전자우편주소를 안전하게 보호합니다.
+            K-water 온라인 물문화관은 이용자의 소중한 개인정보와 전자우편주소를 안전하게 보호합니다.
           </p>
         </div>
       </section>
@@ -42,7 +42,7 @@ export default function EmailRejectionPage() {
                   K-water의 전자우편주소 무단수집 대응방침
                 </h2>
                 <p className="text-sm sm:text-base text-slate-700 leading-relaxed break-keep">
-                  본 K-water 물문화관 통합 포털에 게시된 이메일 주소가 전자우편 수집 프로그램이나 그 밖의 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반 시 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」에 의해 형사 처벌됨을 유념하시기 바랍니다.
+                  본 K-water 온라인 물문화관에 게시된 이메일 주소가 전자우편 수집 프로그램이나 그 밖의 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반 시 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」에 의해 형사 처벌됨을 유념하시기 바랍니다.
                 </p>
                 <div className="mt-4 pt-4 border-t border-slate-200/60 flex items-center gap-2 text-xs text-slate-500 font-medium">
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-sky-500" />

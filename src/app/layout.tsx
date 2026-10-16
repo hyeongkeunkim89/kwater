@@ -11,11 +11,11 @@ const notoSansKr = Noto_Sans_KR({
 
 export const metadata: Metadata = {
   title: {
-    default: "K-water 물문화관 통합 포털 | 전국 거점 안내",
-    template: "%s | K-water 물문화관 통합 포털",
+    default: "K-water 온라인 물문화관 | 전국 거점 안내",
+    template: "%s | K-water 온라인 물문화관",
   },
   description:
-    "한국수자원공사 물문화관의 개요, 위치, 운영 현황 및 가이드 투어 예약을 한눈에 확인할 수 있는 K-water 물문화관 통합 포털입니다.",
+    "한국수자원공사 물문화관의 개요, 위치, 운영 현황 및 가이드 투어 예약을 한눈에 확인할 수 있는 K-water 온라인 물문화관입니다.",
   icons: {
     icon: "/icon.png?v=4",
     shortcut: "/icon.png?v=4",

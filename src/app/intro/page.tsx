@@ -6,7 +6,7 @@ import { WaterHubFooter } from "@/components/WaterHubFooter";
 export const metadata = {
   title: "문화관 소개 & 인사말",
   description:
-    "사람과 물, 문화가 어우러지는 수변 공간. K-water 물문화관 통합 포털을 찾아주신 모든 분께 전하는 인사말입니다.",
+    "사람과 물, 문화가 어우러지는 수변 공간. K-water 온라인 물문화관을 찾아주신 모든 분께 전하는 인사말입니다.",
 };
 
 export default function IntroPage() {
@@ -32,7 +32,7 @@ export default function IntroPage() {
     },
   ];
 
-  // K-water 물문화관 통합 포털 주요 제공 서비스
+  // K-water 온라인 물문화관 주요 제공 서비스
   const hubServices = [
     {
       title: "전국 15개 거점 현황 지도",
@@ -50,7 +50,7 @@ export default function IntroPage() {
       title: "층별 시설 & 전시 안내",
       desc: "각 물문화관별 실내 전시 공간 구성, 층별 주요 시설, 힐링 쉼터 안내 정보를 살펴보세요.",
       btnLabel: "시설안내 보기",
-      path: "/centers",
+      path: "/status?view=list",
     },
     {
       title: "물문화 소식 & 행사",
@@ -121,7 +121,7 @@ export default function IntroPage() {
             <div className="space-y-6 text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
               <p className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed">
                 안녕하세요, 물문화관을 찾아주신 여러분.<br />
-                K-water 물문화관 통합 포털을 방문해 주셔서 진심으로 감사드립니다.
+                K-water 온라인 물문화관을 방문해 주셔서 진심으로 감사드립니다.
               </p>
 
               <p>
@@ -190,12 +190,12 @@ export default function IntroPage() {
           </div>
         </section>
 
-        {/* 4. 포털 주요 이용 안내 */}
-        <section aria-label="통합 포털 서비스 안내" className="space-y-6">
+        {/* 4. 온라인 물문화관 주요 이용 안내 */}
+        <section aria-label="온라인 물문화관 서비스 안내" className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200">
             <div>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                통합 포털 이용 안내
+                온라인 물문화관 이용 안내
               </h2>
               <p className="mt-1 text-xs sm:text-sm text-slate-500 font-medium">
                 방문하시는 모든 분의 편리한 이용을 위한 4가지 핵심 기능입니다.

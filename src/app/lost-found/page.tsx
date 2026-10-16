@@ -115,7 +115,7 @@ export default function LostFoundPage() {
   };
 
   useEffect(() => {
-    document.title = "분실물찾기 | K-water 물문화관 통합 포털";
+    document.title = "분실물찾기 | K-water 온라인 물문화관";
   }, []);
 
   useEffect(() => {
