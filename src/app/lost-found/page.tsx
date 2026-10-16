@@ -18,39 +18,53 @@ export const LOST_FOUND_CENTERS = [
 ];
 
 const CENTER_TEL_MAP: Record<string, string> = {
-  "the-arc": "053-667-2700",
-  "han-river": "031-880-6200",
-  "geum-river": "041-830-0600",
+  // 4대강 문화관 (공식 안내데스크 직통)
+  "the-arc": "053-585-0916",
+  "han-river": "031-880-6242",
+  "geum-river": "041-835-1529",
   "yeongsan-river": "061-335-0866",
-  "nakdong-river": "051-201-0884",
-  soyang: "033-240-1500",
-  chungju: "043-840-2266",
+  "nakdong-river": "051-292-1042",
+
+  // 전국 15대 댐 물문화관 (K-water 공식 홈페이지 기준 물문화관 안내데스크 직통)
+  soyang: "033-259-7309",
+  chungju: "043-846-6482",
   daecheong: "042-930-7332",
-  andong: "054-850-4203",
-  "peace-dam": "033-440-1604",
-  hoengseong: "033-340-0250",
-  hapcheon: "055-930-5205",
-  yongdam: "063-430-4204",
-  juam: "061-750-4205",
-  jangheung: "061-860-3204",
-  buan: "063-580-3204",
-  hantan: "031-839-4204",
-  namgang: "055-760-2204",
-  miryang: "055-350-6204",
-  gimcheon: "054-420-9204",
+  andong: "054-850-4229",
+  "peace-dam": "033-480-1511",
+  hoengseong: "033-340-0255",
+  hapcheon: "055-930-5240",
+  yongdam: "063-430-4263",
+  juam: "061-749-7190",
+  jangheung: "061-860-3302",
+  buan: "063-580-3273",
+  hantan: "031-830-4243",
+  namgang: "055-760-1266",
+  miryang: "055-359-3271",
+  gimcheon: "054-420-2635",
 };
 
 function getCenterPhone(centerId?: string, centerName?: string) {
   if (centerId && CENTER_TEL_MAP[centerId]) return CENTER_TEL_MAP[centerId];
-  if (centerName?.includes("한강")) return "031-880-6200";
-  if (centerName?.includes("금강")) return "041-830-0600";
+  if (centerName?.includes("한강")) return "031-880-6242";
+  if (centerName?.includes("금강")) return "041-835-1529";
   if (centerName?.includes("영산강")) return "061-335-0866";
-  if (centerName?.includes("디아크")) return "053-667-2700";
-  if (centerName?.includes("낙동강")) return "051-201-0884";
-  if (centerName?.includes("소양강")) return "033-240-1500";
-  if (centerName?.includes("충주")) return "043-840-2266";
+  if (centerName?.includes("디아크")) return "053-585-0916";
+  if (centerName?.includes("낙동강")) return "051-292-1042";
+  if (centerName?.includes("소양강")) return "033-259-7309";
+  if (centerName?.includes("충주")) return "043-846-6482";
   if (centerName?.includes("대청")) return "042-930-7332";
-  if (centerName?.includes("안동")) return "054-850-4203";
+  if (centerName?.includes("안동")) return "054-850-4229";
+  if (centerName?.includes("평화")) return "033-480-1511";
+  if (centerName?.includes("횡성")) return "033-340-0255";
+  if (centerName?.includes("합천")) return "055-930-5240";
+  if (centerName?.includes("용담")) return "063-430-4263";
+  if (centerName?.includes("주암")) return "061-749-7190";
+  if (centerName?.includes("장흥")) return "061-860-3302";
+  if (centerName?.includes("부안")) return "063-580-3273";
+  if (centerName?.includes("한탄강")) return "031-830-4243";
+  if (centerName?.includes("남강")) return "055-760-1266";
+  if (centerName?.includes("밀양")) return "055-359-3271";
+  if (centerName?.includes("김천") || centerName?.includes("부항")) return "054-420-2635";
   return "1577-0600";
 }
 
@@ -502,11 +516,11 @@ export default function LostFoundPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-xs">
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">한강물문화관</span>
-                <a href="tel:031-880-6200" className="text-[#004D95] font-bold hover:underline">031-880-6200</a>
+                <a href="tel:031-880-6242" className="text-[#004D95] font-bold hover:underline">031-880-6242</a>
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">금강문화관</span>
-                <a href="tel:041-830-0600" className="text-[#004D95] font-bold hover:underline">041-830-0600</a>
+                <a href="tel:041-835-1529" className="text-[#004D95] font-bold hover:underline">041-835-1529</a>
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">영산강문화관</span>
@@ -514,26 +528,30 @@ export default function LostFoundPage() {
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">디아크 문화관</span>
-                <a href="tel:053-667-2700" className="text-[#004D95] font-bold hover:underline">053-667-2700</a>
+                <a href="tel:053-585-0916" className="text-[#004D95] font-bold hover:underline">053-585-0916</a>
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">낙동강문화관</span>
-                <a href="tel:051-201-0884" className="text-[#004D95] font-bold hover:underline">051-201-0884</a>
+                <a href="tel:051-292-1042" className="text-[#004D95] font-bold hover:underline">051-292-1042</a>
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">소양강댐 물문화관</span>
-                <a href="tel:033-240-1500" className="text-[#004D95] font-bold hover:underline">033-240-1500</a>
+                <a href="tel:033-259-7309" className="text-[#004D95] font-bold hover:underline">033-259-7309</a>
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">충주댐 물문화관</span>
-                <a href="tel:043-840-2266" className="text-[#004D95] font-bold hover:underline">043-840-2266</a>
+                <a href="tel:043-846-6482" className="text-[#004D95] font-bold hover:underline">043-846-6482</a>
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
                 <span className="font-semibold text-slate-800">대청댐 물문화관</span>
                 <a href="tel:042-930-7332" className="text-[#004D95] font-bold hover:underline">042-930-7332</a>
               </div>
               <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
-                <span className="font-semibold text-slate-800">K-water 고객센터</span>
+                <span className="font-semibold text-slate-800">안동댐 물문화관</span>
+                <a href="tel:054-850-4229" className="text-[#004D95] font-bold hover:underline">054-850-4229</a>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between sm:col-span-2 md:col-span-3">
+                <span className="font-semibold text-slate-800">K-water 고객센터 (통합 민원)</span>
                 <a href="tel:1577-0600" className="text-[#004D95] font-bold hover:underline">1577-0600</a>
               </div>
             </div>
