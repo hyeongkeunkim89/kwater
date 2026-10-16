@@ -7,7 +7,7 @@ import { WaterHubFooter } from "@/components/WaterHubFooter";
 export default function EmailRejectionPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-sky-500 selection:text-white">
-      <WaterHubHeader activeNav="intro" />
+      <WaterHubHeader activeNav="feedback" />
 
       {/* 상단 배너 헤더 */}
       <section className="relative overflow-hidden bg-gradient-to-r from-[#003876] via-[#004D95] to-[#1E6BBA] text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -15,6 +15,8 @@ export default function EmailRejectionPage() {
         <div className="relative mx-auto max-w-5xl">
           <div className="flex items-center gap-2 text-xs font-semibold text-sky-200 mb-3">
             <Link href="/" className="hover:text-white transition">홈</Link>
+            <span>›</span>
+            <Link href="/feedback" className="hover:text-white transition">소통창구</Link>
             <span>›</span>
             <span className="text-white">이메일무단수집거부</span>
           </div>

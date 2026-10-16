@@ -74,6 +74,8 @@ export const menuItems: MenuItem[] = [
     subItems: [
       { label: "문의·건의", href: "/feedback" },
       { label: "FAQ", href: "/feedback#faq" },
+      { label: "개인정보처리방침", href: "/privacy" },
+      { label: "이메일무단수집거부", href: "/email-rejection" },
     ],
   },
 ];
@@ -327,7 +329,7 @@ export function WaterHubHeader({
             <div className="flex items-center gap-2">
               <span className="text-lg">🌊</span>
               <span className="font-black text-sm text-white tracking-wide">
-                K-water 물문화관 전체메뉴
+                K-water 온라인 물문화관 전체메뉴
               </span>
             </div>
             <button
