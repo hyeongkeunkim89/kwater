@@ -147,7 +147,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
                 href="/feedback"
                 className="text-white/70 hover:text-white transition"
               >
-                제안ㆍ건의센터
+                소통창구 (문의 & FAQ)
               </Link>
             </li>
             <li className="text-white/20">|</li>
@@ -156,7 +156,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
                 href="/lost-found"
                 className="text-white/70 hover:text-white transition"
               >
-                분실물찾기
+                분실·습득물 센터
               </Link>
             </li>
           </ul>

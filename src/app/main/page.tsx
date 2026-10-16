@@ -41,7 +41,7 @@ export default function MainPage() {
       btnLabel: "시설 안내 보기",
       badge: "시청각 영상실",
       image: "/images/cards/kwater_official_facility.png",
-      path: "/centers",
+      path: "/status?view=list",
       icon: (
         <svg className="h-3.5 w-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h6m-6 0V11m0 0h6" />
@@ -130,20 +130,20 @@ export default function MainPage() {
                   <Link
                     key={card.title}
                     href={card.path}
-                    className="group relative flex flex-col sm:flex-row overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md h-32 sm:h-36"
+                    className="group relative flex flex-row items-stretch overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md min-h-[120px] sm:h-36"
                   >
-                    {/* 1. 좌측 썸네일 이미지 (블루 박스 카드 규격) */}
-                    <div className="relative h-32 sm:h-36 sm:w-48 shrink-0 overflow-hidden bg-slate-100">
+                    {/* 1. 좌측 썸네일 이미지 */}
+                    <div className="relative w-28 xs:w-32 sm:w-48 shrink-0 overflow-hidden bg-slate-100">
                       <Image
                         src={card.image}
                         alt={card.title}
                         fill
                         className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, 200px"
+                        sizes="(max-width: 640px) 130px, 200px"
                       />
                       {/* 상단 뱃지 */}
-                      <div className="absolute left-3 top-3 z-10">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-white/20 px-2.5 py-0.5 text-[11px] font-bold text-white backdrop-blur-md shadow-xs">
+                      <div className="absolute left-2 top-2 sm:left-3 sm:top-3 z-10">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/80 border border-white/20 px-2 py-0.5 sm:px-2.5 text-[10px] sm:text-[11px] font-bold text-white backdrop-blur-md shadow-xs">
                           {card.icon}
                           <span>{card.badge}</span>
                         </span>
@@ -151,17 +151,17 @@ export default function MainPage() {
                     </div>
 
                     {/* 2. 우측 정보 및 버튼 영역 */}
-                    <div className="p-3.5 sm:p-4 flex flex-col justify-between flex-1 bg-white min-w-0">
+                    <div className="p-3 sm:p-4 flex flex-col justify-between flex-1 bg-white min-w-0">
                       <div>
-                        <h3 className="text-sm sm:text-base font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200">
+                        <h3 className="text-xs sm:text-base font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200 line-clamp-1">
                           {card.title}
                         </h3>
-                        <p className="mt-1 text-xs sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">
+                        <p className="mt-1 text-[11px] sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">
                           {card.desc}
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
+                      <div className="pt-1.5 sm:pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-sm font-black text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
                         <span>{card.btnLabel}</span>
                         <span className="text-xs sm:text-sm font-black transform group-hover:translate-x-1.5 transition-transform duration-200">
                           →
