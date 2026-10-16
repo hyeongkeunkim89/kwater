@@ -449,6 +449,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     saveUserSession(userProfile);
     closeAuthModal();
 
+    // 3. 서버 Supabase users 테이블 영구 저장
+    try {
+      await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: userProfile.email,
+          name: userProfile.name,
+          phone: userProfile.phone,
+          provider: "email",
+          role: "user",
+        }),
+      });
+    } catch (e) {
+      console.warn("Failed to sync registered user to Supabase:", e);
+    }
+
     alert(`🎉 ${newUser.name} 님의 회원가입이 완료되었습니다!\n마이페이지로 이동합니다.`);
     window.location.href = "/mypage";
     return true;

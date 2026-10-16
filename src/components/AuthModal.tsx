@@ -420,6 +420,30 @@ export function AuthModal() {
               </p>
             </div>
 
+            {/* 소셜 1초 간편가입 버튼 그룹 */}
+            <div className="space-y-2 pt-1">
+              <button
+                type="button"
+                onClick={() => handleSocialClick("kakao")}
+                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-black text-[#191919] transition hover:bg-[#FDD800] shadow-sm"
+              >
+                <span>💬 카카오로 1초 간편가입</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleSocialClick("naver")}
+                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-black text-white transition hover:bg-[#02B351] shadow-sm"
+              >
+                <span>N 네이버로 1초 간편가입</span>
+              </button>
+            </div>
+
+            <div className="relative flex items-center justify-center my-3">
+              <div className="w-full border-t border-slate-200" />
+              <span className="absolute bg-white px-3 text-xs text-slate-400 font-bold">또는 직접 정보 입력하여 가입</span>
+            </div>
+
             <form onSubmit={handleSignUpSubmit} className="space-y-3.5 pt-1 text-left">
               {/* 1. 이름 */}
               <div>

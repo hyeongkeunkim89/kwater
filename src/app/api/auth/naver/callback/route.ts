@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { upsertUserToDb } from "@/lib/usersDb";
 
 function getOrigin(request: Request): string {
   if (process.env.NEXT_PUBLIC_SITE_URL?.trim()) {
@@ -81,6 +82,15 @@ export async function GET(request: Request) {
       console.error("Naver OAuth fetch error:", err);
     }
   }
+
+  // Supabase users 테이블에 회원 자동 저장(UPSERT)
+  await upsertUserToDb({
+    email: userInfo.email,
+    name: userInfo.name,
+    phone: userInfo.phone,
+    provider: "naver",
+    role: userInfo.role,
+  });
 
   // 3. 100% 무조건 정상 회원 세션으로 리다이렉트 (URL payload + Cookie 동시 탑재)
   const sessionPayload = encodeURIComponent(JSON.stringify(userInfo));
