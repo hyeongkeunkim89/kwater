@@ -23,3 +23,7 @@ CREATE TABLE IF NOT EXISTS center_floor_photos (
 -- 문화관·층별 목록 조회 + sort_order·created_at 정렬에 사용
 CREATE INDEX IF NOT EXISTS center_floor_photos_center_floor_idx
   ON center_floor_photos (center_id, floor_key, sort_order ASC, created_at DESC);
+
+ALTER TABLE center_floor_photos ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public Read Center Floor Photos" ON center_floor_photos;
+CREATE POLICY "Public Read Center Floor Photos" ON center_floor_photos FOR SELECT USING (true);
