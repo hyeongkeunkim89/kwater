@@ -27,10 +27,10 @@ export async function GET(request: Request) {
   const naverClientId =
     process.env.NEXT_PUBLIC_NAVER_CLIENT_ID ||
     process.env.NAVER_CLIENT_ID ||
-    "ez59NAw05RUXlwQXgv3x";
+    "";
   const naverClientSecret =
     process.env.NAVER_CLIENT_SECRET ||
-    "d3RJUpyrP0";
+    "";
   const redirectUri = `${origin}/api/auth/naver/callback`;
 
   let userInfo = {

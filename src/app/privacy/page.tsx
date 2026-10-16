@@ -34,6 +34,71 @@ export default function PrivacyPolicyPage() {
       <main className="flex-1 py-6 sm:py-10 px-3 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl bg-white rounded-2xl shadow-xs border border-slate-200/80 p-4 sm:p-8 lg:p-12">
           
+          {/* 간편로그인(소셜 로그인) 연계 개인정보 수집·이용 고지 (카카오·네이버 검수 및 공사 보안지침 준수) */}
+          <div className="mb-8 rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50/70 via-white to-blue-50/50 p-5 sm:p-6 shadow-xs">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#004D95] text-white text-xs font-black shadow-xs">
+                K
+              </span>
+              <h2 className="text-base sm:text-lg font-black text-slate-900">
+                간편로그인(소셜 계정) 연계 개인정보 처리 고지
+              </h2>
+              <span className="ml-auto inline-flex items-center rounded-full bg-sky-100 px-2.5 py-0.5 text-[11px] font-bold text-sky-800">
+                카카오 · 네이버 연동
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-keep mb-4">
+              K-water 온라인 물문화관은 관람객의 편리한 서비스 이용을 위해 <strong>카카오(Kakao)</strong> 및 <strong>네이버(Naver)</strong> 간편인증 로그인을 지원하며, 「개인정보 보호법」 제15조 및 제16조에 따라 최소한의 정보만을 적법하게 처리합니다.
+            </p>
+
+            <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                  <tr>
+                    <th className="py-2.5 px-3.5 w-1/4">연계 서비스</th>
+                    <th className="py-2.5 px-3.5 w-1/4">처리 목적</th>
+                    <th className="py-2.5 px-3.5 w-1/4">수집 항목</th>
+                    <th className="py-2.5 px-3.5 w-1/4">보유 및 이용기간</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-600">
+                  <tr>
+                    <td className="py-3 px-3.5 font-semibold text-slate-800">
+                      <div className="flex items-center gap-1.5">
+                        <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#FEE500] border border-amber-300" />
+                        <span>카카오 로그인</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#03C75A]" />
+                        <span>네이버 로그인</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      • 회원 식별 및 로그인 인증<br />
+                      • 물문화관 가이드 투어 예약 확인 및 알림<br />
+                      • 소통과 의견 게시글 등록 및 본인 확인
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      • <strong className="text-slate-800">[필수]</strong> 이름(닉네임), 이메일, 계정 식별자<br />
+                      • <strong className="text-slate-500">[선택]</strong> 휴대전화번호
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed font-medium text-slate-700">
+                      <strong>회원 탈퇴 시</strong> 또는 <strong>소셜 계정 연동 해제 시</strong>까지<br />
+                      <span className="text-[11px] text-slate-400 font-normal">※ 목적 달성 시 복구 불가능한 방법으로 영구 파기</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-3.5 text-[11px] sm:text-xs text-slate-500 flex items-start gap-1.5 leading-relaxed">
+              <span className="text-sky-600 font-bold shrink-0">ℹ️</span>
+              <span>
+                정보주체는 소셜 연동을 통한 개인정보 제공을 거부할 권리가 있습니다. 동의를 거부하시더라도 전시관 소개, 관람 안내, 비회원 예약 조회 등 물문화관의 기본 서비스는 제한 없이 이용하실 수 있습니다.
+              </span>
+            </div>
+          </div>
+
           {/* 개인정보처리방침 상세 렌더링 영역 */}
           <div
             className="privacy-policy-body text-slate-800 leading-relaxed"

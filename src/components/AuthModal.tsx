@@ -325,20 +325,28 @@ export function AuthModal() {
               </p>
             </div>
 
-            {/* 소셜 로그인 버튼 그룹 */}
+            {/* 소셜 로그인 버튼 그룹 (카카오/네이버 공식 심사 가이드라인 준수) */}
             <div className="space-y-2 pt-1">
               <button
+                type="button"
                 onClick={() => handleSocialClick("kakao")}
-                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-black text-[#191919] transition hover:bg-[#FDD800] shadow-sm"
+                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-bold text-[#191919] transition hover:bg-[#FDD800] shadow-xs active:scale-[0.99]"
               >
-                <span>💬 카카오 1초 로그인</span>
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 3C6.477 3 2 6.477 2 10.767c0 2.766 1.843 5.19 4.636 6.564l-.946 3.473a.4.4 0 00.518.477l4.137-2.738c.535.053 1.084.084 1.655.084 5.523 0 10-3.477 10-7.767S17.523 3 12 3z" />
+                </svg>
+                <span>카카오 로그인</span>
               </button>
 
               <button
+                type="button"
                 onClick={() => handleSocialClick("naver")}
-                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-black text-white transition hover:bg-[#02B351] shadow-sm"
+                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-bold text-white transition hover:bg-[#02B351] shadow-xs active:scale-[0.99]"
               >
-                <span>N 네이버 1초 로그인</span>
+                <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z" />
+                </svg>
+                <span>네이버 로그인</span>
               </button>
             </div>
 
@@ -420,22 +428,28 @@ export function AuthModal() {
               </p>
             </div>
 
-            {/* 소셜 1초 간편가입 버튼 그룹 */}
+            {/* 소셜 간편가입 버튼 그룹 (카카오/네이버 공식 심사 가이드라인 준수) */}
             <div className="space-y-2 pt-1">
               <button
                 type="button"
                 onClick={() => handleSocialClick("kakao")}
-                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-black text-[#191919] transition hover:bg-[#FDD800] shadow-sm"
+                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-bold text-[#191919] transition hover:bg-[#FDD800] shadow-xs active:scale-[0.99]"
               >
-                <span>💬 카카오로 1초 간편가입</span>
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 3C6.477 3 2 6.477 2 10.767c0 2.766 1.843 5.19 4.636 6.564l-.946 3.473a.4.4 0 00.518.477l4.137-2.738c.535.053 1.084.084 1.655.084 5.523 0 10-3.477 10-7.767S17.523 3 12 3z" />
+                </svg>
+                <span>카카오로 시작하기</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleSocialClick("naver")}
-                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-black text-white transition hover:bg-[#02B351] shadow-sm"
+                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-bold text-white transition hover:bg-[#02B351] shadow-xs active:scale-[0.99]"
               >
-                <span>N 네이버로 1초 간편가입</span>
+                <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z" />
+                </svg>
+                <span>네이버로 시작하기</span>
               </button>
             </div>
 

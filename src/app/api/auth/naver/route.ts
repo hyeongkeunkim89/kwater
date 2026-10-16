@@ -23,7 +23,12 @@ export function GET(request: Request) {
   const naverClientId =
     process.env.NEXT_PUBLIC_NAVER_CLIENT_ID ||
     process.env.NAVER_CLIENT_ID ||
-    "ez59NAw05RUXlwQXgv3x";
+    "";
+
+  if (!naverClientId) {
+    // 키가 설정되지 않은 경우 안내 파라미터와 함께 마이페이지로 안전 리다이렉트
+    return NextResponse.redirect(`${origin}/mypage?notice=naver_demo_mode`);
+  }
 
   const redirectUri = `${origin}/api/auth/naver/callback`;
 
