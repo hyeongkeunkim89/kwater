@@ -258,10 +258,26 @@ export default async function CenterDetailPage({ params }: Props) {
               <h1 className="mt-3 text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
                 {center.name}
               </h1>
-              <p className="mt-2.5 text-sm font-semibold text-slate-500 flex items-center gap-1.5">
-                <span>📍</span>
-                <span>{formatCenterRegionLine(center)}</span>
-              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-semibold text-slate-500">
+                <span className="flex items-center gap-1.5">
+                  <span aria-hidden>📍</span>
+                  <span>{formatCenterRegionLine(center)}</span>
+                </span>
+                <span className="hidden sm:inline text-slate-300" aria-hidden>•</span>
+                <a
+                  href={`tel:${center.contactPhone}`}
+                  className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 -ml-1 text-sky-700 hover:text-sky-900 hover:bg-sky-100/70 transition active:scale-95 border border-sky-200/60 bg-sky-50/50 sm:border-transparent sm:bg-transparent"
+                  title={`${center.name} 전화 문의 (${center.contactPhone})`}
+                >
+                  <span aria-hidden>📞</span>
+                  <span className="font-bold underline underline-offset-4 decoration-sky-300 hover:decoration-sky-600">
+                    {center.contactPhone}
+                  </span>
+                  <span className="text-[11px] font-bold text-sky-700 bg-sky-100 px-1.5 py-0.5 rounded sm:hidden">
+                    전화걸기
+                  </span>
+                </a>
+              </div>
             </div>
             <Link
               href={`/reserve?center=${center.id}`}
@@ -409,20 +425,40 @@ export default async function CenterDetailPage({ params }: Props) {
               <span className="w-20 shrink-0 font-bold text-slate-900">명절·기타</span>
               <span className="text-slate-600">{center.holidayClosureSummary}</span>
             </div>
+            <div className="flex items-center gap-3">
+              <span className="w-20 shrink-0 font-bold text-slate-900">문의전화</span>
+              <a
+                href={`tel:${center.contactPhone}`}
+                className="inline-flex items-center gap-2 font-bold text-sky-700 hover:text-sky-900 transition hover:underline py-1 -my-1"
+                title={`${center.name} 안내데스크 전화 걸기`}
+              >
+                <span>{center.contactPhone}</span>
+                <span className="rounded-md bg-sky-50 px-2 py-0.5 text-xs font-bold text-sky-700 border border-sky-200">
+                  전화걸기
+                </span>
+              </a>
+            </div>
             <p className="text-xs text-slate-400">{center.statusNote}</p>
           </div>
           <div className="flex flex-wrap gap-3 border-t border-slate-100 px-6 py-5">
             <a
+              href={`tel:${center.contactPhone}`}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-sky-200 bg-sky-50 px-5 py-3 text-sm font-bold text-sky-800 transition hover:bg-sky-100 active:scale-95 min-h-[44px] w-full sm:w-auto"
+            >
+              <span>📞</span>
+              <span>안내데스크 전화 문의 ({center.contactPhone})</span>
+            </a>
+            <a
               href={naverMapSearchHref(center)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 shadow-xs"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 shadow-xs min-h-[44px] flex-1 sm:flex-none"
             >
               지도에서 위치 열기 ↗
             </a>
             <Link
               href={`/reserve?center=${center.id}`}
-              className="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-sm font-black text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20 active:scale-95"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-sm font-black text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20 active:scale-95 min-h-[44px] flex-1 sm:flex-none"
             >
               <span>🗓</span> 가이드 투어 예약하기
             </Link>
