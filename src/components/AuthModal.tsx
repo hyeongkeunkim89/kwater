@@ -53,6 +53,13 @@ export function AuthModal() {
   const [guestPin, setGuestPin] = useState("");
   const [showGuestModalPin, setShowGuestModalPin] = useState(false);
 
+  // 탭 전환 시 또는 모달 열림/닫힘 시 비회원 조회 및 패스워드 입력값 초기화
+  useEffect(() => {
+    setGuestPhone("");
+    setGuestPin("");
+    setShowGuestModalPin(false);
+  }, [tab, isAuthOpen]);
+
   if (!isAuthOpen) return null;
 
   // 전화번호 자동 하이픈 포맷팅
@@ -243,8 +250,10 @@ export function AuthModal() {
       alert("휴대폰 번호와 비회원 비밀번호 4자리를 입력해주세요.");
       return;
     }
+    const targetPhone = guestPhone;
+    const targetPin = guestPin;
     closeAuthModal();
-    router.push(`/reserve?tab=lookup&phone=${encodeURIComponent(guestPhone)}&pin=${encodeURIComponent(guestPin)}`);
+    router.push(`/reserve?tab=lookup&phone=${encodeURIComponent(targetPhone)}&pin=${encodeURIComponent(targetPin)}`);
   };
 
   return (
@@ -674,6 +683,7 @@ export function AuthModal() {
                   type="tel"
                   inputMode="numeric"
                   maxLength={13}
+                  autoComplete="off"
                   value={guestPhone}
                   onChange={(e) => setGuestPhone(formatPhone(e.target.value))}
                   placeholder="010-1234-5678"
@@ -687,6 +697,7 @@ export function AuthModal() {
                   <input
                     type={showGuestModalPin ? "text" : "password"}
                     maxLength={4}
+                    autoComplete="new-password"
                     value={guestPin}
                     onChange={(e) => setGuestPin(e.target.value)}
                     placeholder="예약 시 설정한 비밀번호 4자리"
