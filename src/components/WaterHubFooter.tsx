@@ -121,58 +121,61 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
           </div>
         </div>
 
-        {/* 주요 정책 및 법적 고지 바 (riverguide 스타일 반영) */}
-        <div className="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-          <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-            <li>
+        {/* 주요 정책 및 법적 고지 바 (모바일 2x2 격자 정돈 & 관리자 로그인 우측 정렬) */}
+        <div className="mt-8 pt-5 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <ul className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-2 text-xs">
+            <li className="flex items-center">
               <Link
                 href="/privacy"
                 className="font-black text-amber-300 sm:text-yellow-400 hover:text-yellow-300 underline underline-offset-4 tracking-tight"
               >
                 개인정보처리방침
               </Link>
+              <span className="hidden sm:inline text-white/20 ml-4">|</span>
             </li>
-            <li className="text-white/20">|</li>
-            <li>
+            <li className="flex items-center">
               <Link
                 href="/email-rejection"
-                className="text-white/70 hover:text-white transition"
+                className="text-white/70 hover:text-white transition break-keep"
               >
                 이메일무단수집거부
               </Link>
+              <span className="hidden sm:inline text-white/20 ml-4">|</span>
             </li>
-            <li className="text-white/20">|</li>
-            <li>
+            <li className="flex items-center">
               <Link
                 href="/feedback"
-                className="text-white/70 hover:text-white transition"
+                className="text-white/70 hover:text-white transition break-keep"
               >
                 소통창구 (문의 & FAQ)
               </Link>
+              <span className="hidden sm:inline text-white/20 ml-4">|</span>
             </li>
-            <li className="text-white/20">|</li>
-            <li>
+            <li className="flex items-center">
               <Link
                 href="/lost-found"
-                className="text-white/70 hover:text-white transition"
+                className="text-white/70 hover:text-white transition break-keep"
               >
                 분실·습득물 센터
               </Link>
             </li>
           </ul>
 
-          <div className="flex items-center gap-3 text-xs">
+          <div className="flex items-center justify-end w-full sm:w-auto text-xs shrink-0">
             {user?.role === "admin" ? (
-              <Link href="/mypage" className="hover:text-white transition font-bold text-amber-400">
-                🏛️ 통합 관리자 콘솔 바로가기
+              <Link
+                href="/mypage"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 px-2.5 py-1 text-amber-300 hover:bg-amber-500/20 hover:text-amber-200 transition font-bold border border-amber-500/30"
+              >
+                <span>🏛️ 통합 관리자 콘솔</span>
               </Link>
             ) : (
               <button
                 type="button"
                 onClick={() => openAuthModal("admin")}
-                className="text-white/50 hover:text-white transition font-semibold"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-white/5 hover:bg-white/10 px-2.5 py-1 text-white/60 hover:text-white transition font-medium border border-white/10"
               >
-                🛡️ 관리자 로그인
+                <span>🛡️ 관리자 로그인</span>
               </button>
             )}
           </div>
