@@ -55,7 +55,7 @@ export const menuItems: MenuItem[] = [
     subItems: [
       { label: "공지사항", href: "/news" },
       { label: "행사·이벤트", href: "/events" },
-      { label: "물이야기", href: "/mul-iyagi" },
+      { label: "물 이야기 갤러리", href: "/mul-iyagi" },
     ],
   },
   {
