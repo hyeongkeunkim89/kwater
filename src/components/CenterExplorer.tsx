@@ -157,7 +157,7 @@ export function CenterExplorer() {
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 rounded-2xl border border-slate-200 bg-white p-3.5 sm:px-5 sm:py-4 min-w-0 max-w-full">
             <div className="flex items-center gap-2">
               <label className="text-xs font-bold uppercase tracking-widest text-slate-400">
                 {centerExplorerUi.sidoLabel}
@@ -177,7 +177,7 @@ export function CenterExplorer() {
             <div className="h-5 w-px bg-slate-200 hidden sm:block" />
 
             {STATS_ORDER.map((k) => (
-              <div key={k} className="flex items-center gap-2">
+              <div key={k} className="flex items-center gap-1.5 sm:gap-2">
                 <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ring-inset ${displayStatusStyles[k].badge}`}>
                   {k}
                 </span>
@@ -187,12 +187,12 @@ export function CenterExplorer() {
               </div>
             ))}
 
-            <span className="ml-auto text-xs text-slate-400">
+            <span className="w-full sm:w-auto sm:ml-auto text-xs text-slate-400 pt-1 sm:pt-0 border-t border-slate-100 sm:border-0">
               {centerExplorerUi.statsSuffix(baseFiltered.length, waterCenters.length, todaySeoul)}
             </span>
           </div>
 
-          <div className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-4">
+          <div className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white p-3.5 sm:px-5 sm:py-4 min-w-0 max-w-full">
             <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
               {centerExplorerUi.themeLabel}
             </span>
@@ -216,12 +216,12 @@ export function CenterExplorer() {
           </div>
 
           {themeFilter === "전체" && listSections ? (
-            <div className="space-y-12">
+            <div className="space-y-12 min-w-0 max-w-full">
               {listSections.map(({ theme, centers }) => (
                 <section
                   key={theme}
                   aria-labelledby={`theme-heading-${theme}`}
-                  className={`space-y-4 pl-4 sm:pl-5 ${centerThemeSectionAccent[theme]}`}
+                  className={`space-y-4 pl-3.5 sm:pl-5 min-w-0 max-w-full ${centerThemeSectionAccent[theme]}`}
                 >
                   <div className="flex flex-wrap items-end justify-between gap-2">
                     <h2
@@ -234,9 +234,9 @@ export function CenterExplorer() {
                       {centers.length}곳
                     </span>
                   </div>
-                  <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  <ul className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 min-w-0 max-w-full">
                     {centers.map((c) => (
-                      <li key={c.id}>
+                      <li key={c.id} className="min-w-0 max-w-full">
                         <CenterCard center={c} todaySeoul={todaySeoul} />
                       </li>
                     ))}
@@ -245,9 +245,9 @@ export function CenterExplorer() {
               ))}
             </div>
           ) : (
-            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 min-w-0 max-w-full">
               {baseFiltered.map((c) => (
-                <li key={c.id}>
+                <li key={c.id} className="min-w-0 max-w-full">
                   <CenterCard center={c} todaySeoul={todaySeoul} />
                 </li>
               ))}
@@ -398,9 +398,9 @@ export const CenterCard = memo(function CenterCard({
   const naverHref = naverMapSearchHref(c);
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl shadow-sm">
+    <article className="group flex h-full w-full min-w-0 max-w-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl shadow-sm">
       {/* 상단 대표 사진 이미지 커버 배너 */}
-      <Link href={detailHref} className="relative h-56 w-full overflow-hidden bg-slate-100 block shrink-0">
+      <Link href={detailHref} className="relative h-48 sm:h-56 w-full min-w-0 max-w-full overflow-hidden bg-slate-100 block shrink-0">
         <Image
           src={c.imageSrc}
           alt={c.imageAlt || c.name}
@@ -448,24 +448,24 @@ export const CenterCard = memo(function CenterCard({
       </Link>
 
       {/* 본문 영역 */}
-      <div className="flex flex-1 flex-col gap-4 p-5">
+      <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5 min-w-0 max-w-full">
         <p className="line-clamp-2 text-sm sm:text-base leading-relaxed text-slate-700 font-medium">
           {c.summary}
         </p>
 
         {/* 🏛️ 층별 주요 공간 (Floor Guide) */}
         {c.floors && c.floors.length > 0 && (
-          <div className="rounded-xl bg-slate-50 border border-slate-200/80 p-3.5 text-sm space-y-2">
+          <div className="rounded-xl bg-slate-50 border border-slate-200/80 p-3 sm:p-3.5 text-sm space-y-2 min-w-0 max-w-full">
             <span className="text-xs font-bold text-sky-800 uppercase tracking-wide block">
               🏛️ 층별 주요 공간
             </span>
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 min-w-0">
               {c.floors.slice(0, 3).map((f) => (
-                <div key={f.floorLabel} className="flex items-baseline gap-2">
+                <div key={f.floorLabel} className="flex items-baseline gap-2 min-w-0">
                   <span className="shrink-0 font-bold text-slate-800 text-xs bg-white px-2 py-0.5 rounded border border-slate-200 shadow-2xs">
                     {f.floorLabel}
                   </span>
-                  <span className="text-slate-700 truncate text-xs sm:text-sm font-medium">
+                  <span className="text-slate-700 truncate min-w-0 flex-1 text-xs sm:text-sm font-medium">
                     {f.highlights.join(", ")}
                   </span>
                 </div>
@@ -475,7 +475,7 @@ export const CenterCard = memo(function CenterCard({
         )}
 
         {/* 위치 및 주일 휴무 정보 */}
-        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-2 gap-y-1.5 rounded-xl bg-slate-50 border border-slate-200/80 p-3.5 text-sm text-slate-700 mt-auto">
+        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-2 gap-y-1.5 rounded-xl bg-slate-50 border border-slate-200/80 p-3 sm:p-3.5 text-sm text-slate-700 mt-auto min-w-0 max-w-full">
           <span className="shrink-0 font-bold text-slate-900 leading-snug">
             {centerExplorerUi.location}
           </span>
@@ -486,14 +486,14 @@ export const CenterCard = memo(function CenterCard({
             title="네이버지도에서 해당 위치 보기 (새 창)"
             className="min-w-0 leading-snug font-bold text-sky-700 hover:text-sky-900 hover:underline hover:underline-offset-2 transition flex items-center gap-1 group/loc"
           >
-            <span className="truncate">{c.address}</span>
+            <span className="truncate min-w-0">{c.address}</span>
             <span className="text-xs text-sky-500 group-hover/loc:translate-x-0.5 transition shrink-0">🗺️ ↗</span>
           </a>
 
           <span className="shrink-0 font-bold text-slate-900 leading-snug">
             {centerExplorerUi.weeklyClosed}
           </span>
-          <span className="min-w-0 leading-snug font-semibold text-slate-700">
+          <span className="min-w-0 leading-snug font-semibold text-slate-700 break-keep">
             {formatWeeklyClosureSentence(c.weeklyClosedDays)} (09:00~18:00)
           </span>
         </div>

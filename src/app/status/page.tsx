@@ -19,7 +19,7 @@ export default function StatusPage() {
         <div className="pointer-events-none absolute inset-0" aria-hidden>
           <div className="absolute right-1/4 top-0 h-48 w-48 rounded-full bg-sky-500/5 blur-[80px]" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 text-center sm:text-left">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-12 text-center sm:text-left">
           <span className="text-xs font-bold uppercase tracking-widest text-sky-600">
             OVERVIEW & MAP
           </span>
@@ -32,7 +32,7 @@ export default function StatusPage() {
         </div>
       </div>
 
-      <main className="mx-auto max-w-7xl w-full px-6 py-10 sm:px-8 flex-1">
+      <main className="mx-auto max-w-7xl w-full px-3.5 sm:px-8 py-8 sm:py-10 flex-1 min-w-0 overflow-x-hidden">
         <Suspense fallback={
           <div className="flex min-h-[400px] items-center justify-center">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-sky-500 border-t-transparent" />

@@ -207,7 +207,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
   }, [selected]);
 
   return (
-    <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-start min-w-0 w-full max-w-full">
       <div id="korea-map-container" className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-md border border-slate-200 scroll-mt-20 bg-white">
         {/* 지도를 가리지 않는 전용 상단 안내 팁 바 (모바일 텍스트 잘림 방지 반응형 레이아웃) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 border-b border-sky-200/70 bg-gradient-to-r from-sky-50 via-indigo-50/40 to-sky-50 px-3.5 py-2.5 sm:px-4 text-xs sm:text-sm">
@@ -380,7 +380,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
         </div>
       </div>
 
-      <div ref={panelRef} className="lg:w-[440px] xl:w-[460px] lg:shrink-0 scroll-mt-24">
+      <div ref={panelRef} className="w-full min-w-0 max-w-full lg:w-[440px] xl:w-[460px] lg:shrink-0 scroll-mt-24">
         {selected ? (
           <CenterPanel
             center={selected}
