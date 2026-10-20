@@ -92,17 +92,17 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
             <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-2.5">
               패밀리사이트
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+            <div className="grid grid-cols-2 gap-x-3 sm:gap-x-4 gap-y-2 sm:gap-y-1.5">
               {familySites.map((site) => (
                 <a
                   key={site.name}
                   href={site.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-xs sm:text-sm hover:text-sky-400 transition py-0.5"
+                  className="inline-flex items-start sm:items-center text-[11px] sm:text-xs md:text-sm hover:text-sky-400 transition py-0.5 min-w-0 group"
                 >
                   <svg
-                    className="mr-1.5 h-3.5 w-3.5 text-white/30 shrink-0"
+                    className="mr-1 sm:mr-1.5 h-3 w-3 sm:h-3.5 sm:w-3.5 text-white/30 group-hover:text-sky-400 shrink-0 mt-0.5 sm:mt-0 transition"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -114,7 +114,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
                       d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                     />
                   </svg>
-                  <span className="break-keep">{site.name}</span>
+                  <span className="break-keep leading-snug">{site.name}</span>
                 </a>
               ))}
             </div>
