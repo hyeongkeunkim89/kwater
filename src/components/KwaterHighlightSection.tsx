@@ -57,7 +57,7 @@ export function KwaterHighlightSection() {
   return (
     <section
       aria-label="K-water 미디어 하이라이트"
-      className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300"
+      className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm transition-all duration-300"
     >
       {/* 섹션 헤더 */}
       <div className="border-b border-slate-100 pb-4">

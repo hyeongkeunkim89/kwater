@@ -63,11 +63,11 @@ export default function MainPage() {
       </section>
 
       {/* 메인 홈페이지 콘텐츠 영역 */}
-      <main className="mx-auto max-w-7xl w-full px-6 py-8 sm:py-10 space-y-8 flex-1">
+      <main className="mx-auto max-w-7xl w-full px-3.5 sm:px-6 py-6 sm:py-10 space-y-6 sm:space-y-8 flex-1">
         {/* 상단 1컬럼: 전국 15대 댐 물문화관 거점 종합안내 (K-WATER NETWORK 지도 포함) */}
         <section
           aria-label="물문화관 전국 현황 현황판"
-          className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 space-y-6"
+          className="rounded-2xl border border-slate-200 bg-white p-3.5 sm:p-8 shadow-sm transition-all duration-300 space-y-5 sm:space-y-6"
         >
           <div className="border-b border-slate-100 pb-4">
             <div className="flex items-center justify-between gap-2">
@@ -111,7 +111,7 @@ export default function MainPage() {
           <div className="lg:col-span-1">
             <section
               aria-label="주요 물문화 서비스 바로가기"
-              className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300"
+              className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm transition-all duration-300"
             >
               <div className="border-b border-slate-100 pb-4">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-black tracking-wider uppercase text-sky-700">

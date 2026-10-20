@@ -115,6 +115,7 @@ type LabelPosition = {
 const CENTER_LABEL_POSITIONS: Record<string, LabelPosition> = {
   hantan: { anchor: "left", offsetY: -10 },
   daecheong: { anchor: "left", offsetY: -8 },
+  yongdam: { anchor: "left", offsetY: -8 },
   buan: { anchor: "left", offsetY: -8 },
   hapcheon: { anchor: "left", offsetY: -8 },
 };
@@ -173,7 +174,18 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
   const mapCenters = centersProp ?? waterCenters;
   const todaySeoul = useMemo(() => getSeoulWeekdayHan(), []);
   const [selected, setSelected] = useState<WaterCenter | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  // 모바일 화면 감지 (640px 미만에서 대한민국 전역 댐 집중 확대 뷰 전환)
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     setSelected((prev) =>
@@ -228,7 +240,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
           projection="geoMercator"
           projectionConfig={{ center: [127.75, 36.35], scale: 5750 }}
           style={{ width: "100%", height: "auto", display: "block" }}
-          viewBox="0 0 800 760"
+          viewBox={isMobile ? "175 10 450 545" : "0 0 800 760"}
         >
           <defs>
             <linearGradient id="seaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -238,7 +250,7 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             </linearGradient>
           </defs>
 
-          <rect width="800" height="760" fill="url(#seaGrad)" />
+          <rect x={-500} y={-500} width={2000} height={2000} fill="url(#seaGrad)" />
 
           <Geographies geography={PROVINCES_URL}>
             {({ geographies }) =>
@@ -268,10 +280,10 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             const shortName = getCenterShortName(center.name);
             const color = PIN_COLORS[display];
 
-            const fontSize = isSelected ? 13 : 12;
+            const fontSize = isSelected ? 13.5 : 12.5;
             const textWidth = measureTextWidth(shortName, fontSize);
             const badgeWidth = textWidth + 14;
-            const badgeHeight = isSelected ? 24 : 22;
+            const badgeHeight = isSelected ? 25 : 23;
 
             const posConfig = CENTER_LABEL_POSITIONS[center.id] ?? {
               anchor: "right",
@@ -289,6 +301,9 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                 onClick={() => setSelected(isSelected ? null : center)}
               >
                 <g className="cursor-pointer group">
+                  {/* 모바일 터치 접근성을 위한 보이지 않는 탭 영역 확장 */}
+                  <circle cx="0" cy="0" r="26" fill="transparent" />
+
                   <BangulPin color={color} selected={isSelected} />
 
                   {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 (선명하고 큼직한 댐 이름 라벨) */}
@@ -326,33 +341,42 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
           })}
         </ComposableMap>
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-sky-200/60 bg-white px-4 py-2.5">
-          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
-            {koreaMapUi.legendOperating}
-          </span>
-          {LEGEND_ITEMS.map(([label, color]) => (
-            <span key={label} className="flex items-center gap-1.5">
-              <span
-                className="relative inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white ring-2 p-0.5"
-                style={{ boxShadow: `0 0 0 1.5px ${color}` }}
-              >
-                <img src="/character.png" alt="" className="h-full w-full object-contain" />
-              </span>
-              <span className="text-xs text-slate-700">{label}</span>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4 border-t border-sky-200/60 bg-white px-3.5 sm:px-4 py-2.5">
+          {/* 운영 상태 범례: 모바일에서도 줄바꿈 없이 1행에 깔끔하게 정렬 */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 whitespace-nowrap overflow-x-auto no-scrollbar">
+            <span className="text-[11px] font-bold text-slate-500 shrink-0">
+              {koreaMapUi.legendOperating}
             </span>
-          ))}
+            <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
+              {LEGEND_ITEMS.map(([label, color]) => (
+                <span key={label} className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
+                  <span
+                    className="relative inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white ring-2 p-0.5"
+                    style={{ boxShadow: `0 0 0 1.5px ${color}` }}
+                  >
+                    <img src="/character.png" alt="" className="h-full w-full object-contain" />
+                  </span>
+                  <span className="text-xs font-semibold text-slate-700">{label}</span>
+                </span>
+              ))}
+            </div>
+          </div>
 
-          <span className="ml-auto flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+          {/* 지역 구분 범례: 모바일에서는 2행으로 분리되어 줄바꿈 꼬임 방지 */}
+          <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 gap-y-1 pt-1.5 sm:pt-0 border-t border-slate-100 sm:border-0">
+            <span className="text-[11px] font-bold text-slate-400 shrink-0">
               {koreaMapUi.legendRegions}
             </span>
             {koreaMapUi.regionLabels.map(({ label, color }) => (
-              <span key={label} className="flex items-center gap-1">
-                <span className="inline-block h-3 w-3 rounded-sm border border-white/60 ring-1 ring-slate-300/40" style={{ backgroundColor: color }} />
-                <span className="text-[11px] text-slate-600">{label}</span>
+              <span key={label} className="inline-flex items-center gap-1 shrink-0 whitespace-nowrap">
+                <span
+                  className="inline-block h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-sm border border-white/60 ring-1 ring-slate-300/40 shrink-0"
+                  style={{ backgroundColor: color }}
+                />
+                <span className="text-[11px] font-medium text-slate-600">{label}</span>
               </span>
             ))}
-          </span>
+          </div>
         </div>
       </div>
 
