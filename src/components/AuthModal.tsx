@@ -598,6 +598,8 @@ export function AuthModal() {
                 <label className="block text-xs font-bold text-slate-700 mb-1">휴대폰 번호 (선택)</label>
                 <input
                   type="tel"
+                  inputMode="numeric"
+                  maxLength={13}
                   value={signUpPhone}
                   onChange={(e) => setSignUpPhone(formatPhone(e.target.value))}
                   placeholder="010-1234-5678"
@@ -670,9 +672,11 @@ export function AuthModal() {
                 <label className="block text-xs font-bold text-slate-700 mb-1">예약자 휴대폰 번호</label>
                 <input
                   type="tel"
+                  inputMode="numeric"
+                  maxLength={13}
                   value={guestPhone}
-                  onChange={(e) => setGuestPhone(e.target.value)}
-                  placeholder="01012345678 (- 없이 숫자만)"
+                  onChange={(e) => setGuestPhone(formatPhone(e.target.value))}
+                  placeholder="010-1234-5678"
                   className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-sky-500"
                 />
               </div>
