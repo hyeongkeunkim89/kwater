@@ -94,8 +94,8 @@ export default function IntroPage() {
 
           {/* 메인 타이틀 */}
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug text-slate-900 mb-6 break-keep drop-shadow-xs">
-            물(水)과 사람이 함께하는<br className="hidden sm:inline" />
-            <span className="text-[#004D95]"> 따뜻한 수변 문화 공간</span>
+            <span className="block">물(水)과 사람이 함께하는</span>
+            <span className="block text-[#004D95] mt-1 sm:mt-1.5">따뜻한 수변 문화 공간</span>
           </h1>
 
           {/* 서브 타이틀 카피 */}
