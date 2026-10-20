@@ -52,7 +52,7 @@ export default function PrivacyPolicyPage() {
             </p>
 
             <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
-              <table className="w-full text-left text-xs sm:text-sm">
+              <table className="w-full min-w-[560px] text-left text-xs sm:text-sm">
                 <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
                   <tr>
                     <th className="py-2.5 px-3.5 w-1/4">연계 서비스</th>
@@ -117,12 +117,15 @@ export default function PrivacyPolicyPage() {
           line-height: 1.8;
           color: #334155;
           word-break: keep-all;
+          overflow-wrap: break-word;
+          max-width: 100%;
         }
         .privacy-policy-body a {
           color: #0284c7;
           text-decoration: underline;
           text-underline-offset: 2px;
           transition: color 0.15s;
+          word-break: break-all;
         }
         .privacy-policy-body a:hover {
           color: #0369a1;
@@ -260,7 +263,7 @@ export default function PrivacyPolicyPage() {
         }
         .privacy-policy-body .guid_infoList ul {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
           gap: 0.6rem;
           padding: 0;
           margin: 1.25rem 0 3rem 0;
@@ -318,6 +321,7 @@ export default function PrivacyPolicyPage() {
         .privacy-policy-body .scrollTable {
           position: relative;
           width: 100%;
+          max-width: 100%;
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
           margin: 1.25rem 0 2rem 0;
@@ -342,9 +346,8 @@ export default function PrivacyPolicyPage() {
         }
         .privacy-policy-body table.basic_board_table {
           width: 100%;
-          min-width: 640px;
+          min-width: 680px;
           border-collapse: collapse;
-          table-layout: fixed;
           margin: 0;
           font-size: 13.5px;
           background-color: #ffffff;
@@ -361,10 +364,11 @@ export default function PrivacyPolicyPage() {
         .privacy-policy-body table.basic_board_table th,
         .privacy-policy-body table.basic_board_table td {
           border: 1px solid #e2e8f0;
-          padding: 0.75rem 0.9rem;
+          padding: 0.75rem 0.8rem;
           line-height: 1.6;
           vertical-align: middle;
           word-break: keep-all;
+          overflow-wrap: break-word;
         }
         .privacy-policy-body table.basic_board_table thead th {
           background-color: #f1f5f9;
@@ -372,13 +376,18 @@ export default function PrivacyPolicyPage() {
           font-weight: 700;
           text-align: center;
           white-space: nowrap;
+          padding: 0.75rem 0.5rem;
         }
         .privacy-policy-body table.basic_board_table tbody th {
           background-color: #f8fafc;
           color: #1e293b;
           font-weight: 600;
           text-align: center;
-          white-space: nowrap;
+          white-space: normal !important;
+          word-break: keep-all !important;
+          overflow-wrap: break-word !important;
+          line-height: 1.45;
+          padding: 0.75rem 0.6rem;
         }
         .privacy-policy-body table.basic_board_table tbody td {
           color: #334155;
@@ -421,8 +430,8 @@ export default function PrivacyPolicyPage() {
 
         /* 7. 이미지 반응형 및 중앙 정렬 */
         .privacy-policy-body img {
-          max-width: 100%;
-          height: auto;
+          max-width: 100% !important;
+          height: auto !important;
           margin: 1.5rem auto;
           display: block;
           border-radius: 0.65rem;
@@ -433,40 +442,119 @@ export default function PrivacyPolicyPage() {
           margin: 1.5rem 0;
         }
 
-        /* 8. QR 코드 안내 박스 반응형 */
+        /* 8. QR 코드 안내 박스 반응형 (모바일 넘침 완벽 방지) */
         .privacy-policy-body .imgDis2Li02 {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           justify-content: space-between;
           gap: 1.25rem;
-          padding: 1rem 1.25rem;
+          padding: 1.1rem 1.25rem;
           background: #f8fafc;
           border: 1px solid #e2e8f0;
           border-radius: 0.75rem;
-          margin: 1rem 0 1.5rem 0;
+          margin: 1rem 0 1.5rem 0 !important;
+          max-width: 100% !important;
+          box-sizing: border-box;
           list-style: none;
         }
         .privacy-policy-body .imgDis2Li02 li.txt {
           width: auto !important;
-          flex: 1 1 260px;
+          min-width: 0 !important;
+          max-width: 100% !important;
+          flex: 1 1 240px;
           border-right: none !important;
           padding: 0 !important;
           font-size: 13px;
           color: #475569;
-          line-height: 1.6;
+          line-height: 1.65;
+          word-break: break-all !important;
+          overflow-wrap: anywhere !important;
         }
         .privacy-policy-body .imgDis2Li02 li.photo {
           width: auto !important;
           flex: 0 0 auto;
           padding: 0 !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .privacy-policy-body .imgDis2Li02 li.photo img {
-          width: 80px;
-          height: 80px;
-          margin: 0 auto;
+          width: 80px !important;
+          height: 80px !important;
+          margin: 0 auto !important;
           border-radius: 0.5rem;
           border: 1px solid #cbd5e1;
+          background: #ffffff;
+          padding: 3px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 9. 모바일(스마트폰) 전용 추가 최적화 미디어 쿼리 */
+        @media (max-width: 640px) {
+          .privacy-policy-body {
+            font-size: 13.5px;
+            line-height: 1.75;
+          }
+          .privacy-policy-body li > strong {
+            font-size: 15.5px;
+            margin: 2rem 0 0.8rem 0;
+          }
+          .privacy-policy-body ol {
+            padding-left: 1rem;
+          }
+          .privacy-policy-body ol ol {
+            padding-left: 0.85rem;
+          }
+          .privacy-policy-body ol ol ol {
+            padding-left: 0.75rem;
+          }
+          .privacy-policy-body .messageBox {
+            padding: 1rem;
+            font-size: 13px;
+          }
+          .privacy-policy-body .item_desc_box {
+            padding: 1rem;
+          }
+          .privacy-policy-body .guid_infoList ul {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+          }
+          .privacy-policy-body .down_01 {
+            justify-content: stretch;
+            gap: 0.5rem;
+          }
+          .privacy-policy-body .down_01 a {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+            padding: 0.75rem 1rem;
+          }
+          .privacy-policy-body .imgDis2Li02 {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            padding: 1rem 0.9rem !important;
+            gap: 0.85rem !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+          }
+          .privacy-policy-body .imgDis2Li02 li.txt {
+            flex: 1 1 100% !important;
+            width: 100% !important;
+            font-size: 12.5px !important;
+            line-height: 1.6;
+            text-align: left;
+          }
+          .privacy-policy-body .imgDis2Li02 li.photo {
+            width: 100% !important;
+            padding-top: 0.6rem !important;
+            border-top: 1px dashed #e2e8f0;
+          }
+          .privacy-policy-body .imgDis2Li02 li.photo img {
+            width: 88px !important;
+            height: 88px !important;
+          }
         }
       `}</style>
     </div>
