@@ -129,7 +129,7 @@ export default function LostFoundPage() {
   };
 
   useEffect(() => {
-    document.title = "분실물찾기 | K-water 온라인 물문화관";
+    document.title = "분실·습득물 센터 | K-water 온라인 물문화관";
   }, []);
 
   useEffect(() => {
@@ -273,10 +273,10 @@ export default function LostFoundPage() {
             <span>›</span>
             <Link href="/feedback" className="hover:text-white transition">소통창구</Link>
             <span>›</span>
-            <span className="text-white">분실물찾기</span>
+            <span className="text-white">분실·습득물 센터</span>
           </div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
-            분실물찾기
+            분실·습득물 센터
           </h1>
           <p className="mt-2.5 text-sm sm:text-base text-sky-100 max-w-none leading-relaxed break-keep">
             전국 K-water 물문화관 내 분실물 및 습득물에 대한 안내와 문의를 확인하실 수 있습니다.
