@@ -97,30 +97,43 @@ export default function GatewayLandingPage() {
                     key={theme.id}
                     className="flex-1 min-h-[200px] sm:min-h-[240px] md:min-h-[280px] rounded-2xl sm:rounded-3xl overflow-hidden relative border border-white/20 shadow-2xl transition-all duration-500 ease-out flex flex-col justify-between p-5 sm:p-6 md:p-8"
                   >
-                    {/* 배경 이미지 */}
+                    {/* 배경 이미지: 시네마틱 켄 번스(Slow Ken Burns) 서서히 숨쉬는 모션 */}
                     <div
-                      className="absolute inset-0 bg-cover bg-center brightness-[0.8] contrast-[1.05] transition-transform duration-700 ease-out"
+                      key={`bg-${theme.id}`}
+                      className="absolute inset-0 bg-cover bg-center brightness-[0.8] contrast-[1.05] animate-ken-burns will-change-transform"
                       style={{ backgroundImage: `url('${theme.image}')` }}
                     />
                     {/* 그라데이션 오버레이 */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30" />
 
-                    {/* 상단 뱃지 */}
-                    <div className="relative z-10 flex items-center justify-between">
+                    {/* 상단 뱃지: 빠른 플로팅 페이드인 */}
+                    <div
+                      key={`badge-${theme.id}`}
+                      className="relative z-10 flex items-center justify-between animate-float-up-fast"
+                    >
                       <span className="inline-flex items-center gap-1.5 text-[9.5px] sm:text-[10.5px] md:text-xs font-black tracking-widest text-sky-300 uppercase bg-slate-900/85 px-3 py-1 rounded-full border border-sky-400/40 backdrop-blur-md shadow-md">
                         {theme.code}
                       </span>
                     </div>
 
-                    {/* 하단 텍스트 및 액션 링크 */}
+                    {/* 하단 텍스트 및 액션 링크: 시차(Staggered) 플로팅 모션 */}
                     <div className="relative z-10 space-y-1 sm:space-y-1.5">
-                      <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-md">
+                      <h2
+                        key={`title-${theme.id}`}
+                        className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-md animate-float-up"
+                      >
                         {theme.title}
                       </h2>
-                      <p className="text-xs sm:text-[13px] md:text-sm text-slate-200/90 font-medium leading-relaxed max-w-sm md:max-w-lg line-clamp-2">
+                      <p
+                        key={`desc-${theme.id}`}
+                        className="text-xs sm:text-[13px] md:text-sm text-slate-200/90 font-medium leading-relaxed max-w-sm md:max-w-lg line-clamp-2 animate-float-up-delay-1"
+                      >
                         {theme.desc}
                       </p>
-                      <div className="pt-2">
+                      <div
+                        key={`link-${theme.id}`}
+                        className="pt-2 animate-float-up-delay-2"
+                      >
                         <Link
                           href={theme.link}
                           className="inline-flex items-center gap-1.5 text-xs sm:text-sm md:text-base font-bold text-sky-400 hover:text-sky-300 active:text-sky-200 group"
@@ -172,14 +185,17 @@ export default function GatewayLandingPage() {
             })}
           </div>
 
-          {/* ── 3. 하단: 메인 탐색 CTA 버튼 & 푸터 고지 ── */}
+          {/* ── 3. 하단: 메인 탐색 CTA 버튼 & 푸터 고지 (쉬머 모션 적용) ── */}
           <footer className="shrink-0 pt-1 flex flex-col gap-2">
             <Link
               href="/main"
-              className="group w-full min-h-[50px] sm:min-h-[54px] md:min-h-[58px] px-6 py-3.5 inline-flex items-center justify-center rounded-2xl bg-[#0094FF] hover:bg-[#0082e6] active:bg-[#0070c5] text-white font-black text-sm sm:text-base md:text-lg transition duration-200 shadow-xl shadow-[#0094FF]/25 tracking-tight active:scale-[0.98]"
+              className="group relative overflow-hidden w-full min-h-[50px] sm:min-h-[54px] md:min-h-[58px] px-6 py-3.5 inline-flex items-center justify-center rounded-2xl bg-[#0094FF] hover:bg-[#0082e6] active:bg-[#0070c5] text-white font-black text-sm sm:text-base md:text-lg transition duration-200 shadow-xl shadow-[#0094FF]/25 tracking-tight active:scale-[0.98]"
             >
-              <span>전국 물문화관 둘러보기</span>
-              <span className="ml-2 transform group-hover:translate-x-1 group-active:translate-x-1 transition-transform font-black">→</span>
+              {/* 은은하게 스쳐 지나가는 사선 빛줄기 (Shimmer Effect) */}
+              <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none animate-shimmer" />
+
+              <span className="relative z-10">전국 물문화관 둘러보기</span>
+              <span className="relative z-10 ml-2 transform group-hover:translate-x-1 group-active:translate-x-1 transition-transform font-black">→</span>
             </Link>
             <div className="flex items-center justify-center py-0.5">
               <Link

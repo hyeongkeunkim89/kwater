@@ -97,9 +97,68 @@ strong, b {
 .hero-caption-animate {
   animation: hero-caption-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+/* -------------------------------------------------------------
+ * 랜딩 페이지 모바일 인터랙티브 모션 (Ken Burns, Shimmer, Float-up)
+ * ------------------------------------------------------------- */
+@keyframes ken-burns {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-ken-burns {
+  animation: ken-burns 14s ease-in-out infinite alternate;
+}
+
+@keyframes shimmer-slide {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  40%, 100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+.animate-shimmer {
+  animation: shimmer-slide 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-float-up-fast {
+  animation: float-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-float-up {
+  animation: float-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+.animate-float-up-delay-1 {
+  animation: float-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+.animate-float-up-delay-2 {
+  animation: float-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .hero-caption-animate {
-    animation: none;
+  .hero-caption-animate,
+  .animate-ken-burns,
+  .animate-shimmer,
+  .animate-float-up-fast,
+  .animate-float-up,
+  .animate-float-up-delay-1,
+  .animate-float-up-delay-2 {
+    animation: none !important;
   }
 }
 
