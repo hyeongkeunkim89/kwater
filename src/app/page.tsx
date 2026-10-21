@@ -52,6 +52,39 @@ const THEMES = [
 
 export default function GatewayLandingPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState<"next" | "prev">("next");
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const handleSelect = (index: number) => {
+    if (index === activeIndex) return;
+    setDirection(index > activeIndex ? "next" : "prev");
+    setActiveIndex(index);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        // 좌측으로 스와이프 -> 다음 테마
+        const nextIndex = (activeIndex + 1) % THEMES.length;
+        setDirection("next");
+        setActiveIndex(nextIndex);
+      } else {
+        // 우측으로 스와이프 -> 이전 테마
+        const prevIndex = (activeIndex - 1 + THEMES.length) % THEMES.length;
+        setDirection("prev");
+        setActiveIndex(prevIndex);
+      }
+    }
+    setTouchStartX(null);
+  };
 
   return (
     <div className="selection:bg-sky-500 selection:text-white">
@@ -95,52 +128,67 @@ export default function GatewayLandingPage() {
                 return (
                   <div
                     key={theme.id}
-                    className="flex-1 min-h-[200px] sm:min-h-[240px] md:min-h-[280px] rounded-2xl sm:rounded-3xl overflow-hidden relative border border-white/20 shadow-2xl transition-all duration-500 ease-out flex flex-col justify-between p-5 sm:p-6 md:p-8"
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    className="flex-1 min-h-[200px] sm:min-h-[240px] md:min-h-[280px] rounded-2xl sm:rounded-3xl overflow-hidden relative border border-white/20 shadow-2xl transition-all duration-500 ease-out flex flex-col justify-between select-none"
                   >
-                    {/* 배경 이미지: 시네마틱 켄 번스(Slow Ken Burns) 서서히 숨쉬는 모션 */}
+                    {/* 1. 슬라이드 모션 배경 래퍼 (탭 변경 시 좌우 슬라이드) */}
                     <div
-                      key={`bg-${theme.id}`}
-                      className="absolute inset-0 bg-cover bg-center brightness-[0.8] contrast-[1.05] animate-ken-burns will-change-transform"
-                      style={{ backgroundImage: `url('${theme.image}')` }}
-                    />
-                    {/* 그라데이션 오버레이 */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30" />
-
-                    {/* 상단 뱃지: 빠른 플로팅 페이드인 */}
-                    <div
-                      key={`badge-${theme.id}`}
-                      className="relative z-10 flex items-center justify-between animate-float-up-fast"
+                      key={`slide-bg-${theme.id}`}
+                      className={`absolute inset-0 ${
+                        direction === "next" ? "animate-slide-next" : "animate-slide-prev"
+                      }`}
                     >
-                      <span className="inline-flex items-center gap-1.5 text-[9.5px] sm:text-[10.5px] md:text-xs font-black tracking-widest text-sky-300 uppercase bg-slate-900/85 px-3 py-1 rounded-full border border-sky-400/40 backdrop-blur-md shadow-md">
-                        {theme.code}
-                      </span>
+                      {/* 배경 이미지: 슬라이드와 함께 움직이며 Ken Burns 숨쉬는 효과 */}
+                      <div
+                        className="absolute inset-0 bg-cover bg-center brightness-[0.8] contrast-[1.05] animate-ken-burns will-change-transform"
+                        style={{ backgroundImage: `url('${theme.image}')` }}
+                      />
+                      {/* 그라데이션 오버레이 */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30" />
                     </div>
 
-                    {/* 하단 텍스트 및 액션 링크: 시차(Staggered) 플로팅 모션 */}
-                    <div className="relative z-10 space-y-1 sm:space-y-1.5">
-                      <h2
-                        key={`title-${theme.id}`}
-                        className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-md animate-float-up"
-                      >
-                        {theme.title}
-                      </h2>
-                      <p
-                        key={`desc-${theme.id}`}
-                        className="text-xs sm:text-[13px] md:text-sm text-slate-200/90 font-medium leading-relaxed max-w-sm md:max-w-lg line-clamp-2 animate-float-up-delay-1"
-                      >
-                        {theme.desc}
-                      </p>
-                      <div
-                        key={`link-${theme.id}`}
-                        className="pt-2 animate-float-up-delay-2"
-                      >
-                        <Link
-                          href={theme.link}
-                          className="inline-flex items-center gap-1.5 text-xs sm:text-sm md:text-base font-bold text-sky-400 hover:text-sky-300 active:text-sky-200 group"
-                        >
-                          <span>자세히 보기</span>
-                          <span className="transform group-hover:translate-x-1 group-active:translate-x-1 transition-transform">→</span>
-                        </Link>
+                    {/* 2. 슬라이드 모션 텍스트 & 인터랙션 래퍼 */}
+                    <div
+                      key={`slide-content-${theme.id}`}
+                      className={`relative z-10 flex flex-col justify-between h-full p-5 sm:p-6 md:p-8 ${
+                        direction === "next" ? "animate-slide-next" : "animate-slide-prev"
+                      }`}
+                    >
+                      {/* 상단 뱃지 & 순번 인디케이터 */}
+                      <div className="flex items-center justify-between">
+                        <span className="inline-flex items-center gap-1.5 text-[9.5px] sm:text-[10.5px] md:text-xs font-black tracking-widest text-sky-300 uppercase bg-slate-900/85 px-3 py-1 rounded-full border border-sky-400/40 backdrop-blur-md shadow-md">
+                          {theme.code}
+                        </span>
+                        {/* 테마 순번 인디케이터 (스와이프 힌트) */}
+                        <div className="flex items-center gap-1.5 text-[11px] font-bold text-white/60 bg-black/40 px-2.5 py-0.5 rounded-full border border-white/10 backdrop-blur-md">
+                          <span className="text-sky-400 font-black">{theme.num}</span>
+                          <span>/</span>
+                          <span>04</span>
+                        </div>
+                      </div>
+
+                      {/* 하단 텍스트 및 액션 링크 */}
+                      <div className="space-y-1 sm:space-y-1.5">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-md">
+                          {theme.title}
+                        </h2>
+                        <p className="text-xs sm:text-[13px] md:text-sm text-slate-200/90 font-medium leading-relaxed max-w-sm md:max-w-lg line-clamp-2">
+                          {theme.desc}
+                        </p>
+                        <div className="pt-2 flex items-center justify-between">
+                          <Link
+                            href={theme.link}
+                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm md:text-base font-bold text-sky-400 hover:text-sky-300 active:text-sky-200 group"
+                          >
+                            <span>자세히 보기</span>
+                            <span className="transform group-hover:translate-x-1 group-active:translate-x-1 transition-transform">→</span>
+                          </Link>
+                          {/* 스와이프 안내 아이콘/힌트 */}
+                          <div className="flex items-center gap-1 text-[10px] text-white/40 tracking-tight">
+                            <span>← 좌우 슬라이드 →</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -151,7 +199,7 @@ export default function GatewayLandingPage() {
                 <button
                   key={theme.id}
                   type="button"
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => handleSelect(index)}
                   className="group h-13 sm:h-14 md:h-16 shrink-0 rounded-2xl overflow-hidden relative border border-white/10 shadow-md transition-all duration-300 ease-out flex items-center justify-between px-4 sm:px-5 md:px-6 active:scale-[0.99] text-left w-full cursor-pointer"
                 >
                   {/* 배경 이미지 (어둡게 블러 처리) */}

@@ -150,6 +150,36 @@ strong, b {
   animation: float-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
 }
 
+@keyframes slide-in-next {
+  0% {
+    opacity: 0.2;
+    transform: translate3d(60px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slide-in-prev {
+  0% {
+    opacity: 0.2;
+    transform: translate3d(-60px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-slide-next {
+  animation: slide-in-next 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slide-prev {
+  animation: slide-in-prev 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-caption-animate,
   .animate-ken-burns,
@@ -157,7 +187,9 @@ strong, b {
   .animate-float-up-fast,
   .animate-float-up,
   .animate-float-up-delay-1,
-  .animate-float-up-delay-2 {
+  .animate-float-up-delay-2,
+  .animate-slide-next,
+  .animate-slide-prev {
     animation: none !important;
   }
 }
