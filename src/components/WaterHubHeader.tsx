@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { STAFF_CONSOLE_HREF } from "@/lib/sitePaths";
@@ -162,6 +162,29 @@ export function WaterHubHeader({
       document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
+
+  // 우측으로 슬라이드 터치(스와이프 제스처) 감지
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartYRef.current;
+
+    // 오른쪽으로 40px 이상 슬라이드 터치하고, 수평 이동 거리가 수직 이동보다 크면 부드럽게 닫기
+    if (deltaX > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 0.8) {
+      closeMobileMenu();
+    }
+
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+  };
 
   const toggleMenu = (key: ActiveNav) => {
     setExpandedMenu((prev) => (prev === key ? null : key));
@@ -404,35 +427,25 @@ export function WaterHubHeader({
       {/* 모바일 우측 슬라이드 드로어 메뉴 (시안 2 전면 적용 + 부드러운 좌우 슬라이드 모션) */}
       {mobileMenuRendered && (
         <div className="fixed inset-0 z-[100] lg:hidden">
-          {/* 1. 어두운 딤드 오버레이 (클릭 시 닫힘 & 부드러운 페이드 모션) */}
+          {/* 1. 어두운 딤드 오버레이 (바깥 영역 터치 또는 오른쪽 슬라이드 터치 시 부드럽게 닫힘) */}
           <div
             onClick={closeMobileMenu}
-            className={`fixed inset-0 bg-slate-950/65 backdrop-blur-xs transition-opacity duration-300 ease-out ${
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className={`fixed inset-0 bg-slate-950/65 backdrop-blur-xs transition-opacity duration-300 ease-out cursor-pointer ${
               mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
             aria-hidden="true"
           />
 
-          {/* 2. 슬라이드 드로어 본체 (우측에서 좌측으로 부드럽게 슬라이드 인: translate-x-full -> translate-x-0) */}
+          {/* 2. 슬라이드 드로어 본체 (오른쪽으로 슬라이드 터치 시에도 부드럽게 슬라이드 아웃) */}
           <div
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
             className={`fixed top-0 right-0 bottom-0 w-[85%] max-w-[360px] sm:max-w-[390px] bg-white shadow-2xl flex flex-col z-[101] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               mobileMenuOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >
-            {/* 좌측 바깥 플로팅 닫기(X) 원형 버튼 (시안 2 시그니처) */}
-            <button
-              type="button"
-              onClick={closeMobileMenu}
-              className={`absolute top-4 -left-12 sm:-left-13 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white flex items-center justify-center shadow-lg transition-all duration-300 cursor-pointer active:scale-90 ${
-                mobileMenuOpen ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none"
-              }`}
-              aria-label="메뉴 닫기"
-            >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
             {/* 1. 상단 딥 네이비 헤더 (#082752) */}
             <div className="bg-[#082752] px-5 pt-6 pb-5 shrink-0 text-white shadow-sm">
               <div className="flex items-center justify-between">
@@ -454,15 +467,15 @@ export function WaterHubHeader({
                   </div>
                 </div>
 
-                {/* 초소형 모바일 기기(폭 320px 이하)를 위한 인라인 닫기 보조 버튼 */}
+                {/* 우측 상단 닫기(X) 버튼 (오른손 엄지 접근성 최적화 & 시원한 40px 터치 영역) */}
                 <button
                   type="button"
                   onClick={closeMobileMenu}
-                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white/80 flex items-center justify-center transition sm:hidden"
+                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 text-white flex items-center justify-center transition active:scale-95 cursor-pointer shrink-0"
                   aria-label="메뉴 닫기"
                 >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M6 18L18 6M6 6l12 12" />
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
