@@ -264,25 +264,23 @@ export default function LostFoundPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-sky-500 selection:text-white">
       <WaterHubHeader activeNav="feedback" />
 
-      {/* 상단 배너 헤더 */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-[#003876] via-[#004D95] to-[#1E6BBA] text-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
-        <div className="relative mx-auto max-w-5xl">
-          <div className="flex items-center gap-2 text-xs font-semibold text-sky-200 mb-3">
-            <Link href="/" className="hover:text-white transition">홈</Link>
-            <span>›</span>
-            <Link href="/feedback" className="hover:text-white transition">소통창구</Link>
-            <span>›</span>
-            <span className="text-white">분실·습득물 센터</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
+      {/* 히어로 타이틀 */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-sky-50 to-indigo-50 border-b border-slate-200/80 shrink-0">
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="absolute right-1/4 top-0 h-48 w-48 rounded-full bg-sky-500/5 blur-[80px]" />
+        </div>
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12 text-center sm:text-left">
+          <span className="text-xs font-bold uppercase tracking-widest text-sky-600">
+            LOST &amp; FOUND
+          </span>
+          <h1 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
             분실·습득물 센터
           </h1>
-          <p className="mt-2.5 text-sm sm:text-base text-sky-100 max-w-none leading-relaxed break-keep">
+          <p className="mt-2 text-xs sm:text-sm text-slate-500 leading-relaxed max-w-xl font-semibold">
             전국 K-water 물문화관 내 분실물 및 습득물에 대한 안내와 문의를 확인하실 수 있습니다.
           </p>
         </div>
-      </section>
+      </div>
 
       {/* 본문 콘텐츠 컨테이너 */}
       <main className="flex-1 py-10 px-4 sm:px-6 lg:px-8">
