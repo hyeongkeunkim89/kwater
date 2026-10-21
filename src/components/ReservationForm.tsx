@@ -302,6 +302,8 @@ export function ReservationForm({
     time,
     name,
     phone,
+    guestPin,
+    user,
     partySize,
     purpose,
     requests,

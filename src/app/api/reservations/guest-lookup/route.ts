@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   const phone = typeof b.phone === "string" ? b.phone.trim() : "";
   const pin = typeof b.pin === "string" ? b.pin.trim() : "";
 
-  if (!phone) {
+  if (!phone || !pin) {
     return NextResponse.json({ reservations: [] });
   }
 

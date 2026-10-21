@@ -95,6 +95,10 @@ export function ReservationLookupCard() {
       alert("휴대폰 번호를 입력해 주세요.");
       return;
     }
+    if (!user && (!targetPin.trim() || targetPin.trim().length !== 4)) {
+      alert("비회원 예약 조회 시 예약 비밀번호 4자리를 정확히 입력해 주세요.");
+      return;
+    }
 
     setIsSearching(true);
     setHasSearched(true);
@@ -128,7 +132,7 @@ export function ReservationLookupCard() {
         const rPhoneDigits = (r.phone || "").replace(/\D/g, "");
         const phoneMatch = rPhoneDigits === digits;
         if (!phoneMatch) return false;
-        if (r.guestPin && targetPin.trim()) {
+        if (r.guestPin) {
           if (r.guestPin !== targetPin.trim()) return false;
         }
         seenIds.add(r.id);

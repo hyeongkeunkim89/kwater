@@ -124,8 +124,8 @@ function rowToLostFound(r: LostFoundRow): LostFoundItem {
     place: r.place,
     content: r.content,
     writerName: r.writer_name,
-    contact: r.contact ?? undefined,
-    password: r.password ?? undefined,
+    contact: maskContact(r.contact ?? undefined) ?? undefined,
+    password: undefined,
     status: r.status as LostFoundStatus,
     createdAt: r.created_at instanceof Date ? r.created_at.toISOString() : String(r.created_at),
   };

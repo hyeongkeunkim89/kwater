@@ -6,5 +6,7 @@ export async function POST() {
   cookieStore.delete("naver_user_session");
   cookieStore.delete("kakao_user_session");
   cookieStore.delete("staff_console_auth");
+  cookieStore.delete("user_session");
+  cookieStore.delete("kwm_staff_console_gate");
   return NextResponse.json({ success: true });
 }

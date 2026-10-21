@@ -288,12 +288,13 @@ export async function getGuestReservationsFromDb(phone: string, pin: string): Pr
   if (!sql) return [];
   await ensureTourReservationsSchema(sql);
   const targetDigits = phone.replace(/\D/g, "");
-  if (!targetDigits) return [];
+  const trimmedPin = pin.trim();
+  if (!targetDigits || !trimmedPin) return [];
   const rows = await sql<TourReservationRow[]>`
     SELECT id, center_id, center_name, visit_date, visit_time, name, phone, user_email, guest_pin, party_size, purpose, requests, status, created_at
     FROM tour_reservations
     WHERE regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits}
-      AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()})
+      AND guest_pin = ${trimmedPin}
     ORDER BY created_at DESC
   `;
   return rows.map(rowToReservation);
@@ -338,7 +339,7 @@ export async function cancelGuestReservationInDb(
       AND (
         (${emailLower} <> '' AND lower(user_email) = ${emailLower})
         OR
-        (${targetDigits} <> '' AND regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits} AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()}))
+        (${targetDigits} <> '' AND ${pin.trim()} <> '' AND regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits} AND guest_pin = ${pin.trim()})
       )
     RETURNING id
   `;
