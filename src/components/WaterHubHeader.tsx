@@ -486,7 +486,7 @@ export function WaterHubHeader({
                   자연과 사람, 물이 머무는 곳
                 </p>
                 <p className="text-[11px] text-slate-300 leading-snug">
-                  K-water 온라인 물문화관에 오신 것을 환영합니다!
+                  K-water 온라인 물문화관에 오신 것을 환영합니다.
                 </p>
               </div>
 
