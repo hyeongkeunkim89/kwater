@@ -40,8 +40,8 @@ export default function GatewayLandingPage() {
                   <span className="text-sm font-black tracking-tight text-white leading-tight">
                     물문화관
                   </span>
-                  <span className="text-[8px] font-extrabold text-sky-300 tracking-[0.16em] uppercase leading-tight">
-                    WATER CULTURE
+                  <span className="text-[8px] font-extrabold text-sky-400 tracking-[0.16em] uppercase leading-tight">
+                    WATER CULTURE PORTAL
                   </span>
                 </div>
               </div>
@@ -82,8 +82,9 @@ export default function GatewayLandingPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-black/20" />
 
             <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[9.5px] font-black text-sky-300 bg-slate-950/80 border border-sky-400/40 px-2.5 py-0.5 rounded-full backdrop-blur-md shadow-xs">
-                01 · 기술
+              <span className="inline-flex items-center gap-1.5 text-[8.5px] sm:text-[9.5px] font-black tracking-widest text-sky-300 uppercase bg-slate-900/80 px-2.5 py-0.5 rounded-full border border-sky-400/30 backdrop-blur-md shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                01 · TECHNOLOGY
               </span>
               <span className="w-5 h-5 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center text-[10px] text-white">
                 →
@@ -91,12 +92,15 @@ export default function GatewayLandingPage() {
             </div>
 
             <div className="relative z-10">
-              <div className="flex items-center gap-1.5 text-white">
-                <span className="text-sky-400 text-sm">⚙️</span>
-                <h2 className="text-sm sm:text-base font-black">기술</h2>
-              </div>
+              <h2 className="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>기술</span>
+              </h2>
               <p className="mt-0.5 text-[10px] text-slate-300 font-medium line-clamp-1">
-                스마트 수자원 관리
+                스마트 수자원 관리 &amp; 엔지니어링
               </p>
             </div>
           </Link>
@@ -115,8 +119,9 @@ export default function GatewayLandingPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-black/20" />
 
             <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[9.5px] font-black text-emerald-300 bg-slate-950/80 border border-emerald-400/40 px-2.5 py-0.5 rounded-full backdrop-blur-md shadow-xs">
-                02 · 생태
+              <span className="inline-flex items-center gap-1.5 text-[8.5px] sm:text-[9.5px] font-black tracking-widest text-sky-300 uppercase bg-slate-900/80 px-2.5 py-0.5 rounded-full border border-sky-400/30 backdrop-blur-md shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                02 · ECOLOGY
               </span>
               <span className="w-5 h-5 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center text-[10px] text-white">
                 →
@@ -124,12 +129,14 @@ export default function GatewayLandingPage() {
             </div>
 
             <div className="relative z-10">
-              <div className="flex items-center gap-1.5 text-white">
-                <span className="text-emerald-400 text-sm">🌿</span>
-                <h2 className="text-sm sm:text-base font-black">생태</h2>
-              </div>
+              <h2 className="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                </svg>
+                <span>생태</span>
+              </h2>
               <p className="mt-0.5 text-[10px] text-slate-300 font-medium line-clamp-1">
-                수변 생태 &amp; 둘레길
+                강과 호수, 수변 동식물 생태계
               </p>
             </div>
           </Link>
@@ -148,8 +155,9 @@ export default function GatewayLandingPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-black/20" />
 
             <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[9.5px] font-black text-amber-300 bg-slate-950/80 border border-amber-400/40 px-2.5 py-0.5 rounded-full backdrop-blur-md shadow-xs">
-                03 · 역사
+              <span className="inline-flex items-center gap-1.5 text-[8.5px] sm:text-[9.5px] font-black tracking-widest text-sky-300 uppercase bg-slate-900/80 px-2.5 py-0.5 rounded-full border border-sky-400/30 backdrop-blur-md shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                03 · HISTORY
               </span>
               <span className="w-5 h-5 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center text-[10px] text-white">
                 →
@@ -157,12 +165,14 @@ export default function GatewayLandingPage() {
             </div>
 
             <div className="relative z-10">
-              <div className="flex items-center gap-1.5 text-white">
-                <span className="text-amber-400 text-sm">🏛️</span>
-                <h2 className="text-sm sm:text-base font-black">역사</h2>
-              </div>
+              <h2 className="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0V7m0 4h4m-4 0H7" />
+                </svg>
+                <span>역사</span>
+              </h2>
               <p className="mt-0.5 text-[10px] text-slate-300 font-medium line-clamp-1">
-                치수 발자취 &amp; 사료
+                대한민국 치수 발자취 &amp; 사료
               </p>
             </div>
           </Link>
@@ -181,8 +191,9 @@ export default function GatewayLandingPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-black/20" />
 
             <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[9.5px] font-black text-rose-300 bg-slate-950/80 border border-rose-400/40 px-2.5 py-0.5 rounded-full backdrop-blur-md shadow-xs">
-                04 · 문화
+              <span className="inline-flex items-center gap-1.5 text-[8.5px] sm:text-[9.5px] font-black tracking-widest text-sky-300 uppercase bg-slate-900/80 px-2.5 py-0.5 rounded-full border border-sky-400/30 backdrop-blur-md shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                04 · CULTURE &amp; ARTS
               </span>
               <span className="w-5 h-5 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center text-[10px] text-white">
                 →
@@ -190,12 +201,14 @@ export default function GatewayLandingPage() {
             </div>
 
             <div className="relative z-10">
-              <div className="flex items-center gap-1.5 text-white">
-                <span className="text-rose-400 text-sm">🎨</span>
-                <h2 className="text-sm sm:text-base font-black">문화</h2>
-              </div>
+              <h2 className="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                </svg>
+                <span>문화</span>
+              </h2>
               <p className="mt-0.5 text-[10px] text-slate-300 font-medium line-clamp-1">
-                미디어아트 &amp; 복합휴식
+                수변 미디어아트 &amp; 복합휴식
               </p>
             </div>
           </Link>
@@ -205,17 +218,17 @@ export default function GatewayLandingPage() {
         <footer className="relative z-10 shrink-0 pt-1 flex flex-col gap-2">
           <Link
             href="/main"
-            className="group w-full min-h-[50px] sm:min-h-[54px] px-6 py-3 inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600 active:from-sky-300 active:to-blue-500 text-slate-950 font-black text-sm sm:text-base transition shadow-xl shadow-sky-500/25 tracking-tight active:scale-[0.98]"
+            className="group w-full min-h-[48px] sm:min-h-[52px] px-6 py-3 inline-flex items-center justify-center rounded-xl bg-sky-500 hover:bg-sky-400 active:bg-sky-400 text-slate-950 font-black text-sm sm:text-base transition duration-200 shadow-lg shadow-sky-500/25 tracking-tight active:scale-[0.98]"
           >
             <span>전국 물문화관 둘러보기</span>
-            <span className="ml-2 transform group-hover:translate-x-1 transition-transform font-black">→</span>
+            <span className="ml-2 transform group-hover:translate-x-1 group-active:translate-x-1 transition-transform font-black">→</span>
           </Link>
           <div className="flex items-center justify-center gap-3 text-[10.5px] text-white/50">
             <span>© K-water 한국수자원공사</span>
             <span>•</span>
             <Link
               href="/privacy"
-              className="font-bold text-yellow-400/90 hover:text-yellow-300 underline underline-offset-2"
+              className="font-bold text-yellow-400 hover:text-yellow-300 underline underline-offset-2 transition"
             >
               개인정보처리방침
             </Link>
