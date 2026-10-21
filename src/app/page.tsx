@@ -69,26 +69,30 @@ export default function GatewayLandingPage() {
 
         {/* 태블릿(md) 화면에서도 최적의 밸런스를 유지하도록 max-w 래퍼 적용 */}
         <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto h-full flex flex-col justify-between">
-          {/* ── 1. 상단: 브랜드 로고 (방안 1: 햄버거 버튼 삭제 및 미니멀 정돈) ── */}
+          {/* ── 1. 상단: 브랜드 로고 (클릭 시 메인 페이지로 이동) ── */}
           <header className="shrink-0 flex items-center pb-1 sm:pb-2">
-            <div className="flex items-center gap-2 sm:gap-2.5">
+            <Link
+              href="/main"
+              className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-[0.98]"
+              title="K-water 온라인 물문화관 메인으로 이동"
+            >
               <Image
                 src="/images/landing_color_symbol.png"
                 alt="물문화관 로고"
                 width={56}
                 height={64}
-                className="h-8 sm:h-9 md:h-10 w-auto object-contain drop-shadow"
+                className="h-8 sm:h-9 md:h-10 w-auto object-contain drop-shadow transition-transform duration-300 group-hover:scale-105"
                 priority
               />
               <div className="flex flex-col">
-                <span className="text-base sm:text-lg md:text-xl font-black tracking-tight text-white leading-tight">
+                <span className="text-base sm:text-lg md:text-xl font-black tracking-tight text-white leading-tight group-hover:text-sky-300 transition-colors">
                   물문화관
                 </span>
                 <span className="text-[8.5px] sm:text-[9.5px] md:text-[10px] font-extrabold text-sky-400 tracking-[0.16em] uppercase leading-tight">
                   WATER CULTURE PORTAL
                 </span>
               </div>
-            </div>
+            </Link>
           </header>
 
           {/* ── 2. 중앙: 아래로 부드럽게 펼쳐지는 아코디언 카드 영역 ── */}
@@ -226,9 +230,13 @@ export default function GatewayLandingPage() {
         {/* ── 컬럼 1 (맨 좌측): 브랜딩 사이드바 ── */}
         <div className="w-[19%] lg:w-[17%] xl:w-[16%] min-w-[200px] lg:min-w-[210px] max-w-[270px] shrink-0 bg-slate-950 border-r border-white/10 text-white p-5 lg:p-6 xl:p-7 flex flex-col justify-between items-center text-center relative z-20 shadow-2xl">
           
-          {/* 1. 좌측 상단: 방울이 캐릭터 아이콘 */}
+          {/* 1. 좌측 상단: 방울이 캐릭터 아이콘 (클릭 시 메인 이동) */}
           <div className="w-full flex justify-start items-center">
-            <div className="relative w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-start group">
+            <Link
+              href="/main"
+              title="K-water 온라인 물문화관 메인으로 이동"
+              className="relative w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-start group cursor-pointer"
+            >
               <Image
                 src="/bangwoori.png"
                 alt="K-water 방울이 마스코트"
@@ -237,26 +245,30 @@ export default function GatewayLandingPage() {
                 className="object-contain drop-shadow-md group-hover:scale-105 transition duration-300"
                 priority
               />
-            </div>
+            </Link>
           </div>
 
-          {/* 2. 가운데: K-water 물문화관 컬러풀 브랜드 상징 로고 */}
-          <div className="my-6 sm:my-8 flex flex-col items-center w-full px-1">
+          {/* 2. 가운데: K-water 물문화관 컬러풀 브랜드 상징 로고 (클릭 시 메인 이동) */}
+          <Link
+            href="/main"
+            title="K-water 온라인 물문화관 메인으로 이동"
+            className="my-6 sm:my-8 flex flex-col items-center w-full px-1 group cursor-pointer"
+          >
             <Image
               src="/images/landing_color_symbol.png"
               alt="K-water 물문화관 심볼"
               width={815}
               height={921}
-              className="h-20 sm:h-24 lg:h-28 w-auto object-contain drop-shadow-xl hover:scale-105 transition duration-300"
+              className="h-20 sm:h-24 lg:h-28 w-auto object-contain drop-shadow-xl group-hover:scale-105 transition duration-300"
               priority
             />
-            <h1 className="mt-3 text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-md">
+            <h1 className="mt-3 text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-md group-hover:text-sky-300 transition-colors">
               물문화관
             </h1>
             <p className="mt-2 text-[10px] sm:text-[11px] font-black text-sky-400 tracking-[0.16em] uppercase whitespace-nowrap opacity-90">
               WATER CULTURE PORTAL
             </p>
-          </div>
+          </Link>
 
           {/* 3. 하단: 전국 물문화관 둘러보기 버튼 및 개인정보처리방침 */}
           <div className="w-full pt-5 border-t border-white/10 px-1">
