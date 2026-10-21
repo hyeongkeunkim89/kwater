@@ -135,6 +135,9 @@ export function WaterHubHeader({
   const [activeHoverKey, setActiveHoverKey] = useState<ActiveNav | null>(null);
   const { user, openAuthModal, logout } = useAuth();
 
+  const drawerScrollRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
   const openMobileMenu = () => {
     setMobileMenuRendered(true);
     requestAnimationFrame(() => {
@@ -187,7 +190,36 @@ export function WaterHubHeader({
   };
 
   const toggleMenu = (key: ActiveNav) => {
-    setExpandedMenu((prev) => (prev === key ? null : key));
+    setExpandedMenu((prev) => {
+      const next = prev === key ? null : key;
+      if (next) {
+        // 메뉴가 펼쳐질 때 하위 항목이 가려지지 않고 온전히 보이도록 부드러운 스크롤 모션 실행
+        setTimeout(() => {
+          const el = itemRefs.current[key];
+          const container = drawerScrollRef.current;
+          if (el && container) {
+            const elRect = el.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            const overflowBottom = elRect.bottom - containerRect.bottom;
+            if (overflowBottom > -20) {
+              container.scrollBy({
+                top: overflowBottom + 36,
+                behavior: "smooth",
+              });
+            } else {
+              const overflowTop = containerRect.top - elRect.top;
+              if (overflowTop > 0) {
+                container.scrollBy({
+                  top: -overflowTop - 12,
+                  behavior: "smooth",
+                });
+              }
+            }
+          }
+        }, 120);
+      }
+      return next;
+    });
   };
 
   const isTabActive = (itemKey: ActiveNav) => {
@@ -549,7 +581,7 @@ export function WaterHubHeader({
             </div>
 
             {/* 2. 본문 영역 (검색창 + 5대 카테고리) */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+            <div ref={drawerScrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4 scroll-smooth">
               {/* 메뉴 · 전시 검색 바 */}
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
@@ -579,7 +611,13 @@ export function WaterHubHeader({
                   const isCurrentActive = isTabActive(item.key);
 
                   return (
-                    <div key={item.key} className="rounded-xl transition">
+                    <div
+                      key={item.key}
+                      ref={(node) => {
+                        itemRefs.current[item.key] = node;
+                      }}
+                      className="rounded-xl transition"
+                    >
                       {/* 대메뉴 클릭 행 */}
                       <button
                         type="button"
@@ -621,13 +659,13 @@ export function WaterHubHeader({
 
                       {/* 서브메뉴 아코디언 펼침 */}
                       {isExpanded && (
-                        <div className="mt-1 ml-14 pl-1 pr-2 space-y-1 pb-1 animate-in slide-in-from-top-1 duration-150">
+                        <div className="mt-1 ml-14 pl-1 pr-2 space-y-1 pb-2 animate-in fade-in slide-in-from-top-2 duration-200">
                           {item.subItems.map((sub) => (
                             <Link
                               key={sub.href + sub.label}
                               href={sub.href}
                               onClick={closeMobileMenu}
-                              className="flex items-center justify-between py-2 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition"
+                              className="flex items-center justify-between py-2 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-sky-600 hover:bg-sky-50 active:bg-sky-100 transition"
                             >
                               <span>{sub.label}</span>
                               <span className="text-[10px] text-slate-400">→</span>
