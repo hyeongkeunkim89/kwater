@@ -81,6 +81,43 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
+function getMenuIcon(key: ActiveNav) {
+  switch (key) {
+    case "intro":
+      return (
+        <svg className="w-4 h-4 text-sky-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0V7m0 4h4m-4 0H7" />
+        </svg>
+      );
+    case "status":
+      return (
+        <svg className="w-4 h-4 text-sky-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+        </svg>
+      );
+    case "news":
+      return (
+        <svg className="w-4 h-4 text-sky-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+        </svg>
+      );
+    case "reserve":
+      return (
+        <svg className="w-4 h-4 text-sky-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      );
+    case "feedback":
+      return (
+        <svg className="w-4 h-4 text-sky-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 export function WaterHubHeader({
   activeNav = "none",
   dense = false,
@@ -323,34 +360,52 @@ export function WaterHubHeader({
         </div>
       </div>
 
-      {/* 모바일 드로어 메뉴 */}
+      {/* 모바일 드로어 메뉴 (프리미엄 리디자인) */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[100] flex flex-col bg-white lg:hidden overflow-hidden animate-in fade-in duration-200">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 bg-slate-900 text-white shrink-0">
-            <div className="flex items-center gap-2">
-              <span className="text-lg">🌊</span>
-              <span className="font-black text-sm text-white tracking-wide">
-                K-water 온라인 물문화관 전체메뉴
-              </span>
+          {/* 1. 상단 헤더: 화이트 클린 배경 & 공식 컬러 심볼 로고 */}
+          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-white shrink-0">
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/images/landing_color_symbol.png"
+                alt="물문화관 로고"
+                width={40}
+                height={46}
+                className="h-7 w-auto object-contain drop-shadow-xs"
+              />
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base font-black text-slate-900 tracking-tight leading-none">
+                    물문화관
+                  </span>
+                  <span className="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full leading-none">
+                    전체메뉴
+                  </span>
+                </div>
+                <span className="text-[8.5px] font-extrabold text-sky-600 tracking-[0.16em] uppercase mt-0.5 leading-none">
+                  WATER CULTURE PORTAL
+                </span>
+              </div>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 text-slate-300 hover:text-white rounded-lg bg-slate-800 transition"
-              aria-label="닫기"
+              className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 flex items-center justify-center transition active:scale-95 cursor-pointer"
+              aria-label="메뉴 닫기"
             >
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          <div className="flex-1 px-5 py-6 overflow-y-auto bg-white flex flex-col justify-between">
-            <div className="mb-6 rounded-2xl bg-slate-50 border border-slate-200 p-4">
+          <div className="flex-1 px-5 py-5 overflow-y-auto bg-white flex flex-col justify-between">
+            {/* 2. 유저 / 환영 배너 카드 (방울이 마스코트 & 워터블루 그라데이션) */}
+            <div className="mb-5 rounded-2xl bg-gradient-to-br from-sky-50/80 via-white to-blue-50/50 border border-sky-100/90 p-4 shadow-xs">
               {user ? (
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-black text-base border border-sky-200">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-500 text-white font-black text-base shadow-sm">
                         {user.role === "admin" ? "🏛️" : "👤"}
                       </div>
                       <div>
@@ -368,7 +423,7 @@ export function WaterHubHeader({
                         setMobileMenuOpen(false);
                         logout();
                       }}
-                      className="text-xs font-bold text-slate-500 hover:text-slate-900 bg-white border border-slate-200 px-2.5 py-1 rounded-lg"
+                      className="text-xs font-bold text-slate-500 hover:text-slate-900 bg-white border border-slate-200 px-2.5 py-1 rounded-lg transition"
                     >
                       로그아웃
                     </button>
@@ -376,21 +431,39 @@ export function WaterHubHeader({
                   <Link
                     href="/mypage"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex w-full items-center justify-center rounded-xl border border-slate-300 bg-white py-2.5 text-xs font-black text-slate-700 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 transition shadow-2xs"
+                    className="flex w-full items-center justify-center rounded-xl border border-sky-200 bg-white py-2.5 text-xs font-black text-sky-700 hover:bg-sky-50 transition shadow-2xs"
                   >
                     {user.role === "admin" ? "🏛️ 통합 관리자 콘솔 바로가기" : "👤 마이페이지 바로가기"}
                   </Link>
                 </div>
               ) : (
-                <div className="space-y-2.5">
-                  <p className="text-xs font-bold text-slate-500">K-water 온라인 물문화관 방문을 환영합니다!</p>
-                  <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="relative w-9 h-9 shrink-0 flex items-center justify-center">
+                      <Image
+                        src="/bangwoori.png"
+                        alt="방울이"
+                        width={36}
+                        height={36}
+                        className="object-contain drop-shadow-xs"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs font-black text-slate-900 leading-tight">
+                        자연과 사람, 물이 머무는 곳
+                      </p>
+                      <p className="text-[11px] font-medium text-slate-500 mt-0.5">
+                        K-water 온라인 물문화관에 오신 것을 환영합니다!
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 pt-0.5">
                     <button
                       onClick={() => {
                         setMobileMenuOpen(false);
                         openAuthModal("login");
                       }}
-                      className="flex items-center justify-center rounded-xl bg-white border border-slate-300 py-2.5 text-xs font-black text-slate-700 hover:bg-slate-50 hover:text-sky-600 transition shadow-2xs"
+                      className="flex items-center justify-center rounded-xl bg-white border border-slate-200/90 py-2.5 text-xs font-black text-slate-700 hover:bg-slate-50 hover:text-sky-600 transition shadow-2xs cursor-pointer active:scale-[0.98]"
                     >
                       <span>로그인</span>
                     </button>
@@ -399,7 +472,7 @@ export function WaterHubHeader({
                         setMobileMenuOpen(false);
                         openAuthModal("signup");
                       }}
-                      className="flex items-center justify-center gap-1.5 rounded-xl bg-sky-50 border border-sky-200 py-2.5 text-xs font-black text-sky-700 hover:bg-sky-100 transition shadow-2xs"
+                      className="flex items-center justify-center rounded-xl bg-sky-500 text-white py-2.5 text-xs font-black hover:bg-sky-600 transition shadow-sm shadow-sky-500/20 cursor-pointer active:scale-[0.98]"
                     >
                       <span>회원가입</span>
                     </button>
@@ -408,6 +481,7 @@ export function WaterHubHeader({
               )}
             </div>
 
+            {/* 3. 5대 대메뉴 아코디언 목록 (미니 벡터 아이콘 탑재) */}
             <div className="flex flex-col gap-2.5">
               {menuItems.map((item) => {
                 const isExpanded = expandedMenu === item.key;
@@ -426,14 +500,17 @@ export function WaterHubHeader({
                     <button
                       type="button"
                       onClick={() => toggleMenu(item.key)}
-                      className={`w-full flex items-center justify-between py-3.5 px-4 font-black text-base transition ${
+                      className={`w-full flex items-center justify-between py-3.5 px-4 font-black text-base transition cursor-pointer ${
                         isCurrentActive ? "text-[#3054b0]" : "text-slate-900 hover:text-[#3054b0]"
                       }`}
                       aria-expanded={isExpanded}
                       aria-label={`${item.label} 하위 메뉴 ${isExpanded ? "닫기" : "열기"}`}
                     >
-                      <span className="flex items-center gap-2.5">
-                        <span>{item.label}</span>
+                      <span className="flex items-center gap-3">
+                        <span className="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center shrink-0">
+                          {getMenuIcon(item.key)}
+                        </span>
+                        <span className="font-black text-slate-900">{item.label}</span>
                         {isCurrentActive && (
                           <span className="rounded-full bg-[#3054b0] px-2 py-0.5 text-[10px] font-bold text-white">
                             현재위치
@@ -457,7 +534,7 @@ export function WaterHubHeader({
                       </svg>
                     </button>
 
-                    {/* 아코디언 하위 메뉴 리스트 (최대한 축약된 간결한 명칭) */}
+                    {/* 아코디언 하위 메뉴 리스트 */}
                     {isExpanded && (
                       <div className="border-t border-slate-100 bg-slate-50/80 p-3 grid grid-cols-2 gap-2 animate-in slide-in-from-top-1 duration-150">
                         {item.subItems.map((sub) => (
@@ -465,7 +542,7 @@ export function WaterHubHeader({
                             key={sub.href + sub.label}
                             href={sub.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-2 rounded-xl bg-white px-3 py-2.5 text-xs font-bold text-slate-700 border border-slate-200/80 shadow-2xs hover:border-[#3054b0]/40 hover:bg-[#edf4fb] hover:text-[#3054b0] transition"
+                            className="flex items-center gap-2 rounded-xl bg-white px-3 py-2.5 text-xs font-bold text-slate-700 border border-slate-200/80 shadow-2xs hover:border-[#3054b0]/40 hover:bg-[#edf4fb] hover:text-[#3054b0] transition active:scale-[0.98]"
                           >
                             <span className="h-1.5 w-1.5 rounded-full bg-[#3054b0] shrink-0" />
                             <span className="truncate">{sub.label}</span>
@@ -478,20 +555,22 @@ export function WaterHubHeader({
               })}
             </div>
 
-            <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col gap-3 shrink-0">
+            {/* 4. 하단 퀵 링크 & 푸터 액션 */}
+            <div className="mt-6 pt-5 border-t border-slate-200/80 flex flex-col gap-2.5 shrink-0 pb-1">
               <a
                 href="https://www.kwater.or.kr"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex min-h-[48px] items-center justify-center rounded-xl bg-sky-500 px-4 py-3 text-center text-sm font-black text-white transition hover:bg-sky-600 shadow-md shadow-sky-500/20"
+                className="flex min-h-[48px] items-center justify-center rounded-xl bg-sky-500 px-4 py-3 text-center text-sm font-black text-white transition hover:bg-sky-600 active:bg-sky-700 shadow-md shadow-sky-500/20 active:scale-[0.98]"
               >
-                K-water 공식 홈페이지 ↗
+                <span>K-water 공식 홈페이지</span>
+                <span className="ml-1 text-xs opacity-85">↗</span>
               </a>
               {showStaffConsoleLink && (
                 <Link
                   href={STAFF_CONSOLE_HREF}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex min-h-[44px] items-center justify-center rounded-xl border border-slate-300 bg-slate-100 px-4 py-2.5 text-center text-xs font-bold text-slate-700 transition hover:bg-slate-200"
+                  className="flex min-h-[42px] items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-center text-xs font-bold text-slate-600 transition hover:bg-slate-100 active:bg-slate-200"
                 >
                   관리자 콘솔 접속
                 </Link>
