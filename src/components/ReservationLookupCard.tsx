@@ -162,20 +162,27 @@ export function ReservationLookupCard() {
 
   const handleCancel = async (id: string) => {
     if (confirm("예약을 정말 취소하시겠습니까?")) {
-      updateStatus(id, "취소");
       try {
-        await fetch("/api/reservations/guest-cancel", {
+        const res = await fetch("/api/reservations/guest-cancel", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id, phone, pin }),
         });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          alert(errData.error || "예약 취소에 실패했습니다. 입력 정보를 확인해 주세요.");
+          return;
+        }
       } catch (e) {
         console.error("Cancel fetch error", e);
+        alert("예약 취소 중 네트워크 오류가 발생했습니다.");
+        return;
       }
+      updateStatus(id, "취소");
       setResults((prev) =>
         prev.map((r) => (r.id === id ? { ...r, status: "취소됨" } : r))
       );
-      alert("예약이 취소되었습니다.");
+      alert("예약이 정상적으로 취소되었습니다.");
     }
   };
 

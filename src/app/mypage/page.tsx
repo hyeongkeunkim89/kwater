@@ -129,12 +129,8 @@ function MyPageContent() {
 
   const handleCancelReservation = async (id: string) => {
     if (confirm("정말 예약을 취소하시겠습니까?")) {
-      updateStatus(id, "취소");
-      setReservations((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, status: "취소" } : r))
-      );
       try {
-        await fetch("/api/reservations/guest-cancel", {
+        const res = await fetch("/api/reservations/guest-cancel", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -143,10 +139,21 @@ function MyPageContent() {
             email: user?.email || "",
           }),
         });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          alert(errData.error || "예약 취소 처리에 실패했습니다.");
+          return;
+        }
       } catch (e) {
         console.error("Cancel reservation fetch error", e);
+        alert("예약 취소 중 네트워크 오류가 발생했습니다.");
+        return;
       }
-      alert("예약이 취소되었습니다.");
+      updateStatus(id, "취소");
+      setReservations((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, status: "취소" } : r))
+      );
+      alert("예약이 정상적으로 취소되었습니다.");
     }
   };
 

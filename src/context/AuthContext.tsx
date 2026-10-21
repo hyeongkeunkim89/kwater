@@ -262,6 +262,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.error("Staff console session error", e);
       }
 
+      try {
+        sessionStorage.setItem("kwm_stories_admin_secret", lowerPass);
+      } catch {}
+
       const adminUser: UserProfile = {
         id: `staff_admin`,
         name: "K-water 통합 관리자",
@@ -471,7 +475,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return true;
   };
 
-  const loginAsStaff = async (_pass: string, centerId: string): Promise<boolean> => {
+  const loginAsStaff = async (pass: string, centerId: string): Promise<boolean> => {
+    const trimmedPass = pass.trim();
+    try {
+      const res = await fetch("/api/staff-console/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: trimmedPass }),
+        credentials: "same-origin",
+      });
+
+      const j = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) {
+        alert(`🔒 관리자 로그인 실패: ${j.error || "비밀번호가 올바르지 않습니다."}`);
+        return false;
+      }
+    } catch (e) {
+      console.error("Staff console session error", e);
+      alert("관리자 세션 생성에 실패했습니다.");
+      return false;
+    }
+
+    try {
+      sessionStorage.setItem("kwm_stories_admin_secret", trimmedPass);
+    } catch {}
+
     const staffUser: UserProfile = {
       id: `staff_${Date.now()}`,
       name: centerId === "all" ? "K-water 통합 관리자" : "문화관 운영 담당자",
@@ -489,6 +517,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     try {
       localStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem("kwm_stories_admin_secret");
       document.cookie = "user_session=; path=/; max-age=0; SameSite=Lax";
       document.cookie = "kakao_user_session=; path=/; max-age=0; SameSite=Lax";
       document.cookie = "naver_user_session=; path=/; max-age=0; SameSite=Lax";
@@ -501,6 +530,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error("Logout cleanup error", e);
     }
     void fetch("/api/auth/logout", { method: "POST" });
+    void fetch("/api/staff-console/session", { method: "DELETE" });
     alert("로그아웃 되었습니다.");
     window.location.href = "/main";
   };

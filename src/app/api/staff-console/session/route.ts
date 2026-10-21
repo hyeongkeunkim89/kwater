@@ -40,7 +40,10 @@ export async function POST(req: NextRequest) {
       : "";
   const pwd = pwdRaw.trim();
   const expected = getStaffConsoleGatePassword();
-  const isMatch = pwd === "admin" || (expected ? timingSafeEqualUtf8(pwd, expected) : false);
+  
+  const isDevFallback = process.env.NODE_ENV !== "production" && !expected && pwd === "admin";
+  const isMatch = isDevFallback || (expected ? timingSafeEqualUtf8(pwd, expected) : false);
+
   if (!pwd || !isMatch) {
     return NextResponse.json({ error: "비밀번호가 올바르지 않습니다." }, { status: 401 });
   }
