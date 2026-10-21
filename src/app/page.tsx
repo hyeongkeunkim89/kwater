@@ -64,8 +64,8 @@ export default function GatewayLandingPage() {
 
         {/* 태블릿(md) 화면에서도 최적의 밸런스를 유지하도록 max-w 래퍼 적용 */}
         <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto h-full flex flex-col justify-between">
-          {/* ── 1. 상단: 브랜드 로고 & 햄버거 메뉴 ── */}
-          <header className="shrink-0 flex items-center justify-between pb-1 sm:pb-2">
+          {/* ── 1. 상단: 브랜드 로고 (방안 1: 햄버거 버튼 삭제 및 미니멀 정돈) ── */}
+          <header className="shrink-0 flex items-center pb-1 sm:pb-2">
             <div className="flex items-center gap-2 sm:gap-2.5">
               <Image
                 src="/images/landing_color_symbol.png"
@@ -84,16 +84,6 @@ export default function GatewayLandingPage() {
                 </span>
               </div>
             </div>
-
-            <Link
-              href="/main"
-              aria-label="전체 둘러보기"
-              className="p-2 -mr-1 text-white/90 hover:text-white active:scale-95 transition-transform"
-            >
-              <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </Link>
           </header>
 
           {/* ── 2. 중앙: 인터랙티브 아코디언 카드 영역 (핸드폰/태블릿 최적화) ── */}
