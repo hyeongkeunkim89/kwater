@@ -641,34 +641,13 @@ export function WaterHubHeader({
               </div>
             </div>
 
-            {/* 3. 하단 테마 바로가기 & 개인정보처리방침 */}
-            <div className="px-5 pt-4 pb-6 border-t border-slate-100 bg-white shrink-0 space-y-3.5">
-              <div>
-                <p className="text-xs font-bold text-slate-500 mb-2.5">테마 바로가기</p>
-                <div className="grid grid-cols-4 gap-2">
-                  {[
-                    { label: "기술", id: "technology" },
-                    { label: "생태", id: "ecology" },
-                    { label: "역사", id: "history" },
-                    { label: "문화", id: "culture" },
-                  ].map((chip) => (
-                    <Link
-                      key={chip.id}
-                      href={`/?theme=${chip.id}`}
-                      onClick={closeMobileMenu}
-                      className="py-2 rounded-full border border-slate-200 text-xs font-semibold text-slate-700 text-center hover:bg-sky-50 hover:border-sky-300 hover:text-sky-700 transition"
-                    >
-                      {chip.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between pt-1">
+            {/* 3. 하단 푸터 (개인정보처리방침 & 관리자 콘솔) */}
+            <div className="px-5 py-4 border-t border-slate-100 bg-slate-50/70 shrink-0">
+              <div className="flex items-center justify-between text-xs">
                 <Link
                   href="/privacy"
                   onClick={closeMobileMenu}
-                  className="text-xs font-semibold text-[#92782b] hover:text-[#786221] underline underline-offset-4 transition"
+                  className="font-semibold text-slate-600 hover:text-slate-900 underline underline-offset-4 transition"
                 >
                   개인정보처리방침
                 </Link>
