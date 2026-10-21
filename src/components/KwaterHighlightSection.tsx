@@ -78,15 +78,16 @@ export function KwaterHighlightSection() {
             <span className="transform group-hover:translate-x-1 transition-transform duration-200">→</span>
           </a>
         </div>
+
         <h2 className="mt-2 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-          생생한 물문화 영상 &amp; 숏폼
+          K-water 미디어 하이라이트
         </h2>
         <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
-          K-water 공식 채널에서 전해드리는 물문화관 생생 영상입니다.
+          한국수자원공사 공식 유튜브 채널의 생생한 물문화관 숏폼 및 탐방 영상을 만나보세요.
         </p>
       </div>
 
-      {/* SK HIGHLIGHT 스타일 유튜브 카드 리스트 (썸네일 위 제목 + 마우스 호버 시 제목 확대) */}
+      {/* 영상 카드 목록 */}
       <div className="mt-4 space-y-3.5">
         {HIGHLIGHT_ITEMS.map((item) => (
           <div
@@ -130,12 +131,12 @@ export function KwaterHighlightSection() {
               </div>
             </div>
 
-            {/* 5. 하단 썸네일 위 제목 (마우스 호버 시 제목 확대 애니메이션) */}
-            <div className="absolute bottom-0 left-0 right-0 z-10 p-3.5 text-white">
-              <span className="text-[10px] sm:text-xs font-bold text-sky-300/90 block mb-0.5 tracking-wide">
+            {/* 5. 하단 텍스트 정보 */}
+            <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 z-10">
+              <span className="text-[10px] sm:text-[11px] font-bold text-sky-400">
                 {item.author}
               </span>
-              <h3 className="text-xs sm:text-sm font-black text-white leading-snug line-clamp-2 transition-transform duration-300 ease-out origin-bottom-left group-hover:scale-[1.03] group-hover:text-sky-100 drop-shadow-md">
+              <h3 className="text-xs sm:text-sm font-black text-white line-clamp-1 group-hover:text-sky-200 transition">
                 {item.title}
               </h3>
             </div>
@@ -146,49 +147,64 @@ export function KwaterHighlightSection() {
       {/* 비디오 재생 팝업 모달 */}
       {activeVideo && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4 transition-opacity duration-300"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 transition-opacity duration-300"
           onClick={() => setActiveVideo(null)}
           role="presentation"
         >
           <div
-            className={`relative w-full overflow-hidden rounded-2xl bg-black shadow-2xl ${
-              activeVideo.isShorts
-                ? "max-w-xs sm:max-w-sm aspect-[9/16] h-[80vh]"
-                : "max-w-4xl aspect-video"
-            }`}
+            className="flex flex-col items-center w-full max-h-[94vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* 모달 닫기 버튼 */}
-            <button
-              onClick={() => setActiveVideo(null)}
-              className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/90 transition border border-white/20"
-              aria-label="닫기"
+            {/* 영상 플레이어 프레임 (유튜브 영상 본연의 영역 유지) */}
+            <div
+              className={`relative w-full overflow-hidden rounded-2xl bg-black shadow-2xl ${
+                activeVideo.isShorts
+                  ? "max-w-[340px] sm:max-w-[380px] aspect-[9/16] max-h-[74vh]"
+                  : "max-w-4xl aspect-video max-h-[78vh]"
+              }`}
             >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+              {/* 모달 닫기 버튼 */}
+              <button
+                onClick={() => setActiveVideo(null)}
+                className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white hover:bg-black/95 transition border border-white/20 shadow-md"
+                aria-label="닫기"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
 
-            {/* 유튜브 아이프레임 재생 */}
-            <iframe
-              src={activeVideo.embedUrl}
-              title={activeVideo.title}
-              className="h-full w-full rounded-2xl"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
+              {/* 유튜브 아이프레임 재생 */}
+              <iframe
+                src={activeVideo.embedUrl}
+                title={activeVideo.title}
+                className="h-full w-full rounded-2xl"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
 
-            {/* 유튜브 외부 링크 버튼 */}
-            <div className="absolute bottom-3 left-3 right-3 z-20 flex justify-center">
+            {/* 하단 액션 버튼 바 (영상/제목을 가리지 않도록 플레이어 하단 외부로 분리 배치) */}
+            <div className="mt-3.5 flex items-center justify-center gap-2.5 z-20 shrink-0">
               <a
                 href={activeVideo.videoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full bg-red-600/90 hover:bg-red-600 px-4 py-1.5 text-xs font-bold text-white backdrop-blur-md shadow-md transition"
+                className="inline-flex items-center gap-2 rounded-full bg-red-600 hover:bg-red-500 px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-xl hover:shadow-red-600/30 transition transform active:scale-95"
               >
+                <svg className="h-4 w-4 fill-current text-white" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
                 <span>유튜브 앱에서 보기</span>
-                <span>↗</span>
+                <span className="text-[11px] opacity-80">↗</span>
               </a>
+              <button
+                type="button"
+                onClick={() => setActiveVideo(null)}
+                className="inline-flex items-center gap-1 rounded-full bg-white/10 hover:bg-white/20 text-white/90 px-4 py-2.5 text-xs sm:text-sm font-bold border border-white/20 backdrop-blur-md shadow-md transition"
+              >
+                <span>닫기</span>
+              </button>
             </div>
           </div>
         </div>
