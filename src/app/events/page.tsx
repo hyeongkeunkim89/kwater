@@ -6,7 +6,7 @@ import { isWaterStoriesLive } from "@/lib/storiesConfig";
 import { EventBoard } from "@/components/EventBoard";
 
 export const metadata: Metadata = {
-  title: "문화 행사 & 이벤트",
+  title: "체험·이벤트",
   description: "전국 K-water 물문화관에서 펼쳐지는 다채로운 문화 행사 및 참여형 이벤트를 확인하세요.",
 };
 
@@ -54,7 +54,7 @@ export default async function EventsPage({ searchParams }: Props) {
             EXPERIENCE &amp; EVENTS
           </span>
           <h1 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
-            체험 및 이벤트
+            체험·이벤트
           </h1>
           <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl font-medium">
             K-water 본사 및 전국 15개 물문화관에서 운영하는 다양한 시민 체험형 생태·환경·과학 이벤트 및 갤러리 사진전을 소개합니다.

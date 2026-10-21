@@ -5,7 +5,7 @@ import { listNewsFromDb, getNewsDetailFromDb } from "@/lib/newsDb";
 import { NewsBoard } from "@/components/NewsBoard";
 
 export const metadata: Metadata = {
-  title: "공지사항 & 새소식",
+  title: "공지사항",
   description: "전국 K-water 물문화관 및 강문화관의 주요 공지사항과 새로운 소식을 전해드립니다.",
 };
 
@@ -41,7 +41,7 @@ export default async function NewsPage({ searchParams }: Props) {
             NOTICE & NEWS
           </span>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-            소식 및 공지사항
+            공지사항
           </h1>
           <p className="mt-2 text-sm text-slate-500 leading-relaxed max-w-xl font-semibold">
             K-water 물문화관 및 각 지점 담당자가 전하는 새로운 소식과 주요 공지사항을 안내합니다.
