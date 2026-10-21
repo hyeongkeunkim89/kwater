@@ -5,206 +5,140 @@ export default function GatewayLandingPage() {
   return (
     <div className="selection:bg-sky-500 selection:text-white">
       {/* ══════════════════════════════════════════════════════════════
-          1. 모바일 전용 UI (md:hidden): 스크롤 없이 100dvh 한 화면 2×2 그리드
+          1. 모바일 전용 UI (md:hidden): K-water 시그니처 블루 풀스크린 인트로 (방안 A)
          ══════════════════════════════════════════════════════════════ */}
-      <div className="flex md:hidden h-[100dvh] w-full bg-slate-950 text-white flex-col justify-between p-3.5 sm:p-4 overflow-hidden">
-        {/* 모바일 상단 콤팩트 헤더 */}
-        <header className="flex items-center justify-between shrink-0 pb-2 border-b border-white/10">
-          <div className="flex items-center gap-2">
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 flex items-center justify-center">
+      <div className="flex md:hidden h-[100dvh] w-full relative overflow-hidden flex-col justify-between p-5 sm:p-6 text-white">
+        {/* 배경: 대청호 수변 파노라마 + K-water 딥 오션블루 그라데이션 */}
+        <div
+          className="absolute inset-0 bg-cover bg-center brightness-[0.85] contrast-[1.05] scale-105"
+          style={{
+            backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg/1280px-Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg')`,
+          }}
+        />
+        {/* 깊이감 있는 시그니처 블루 비네팅 오버레이 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#001833]/90 via-[#002e5c]/80 to-[#001226]/95 backdrop-blur-[1.5px]" />
+        
+        {/* 상단 은은한 빛 반사 앰비언트 글로우 */}
+        <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-sky-400/20 blur-[80px]" />
+
+        {/* ── 1. 상단: 브랜드 엠블럼 바 ── */}
+        <header className="relative z-10 flex items-center justify-between shrink-0 pt-1">
+          <div className="flex items-center gap-2.5">
+            <div className="relative w-9 h-9 shrink-0 flex items-center justify-center">
               <Image
                 src="/bangwoori.png"
                 alt="방울이"
                 width={36}
                 height={36}
-                className="object-contain"
+                className="object-contain drop-shadow-md"
                 priority
               />
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <Image
                 src="/images/landing_color_symbol.png"
                 alt="물문화관 로고"
                 width={60}
                 height={68}
-                className="h-6 w-auto object-contain"
+                className="h-7 w-auto object-contain drop-shadow"
                 priority
               />
               <div className="flex flex-col">
                 <span className="text-sm font-black tracking-tight text-white leading-tight">
                   물문화관
                 </span>
-                <span className="text-[8px] font-black text-sky-400 tracking-[0.14em] uppercase leading-tight">
+                <span className="text-[8.5px] font-extrabold text-sky-300 tracking-[0.16em] uppercase leading-tight">
                   WATER CULTURE
                 </span>
               </div>
             </div>
           </div>
 
-          <span className="text-[10px] font-bold text-sky-300 bg-sky-950/80 border border-sky-500/30 px-2 py-0.5 rounded-full">
+          <span className="text-[10px] font-bold text-sky-200 bg-white/10 border border-white/20 px-3 py-1 rounded-full backdrop-blur-md shadow-xs">
             K-water
           </span>
         </header>
 
-        {/* 모바일 중앙: 2×2 테마 카드 그리드 (화면 높이에 맞춰 유동 확장) */}
-        <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-2 sm:gap-2.5 my-2.5 min-h-0">
-          {/* 01 기술 */}
-          <Link
-            href="/main"
-            className="group relative rounded-xl sm:rounded-2xl overflow-hidden border border-white/15 bg-slate-900 flex flex-col justify-between p-3 active:scale-[0.98] transition shadow-md"
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center brightness-[0.85] transition-transform duration-500 group-active:scale-105"
-              style={{
-                backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg/1280px-Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg')`,
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30" />
+        {/* ── 2. 중앙: 감성적 슬로건 & 4대 가치 글래스 카드 ── */}
+        <main className="relative z-10 my-auto flex flex-col items-start py-2">
+          {/* 아이브로우 뱃지 */}
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-400/15 border border-sky-300/30 text-sky-300 text-[11px] font-bold tracking-wide backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+            대한민국 맑은 물과 문화의 만남
+          </span>
 
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[9px] sm:text-[10px] font-black text-sky-300 bg-slate-900/85 px-2 py-0.5 rounded-full border border-sky-400/30">
-                01 · 기술
-              </span>
-              <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white/80">
-                →
-              </span>
-            </div>
+          {/* 메인 헤드라인 */}
+          <h1 className="mt-3 text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug drop-shadow-md">
+            자연과 사람, 물이 머무는 곳<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-sky-400 to-teal-300">
+              K-water 온라인 물문화관
+            </span>
+          </h1>
 
-            <div className="relative z-10">
-              <div className="flex items-center gap-1.5 text-white">
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <h3 className="text-xs sm:text-sm font-black">기술</h3>
+          {/* 서브 설명글 */}
+          <p className="mt-2 text-xs sm:text-sm text-slate-200/90 font-medium leading-relaxed max-w-sm drop-shadow-sm">
+            전국 15대 댐과 4대 강 수변에 펼쳐진 물문화관에서 생태와 역사, 예술과 휴식이 공존하는 생생한 이야기를 만나보세요.
+          </p>
+
+          {/* 4대 가치 글래스모피즘(Glassmorphism) 미니멀 칩 그리드 */}
+          <div className="mt-5 grid grid-cols-2 gap-2 w-full max-w-sm">
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 border border-white/15 backdrop-blur-md shadow-sm">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-sky-500/25 text-sky-300 text-sm">
+                ⚙️
+              </span>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black text-white">01 기술</div>
+                <div className="text-[9.5px] text-sky-200/80 truncate">스마트 수자원 관리</div>
               </div>
-              <p className="mt-0.5 text-[9px] sm:text-[10px] text-slate-300 font-medium line-clamp-1">
-                스마트 수자원 &amp; 수력발전
-              </p>
-            </div>
-          </Link>
-
-          {/* 02 생태 */}
-          <Link
-            href="/main"
-            className="group relative rounded-xl sm:rounded-2xl overflow-hidden border border-white/15 bg-slate-900 flex flex-col justify-between p-3 active:scale-[0.98] transition shadow-md"
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center brightness-[0.85] transition-transform duration-500 group-active:scale-105"
-              style={{
-                backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG')`,
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30" />
-
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[9px] sm:text-[10px] font-black text-emerald-300 bg-slate-900/85 px-2 py-0.5 rounded-full border border-emerald-400/30">
-                02 · 생태
-              </span>
-              <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white/80">
-                →
-              </span>
             </div>
 
-            <div className="relative z-10">
-              <div className="flex items-center gap-1.5 text-white">
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                </svg>
-                <h3 className="text-xs sm:text-sm font-black">생태</h3>
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 border border-white/15 backdrop-blur-md shadow-sm">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-500/25 text-emerald-300 text-sm">
+                🌿
+              </span>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black text-white">02 생태</div>
+                <div className="text-[9.5px] text-emerald-200/80 truncate">수변 생태 &amp; 둘레길</div>
               </div>
-              <p className="mt-0.5 text-[9px] sm:text-[10px] text-slate-300 font-medium line-clamp-1">
-                수변 생태계 &amp; 둘레길
-              </p>
-            </div>
-          </Link>
-
-          {/* 03 역사 */}
-          <Link
-            href="/main"
-            className="group relative rounded-xl sm:rounded-2xl overflow-hidden border border-white/15 bg-slate-900 flex flex-col justify-between p-3 active:scale-[0.98] transition shadow-md"
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center brightness-[0.85] transition-transform duration-500 group-active:scale-105"
-              style={{
-                backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Chungju_Lake.jpg/1280px-Chungju_Lake.jpg')`,
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30" />
-
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[9px] sm:text-[10px] font-black text-amber-300 bg-slate-900/85 px-2 py-0.5 rounded-full border border-amber-400/30">
-                03 · 역사
-              </span>
-              <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white/80">
-                →
-              </span>
             </div>
 
-            <div className="relative z-10">
-              <div className="flex items-center gap-1.5 text-white">
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0V7m0 4h4m-4 0H7" />
-                </svg>
-                <h3 className="text-xs sm:text-sm font-black">역사</h3>
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 border border-white/15 backdrop-blur-md shadow-sm">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/25 text-amber-300 text-sm">
+                🏛️
+              </span>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black text-white">03 역사</div>
+                <div className="text-[9.5px] text-amber-200/80 truncate">치수 발자취 &amp; 사료</div>
               </div>
-              <p className="mt-0.5 text-[9px] sm:text-[10px] text-slate-300 font-medium line-clamp-1">
-                치수 발자취 &amp; 수몰 사료
-              </p>
-            </div>
-          </Link>
-
-          {/* 04 문화 */}
-          <Link
-            href="/main"
-            className="group relative rounded-xl sm:rounded-2xl overflow-hidden border border-white/15 bg-slate-900 flex flex-col justify-between p-3 active:scale-[0.98] transition shadow-md"
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center brightness-[0.85] transition-transform duration-500 group-active:scale-105"
-              style={{
-                backgroundImage: `url('/peace-dam-trench.jpg')`,
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30" />
-
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[9px] sm:text-[10px] font-black text-rose-300 bg-slate-900/85 px-2 py-0.5 rounded-full border border-rose-400/30">
-                04 · 문화
-              </span>
-              <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white/80">
-                →
-              </span>
             </div>
 
-            <div className="relative z-10">
-              <div className="flex items-center gap-1.5 text-white">
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
-                </svg>
-                <h3 className="text-xs sm:text-sm font-black">문화</h3>
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 border border-white/15 backdrop-blur-md shadow-sm">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-rose-500/25 text-rose-300 text-sm">
+                🎨
+              </span>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black text-white">04 문화</div>
+                <div className="text-[9.5px] text-rose-200/80 truncate">미디어아트 &amp; 복합휴식</div>
               </div>
-              <p className="mt-0.5 text-[9px] sm:text-[10px] text-slate-300 font-medium line-clamp-1">
-                미디어아트 &amp; 복합 휴식공간
-              </p>
             </div>
-          </Link>
-        </div>
+          </div>
+        </main>
 
-        {/* 모바일 하단 CTA 바 */}
-        <footer className="shrink-0 pt-1 flex flex-col gap-1.5">
+        {/* ── 3. 하단: 메인 탐색 CTA 버튼 & 푸터 고지 ── */}
+        <footer className="relative z-10 shrink-0 pt-2 flex flex-col gap-2">
           <Link
             href="/main"
-            className="w-full min-h-[46px] sm:min-h-[50px] px-4 py-2.5 inline-flex items-center justify-center rounded-xl sm:rounded-2xl bg-sky-500 active:bg-sky-400 text-slate-950 text-xs sm:text-sm font-black transition shadow-lg shadow-sky-500/25 tracking-tight active:scale-[0.98]"
+            className="group w-full min-h-[52px] sm:min-h-[56px] px-6 py-3.5 inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-slate-950 font-black text-sm sm:text-base transition shadow-xl shadow-sky-500/25 tracking-tight active:scale-[0.98]"
           >
             <span>전국 물문화관 둘러보기</span>
-            <span className="ml-1.5 text-sm font-black">→</span>
+            <span className="ml-2 transform group-hover:translate-x-1 transition-transform font-black">→</span>
           </Link>
-          <div className="flex items-center justify-center gap-3 text-[10px] text-white/45">
+          <div className="flex items-center justify-center gap-3 text-[11px] text-white/50">
             <span>© K-water 한국수자원공사</span>
             <span>•</span>
             <Link
               href="/privacy"
-              className="font-bold text-yellow-400 hover:text-yellow-300 underline underline-offset-2"
+              className="font-bold text-yellow-400/90 hover:text-yellow-300 underline underline-offset-2"
             >
               개인정보처리방침
             </Link>
