@@ -30,10 +30,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "예약 번호가 필요합니다." }, { status: 400 });
   }
 
+  if (!phone && !email) {
+    return NextResponse.json({ error: "예약 취소를 위해 예약 시 입력한 연락처 또는 이메일이 필요합니다." }, { status: 400 });
+  }
+
   try {
     const ok = await cancelGuestReservationInDb(id, phone, pin, email);
     if (!ok) {
-      return NextResponse.json({ error: "예약 취소에 실패했거나 예약을 찾을 수 없습니다." }, { status: 404 });
+      return NextResponse.json({ error: "예약 정보가 일치하지 않거나 취소할 수 없습니다." }, { status: 404 });
     }
     return NextResponse.json({ ok: true });
   } catch (e) {

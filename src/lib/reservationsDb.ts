@@ -329,22 +329,22 @@ export async function cancelGuestReservationInDb(
   await ensureTourReservationsSchema(sql);
   const targetDigits = phone.replace(/\D/g, "");
   const emailLower = email.trim().toLowerCase();
+  if (!targetDigits && !emailLower) return false;
+
   const rows = await sql<{ id: string }[]>`
     UPDATE tour_reservations
     SET status = '취소'
     WHERE id = ${id}
       AND (
-        ${emailLower} <> '' AND lower(user_email) = ${emailLower}
-        OR ${targetDigits} <> '' AND regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits}
-        OR (${targetDigits} = '' AND ${emailLower} = '')
+        (${emailLower} <> '' AND lower(user_email) = ${emailLower})
+        OR
+        (${targetDigits} <> '' AND regexp_replace(phone, '[^0-9]', '', 'g') = ${targetDigits} AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()}))
       )
-      AND (guest_pin IS NULL OR guest_pin = '' OR guest_pin = ${pin.trim()} OR ${emailLower} <> '')
     RETURNING id
   `;
   return rows.length > 0;
 }
 
-/** 관리자: 대기/확정/취소 상태 변경 */
 export async function updateTourReservationStatusDb(
   id: string,
   status: ReservationStatus,

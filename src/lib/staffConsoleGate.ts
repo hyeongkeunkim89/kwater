@@ -1,5 +1,5 @@
 /**
- * 관리자 페이지(/yunyeong) 접근 게이트 — 예약·물 이야기와 동일한 관리 비밀번호로 통합.
+ * 관리자 페이지(/admin, /mypage) 접근 게이트 — 예약·물 이야기와 동일한 관리 비밀번호로 통합.
  * `STAFF_CONSOLE_PASSWORD`가 있으면 그 값을, 없으면 `WATER_STORIES_ADMIN_SECRET`을 페이지 진입 비밀번호로 사용.
  * 미들웨어(Edge)와 API(Node)에서 공통 사용. Web Crypto만 사용.
  */
@@ -49,25 +49,31 @@ function bytesToHex(bytes: ArrayBuffer): string {
 
 /** HMAC 서명용 비밀(페이지 게이트 비밀번호와 별도로 두면 로테이션에 유리) */
 export function getStaffGateSigningSecret(): string {
-  return (
+  const fromEnv =
     process.env.STAFF_CONSOLE_SESSION_SECRET?.trim() ||
     process.env.WATER_STORIES_ADMIN_SECRET?.trim() ||
-    process.env.STAFF_CONSOLE_PASSWORD?.trim() ||
-    "admin"
-  );
+    process.env.STAFF_CONSOLE_PASSWORD?.trim();
+
+  if (fromEnv) return fromEnv;
+  // 프로덕션에서는 하드코딩된 'admin' 사용을 절대 금지
+  if (process.env.NODE_ENV === "production") return "";
+  return "admin";
 }
 
 export function isStaffConsoleGateEnabled(): boolean {
   return true;
 }
 
-/** 로그인 폼·미들웨어가 비교하는 비밀번호(기본값: admin) */
+/** 로그인 폼·미들웨어가 비교하는 비밀번호 */
 export function getStaffConsoleGatePassword(): string {
-  return (
+  const fromEnv =
     process.env.STAFF_CONSOLE_PASSWORD?.trim() ||
-    process.env.WATER_STORIES_ADMIN_SECRET?.trim() ||
-    "admin"
-  );
+    process.env.WATER_STORIES_ADMIN_SECRET?.trim();
+
+  if (fromEnv) return fromEnv;
+  // 프로덕션에서는 비밀번호 미지정 시 접근 차단
+  if (process.env.NODE_ENV === "production") return "";
+  return "admin";
 }
 
 async function importHmacKey(secret: string): Promise<CryptoKey> {
@@ -118,7 +124,7 @@ export async function verifyStaffGateSessionToken(token: string): Promise<boolea
   }
 }
 
-/** API에서 Set-Cookie 헤더 조립 */
+/** API 및 전체 사이트에서 Set-Cookie 헤더 조립 (경로: / 전체 적용) */
 export function staffGateCookieOptions(): {
   name: string;
   maxAgeSec: number;
@@ -130,7 +136,7 @@ export function staffGateCookieOptions(): {
   return {
     name: STAFF_CONSOLE_GATE_COOKIE,
     maxAgeSec: Math.floor(TTL_MS / 1000),
-    path: "/yunyeong",
+    path: "/",
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",

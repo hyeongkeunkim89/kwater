@@ -1,8 +1,16 @@
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { NextRequest, NextResponse } from "next/server";
+import { verifyAdminRequest } from "@/lib/waterStoriesAdminAuth";
 
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MIME_TO_EXT: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "image/gif": "gif",
+};
+
+const ALLOWED_TYPES = Object.keys(MIME_TO_EXT);
 const MAX_SIZE = 20 * 1024 * 1024; // 20 MB
 
 function safeSegment(s: string) {
@@ -10,6 +18,10 @@ function safeSegment(s: string) {
 }
 
 export async function POST(req: NextRequest) {
+  if (!(await verifyAdminRequest(req))) {
+    return NextResponse.json({ error: "관리자 권한이 필요합니다." }, { status: 401 });
+  }
+
   /** Vercel 서버리스 파일 시스템은 보통 쓰기 불가 → public/ 저장은 실패하고 "서버 오류"만 보이기 쉬움 */
   if (process.env.VERCEL) {
     return NextResponse.json(
@@ -47,7 +59,7 @@ export async function POST(req: NextRequest) {
       : path.join(process.cwd(), "public", "centers", safeId);
     await mkdir(dir, { recursive: true });
 
-    const ext = file.name.split(".").pop() ?? "jpg";
+    const ext = MIME_TO_EXT[file.type] || "jpg";
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}.${ext}`;
     await writeFile(path.join(dir, filename), buffer);
 
@@ -72,6 +84,10 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  if (!(await verifyAdminRequest(req))) {
+    return NextResponse.json({ error: "관리자 권한이 필요합니다." }, { status: 401 });
+  }
+
   try {
     const { centerId, filename, subDir } = await req.json();
     if (!centerId || !filename) {

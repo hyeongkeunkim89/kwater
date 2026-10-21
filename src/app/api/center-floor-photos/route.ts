@@ -10,6 +10,7 @@ import {
   removeCenterFloorPhotoFromStorage,
   uploadCenterFloorPhotoToStorage,
 } from "@/lib/supabaseAdmin";
+import { verifyAdminRequest } from "@/lib/waterStoriesAdminAuth";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -65,6 +66,10 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  if (!(await verifyAdminRequest(req))) {
+    return NextResponse.json({ error: "관리자 권한이 필요합니다." }, { status: 401 });
+  }
+
   if (!isWaterStoriesLive()) {
     return NextResponse.json(
       { error: "Supabase(DB·Storage)가 구성되지 않았습니다. Vercel 환경 변수를 확인해 주세요." },
@@ -118,15 +123,13 @@ export async function POST(req: NextRequest) {
       });
       return NextResponse.json(row, { status: 201 });
     } catch (dbErr) {
-      console.error("insertCenterFloorPhotoDb:", dbErr);
+      console.error("center-floor-photos DB insert", dbErr);
       await removeCenterFloorPhotoFromStorage(uploaded.publicUrl);
-      const msg = dbErr instanceof Error ? dbErr.message : String(dbErr);
-      if (/42P01|does not exist/i.test(msg)) {
+      const clip =
+        dbErr instanceof Error ? dbErr.message.replace(/\s+/g, " ").trim().slice(0, 120) : "";
+      if (clip) {
         return NextResponse.json(
-          {
-            error:
-              "층별 사진 테이블이 없습니다. Supabase SQL Editor에서 `db/center-floor-photos.sql`을 실행했는지 확인해 주세요.",
-          },
+          { error: `DB 저장 오류: ${clip}` },
           { status: 500 },
         );
       }
@@ -148,6 +151,10 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  if (!(await verifyAdminRequest(req))) {
+    return NextResponse.json({ error: "관리자 권한이 필요합니다." }, { status: 401 });
+  }
+
   if (!isWaterStoriesLive()) {
     return NextResponse.json(
       { error: "Supabase(DB·Storage)가 구성되지 않았습니다." },
