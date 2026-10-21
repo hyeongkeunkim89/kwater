@@ -51,12 +51,14 @@ type ThemeFilter = "전체" | CenterTheme;
 export function CenterExplorer() {
   const searchParams = useSearchParams();
   const initialParam = searchParams.get("view") || searchParams.get("tab");
-  const [view, setView] = useState<TabView>(initialParam === "map" ? "map" : "list");
+  const [view, setView] = useState<TabView>(initialParam === "list" ? "list" : "map");
 
   useEffect(() => {
     const p = searchParams.get("view") || searchParams.get("tab");
     if (p === "list" || p === "map") {
       setView(p);
+    } else if (!p) {
+      setView("map");
     }
   }, [searchParams]);
 

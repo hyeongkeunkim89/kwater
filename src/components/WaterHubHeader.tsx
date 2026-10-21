@@ -42,9 +42,9 @@ export const menuItems: MenuItem[] = [
   {
     key: "status",
     label: "문화관 현황",
-    href: "/status",
+    href: "/status?view=map",
     subItems: [
-      { label: "전국 지도", href: "/status" },
+      { label: "전국 지도", href: "/status?view=map" },
       { label: "15개 문화관", href: "/status?view=list" },
     ],
   },
