@@ -150,34 +150,29 @@ strong, b {
   animation: float-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
 }
 
-@keyframes slide-in-next {
+/* 아래로 부드럽게 펼쳐지는 아코디언 애니메이션 */
+@keyframes slide-down-unfold {
   0% {
-    opacity: 0.2;
-    transform: translate3d(60px, 0, 0);
+    opacity: 0;
+    transform: translateY(-24px);
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translateY(0);
   }
 }
 
-@keyframes slide-in-prev {
-  0% {
-    opacity: 0.2;
-    transform: translate3d(-60px, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+.animate-slide-down {
+  animation: slide-down-unfold 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.animate-slide-next {
-  animation: slide-in-next 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.animate-slide-prev {
-  animation: slide-in-prev 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+.accordion-panel {
+  transition: flex-grow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              flex-basis 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              min-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.4s ease;
+  will-change: flex-grow, flex-basis;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -188,9 +183,10 @@ strong, b {
   .animate-float-up,
   .animate-float-up-delay-1,
   .animate-float-up-delay-2,
-  .animate-slide-next,
-  .animate-slide-prev {
+  .animate-slide-down,
+  .accordion-panel {
     animation: none !important;
+    transition: none !important;
   }
 }
 

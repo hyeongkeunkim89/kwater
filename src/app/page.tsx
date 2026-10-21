@@ -52,38 +52,10 @@ const THEMES = [
 
 export default function GatewayLandingPage() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState<"next" | "prev">("next");
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   const handleSelect = (index: number) => {
     if (index === activeIndex) return;
-    setDirection(index > activeIndex ? "next" : "prev");
     setActiveIndex(index);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) {
-        // 좌측으로 스와이프 -> 다음 테마
-        const nextIndex = (activeIndex + 1) % THEMES.length;
-        setDirection("next");
-        setActiveIndex(nextIndex);
-      } else {
-        // 우측으로 스와이프 -> 이전 테마
-        const prevIndex = (activeIndex - 1 + THEMES.length) % THEMES.length;
-        setDirection("prev");
-        setActiveIndex(prevIndex);
-      }
-    }
-    setTouchStartX(null);
   };
 
   return (
@@ -119,53 +91,82 @@ export default function GatewayLandingPage() {
             </div>
           </header>
 
-          {/* ── 2. 중앙: 인터랙티브 아코디언 카드 영역 (핸드폰/태블릿 최적화) ── */}
+          {/* ── 2. 중앙: 아래로 부드럽게 펼쳐지는 아코디언 카드 영역 ── */}
           <div className="flex-1 min-h-0 my-2.5 sm:my-3 md:my-4 flex flex-col gap-2 sm:gap-2.5 md:gap-3 w-full">
             {THEMES.map((theme, index) => {
               const isActive = activeIndex === index;
 
-              if (isActive) {
-                return (
+              return (
+                <div
+                  key={theme.id}
+                  onClick={() => handleSelect(index)}
+                  className={`accordion-panel rounded-2xl sm:rounded-3xl overflow-hidden relative border shadow-lg ${
+                    isActive
+                      ? "border-white/25 shadow-2xl cursor-default"
+                      : "border-white/10 cursor-pointer active:scale-[0.99] hover:border-white/20"
+                  }`}
+                  style={{
+                    flexGrow: isActive ? 1 : 0,
+                    flexShrink: 0,
+                    flexBasis: isActive ? "240px" : "56px",
+                    minHeight: isActive ? "220px" : "56px",
+                  }}
+                >
+                  {/* 배경 이미지: 활성 시 서서히 숨쉬는 켄 번스 모션, 비활성 시 차분한 블러 */}
                   <div
-                    key={theme.id}
-                    onTouchStart={handleTouchStart}
-                    onTouchEnd={handleTouchEnd}
-                    className="flex-1 min-h-[200px] sm:min-h-[240px] md:min-h-[280px] rounded-2xl sm:rounded-3xl overflow-hidden relative border border-white/20 shadow-2xl transition-all duration-500 ease-out flex flex-col justify-between select-none"
-                  >
-                    {/* 1. 슬라이드 모션 배경 래퍼 (탭 변경 시 좌우 슬라이드) */}
-                    <div
-                      key={`slide-bg-${theme.id}`}
-                      className={`absolute inset-0 ${
-                        direction === "next" ? "animate-slide-next" : "animate-slide-prev"
-                      }`}
-                    >
-                      {/* 배경 이미지: 슬라이드와 함께 움직이며 Ken Burns 숨쉬는 효과 */}
-                      <div
-                        className="absolute inset-0 bg-cover bg-center brightness-[0.8] contrast-[1.05] animate-ken-burns will-change-transform"
-                        style={{ backgroundImage: `url('${theme.image}')` }}
-                      />
-                      {/* 그라데이션 오버레이 */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30" />
-                    </div>
+                    className={`absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out ${
+                      isActive
+                        ? "brightness-[0.8] contrast-[1.05] animate-ken-burns will-change-transform"
+                        : "brightness-[0.35] contrast-[1.1]"
+                    }`}
+                    style={{ backgroundImage: `url('${theme.image}')` }}
+                  />
+                  {/* 그라데이션 오버레이 */}
+                  <div
+                    className={`absolute inset-0 transition-opacity duration-500 ${
+                      isActive
+                        ? "bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-black/30 opacity-100"
+                        : "bg-slate-950/75 opacity-100"
+                    }`}
+                  />
 
-                    {/* 2. 슬라이드 모션 텍스트 & 인터랙션 래퍼 */}
-                    <div
-                      key={`slide-content-${theme.id}`}
-                      className={`relative z-10 flex flex-col justify-between h-full p-5 sm:p-6 md:p-8 ${
-                        direction === "next" ? "animate-slide-next" : "animate-slide-prev"
-                      }`}
-                    >
-                      {/* 상단 뱃지 & 순번 인디케이터 */}
+                  {/* ──────────────────────────────────────────
+                      A. 접혀있을 때 표시되는 슬림 바 (비활성 상태)
+                     ────────────────────────────────────────── */}
+                  {!isActive && (
+                    <div className="relative z-10 h-14 sm:h-14 md:h-16 flex items-center justify-between px-4 sm:px-5 md:px-6">
+                      <div className="flex items-center gap-2.5 sm:gap-3 md:gap-4">
+                        <span className="text-sm sm:text-base md:text-lg font-black text-sky-400">
+                          {theme.num}
+                        </span>
+                        <span className="text-base sm:text-lg md:text-xl font-black text-white">
+                          {theme.title}
+                        </span>
+                        <span className="text-[11px] sm:text-xs md:text-sm font-bold text-slate-400 tracking-wider uppercase">
+                          {theme.en}
+                        </span>
+                      </div>
+                      <span className="text-white/70">
+                        <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M12 5v14m7-7H5" />
+                        </svg>
+                      </span>
+                    </div>
+                  )}
+
+                  {/* ──────────────────────────────────────────
+                      B. 아래로 부드럽게 펼쳐지는 상세 콘텐츠 (활성 상태)
+                     ────────────────────────────────────────── */}
+                  {isActive && (
+                    <div className="relative z-10 flex flex-col justify-between h-full p-5 sm:p-6 md:p-8 animate-slide-down">
+                      {/* 상단 뱃지 */}
                       <div className="flex items-center justify-between">
                         <span className="inline-flex items-center gap-1.5 text-[9.5px] sm:text-[10.5px] md:text-xs font-black tracking-widest text-sky-300 uppercase bg-slate-900/85 px-3 py-1 rounded-full border border-sky-400/40 backdrop-blur-md shadow-md">
                           {theme.code}
                         </span>
-                        {/* 테마 순번 인디케이터 (스와이프 힌트) */}
-                        <div className="flex items-center gap-1.5 text-[11px] font-bold text-white/60 bg-black/40 px-2.5 py-0.5 rounded-full border border-white/10 backdrop-blur-md">
-                          <span className="text-sky-400 font-black">{theme.num}</span>
-                          <span>/</span>
-                          <span>04</span>
-                        </div>
+                        <span className="text-xs text-white/50 font-bold">
+                          {theme.num} / 04
+                        </span>
                       </div>
 
                       {/* 하단 텍스트 및 액션 링크 */}
@@ -176,59 +177,20 @@ export default function GatewayLandingPage() {
                         <p className="text-xs sm:text-[13px] md:text-sm text-slate-200/90 font-medium leading-relaxed max-w-sm md:max-w-lg line-clamp-2">
                           {theme.desc}
                         </p>
-                        <div className="pt-2 flex items-center justify-between">
+                        <div className="pt-2">
                           <Link
                             href={theme.link}
+                            onClick={(e) => e.stopPropagation()}
                             className="inline-flex items-center gap-1.5 text-xs sm:text-sm md:text-base font-bold text-sky-400 hover:text-sky-300 active:text-sky-200 group"
                           >
                             <span>자세히 보기</span>
                             <span className="transform group-hover:translate-x-1 group-active:translate-x-1 transition-transform">→</span>
                           </Link>
-                          {/* 스와이프 안내 아이콘/힌트 */}
-                          <div className="flex items-center gap-1 text-[10px] text-white/40 tracking-tight">
-                            <span>← 좌우 슬라이드 →</span>
-                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              }
-
-              return (
-                <button
-                  key={theme.id}
-                  type="button"
-                  onClick={() => handleSelect(index)}
-                  className="group h-13 sm:h-14 md:h-16 shrink-0 rounded-2xl overflow-hidden relative border border-white/10 shadow-md transition-all duration-300 ease-out flex items-center justify-between px-4 sm:px-5 md:px-6 active:scale-[0.99] text-left w-full cursor-pointer"
-                >
-                  {/* 배경 이미지 (어둡게 블러 처리) */}
-                  <div
-                    className="absolute inset-0 bg-cover bg-center brightness-[0.35] contrast-[1.1] transition-transform duration-500 group-hover:scale-105"
-                    style={{ backgroundImage: `url('${theme.image}')` }}
-                  />
-                  <div className="absolute inset-0 bg-slate-950/75 group-hover:bg-slate-950/60 transition-colors" />
-
-                  {/* 타이틀 및 번호 */}
-                  <div className="relative z-10 flex items-center gap-2.5 sm:gap-3 md:gap-4">
-                    <span className="text-sm sm:text-base md:text-lg font-black text-sky-400">
-                      {theme.num}
-                    </span>
-                    <span className="text-base sm:text-lg md:text-xl font-black text-white">
-                      {theme.title}
-                    </span>
-                    <span className="text-[11px] sm:text-xs md:text-sm font-bold text-slate-400 tracking-wider uppercase">
-                      {theme.en}
-                    </span>
-                  </div>
-
-                  {/* + 아이콘 */}
-                  <div className="relative z-10 text-white/70 group-hover:text-white transition-colors">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M12 5v14m7-7H5" />
-                    </svg>
-                  </div>
-                </button>
+                  )}
+                </div>
               );
             })}
           </div>
