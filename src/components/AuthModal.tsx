@@ -13,6 +13,7 @@ export function AuthModal() {
   useEffect(() => {
     if (isAuthOpen) {
       setTab(authTab || "login");
+      setLoginEmail("");
     }
   }, [isAuthOpen, authTab]);
   const router = useRouter();
@@ -53,8 +54,31 @@ export function AuthModal() {
   const [guestPin, setGuestPin] = useState("");
   const [showGuestModalPin, setShowGuestModalPin] = useState(false);
 
-  // 탭 전환 시 또는 모달 열림/닫힘 시 비회원 조회 및 패스워드 입력값 초기화
+  // 탭 전환 시 또는 모달 열림/닫힘 시 모든 탭의 폼 입력값 및 캐시 상태 전면 초기화
   useEffect(() => {
+    // 1. 회원가입 폼 초기화 (휴대폰 번호, 이름, 이메일, 비밀번호, 약관 동의 등)
+    setSignUpName("");
+    setSignUpEmail("");
+    setSignUpPass("");
+    setSignUpPassConfirm("");
+    setSignUpPhone("");
+    setShowSignUpPass(false);
+    setShowSignUpPassConfirm(false);
+    setIsEmailChecked(false);
+    setEmailCheckResult(null);
+    setAgreeTerms(false);
+    setAgreePrivacy(false);
+    setAgreeMarketing(false);
+
+    // 2. 로그인 폼 비밀번호 초기화
+    setLoginPass("");
+    setShowLoginPass(false);
+
+    // 3. 관리자 폼 비밀번호 초기화
+    setAdminPass("");
+    setShowAdminPass(false);
+
+    // 4. 비회원 조회 폼 초기화
     setGuestPhone("");
     setGuestPin("");
     setShowGuestModalPin(false);
@@ -326,7 +350,7 @@ export function AuthModal() {
 
         {/* 1. 통합 로그인 탭 */}
         {tab === "login" && (
-          <div className="space-y-5">
+          <div key="login-tab" className="space-y-5">
             <div className="text-center">
               <h2 className="text-xl font-black text-slate-900">물문화관 로그인</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
@@ -364,11 +388,12 @@ export function AuthModal() {
               <span className="absolute bg-white px-3 text-xs text-slate-400 font-bold">또는 아이디/이메일 로그인</span>
             </div>
 
-            <form onSubmit={handleLoginSubmit} className="space-y-3">
+            <form onSubmit={handleLoginSubmit} className="space-y-3" autoComplete="off">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">아이디 또는 이메일주소</label>
                 <input
                   type="text"
+                  autoComplete="off"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   placeholder="아이디 또는 이메일 주소 입력"
@@ -381,6 +406,7 @@ export function AuthModal() {
                 <div className="relative flex items-center">
                   <input
                     type={showLoginPass ? "text" : "password"}
+                    autoComplete="current-password"
                     value={loginPass}
                     onChange={(e) => setLoginPass(e.target.value)}
                     placeholder="비밀번호 입력"
@@ -429,7 +455,7 @@ export function AuthModal() {
 
         {/* 3. 회원가입 탭 (6대 보완 요소 반영) */}
         {tab === "signup" && (
-          <div className="space-y-4">
+          <div key="signup-tab" className="space-y-4">
             <div className="text-center">
               <h2 className="text-xl font-black text-slate-900">관람객 회원가입</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
@@ -467,12 +493,13 @@ export function AuthModal() {
               <span className="absolute bg-white px-3 text-xs text-slate-400 font-bold">또는 직접 정보 입력하여 가입</span>
             </div>
 
-            <form onSubmit={handleSignUpSubmit} className="space-y-3.5 pt-1 text-left">
+            <form onSubmit={handleSignUpSubmit} className="space-y-3.5 pt-1 text-left" autoComplete="off">
               {/* 1. 이름 */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">이름 *</label>
                 <input
                   type="text"
+                  autoComplete="off"
                   value={signUpName}
                   onChange={(e) => setSignUpName(e.target.value)}
                   placeholder="홍길동"
@@ -486,6 +513,7 @@ export function AuthModal() {
                 <div className="flex gap-2">
                   <input
                     type="email"
+                    autoComplete="off"
                     value={signUpEmail}
                     onChange={(e) => {
                       setSignUpEmail(e.target.value);
@@ -516,6 +544,7 @@ export function AuthModal() {
                 <div className="relative flex items-center">
                   <input
                     type={showSignUpPass ? "text" : "password"}
+                    autoComplete="new-password"
                     value={signUpPass}
                     onChange={(e) => setSignUpPass(e.target.value)}
                     placeholder="8자 이상 (영문, 숫자, 특수문자)"
@@ -567,6 +596,7 @@ export function AuthModal() {
                 <div className="relative flex items-center">
                   <input
                     type={showSignUpPassConfirm ? "text" : "password"}
+                    autoComplete="new-password"
                     value={signUpPassConfirm}
                     onChange={(e) => setSignUpPassConfirm(e.target.value)}
                     placeholder="비밀번호 재입력"
@@ -606,9 +636,11 @@ export function AuthModal() {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">휴대폰 번호 (선택)</label>
                 <input
+                  key={`signup-phone-${tab}`}
                   type="tel"
                   inputMode="numeric"
                   maxLength={13}
+                  autoComplete="off"
                   value={signUpPhone}
                   onChange={(e) => setSignUpPhone(formatPhone(e.target.value))}
                   placeholder="010-1234-5678"
@@ -668,7 +700,7 @@ export function AuthModal() {
 
         {/* 4. 비회원 예약조회 탭 */}
         {tab === "guest" && (
-          <div className="space-y-4">
+          <div key="guest-tab" className="space-y-4">
             <div className="text-center">
               <h2 className="text-xl font-black text-slate-900">비회원 투어 예약 조회</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
@@ -676,7 +708,7 @@ export function AuthModal() {
               </p>
             </div>
 
-            <form onSubmit={handleGuestLookup} className="space-y-3 pt-3">
+            <form onSubmit={handleGuestLookup} className="space-y-3 pt-3" autoComplete="off">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">예약자 휴대폰 번호</label>
                 <input
@@ -736,7 +768,7 @@ export function AuthModal() {
 
         {/* 4. 관리자 전용 로그인 탭 */}
         {tab === "admin" && (
-          <div className="space-y-4">
+          <div key="admin-tab" className="space-y-4">
             <div className="text-center">
               <h2 className="text-xl font-black text-slate-900">관리자 전용 로그인</h2>
               <p className="mt-1 text-xs text-slate-500 font-semibold">
@@ -744,11 +776,12 @@ export function AuthModal() {
               </p>
             </div>
 
-            <form onSubmit={handleAdminSubmit} className="space-y-3 pt-1">
+            <form onSubmit={handleAdminSubmit} className="space-y-3 pt-1" autoComplete="off">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">관리자 아이디 / 이메일 *</label>
                 <input
                   type="text"
+                  autoComplete="off"
                   value={adminId}
                   onChange={(e) => setAdminId(e.target.value)}
                   placeholder="admin 또는 admin@kwater.or.kr"
@@ -761,6 +794,7 @@ export function AuthModal() {
                 <div className="relative flex items-center">
                   <input
                     type={showAdminPass ? "text" : "password"}
+                    autoComplete="current-password"
                     value={adminPass}
                     onChange={(e) => setAdminPass(e.target.value)}
                     placeholder="관리자 비밀번호 입력"
