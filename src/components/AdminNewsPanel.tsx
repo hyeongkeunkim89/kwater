@@ -47,6 +47,17 @@ export function AdminNewsPanel({
     void fetchNews();
   }, []);
 
+  // 폼 닫힘 시 편집 상태 및 입력 캐시 초기화
+  useEffect(() => {
+    if (!showForm) {
+      setEditingId(null);
+      setTitle("");
+      setContent("");
+      setImageUrl("");
+      setIsPinned(false);
+    }
+  }, [showForm]);
+
   const openWriteForm = () => {
     setEditingId(null);
     setCenterId("all");

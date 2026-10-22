@@ -366,8 +366,13 @@ export function ReservationForm({
               setTime("");
               setName("");
               setPhone("");
+              setGuestPin("");
+              setShowGuestPin(false);
               setPartySize(2);
               setRequests("");
+              setPrivacyConsent(false);
+              setDateError(null);
+              setSubmitError(null);
             }}
             className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:border-sky-400 hover:text-sky-800"
           >

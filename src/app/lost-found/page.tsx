@@ -137,6 +137,29 @@ export default function LostFoundPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCenter, selectedType]);
 
+  // 모달 닫힘 시 작성 폼 및 삭제 비밀번호 캐시 전면 초기화
+  useEffect(() => {
+    if (!showWriteModal) {
+      setTitle("");
+      setItemName("");
+      setPlace("");
+      setContent("");
+      setWriterName("");
+      setContact("");
+      setPassword("");
+      setShowPassword(false);
+      setFormError("");
+    }
+  }, [showWriteModal]);
+
+  useEffect(() => {
+    if (!detailItem) {
+      setDeletePassword("");
+      setShowDeletePassword(false);
+      setDeleteError("");
+    }
+  }, [detailItem]);
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     void fetchItems();

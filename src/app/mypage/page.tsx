@@ -44,6 +44,7 @@ function MyPageContent() {
   useEffect(() => {
     if (!user) {
       setReservations([]);
+      setMyFeedbacks([]);
       return;
     }
 

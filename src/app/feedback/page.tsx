@@ -59,6 +59,35 @@ export default function FeedbackPage() {
     void fetchFeedbacks(filterCenter);
   }, [filterCenter]);
 
+  // 모달 닫힘 시 폼 입력 캐시 및 비밀번호 상태 전면 초기화
+  useEffect(() => {
+    if (!showWriteModal) {
+      setTitle("");
+      setWriterName("");
+      setPassword("");
+      setContent("");
+      setIsPrivate(false);
+      setTargetCenterId("all");
+      setFormError("");
+    }
+  }, [showWriteModal]);
+
+  useEffect(() => {
+    if (!openPasswordModal) {
+      setPrivatePostPassword("");
+      setPasswordError("");
+      setSelectedPostId(null);
+    }
+  }, [openPasswordModal]);
+
+  useEffect(() => {
+    if (!showDetailModal) {
+      setDeletingPostId(null);
+      setDeletePassword("");
+      setDeleteError("");
+    }
+  }, [showDetailModal]);
+
   // Submit Feedback
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

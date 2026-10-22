@@ -80,12 +80,17 @@ export function ReservationLookupCard() {
     }
   }, [queryPhone, queryPin]);
 
-  // 회원 로그인 상태인 경우 유저 전화번호 자동 세팅 및 회원 예약 자동 조회
+  // 회원 로그인 상태인 경우 유저 전화번호 자동 세팅 및 회원 예약 자동 조회 (로그아웃 시 캐시 초기화)
   useEffect(() => {
     if (!queryPhone && user?.phone && user.phone !== "010-0000-0000" && user.phone !== "010-1234-5678" && user.phone !== "010-9876-5432") {
       const formatted = formatPhone(user.phone);
       setPhone(formatted);
       void handleSearch(formatted, "");
+    } else if (!user && !queryPhone) {
+      setPhone("");
+      setPin("");
+      setResults([]);
+      setHasSearched(false);
     }
   }, [user, queryPhone]);
 
