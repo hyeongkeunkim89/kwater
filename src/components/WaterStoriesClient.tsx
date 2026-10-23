@@ -281,9 +281,8 @@ export function WaterStoriesClient({
           <h2 id="pom-heading" className="mt-1.5 text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
             이달의 사진
           </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 font-medium">
-            매월 말 운영진이 갤러리 후보 중 한 작품을 선정합니다. 선정되신 분께는 작은 기념품을 드리는 이벤트와
-            연동할 수 있어요.
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 font-medium break-keep">
+            매월 갤러리에 등록된 참여 작품 중 우수작을 선정하여 상단에 명예롭게 소개합니다. 선정되신 분께는 소정의 모바일 기념 상품을 선물로 드립니다.
           </p>
         </div>
 

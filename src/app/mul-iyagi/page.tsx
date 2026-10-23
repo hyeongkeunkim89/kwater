@@ -10,11 +10,11 @@ import type { WaterStory } from "@/types/waterStory";
 export const metadata: Metadata = {
   title: "물 이야기 갤러리",
   description:
-    "물문화관 주변 산책로와 풍경 사진을 방문객이 나누는 참여형 갤러리입니다. 이달의 사진 이벤트·생생한 후기로 검색과 홍보에 도움이 됩니다.",
+    "물문화관 주변 산책로와 사계절 풍경을 시민들이 함께 나누는 참여형 갤러리입니다. 매월 우수작을 선정하여 '이달의 사진'으로 소개합니다.",
   openGraph: {
     title: "물 이야기 갤러리 | K-water 온라인 물문화관",
     description:
-      "전국 물문화관 주변의 걸음과 풍경을 사진과 짧은 글로 남겨 보세요. 이달의 사진 이벤트와 연동할 수 있습니다.",
+      "전국 15개 물문화관 주변의 아름다운 걸음과 풍경을 사진과 이야기로 함께 나누어 보세요.",
   },
 };
 
@@ -40,7 +40,7 @@ export default async function MulIyagiPage({ searchParams }: Props) {
     "@type": "WebPage",
     name: "물 이야기 갤러리",
     description:
-      "K-water 물문화관 방문객 참여형 사진 갤러리. 산책로·전망·계절 풍경을 공유하고 이달의 사진 이벤트와 연동할 수 있습니다.",
+      "K-water 물문화관 방문객 참여형 사진 갤러리. 산책로·전망·계절 풍경을 공유하고 매월 '이달의 사진'으로 선정된 우수작을 소개합니다.",
     isPartOf: { "@type": "WebSite", name: "K-water 물문화관 홍보 허브" },
   };
 
