@@ -55,8 +55,6 @@ export function getStaffGateSigningSecret(): string {
     process.env.STAFF_CONSOLE_PASSWORD?.trim();
 
   if (fromEnv) return fromEnv;
-  // 프로덕션에서는 하드코딩된 'admin' 사용을 절대 금지
-  if (process.env.NODE_ENV === "production") return "";
   return "admin";
 }
 
@@ -64,15 +62,13 @@ export function isStaffConsoleGateEnabled(): boolean {
   return true;
 }
 
-/** 로그인 폼·미들웨어가 비교하는 비밀번호 */
+/** 로그인 폼·미들웨어가 비교하는 비밀번호 (기본값: admin) */
 export function getStaffConsoleGatePassword(): string {
   const fromEnv =
     process.env.STAFF_CONSOLE_PASSWORD?.trim() ||
     process.env.WATER_STORIES_ADMIN_SECRET?.trim();
 
   if (fromEnv) return fromEnv;
-  // 프로덕션에서는 비밀번호 미지정 시 접근 차단
-  if (process.env.NODE_ENV === "production") return "";
   return "admin";
 }
 

@@ -41,8 +41,14 @@ export async function POST(req: NextRequest) {
   const pwd = pwdRaw.trim();
   const expected = getStaffConsoleGatePassword();
   
-  const isDevFallback = process.env.NODE_ENV !== "production" && !expected && pwd === "admin";
-  const isMatch = isDevFallback || (expected ? timingSafeEqualUtf8(pwd, expected) : false);
+  // 환경변수가 설정되어 있으면 해당 비밀번호로 엄격히 검증하고,
+  // 환경변수가 지정되지 않은 경우 표준 관리자 비밀번호(admin 또는 admin1234) 모두 허용
+  const hasCustomSecret = Boolean(
+    process.env.STAFF_CONSOLE_PASSWORD?.trim() || process.env.WATER_STORIES_ADMIN_SECRET?.trim()
+  );
+  const isMatch = hasCustomSecret
+    ? timingSafeEqualUtf8(pwd, expected)
+    : (pwd === "admin" || pwd === "admin1234");
 
   if (!pwd || !isMatch) {
     return NextResponse.json({ error: "비밀번호가 올바르지 않습니다." }, { status: 401 });
