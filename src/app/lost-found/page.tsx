@@ -453,7 +453,7 @@ export default function LostFoundPage() {
                       <td className="py-3.5 px-4 font-medium text-slate-600 truncate max-w-[130px]">
                         {item.centerName}
                       </td>
-                      <td className="py-3.5 px-4 text-left font-semibold text-slate-900 truncate max-w-[280px]">
+                      <td className="py-3.5 px-4 text-left font-semibold text-slate-900 truncate max-w-[280px]" title={item.title}>
                         {item.title}
                       </td>
                       <td className="py-3.5 px-3 text-slate-600">
@@ -514,7 +514,7 @@ export default function LostFoundPage() {
                       {item.status}
                     </span>
                   </div>
-                  <h4 className="text-sm font-bold text-slate-900 mb-1.5 line-clamp-2">
+                  <h4 className="text-sm font-bold text-slate-900 mb-1.5 line-clamp-2 break-keep leading-snug">
                     {item.title}
                   </h4>
                   <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-100">

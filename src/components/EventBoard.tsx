@@ -84,7 +84,7 @@ function EventCardItem({
           <span className="inline-block rounded bg-sky-50 text-[10px] font-bold text-sky-700 px-2 py-0.5">
             {event.centerName}
           </span>
-          <h3 className="mt-2.5 text-base font-bold text-slate-900 group-hover:text-sky-600 line-clamp-2 leading-snug">
+          <h3 className="mt-2.5 text-base font-bold text-slate-900 group-hover:text-sky-600 line-clamp-2 break-keep leading-snug">
             {event.title}
           </h3>
           <p className="mt-1.5 text-xs text-slate-500 line-clamp-2 leading-relaxed font-semibold">

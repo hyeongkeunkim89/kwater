@@ -62,7 +62,7 @@ export function RecentWaterStories({ storiesLive }: { storiesLive: boolean }) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition duration-200 flex flex-col justify-end p-3 text-white">
                 <span className="text-[10px] font-black text-sky-300 tracking-tight">{story.centerName}</span>
-                <p className="text-xs font-bold truncate mt-0.5 text-white/95">&quot;{story.caption}&quot;</p>
+                <p className="text-xs font-bold line-clamp-2 break-keep mt-0.5 text-white/95 leading-snug">&quot;{story.caption}&quot;</p>
                 <span className="text-[10px] text-white/70 mt-0.5 font-medium">by {story.nickname}</span>
               </div>
               {story.isPhotoOfMonth && (

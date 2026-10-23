@@ -153,7 +153,7 @@ export default function MainPage() {
                     {/* 2. 우측 정보 및 버튼 영역 */}
                     <div className="p-3 sm:p-4 flex flex-col justify-between flex-1 bg-white min-w-0">
                       <div>
-                        <h3 className="text-xs sm:text-base font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200 line-clamp-1">
+                        <h3 className="text-sm sm:text-base font-black text-slate-900 group-hover:text-sky-600 transition-colors duration-200 line-clamp-2 break-keep leading-snug">
                           {card.title}
                         </h3>
                         <p className="mt-1 text-[11px] sm:text-sm font-medium text-slate-600 leading-relaxed line-clamp-2 break-keep">

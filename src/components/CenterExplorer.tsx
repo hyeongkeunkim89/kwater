@@ -488,7 +488,7 @@ export const CenterCard = memo(function CenterCard({
             title="네이버지도에서 해당 위치 보기 (새 창)"
             className="min-w-0 leading-snug font-bold text-sky-700 hover:text-sky-900 hover:underline hover:underline-offset-2 transition flex items-center gap-1 group/loc"
           >
-            <span className="truncate min-w-0">{c.address}</span>
+            <span className="min-w-0 break-keep line-clamp-2">{c.address}</span>
             <span className="text-xs text-sky-500 group-hover/loc:translate-x-0.5 transition shrink-0">🗺️ ↗</span>
           </a>
 

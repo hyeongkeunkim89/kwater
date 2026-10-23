@@ -351,7 +351,7 @@ export default function FeedbackPage() {
                               🔒
                             </span>
                           )}
-                          <span className="truncate font-bold text-slate-900 hover:text-[#004D95] text-xs sm:text-sm">
+                          <span className="line-clamp-2 sm:line-clamp-1 font-bold text-slate-900 hover:text-[#004D95] text-xs sm:text-sm break-keep leading-snug">
                             {item.title}
                           </span>
                         </div>

@@ -100,7 +100,7 @@ export function HomeTabbedBoard({ feedbacks, stories }: Props) {
                     <span className="text-[9px] font-bold text-sky-600 truncate block">
                       {story.centerName}
                     </span>
-                    <p className="text-xs font-semibold text-slate-700 line-clamp-1 mt-0.5">
+                    <p className="text-xs font-semibold text-slate-700 line-clamp-2 break-keep mt-0.5 leading-snug">
                       {story.caption}
                     </p>
                     <span className="text-[9px] text-slate-400 font-medium block mt-1.5">
@@ -131,7 +131,7 @@ export function HomeTabbedBoard({ feedbacks, stories }: Props) {
                         {item.centerName}
                       </span>
                     )}
-                    <span className="text-sm font-bold text-slate-700 group-hover:text-sky-600 truncate">
+                    <span className="text-sm font-bold text-slate-700 group-hover:text-sky-600 line-clamp-2 sm:truncate break-keep leading-snug">
                       {item.title}
                     </span>
                   </div>

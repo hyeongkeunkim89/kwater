@@ -131,7 +131,7 @@ export function NewsBoard({ newsList, selectedNews, center }: Props) {
                     </div>
 
                     {/* 제목 */}
-                    <h3 className="mt-3 text-base font-bold text-slate-900 group-hover:text-sky-600 line-clamp-2 leading-snug">
+                    <h3 className="mt-3 text-base font-bold text-slate-900 group-hover:text-sky-600 line-clamp-2 break-keep leading-snug">
                       {news.title}
                     </h3>
 

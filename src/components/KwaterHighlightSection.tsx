@@ -136,7 +136,7 @@ export function KwaterHighlightSection() {
               <span className="text-[10px] sm:text-[11px] font-bold text-sky-400">
                 {item.author}
               </span>
-              <h3 className="text-xs sm:text-sm font-black text-white line-clamp-1 group-hover:text-sky-200 transition">
+              <h3 className="text-xs sm:text-sm font-black text-white line-clamp-2 break-keep group-hover:text-sky-200 transition leading-snug">
                 {item.title}
               </h3>
             </div>
