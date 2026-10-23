@@ -367,12 +367,14 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
                         width={badgeWidth}
                         height={badgeHeight}
                         rx={isSelected ? 6 : 5}
-                        fill={isSelected ? "#0f172a" : isHovered ? "#f8fafc" : "#ffffff"}
-                        fillOpacity={isSelected ? 0.98 : 0.96}
+                        fill={isSelected ? "#004D95" : isHovered ? "#f8fafc" : "#ffffff"}
+                        fillOpacity={isSelected ? 1 : 0.96}
                         stroke={isSelected ? "#38bdf8" : isHovered ? color : color}
                         strokeWidth={isSelected ? 2.5 : isHovered ? 2 : 1.5}
                         style={{
-                          filter: isHovered
+                          filter: isSelected
+                            ? "drop-shadow(0px 4px 10px rgba(0, 77, 149, 0.4))"
+                            : isHovered
                             ? "drop-shadow(0px 4px 8px rgba(15, 23, 42, 0.26))"
                             : "drop-shadow(0px 2px 4px rgba(15, 23, 42, 0.18))",
                           transition: "all 0.28s ease-out",
