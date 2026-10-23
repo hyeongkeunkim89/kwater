@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { EditorialPhotoOfMonth } from "@/data/water-stories-spotlight";
 import { waterCenters } from "@/data/centers";
 import {
@@ -71,6 +71,16 @@ export function WaterStoriesClient({
   const [nickname, setNickname] = useState("");
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const resetForm = () => {
+    setCaption("");
+    setNickname("");
+    setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
   const [uploading, setUploading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [formOk, setFormOk] = useState<string | null>(null);
@@ -199,8 +209,7 @@ export function WaterStoriesClient({
           return;
         }
         setFormOk("등록되었습니다. 갤러리에 반영되었어요!");
-        setCaption("");
-        setFile(null);
+        resetForm();
         await reload();
         return;
       }
@@ -231,8 +240,7 @@ export function WaterStoriesClient({
         caption: cap,
       });
       setFormOk("등록되었습니다. 갤러리에 반영되었어요!");
-      setCaption("");
-      setFile(null);
+      resetForm();
       await reload();
     } catch (err) {
       console.error(err);
@@ -418,6 +426,7 @@ export function WaterStoriesClient({
             <label className="block min-w-0">
               <span className="text-xs font-bold text-slate-700">사진 파일</span>
               <input
+                ref={fileInputRef}
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/gif"
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
