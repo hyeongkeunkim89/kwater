@@ -182,14 +182,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // 4. 서버 쿠키 API (/api/auth/me)와 최종 교차 검증
     fetch("/api/auth/me", { cache: "no-store", credentials: "same-origin" })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) return null;
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          return res.json();
+        }
+        return null;
+      })
       .then((data) => {
         if (data && data.user) {
           saveUserSession(data.user);
         }
       })
       .catch((e) => {
-        console.error("Failed to fetch /api/auth/me", e);
+        console.warn("Notice: /api/auth/me check notice", e);
       })
       .finally(() => {
         setIsLoading(false);
