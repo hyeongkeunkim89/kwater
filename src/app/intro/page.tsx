@@ -192,11 +192,11 @@ export default function IntroPage() {
 
         {/* 4. 온라인 물문화관 주요 이용 안내 */}
         <section aria-label="온라인 물문화관 서비스 안내" className="space-y-6">
-          <div className="pb-4 border-b border-slate-200">
+          <div className="text-center max-w-xl mx-auto space-y-1.5">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               온라인 물문화관 이용 안내
             </h2>
-            <p className="mt-1 text-xs sm:text-sm text-slate-500 font-medium">
+            <p className="text-xs sm:text-sm text-slate-500 font-medium">
               방문하시는 모든 분의 편리한 이용을 위한 4가지 핵심 기능입니다.
             </p>
           </div>
