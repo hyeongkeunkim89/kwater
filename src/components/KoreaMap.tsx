@@ -350,12 +350,30 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
               {LEGEND_ITEMS.map(([label, color]) => (
                 <span key={label} className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-                  <span
-                    className="relative inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white ring-2 p-0.5"
-                    style={{ boxShadow: `0 0 0 1.5px ${color}` }}
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 32 32"
+                    className="shrink-0 overflow-visible"
+                    aria-hidden="true"
                   >
-                    <img src="/character.png" alt="" className="h-full w-full object-contain" />
-                  </span>
+                    <circle
+                      cx="16"
+                      cy="16"
+                      r="14.5"
+                      fill="white"
+                      stroke={color}
+                      strokeWidth="2.5"
+                    />
+                    <image
+                      href="/character.png"
+                      x="3.5"
+                      y="3.5"
+                      width="25"
+                      height="25"
+                      preserveAspectRatio="xMidYMid meet"
+                    />
+                  </svg>
                   <span className="text-xs font-semibold text-slate-700">{label}</span>
                 </span>
               ))}
