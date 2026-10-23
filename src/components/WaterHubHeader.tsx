@@ -249,12 +249,12 @@ export function WaterHubHeader({
     >
       <div
         className={[
-          "w-full max-w-[1920px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-4 xl:px-8 2xl:px-12 h-[84px] sm:h-[92px] md:h-[98px]",
+          "w-full max-w-[1920px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-6 xl:px-10 2xl:px-14 h-[84px] sm:h-[92px] md:h-[98px]",
           dense ? "py-1.5" : "py-2",
         ].join(" ")}
       >
         {/* 로고 영역 (화면 좌측 끝으로 시원하게 배치) */}
-        <div className="flex items-center shrink-0 w-[140px] lg:w-[155px] xl:w-[195px] 2xl:w-[235px]">
+        <div className="flex items-center shrink-0 w-[220px] lg:w-[240px] xl:w-[260px] 2xl:w-[280px]">
           <Link
             href="/main"
             onClick={(e) => {
@@ -270,7 +270,7 @@ export function WaterHubHeader({
               alt="K-water 온라인 물문화관"
               width={1024}
               height={341}
-              className="h-[50px] sm:h-[58px] lg:h-[54px] xl:h-[64px] 2xl:h-[72px] w-auto max-w-[140px] lg:max-w-[155px] xl:max-w-[195px] 2xl:max-w-[235px] shrink-0 object-contain"
+              className="h-[56px] sm:h-[68px] md:h-[76px] w-auto max-w-[240px] shrink-0 object-contain"
               priority
             />
           </Link>
@@ -315,7 +315,7 @@ export function WaterHubHeader({
         </nav>
 
         {/* 우측 회원/로그인 영역 (화면 우측 끝으로 정렬 및 대칭 너비 슬롯) */}
-        <div className="hidden lg:flex items-center justify-end shrink-0 w-[140px] lg:w-[155px] xl:w-[195px] 2xl:w-[235px]">
+        <div className="hidden lg:flex items-center justify-end shrink-0 w-[220px] lg:w-[240px] xl:w-[260px] 2xl:w-[280px]">
           {user ? (
             <div className="flex items-center gap-x-2">
               {user.role === "admin" ? (
@@ -407,9 +407,9 @@ export function WaterHubHeader({
           setActiveHoverKey(null);
         }}
       >
-        <div className="w-full max-w-[1920px] mx-auto flex items-stretch justify-between px-4 sm:px-6 lg:px-4 xl:px-8 2xl:px-12">
+        <div className="w-full max-w-[1920px] mx-auto flex items-stretch justify-between px-4 sm:px-6 lg:px-6 xl:px-10 2xl:px-14">
           {/* 좌측 로고 영역 대응 투명 가이드 앵커 (너비 완벽 일치) */}
-          <div className="w-[140px] lg:w-[155px] xl:w-[195px] 2xl:w-[235px] shrink-0 invisible pointer-events-none" />
+          <div className="w-[220px] lg:w-[240px] xl:w-[260px] 2xl:w-[280px] shrink-0 invisible pointer-events-none" />
 
           {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
           <div className="grid grid-cols-5 w-full flex-1 max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto divide-x divide-slate-100/90 px-1 sm:px-2">
@@ -452,7 +452,7 @@ export function WaterHubHeader({
           </div>
 
           {/* 우측 로그인 영역 대응 투명 가이드 앵커 (너비 완벽 일치) */}
-          <div className="w-[140px] lg:w-[155px] xl:w-[195px] 2xl:w-[235px] shrink-0 invisible pointer-events-none" />
+          <div className="w-[220px] lg:w-[240px] xl:w-[260px] 2xl:w-[280px] shrink-0 invisible pointer-events-none" />
         </div>
       </div>
 
