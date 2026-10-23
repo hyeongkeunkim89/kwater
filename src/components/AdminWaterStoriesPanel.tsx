@@ -72,6 +72,7 @@ export function AdminWaterStoriesPanel({
       return;
     }
     await reload();
+    alert("🌟 '이달의 사진'으로 등록되었습니다.\n/mul-iyagi 갤러리 상단에 즉시 대표 사진으로 노출됩니다.");
   };
 
   const clearServerPhotoOfMonth = async () => {
@@ -86,6 +87,21 @@ export function AdminWaterStoriesPanel({
       return;
     }
     await reload();
+    alert("이달의 사진 지정이 해제되었습니다.");
+  };
+
+  const handleSelectPom = async (id: string) => {
+    if (pomId === id) {
+      alert("이미 '이달의 사진'으로 선정된 작품입니다.");
+      return;
+    }
+    if (storiesLive) {
+      await setServerPhotoOfMonth(id);
+    } else {
+      setPhotoOfMonthStoryId(id);
+      await reload();
+      alert("🌟 '이달의 사진'으로 등록되었습니다.\n/mul-iyagi 갤러리 상단에 즉시 대표 사진으로 노출됩니다.");
+    }
   };
 
   const deleteServerStory = async (id: string) => {
@@ -148,7 +164,7 @@ export function AdminWaterStoriesPanel({
                   <>
                     <button
                       type="button"
-                      onClick={() => void setServerPhotoOfMonth(s.id)}
+                      onClick={() => void handleSelectPom(s.id)}
                       className="min-h-10 rounded-lg bg-amber-100 px-3 py-2 text-xs font-bold text-amber-900 transition hover:bg-amber-200"
                     >
                       {pomId === s.id ? "선정됨" : "이달의 사진"}
@@ -168,10 +184,7 @@ export function AdminWaterStoriesPanel({
                   <>
                     <button
                       type="button"
-                      onClick={() => {
-                        setPhotoOfMonthStoryId(s.id);
-                        void reload();
-                      }}
+                      onClick={() => void handleSelectPom(s.id)}
                       className="min-h-10 rounded-lg bg-amber-100 px-3 py-2 text-xs font-bold text-amber-900 transition hover:bg-amber-200"
                     >
                       {pomId === s.id ? "선정됨" : "이달의 사진"}
@@ -211,6 +224,7 @@ export function AdminWaterStoriesPanel({
           onClick={() => {
             setPhotoOfMonthStoryId(null);
             void reload();
+            alert("이달의 사진 지정이 해제되었습니다.");
           }}
           className="mt-6 text-xs font-bold text-slate-500 underline hover:text-slate-800"
         >
