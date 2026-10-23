@@ -249,12 +249,12 @@ export function WaterHubHeader({
     >
       <div
         className={[
-          "w-full max-w-[1920px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-5 xl:px-8 2xl:px-12 h-[84px] sm:h-[92px] md:h-[98px]",
+          "w-full max-w-[1920px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-4 xl:px-8 2xl:px-12 h-[84px] sm:h-[92px] md:h-[98px]",
           dense ? "py-1.5" : "py-2",
         ].join(" ")}
       >
         {/* 로고 영역 (화면 좌측 끝으로 시원하게 배치) */}
-        <div className="flex items-center shrink-0 w-[150px] lg:w-[175px] xl:w-[215px] 2xl:w-[250px]">
+        <div className="flex items-center shrink-0 w-[140px] lg:w-[155px] xl:w-[195px] 2xl:w-[235px]">
           <Link
             href="/main"
             onClick={(e) => {
@@ -270,7 +270,7 @@ export function WaterHubHeader({
               alt="K-water 온라인 물문화관"
               width={1024}
               height={341}
-              className="h-[50px] sm:h-[58px] lg:h-[54px] xl:h-[64px] 2xl:h-[72px] w-auto max-w-[150px] lg:max-w-[170px] xl:max-w-[210px] 2xl:max-w-[240px] shrink-0 object-contain"
+              className="h-[50px] sm:h-[58px] lg:h-[54px] xl:h-[64px] 2xl:h-[72px] w-auto max-w-[140px] lg:max-w-[155px] xl:max-w-[195px] 2xl:max-w-[235px] shrink-0 object-contain"
               priority
             />
           </Link>
@@ -290,7 +290,7 @@ export function WaterHubHeader({
                 <div
                   key={item.key}
                   className={[
-                    "relative flex items-center justify-center text-center h-full cursor-pointer px-2 transition-colors duration-200",
+                    "relative flex items-center justify-center text-center h-full cursor-pointer px-1.5 transition-colors duration-200",
                     isHovered
                       ? "text-[#3054b0] font-black"
                       : isCurrentActive
@@ -304,7 +304,7 @@ export function WaterHubHeader({
                 >
                   <Link
                     href={item.href}
-                    className="w-full text-center py-2 text-sm lg:text-[0.96rem] xl:text-[1.05rem] font-black tracking-tight whitespace-nowrap"
+                    className="w-full text-center py-2 text-[15px] lg:text-[16px] xl:text-[17px] 2xl:text-[17.5px] font-black tracking-tight whitespace-nowrap"
                   >
                     {item.label}
                   </Link>
@@ -315,7 +315,7 @@ export function WaterHubHeader({
         </nav>
 
         {/* 우측 회원/로그인 영역 (화면 우측 끝으로 정렬 및 대칭 너비 슬롯) */}
-        <div className="hidden lg:flex items-center justify-end shrink-0 w-[150px] lg:w-[175px] xl:w-[215px] 2xl:w-[250px]">
+        <div className="hidden lg:flex items-center justify-end shrink-0 w-[140px] lg:w-[155px] xl:w-[195px] 2xl:w-[235px]">
           {user ? (
             <div className="flex items-center gap-x-2">
               {user.role === "admin" ? (
@@ -398,7 +398,7 @@ export function WaterHubHeader({
         className={[
           "hidden lg:block absolute left-0 right-0 top-full bg-white border-b border-slate-200/80 shadow-lg z-40 overflow-hidden transition-all duration-300 ease-out origin-top",
           isMegaMenuOpen
-            ? "max-h-[340px] opacity-100 translate-y-0"
+            ? "max-h-[380px] opacity-100 translate-y-0"
             : "max-h-0 opacity-0 -translate-y-2 pointer-events-none",
         ].join(" ")}
         onMouseEnter={() => setIsMegaMenuOpen(true)}
@@ -407,9 +407,9 @@ export function WaterHubHeader({
           setActiveHoverKey(null);
         }}
       >
-        <div className="w-full max-w-[1920px] mx-auto flex items-stretch justify-between px-4 sm:px-6 lg:px-5 xl:px-8 2xl:px-12">
+        <div className="w-full max-w-[1920px] mx-auto flex items-stretch justify-between px-4 sm:px-6 lg:px-4 xl:px-8 2xl:px-12">
           {/* 좌측 로고 영역 대응 투명 가이드 앵커 (너비 완벽 일치) */}
-          <div className="w-[150px] lg:w-[175px] xl:w-[215px] 2xl:w-[250px] shrink-0 invisible pointer-events-none" />
+          <div className="w-[140px] lg:w-[155px] xl:w-[195px] 2xl:w-[235px] shrink-0 invisible pointer-events-none" />
 
           {/* GNB 5개 탭과 수직 1:1 라인 위치 완벽 정렬 그리드 */}
           <div className="grid grid-cols-5 w-full flex-1 max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto divide-x divide-slate-100/90 px-1 sm:px-2">
@@ -421,7 +421,7 @@ export function WaterHubHeader({
                 <div
                   key={item.key}
                   className={[
-                    "py-6 px-1 lg:px-1.5 xl:px-2 text-center min-h-[230px] transition-colors duration-200 flex flex-col items-center justify-start",
+                    "py-5 lg:py-6 px-1 lg:px-1.5 xl:px-2 text-center min-h-[250px] transition-colors duration-200 flex flex-col items-center justify-start",
                     isHovered
                       ? "bg-[#edf4fb]"
                       : isCurrentActive && !activeHoverKey
@@ -430,7 +430,7 @@ export function WaterHubHeader({
                   ].join(" ")}
                   onMouseEnter={() => setActiveHoverKey(item.key)}
                 >
-                  <ul className="space-y-3.5 text-sm w-full text-center">
+                  <ul className="space-y-3 lg:space-y-3.5 w-full text-center">
                     {item.subItems.map((sub) => (
                       <li key={sub.href + sub.label}>
                         <Link
@@ -439,7 +439,7 @@ export function WaterHubHeader({
                             setIsMegaMenuOpen(false);
                             setActiveHoverKey(null);
                           }}
-                          className="inline-block whitespace-nowrap transition-colors duration-150 py-1 px-1 text-[11.5px] lg:text-[12px] xl:text-[13px] 2xl:text-[13.5px] tracking-tight text-slate-700 font-semibold hover:text-[#3054b0] hover:font-bold hover:underline underline-offset-4 decoration-1 decoration-[#3054b0]"
+                          className="inline-block whitespace-nowrap transition-all duration-150 py-1.5 px-2 rounded-lg text-[13.5px] lg:text-[14px] xl:text-[14.5px] 2xl:text-[15px] tracking-tight text-slate-700 font-semibold hover:text-[#3054b0] hover:font-bold hover:bg-sky-50/80 hover:underline underline-offset-4 decoration-1 decoration-[#3054b0]"
                         >
                           {sub.label}
                         </Link>
@@ -452,7 +452,7 @@ export function WaterHubHeader({
           </div>
 
           {/* 우측 로그인 영역 대응 투명 가이드 앵커 (너비 완벽 일치) */}
-          <div className="w-[150px] lg:w-[175px] xl:w-[215px] 2xl:w-[250px] shrink-0 invisible pointer-events-none" />
+          <div className="w-[140px] lg:w-[155px] xl:w-[195px] 2xl:w-[235px] shrink-0 invisible pointer-events-none" />
         </div>
       </div>
 
@@ -638,7 +638,7 @@ export function WaterHubHeader({
                             {getMenuIcon(item.key)}
                           </div>
                           <span
-                            className={`text-[15px] font-bold transition-colors ${
+                            className={`text-[15.5px] font-bold transition-colors ${
                               isCurrentActive ? "text-sky-700 font-extrabold" : "text-slate-900"
                             }`}
                           >
@@ -665,10 +665,10 @@ export function WaterHubHeader({
                               key={sub.href + sub.label}
                               href={sub.href}
                               onClick={closeMobileMenu}
-                              className="flex items-center justify-between py-2 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-sky-600 hover:bg-sky-50 active:bg-sky-100 transition"
+                              className="flex items-center justify-between py-2.5 px-3 rounded-lg text-[13.5px] sm:text-[14px] font-semibold text-slate-600 hover:text-sky-600 hover:bg-sky-50 active:bg-sky-100 transition"
                             >
                               <span>{sub.label}</span>
-                              <span className="text-[10px] text-slate-400">→</span>
+                              <span className="text-xs text-slate-400">→</span>
                             </Link>
                           ))}
                         </div>
