@@ -123,20 +123,35 @@ const CENTER_LABEL_POSITIONS: Record<string, LabelPosition> = {
 function BangulPin({
   color,
   selected,
+  hovered = false,
 }: {
   color: string;
   selected: boolean;
+  hovered?: boolean;
 }) {
-  const size = selected ? 42 : 32;
-  const offset = selected ? -21 : -16;
-  const padding = selected ? 4.5 : 3.5;
+  const size = selected ? 42 : hovered ? 36 : 32;
+  const offset = -size / 2;
+  const padding = selected ? 4.5 : hovered ? 4 : 3.5;
   const imgSize = size - padding * 2;
 
   return (
-    <g transform={`translate(${offset}, ${offset})`} style={{ cursor: "pointer" }}>
-      {/* 선택 시 그림자 효과 */}
-      {selected && (
-        <circle cx={size / 2} cy={size / 2} r={size / 2 + 4} fill={color} opacity="0.28" />
+    <g
+      transform={`translate(${offset}, ${offset})`}
+      style={{
+        cursor: "pointer",
+        transition: "transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1)",
+      }}
+    >
+      {/* 선택 또는 호버 시 물방울 파동/네온 글로우 링 */}
+      {(selected || hovered) && (
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={size / 2 + (selected ? 5 : 4)}
+          fill={color}
+          opacity={selected ? 0.32 : 0.24}
+          style={{ transition: "all 0.28s ease-out" }}
+        />
       )}
       {/* 바깥 링 (운영 현황 색상 표시) */}
       <circle
@@ -145,8 +160,11 @@ function BangulPin({
         r={size / 2 - 1.5}
         fill="white"
         stroke={color}
-        strokeWidth={selected ? 3.5 : 2.5}
-        className="transition-all duration-200"
+        strokeWidth={selected ? 3.5 : hovered ? 3 : 2.5}
+        style={{
+          filter: hovered || selected ? `drop-shadow(0px 3px 6px ${color}66)` : undefined,
+          transition: "all 0.28s ease-out",
+        }}
       />
       {/* 캐릭터 사진 (public/character.png) */}
       <image
@@ -156,6 +174,7 @@ function BangulPin({
         width={imgSize}
         height={imgSize}
         preserveAspectRatio="xMidYMid meet"
+        style={{ transition: "all 0.28s ease-out" }}
         onError={(e) => {
           // 이미지 미존재 시 기본 아이콘 표출
           (e.currentTarget as SVGElement).style.display = "none";
@@ -174,8 +193,18 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
   const mapCenters = centersProp ?? waterCenters;
   const todaySeoul = useMemo(() => getSeoulWeekdayHan(), []);
   const [selected, setSelected] = useState<WaterCenter | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  // 호버 및 선택된 마커가 항상 이웃 마커보다 상단(z-index)에 자연스럽게 올라오도록 정렬
+  const sortedCenters = useMemo(() => {
+    return [...mapCenters].sort((a, b) => {
+      const aRank = a.id === selected?.id ? 2 : a.id === hoveredId ? 1 : 0;
+      const bRank = b.id === selected?.id ? 2 : b.id === hoveredId ? 1 : 0;
+      return aRank - bRank;
+    });
+  }, [mapCenters, selected?.id, hoveredId]);
 
   // 모바일 화면 감지 (640px 미만에서 대한민국 전역 댐 집중 확대 뷰 전환)
   useEffect(() => {
@@ -274,16 +303,17 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
             }
           </Geographies>
 
-          {mapCenters.map((center) => {
+          {sortedCenters.map((center) => {
             const display = resolveDisplayStatus(center, todaySeoul);
             const isSelected = selected?.id === center.id;
+            const isHovered = hoveredId === center.id;
             const shortName = getCenterShortName(center.name);
             const color = PIN_COLORS[display];
 
-            const fontSize = isSelected ? 13.5 : 12.5;
+            const fontSize = isSelected ? 13.5 : isHovered ? 13 : 12.5;
             const textWidth = measureTextWidth(shortName, fontSize);
-            const badgeWidth = textWidth + 14;
-            const badgeHeight = isSelected ? 25 : 23;
+            const badgeWidth = textWidth + (isHovered ? 16 : 14);
+            const badgeHeight = isSelected ? 25 : isHovered ? 24 : 23;
 
             const posConfig = CENTER_LABEL_POSITIONS[center.id] ?? {
               anchor: "right",
@@ -298,42 +328,70 @@ export function KoreaMap({ centers: centersProp }: KoreaMapProps = {}) {
               <Marker
                 key={center.id}
                 coordinates={center.coordinates as [number, number]}
-                onClick={() => setSelected(isSelected ? null : center)}
               >
-                <g className="cursor-pointer group">
-                  {/* 모바일 터치 접근성을 위한 보이지 않는 탭 영역 확장 */}
-                  <circle cx="0" cy="0" r="26" fill="transparent" />
+                <g
+                  className="cursor-pointer group"
+                  onClick={() => setSelected(isSelected ? null : center)}
+                  onMouseEnter={() => setHoveredId(center.id)}
+                  onMouseLeave={() => setHoveredId((id) => (id === center.id ? null : id))}
+                >
+                  {/* 모바일 터치 및 마우스 감지를 위한 보이지 않는 탭 영역 확장 */}
+                  <circle cx="0" cy="0" r="30" fill="transparent" />
 
-                  <BangulPin color={color} selected={isSelected} />
+                  {/* 바닥 그림자 (마우스 호버 시 핀이 위로 떠오르며 바닥 그림자가 부드럽게 확산) */}
+                  <ellipse
+                    cx="0"
+                    cy="11"
+                    rx={isHovered ? 7 : 10}
+                    ry={isHovered ? 2.5 : 3.5}
+                    fill="#0f172a"
+                    opacity={isHovered ? 0.16 : 0.28}
+                    style={{ transition: "all 0.28s ease-out" }}
+                    className="pointer-events-none"
+                  />
 
-                  {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 (선명하고 큼직한 댐 이름 라벨) */}
-                  <g transform={`translate(${badgeX}, ${badgeY})`}>
-                    <rect
-                      x="0"
-                      y="0"
-                      width={badgeWidth}
-                      height={badgeHeight}
-                      rx={isSelected ? 6 : 5}
-                      fill={isSelected ? "#0f172a" : "#ffffff"}
-                      fillOpacity={isSelected ? 0.98 : 0.95}
-                      stroke={isSelected ? "#38bdf8" : color}
-                      strokeWidth={isSelected ? 2 : 1.5}
-                      style={{
-                        filter: "drop-shadow(0px 2px 4px rgba(15, 23, 42, 0.2))",
-                      }}
-                    />
-                    <text
-                      x={badgeWidth / 2}
-                      y={badgeHeight / 2 + 0.5}
-                      textAnchor="middle"
-                      dominantBaseline="central"
-                      fontSize={fontSize}
-                      fontWeight={isSelected ? "900" : "800"}
-                      fill={isSelected ? "#ffffff" : "#0f172a"}
-                      className="pointer-events-none select-none font-sans tracking-tight"
-                    >
-                      {shortName}
-                    </text>
+                  {/* 마우스 올릴 때 위로 부드럽게 통통 떠오르고, 내릴 때 사뿐히 착지하는 모션 래퍼 */}
+                  <g
+                    style={{
+                      transform: isHovered ? "translateY(-6px)" : "translateY(0px)",
+                      transition: "transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                    }}
+                  >
+                    <BangulPin color={color} selected={isSelected} hovered={isHovered} />
+
+                    {/* 방울이 아이콘 옆 문화관 명칭 라벨 표기 (호버 시 선명한 하이라이트 글로우) */}
+                    <g transform={`translate(${badgeX}, ${badgeY})`}>
+                      <rect
+                        x="0"
+                        y="0"
+                        width={badgeWidth}
+                        height={badgeHeight}
+                        rx={isSelected ? 6 : 5}
+                        fill={isSelected ? "#0f172a" : isHovered ? "#f8fafc" : "#ffffff"}
+                        fillOpacity={isSelected ? 0.98 : 0.96}
+                        stroke={isSelected ? "#38bdf8" : isHovered ? color : color}
+                        strokeWidth={isSelected ? 2.5 : isHovered ? 2 : 1.5}
+                        style={{
+                          filter: isHovered
+                            ? "drop-shadow(0px 4px 8px rgba(15, 23, 42, 0.26))"
+                            : "drop-shadow(0px 2px 4px rgba(15, 23, 42, 0.18))",
+                          transition: "all 0.28s ease-out",
+                        }}
+                      />
+                      <text
+                        x={badgeWidth / 2}
+                        y={badgeHeight / 2 + 0.5}
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                        fontSize={fontSize}
+                        fontWeight={isSelected || isHovered ? "900" : "800"}
+                        fill={isSelected ? "#ffffff" : isHovered ? "#004D95" : "#0f172a"}
+                        className="pointer-events-none select-none font-sans tracking-tight"
+                        style={{ transition: "fill 0.2s ease" }}
+                      >
+                        {shortName}
+                      </text>
+                    </g>
                   </g>
                 </g>
               </Marker>
