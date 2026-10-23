@@ -192,23 +192,13 @@ export default function IntroPage() {
 
         {/* 4. 온라인 물문화관 주요 이용 안내 */}
         <section aria-label="온라인 물문화관 서비스 안내" className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                온라인 물문화관 이용 안내
-              </h2>
-              <p className="mt-1 text-xs sm:text-sm text-slate-500 font-medium">
-                방문하시는 모든 분의 편리한 이용을 위한 4가지 핵심 기능입니다.
-              </p>
-            </div>
-
-            <Link
-              href="/status"
-              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-900 hover:bg-sky-600 text-xs sm:text-sm font-bold text-white px-5 py-2.5 transition shadow-xs whitespace-nowrap"
-            >
-              <span>전국 거점 현황지도</span>
-              <span>→</span>
-            </Link>
+          <div className="pb-4 border-b border-slate-200">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              온라인 물문화관 이용 안내
+            </h2>
+            <p className="mt-1 text-xs sm:text-sm text-slate-500 font-medium">
+              방문하시는 모든 분의 편리한 이용을 위한 4가지 핵심 기능입니다.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
