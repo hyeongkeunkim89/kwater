@@ -427,16 +427,9 @@ export default async function CenterDetailPage({ params }: Props) {
             </div>
             <div className="flex items-center gap-3">
               <span className="w-16 sm:w-20 shrink-0 font-bold text-slate-900">문의전화</span>
-              <a
-                href={`tel:${center.contactPhone}`}
-                className="inline-flex items-center gap-2 font-bold text-sky-700 hover:text-sky-900 transition hover:underline py-1 -my-1"
-                title={`${center.name} 안내데스크 전화 걸기`}
-              >
-                <span>{center.contactPhone}</span>
-                <span className="rounded-md bg-sky-50 px-2 py-0.5 text-xs font-bold text-sky-700 border border-sky-200">
-                  전화걸기
-                </span>
-              </a>
+              <span className="font-bold text-slate-800">
+                {center.contactPhone}
+              </span>
             </div>
             <p className="text-xs text-slate-400">{center.statusNote}</p>
           </div>

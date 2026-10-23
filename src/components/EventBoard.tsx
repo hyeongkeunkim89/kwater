@@ -216,24 +216,15 @@ export function EventBoard({ filteredEvents, selectedEvent, center, type, storie
                   전국 15개 물문화관과 수변 산책로에서 포착한 특별한 순간을 공유해 보세요. 
                   매월 우수작을 선정하여 명예의 전당인 <strong className="font-bold text-[#004D95]">&apos;이달의 사진&apos;</strong> 등재 및 문화상품권을 드립니다.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                <div className="pt-1">
                   <Link
                     href="/mul-iyagi"
-                    className="flex-1 inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs font-bold text-white px-4 transition shadow-xs text-center"
+                    className="w-full inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-[#004D95] hover:bg-[#003870] text-xs sm:text-sm font-bold text-white px-4 transition shadow-xs text-center"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span>사진 응모하기</span>
-                  </Link>
-                  <Link
-                    href="/mul-iyagi"
-                    className="flex-1 inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold px-4 transition text-center"
-                  >
-                    <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span>전체 갤러리</span>
+                    <span>물 이야기 갤러리 및 사진 응모 바로가기 →</span>
                   </Link>
                 </div>
               </div>
