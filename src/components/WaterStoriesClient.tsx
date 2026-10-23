@@ -523,7 +523,7 @@ export function WaterStoriesClient({
                 <div className="flex min-w-0 flex-1 flex-col gap-2 p-5">
                   <p className="truncate text-xs font-black text-[#3054b0]">{s.centerName}</p>
                   <p className="text-sm font-bold text-slate-900">{s.nickname}</p>
-                  <p className="line-clamp-3 text-sm leading-relaxed text-slate-600 font-medium">{s.caption}</p>
+                  <p className="text-sm leading-relaxed text-slate-600 font-medium whitespace-pre-wrap break-keep">{s.caption}</p>
                   <p className="mt-auto text-[11px] text-slate-400 font-medium pt-2">{formatDateKo(s.createdAt)}</p>
                   <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100 mt-2">
                     <Link
