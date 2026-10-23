@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useAuth, type AuthTab } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,7 @@ import { waterCenters } from "@/data/centers";
 export function AuthModal() {
   const { isAuthOpen, authTab, closeAuthModal, loginWithSocial, loginWithEmail, signupWithEmail, loginAsStaff } = useAuth();
   const [tab, setTab] = useState<AuthTab>(authTab || "login");
+  const modalScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isAuthOpen) {
@@ -16,6 +17,13 @@ export function AuthModal() {
       setLoginEmail("");
     }
   }, [isAuthOpen, authTab]);
+
+  // 탭 전환 시 모달 내부 스크롤을 항상 최상단으로 리셋
+  useEffect(() => {
+    if (modalScrollRef.current) {
+      modalScrollRef.current.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [tab]);
   const router = useRouter();
 
   // Login form state (아이디 또는 이메일)
@@ -281,34 +289,37 @@ export function AuthModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto rounded-3xl border border-white/20 bg-white p-6 shadow-2xl sm:p-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 p-3 sm:p-4 backdrop-blur-sm animate-in fade-in duration-200">
+      <div
+        ref={modalScrollRef}
+        className="relative w-full max-w-md max-h-[92dvh] sm:max-h-[88vh] overflow-y-auto rounded-2xl sm:rounded-3xl border border-white/20 bg-white p-4 sm:p-6 md:p-8 shadow-2xl overscroll-contain"
+      >
         {/* 닫기 버튼 */}
         <button
           onClick={closeAuthModal}
-          className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900 z-10"
+          className="absolute right-3.5 top-3.5 sm:right-5 sm:top-5 flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900 z-10"
           aria-label="닫기"
         >
           ✕
         </button>
 
         {/* 메인 브랜드 로고 */}
-        <div className="flex justify-center pt-1 pb-3">
+        <div className="flex justify-center pt-0 pb-2 sm:pb-3">
           <Image
             src="/images/kwater_waterhub_logo.png"
             alt="K-water 한국수자원공사 물문화관"
             width={1024}
             height={341}
-            className="h-14 sm:h-16 w-auto object-contain"
+            className="h-10 sm:h-12 md:h-14 w-auto object-contain"
             priority
           />
         </div>
 
         {/* 상단 탭 구분 (로그인 / 회원가입 / 비회원 / 관리자) */}
-        <div className="grid grid-cols-4 border-b border-slate-200 pb-3 mb-6 gap-1 text-center">
+        <div className="grid grid-cols-4 border-b border-slate-200 pb-2 sm:pb-3 mb-3.5 sm:mb-5 gap-1 text-center">
           <button
             onClick={() => setTab("login")}
-            className={`py-2 text-[11px] sm:text-xs font-black transition border-b-2 ${
+            className={`py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold sm:font-black transition border-b-2 ${
               tab === "login"
                 ? "border-sky-600 text-sky-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -318,7 +329,7 @@ export function AuthModal() {
           </button>
           <button
             onClick={() => setTab("signup")}
-            className={`py-2 text-[11px] sm:text-xs font-black transition border-b-2 ${
+            className={`py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold sm:font-black transition border-b-2 ${
               tab === "signup"
                 ? "border-sky-600 text-sky-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -328,7 +339,7 @@ export function AuthModal() {
           </button>
           <button
             onClick={() => setTab("guest")}
-            className={`py-2 text-[11px] sm:text-xs font-black transition border-b-2 ${
+            className={`py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold sm:font-black transition border-b-2 ${
               tab === "guest"
                 ? "border-emerald-600 text-emerald-600 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -338,7 +349,7 @@ export function AuthModal() {
           </button>
           <button
             onClick={() => setTab("admin")}
-            className={`py-2 text-[11px] sm:text-xs font-black transition border-b-2 ${
+            className={`py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold sm:font-black transition border-b-2 ${
               tab === "admin"
                 ? "border-slate-900 text-slate-900 font-extrabold"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -350,59 +361,59 @@ export function AuthModal() {
 
         {/* 1. 통합 로그인 탭 */}
         {tab === "login" && (
-          <div key="login-tab" className="space-y-5">
+          <div key="login-tab" className="space-y-3.5 sm:space-y-4">
             <div className="text-center">
-              <h2 className="text-xl font-black text-slate-900">물문화관 로그인</h2>
-              <p className="mt-1 text-xs text-slate-500 font-semibold">
+              <h2 className="text-lg sm:text-xl font-black text-slate-900">물문화관 로그인</h2>
+              <p className="mt-0.5 sm:mt-1 text-[11px] sm:text-xs text-slate-500 font-semibold">
                 소셜 로그인 또는 아이디/이메일로 로그인하세요.
               </p>
             </div>
 
-            {/* 소셜 로그인 버튼 그룹 (카카오/네이버 공식 심사 가이드라인 준수) */}
-            <div className="space-y-2 pt-1">
+            {/* 소셜 로그인 버튼 그룹 (모바일 화면 최적화 2열 그리드) */}
+            <div className="grid grid-cols-2 gap-2 pt-0.5">
               <button
                 type="button"
                 onClick={() => handleSocialClick("kakao")}
-                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-bold text-[#191919] transition hover:bg-[#FDD800] shadow-xs active:scale-[0.99]"
+                className="w-full flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FEE500] py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-[#191919] transition hover:bg-[#FDD800] shadow-xs active:scale-[0.99]"
               >
                 <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 3C6.477 3 2 6.477 2 10.767c0 2.766 1.843 5.19 4.636 6.564l-.946 3.473a.4.4 0 00.518.477l4.137-2.738c.535.053 1.084.084 1.655.084 5.523 0 10-3.477 10-7.767S17.523 3 12 3z" />
                 </svg>
-                <span>카카오 로그인</span>
+                <span className="truncate">카카오 로그인</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleSocialClick("naver")}
-                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-bold text-white transition hover:bg-[#02B351] shadow-xs active:scale-[0.99]"
+                className="w-full flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#03C75A] py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-white transition hover:bg-[#02B351] shadow-xs active:scale-[0.99]"
               >
                 <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z" />
                 </svg>
-                <span>네이버 로그인</span>
+                <span className="truncate">네이버 로그인</span>
               </button>
             </div>
 
-            <div className="relative flex items-center justify-center my-3">
+            <div className="relative flex items-center justify-center my-2.5 sm:my-3">
               <div className="w-full border-t border-slate-200" />
-              <span className="absolute bg-white px-3 text-xs text-slate-400 font-bold">또는 아이디/이메일 로그인</span>
+              <span className="absolute bg-white px-2.5 text-[11px] sm:text-xs text-slate-400 font-bold">또는 아이디/이메일 로그인</span>
             </div>
 
-            <form onSubmit={handleLoginSubmit} className="space-y-3" autoComplete="off">
+            <form onSubmit={handleLoginSubmit} className="space-y-2.5 sm:space-y-3" autoComplete="off">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">아이디 또는 이메일주소</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">아이디 또는 이메일주소</label>
                 <input
                   type="text"
                   autoComplete="off"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   placeholder="아이디 또는 이메일 주소 입력"
-                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
+                  className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">비밀번호</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">비밀번호</label>
                 <div className="relative flex items-center">
                   <input
                     type={showLoginPass ? "text" : "password"}
@@ -410,7 +421,7 @@ export function AuthModal() {
                     value={loginPass}
                     onChange={(e) => setLoginPass(e.target.value)}
                     placeholder="비밀번호 입력"
-                    className="w-full rounded-xl border border-slate-200 p-2.5 pr-10 text-sm outline-none focus:border-sky-500"
+                    className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 pr-10 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                   />
                   <button
                     type="button"
@@ -435,7 +446,7 @@ export function AuthModal() {
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-slate-900 py-3 text-sm font-black text-white hover:bg-slate-800 transition shadow-md"
+                className="w-full rounded-xl bg-slate-900 py-2.5 sm:py-3 text-sm font-black text-white hover:bg-slate-800 transition shadow-md"
               >
                 🔑 로그인
               </button>
@@ -444,7 +455,7 @@ export function AuthModal() {
                 <button
                   type="button"
                   onClick={() => setTab("admin")}
-                  className="text-xs font-bold text-slate-500 hover:text-slate-900 transition underline underline-offset-2 inline-flex items-center gap-1 mx-auto"
+                  className="text-[11px] sm:text-xs font-bold text-slate-500 hover:text-slate-900 transition underline underline-offset-2 inline-flex items-center gap-1 mx-auto"
                 >
                   <span>🛡️ K-water 관리자 계정으로 로그인</span>
                 </button>
@@ -453,63 +464,63 @@ export function AuthModal() {
           </div>
         )}
 
-        {/* 3. 회원가입 탭 (6대 보완 요소 반영) */}
+        {/* 3. 회원가입 탭 (6대 보완 요소 반영 및 모바일 최적화) */}
         {tab === "signup" && (
-          <div key="signup-tab" className="space-y-4">
+          <div key="signup-tab" className="space-y-3 sm:space-y-4">
             <div className="text-center">
-              <h2 className="text-xl font-black text-slate-900">관람객 회원가입</h2>
-              <p className="mt-1 text-xs text-slate-500 font-semibold">
+              <h2 className="text-lg sm:text-xl font-black text-slate-900">관람객 회원가입</h2>
+              <p className="mt-0.5 sm:mt-1 text-[11px] sm:text-xs text-slate-500 font-semibold">
                 가입 후 투어 예약 및 커뮤니티 서비스를 이용해 보세요.
               </p>
             </div>
 
-            {/* 소셜 간편가입 버튼 그룹 (카카오/네이버 공식 심사 가이드라인 준수) */}
-            <div className="space-y-2 pt-1">
+            {/* 소셜 간편가입 버튼 그룹 (모바일 최적화 2열 그리드) */}
+            <div className="grid grid-cols-2 gap-2 pt-0.5">
               <button
                 type="button"
                 onClick={() => handleSocialClick("kakao")}
-                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#FEE500] py-3 text-sm font-bold text-[#191919] transition hover:bg-[#FDD800] shadow-xs active:scale-[0.99]"
+                className="w-full flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FEE500] py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-[#191919] transition hover:bg-[#FDD800] shadow-xs active:scale-[0.99]"
               >
                 <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 3C6.477 3 2 6.477 2 10.767c0 2.766 1.843 5.19 4.636 6.564l-.946 3.473a.4.4 0 00.518.477l4.137-2.738c.535.053 1.084.084 1.655.084 5.523 0 10-3.477 10-7.767S17.523 3 12 3z" />
                 </svg>
-                <span>카카오로 시작하기</span>
+                <span className="truncate">카카오로 시작</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleSocialClick("naver")}
-                className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#03C75A] py-3 text-sm font-bold text-white transition hover:bg-[#02B351] shadow-xs active:scale-[0.99]"
+                className="w-full flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#03C75A] py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-white transition hover:bg-[#02B351] shadow-xs active:scale-[0.99]"
               >
                 <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z" />
                 </svg>
-                <span>네이버로 시작하기</span>
+                <span className="truncate">네이버로 시작</span>
               </button>
             </div>
 
-            <div className="relative flex items-center justify-center my-3">
+            <div className="relative flex items-center justify-center my-2 sm:my-3">
               <div className="w-full border-t border-slate-200" />
-              <span className="absolute bg-white px-3 text-xs text-slate-400 font-bold">또는 직접 정보 입력하여 가입</span>
+              <span className="absolute bg-white px-2.5 text-[11px] sm:text-xs text-slate-400 font-bold">또는 직접 정보 입력하여 가입</span>
             </div>
 
-            <form onSubmit={handleSignUpSubmit} className="space-y-3.5 pt-1 text-left" autoComplete="off">
+            <form onSubmit={handleSignUpSubmit} className="space-y-2.5 sm:space-y-3.5 pt-0.5 text-left" autoComplete="off">
               {/* 1. 이름 */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">이름 *</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">이름 *</label>
                 <input
                   type="text"
                   autoComplete="off"
                   value={signUpName}
                   onChange={(e) => setSignUpName(e.target.value)}
                   placeholder="홍길동"
-                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
+                  className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                 />
               </div>
 
               {/* 2. 이메일 (아이디) + 중복 확인 버튼 */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">이메일 (아이디) *</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">이메일 (아이디) *</label>
                 <div className="flex gap-2">
                   <input
                     type="email"
@@ -521,18 +532,18 @@ export function AuthModal() {
                       setEmailCheckResult(null);
                     }}
                     placeholder="user@kwater.or.kr"
-                    className="flex-1 rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
+                    className="flex-1 rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                   />
                   <button
                     type="button"
                     onClick={handleCheckEmailDuplicate}
-                    className="shrink-0 rounded-xl bg-slate-800 px-3 py-2 text-xs font-bold text-white hover:bg-slate-700 transition"
+                    className="shrink-0 rounded-xl bg-slate-800 px-3 py-2 text-[11px] sm:text-xs font-bold text-white hover:bg-slate-700 transition"
                   >
                     중복 확인
                   </button>
                 </div>
                 {emailCheckResult && (
-                  <p className={`mt-1.5 text-[11px] font-bold ${emailCheckResult.ok ? "text-emerald-600" : "text-rose-600"}`}>
+                  <p className={`mt-1 text-[11px] font-bold ${emailCheckResult.ok ? "text-emerald-600" : "text-rose-600"}`}>
                     {emailCheckResult.msg}
                   </p>
                 )}
@@ -540,7 +551,7 @@ export function AuthModal() {
 
               {/* 3. 비밀번호 + 표시/숨기기 토글 + 강도 측정 */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">비밀번호 * (최소 8자)</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">비밀번호 * (최소 8자)</label>
                 <div className="relative flex items-center">
                   <input
                     type={showSignUpPass ? "text" : "password"}
@@ -548,7 +559,7 @@ export function AuthModal() {
                     value={signUpPass}
                     onChange={(e) => setSignUpPass(e.target.value)}
                     placeholder="8자 이상 (영문, 숫자, 특수문자)"
-                    className="w-full rounded-xl border border-slate-200 p-2.5 pr-10 text-sm outline-none focus:border-sky-500"
+                    className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 pr-10 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                   />
                   <button
                     type="button"
@@ -573,14 +584,14 @@ export function AuthModal() {
                 {signUpPass && (() => {
                   const strength = getPasswordStrength(signUpPass);
                   return (
-                    <div className="mt-2 space-y-1.5 rounded-xl border border-slate-300 bg-slate-100/90 p-2.5 shadow-inner">
+                    <div className="mt-1.5 space-y-1 rounded-xl border border-slate-300 bg-slate-100/90 p-2 sm:p-2.5 shadow-inner">
                       <div className="flex items-center justify-between text-[11px]">
                         <span className="font-extrabold text-slate-700">비밀번호 보안 강도</span>
                         <span className={`inline-block rounded-md px-2 py-0.5 text-[10px] border ${strength.badgeBg}`}>
                           {strength.label}
                         </span>
                       </div>
-                      <div className="grid grid-cols-3 gap-1.5 h-2.5 w-full">
+                      <div className="grid grid-cols-3 gap-1.5 h-2 w-full">
                         <div className={`rounded-full transition-all duration-300 ${strength.score >= 1 ? strength.barColor : "bg-slate-300/80 border border-slate-400/40"}`} />
                         <div className={`rounded-full transition-all duration-300 ${strength.score >= 2 ? strength.barColor : "bg-slate-300/80 border border-slate-400/40"}`} />
                         <div className={`rounded-full transition-all duration-300 ${strength.score >= 3 ? strength.barColor : "bg-slate-300/80 border border-slate-400/40"}`} />
@@ -592,7 +603,7 @@ export function AuthModal() {
 
               {/* 4. 비밀번호 재확인 + 실시간 일치 검증 */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">비밀번호 확인 *</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">비밀번호 확인 *</label>
                 <div className="relative flex items-center">
                   <input
                     type={showSignUpPassConfirm ? "text" : "password"}
@@ -600,7 +611,7 @@ export function AuthModal() {
                     value={signUpPassConfirm}
                     onChange={(e) => setSignUpPassConfirm(e.target.value)}
                     placeholder="비밀번호 재입력"
-                    className="w-full rounded-xl border border-slate-200 p-2.5 pr-10 text-sm outline-none focus:border-sky-500"
+                    className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 pr-10 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                   />
                   <button
                     type="button"
@@ -623,7 +634,7 @@ export function AuthModal() {
                 </div>
                 {signUpPassConfirm && (
                   <p
-                    className={`mt-1.5 text-[11px] font-bold ${
+                    className={`mt-1 text-[11px] font-bold ${
                       signUpPass === signUpPassConfirm ? "text-emerald-600" : "text-rose-600"
                     }`}
                   >
@@ -634,7 +645,7 @@ export function AuthModal() {
 
               {/* 5. 휴대폰 번호 (자동 하이픈) */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">휴대폰 번호 (선택)</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">휴대폰 번호 (선택)</label>
                 <input
                   key={`signup-phone-${tab}`}
                   type="tel"
@@ -644,12 +655,12 @@ export function AuthModal() {
                   value={signUpPhone}
                   onChange={(e) => setSignUpPhone(formatPhone(e.target.value))}
                   placeholder="010-1234-5678"
-                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm outline-none focus:border-sky-500"
+                  className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                 />
               </div>
 
               {/* 6. 약관 동의 체크박스 그룹 */}
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 space-y-2 text-xs">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 sm:p-3 space-y-1.5 sm:space-y-2 text-[11px] sm:text-xs">
                 <label className="flex items-center gap-2 font-black text-slate-900 border-b border-slate-200 pb-1.5 cursor-pointer">
                   <input
                     type="checkbox"
@@ -690,7 +701,7 @@ export function AuthModal() {
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-sky-600 py-3 text-sm font-black text-white hover:bg-sky-500 transition shadow-md shadow-sky-600/20"
+                className="w-full rounded-xl bg-sky-600 py-2.5 sm:py-3 text-sm font-black text-white hover:bg-sky-500 transition shadow-md shadow-sky-600/20 cursor-pointer"
               >
                 관람객 회원가입 완료
               </button>
@@ -700,17 +711,17 @@ export function AuthModal() {
 
         {/* 4. 비회원 예약조회 탭 */}
         {tab === "guest" && (
-          <div key="guest-tab" className="space-y-4">
+          <div key="guest-tab" className="space-y-3 sm:space-y-4">
             <div className="text-center">
-              <h2 className="text-xl font-black text-slate-900">비회원 투어 예약 조회</h2>
-              <p className="mt-1 text-xs text-slate-500 font-semibold">
+              <h2 className="text-lg sm:text-xl font-black text-slate-900">비회원 투어 예약 조회</h2>
+              <p className="mt-0.5 sm:mt-1 text-[11px] sm:text-xs text-slate-500 font-semibold">
                 회원가입 없이 예약할 때 설정한 연락처와 비밀번호로 내역을 조회합니다.
               </p>
             </div>
 
-            <form onSubmit={handleGuestLookup} className="space-y-3 pt-3" autoComplete="off">
+            <form onSubmit={handleGuestLookup} className="space-y-2.5 sm:space-y-3 pt-1 text-left" autoComplete="off">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">예약자 휴대폰 번호</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">예약자 휴대폰 번호</label>
                 <input
                   type="tel"
                   inputMode="numeric"
@@ -719,12 +730,12 @@ export function AuthModal() {
                   value={guestPhone}
                   onChange={(e) => setGuestPhone(formatPhone(e.target.value))}
                   placeholder="010-1234-5678"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-sky-500"
+                  className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">비회원 비밀번호 (숫자 4자리)</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">비회원 비밀번호 (숫자 4자리)</label>
                 <div className="relative flex items-center">
                   <input
                     type={showGuestModalPin ? "text" : "password"}
@@ -733,7 +744,7 @@ export function AuthModal() {
                     value={guestPin}
                     onChange={(e) => setGuestPin(e.target.value)}
                     placeholder="예약 시 설정한 비밀번호 4자리"
-                    className="w-full rounded-xl border border-slate-200 p-3 pr-10 text-sm outline-none focus:border-sky-500"
+                    className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 pr-10 text-[16px] sm:text-sm outline-none focus:border-sky-500"
                   />
                   <button
                     type="button"
@@ -758,7 +769,7 @@ export function AuthModal() {
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-emerald-600 py-3 text-sm font-black text-white hover:bg-emerald-500 transition shadow-md shadow-emerald-600/20"
+                className="w-full rounded-xl bg-emerald-600 py-2.5 sm:py-3 text-sm font-black text-white hover:bg-emerald-500 transition shadow-md shadow-emerald-600/20 cursor-pointer"
               >
                 비회원 예약 조회하기 🔍
               </button>
@@ -766,31 +777,31 @@ export function AuthModal() {
           </div>
         )}
 
-        {/* 4. 관리자 전용 로그인 탭 */}
+        {/* 5. 관리자 전용 로그인 탭 */}
         {tab === "admin" && (
-          <div key="admin-tab" className="space-y-4">
+          <div key="admin-tab" className="space-y-3 sm:space-y-4">
             <div className="text-center">
-              <h2 className="text-xl font-black text-slate-900">관리자 전용 로그인</h2>
-              <p className="mt-1 text-xs text-slate-500 font-semibold">
+              <h2 className="text-lg sm:text-xl font-black text-slate-900">관리자 전용 로그인</h2>
+              <p className="mt-0.5 sm:mt-1 text-[11px] sm:text-xs text-slate-500 font-semibold">
                 통합 관제 및 물문화관 담당자 전용 인증 공간입니다.
               </p>
             </div>
 
-            <form onSubmit={handleAdminSubmit} className="space-y-3 pt-1" autoComplete="off">
+            <form onSubmit={handleAdminSubmit} className="space-y-2.5 sm:space-y-3 pt-1 text-left" autoComplete="off">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">관리자 아이디 / 이메일 *</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">관리자 아이디 / 이메일 *</label>
                 <input
                   type="text"
                   autoComplete="off"
                   value={adminId}
                   onChange={(e) => setAdminId(e.target.value)}
                   placeholder="admin 또는 admin@kwater.or.kr"
-                  className="w-full rounded-xl border border-slate-200 p-2.5 text-sm font-semibold outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20"
+                  className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 text-[16px] sm:text-sm font-semibold outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">관리 비밀번호 *</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">관리 비밀번호 *</label>
                 <div className="relative flex items-center">
                   <input
                     type={showAdminPass ? "text" : "password"}
@@ -798,7 +809,7 @@ export function AuthModal() {
                     value={adminPass}
                     onChange={(e) => setAdminPass(e.target.value)}
                     placeholder="관리자 비밀번호 입력"
-                    className="w-full rounded-xl border border-slate-200 p-2.5 pr-10 text-sm font-semibold outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20"
+                    className="w-full rounded-xl border border-slate-200 py-2 sm:py-2.5 px-3 pr-10 text-[16px] sm:text-sm font-semibold outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20"
                   />
                   <button
                     type="button"
@@ -822,11 +833,11 @@ export function AuthModal() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">담당 물문화관 지정</label>
+                <label className="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">담당 물문화관 지정</label>
                 <select
                   value={adminCenter}
                   onChange={(e) => setAdminCenter(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 p-2.5 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-slate-900/20"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 sm:py-2.5 px-3 text-[14px] sm:text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-slate-900/20"
                 >
                   <option value="all">🏛️ K-water 전 시설 (통합 관제)</option>
                   {waterCenters.map((c) => (
@@ -839,7 +850,7 @@ export function AuthModal() {
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-slate-900 py-3 text-sm font-black text-white hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center justify-center gap-1.5"
+                className="w-full rounded-xl bg-slate-900 py-2.5 sm:py-3 text-sm font-black text-white hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <span>🛡️</span> 관리자 콘솔 로그인
               </button>
