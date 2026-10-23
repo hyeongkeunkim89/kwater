@@ -48,7 +48,7 @@ export function FacilityTabs({ facilities }: FacilityTabsProps) {
 
       {/* 2. 탭 콘텐츠 상세 정보 카드 */}
       {activeFac && (
-        <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-[1fr_1.3fr] transition-opacity duration-200">
+        <div className="grid gap-5 sm:gap-6 rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm md:grid-cols-[1fr_1.3fr] transition-opacity duration-200">
           {/* 이미지 영역 */}
           {activeFac.image_url ? (
             <div className="relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
@@ -83,13 +83,13 @@ export function FacilityTabs({ facilities }: FacilityTabsProps) {
                 {activeFac.location && (
                   <div className="grid grid-cols-[80px_1fr] gap-2">
                     <dt className="font-extrabold text-slate-500">위치</dt>
-                    <dd className="text-slate-800 font-medium">{activeFac.location}</dd>
+                    <dd className="text-slate-800 font-medium break-keep min-w-0">{activeFac.location}</dd>
                   </div>
                 )}
                 {activeFac.operating_hours && (
                   <div className="grid grid-cols-[80px_1fr] gap-2">
                     <dt className="font-extrabold text-slate-500">운영시간</dt>
-                    <dd className="text-slate-800 font-medium">{activeFac.operating_hours}</dd>
+                    <dd className="text-slate-800 font-medium break-keep min-w-0">{activeFac.operating_hours}</dd>
                   </div>
                 )}
                 {activeFac.area && (

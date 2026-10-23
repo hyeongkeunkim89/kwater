@@ -206,17 +206,17 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
             <button
               type="button"
               onClick={() => toggleFloor(f.id)}
-              className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left outline-none hover:bg-slate-50 focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-sky-500"
+              className="flex w-full items-center justify-between gap-2.5 sm:gap-4 px-3.5 py-3 sm:px-5 sm:py-4 text-left outline-none hover:bg-slate-50 focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-sky-500"
             >
-              <div className="flex min-w-0 flex-1 items-center gap-4">
-                <span className="flex h-11 min-w-[4.2rem] px-4 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-sm font-black text-white sm:text-base">
+              <div className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-4">
+                <span className="flex h-9 sm:h-11 min-w-[3.2rem] sm:min-w-[4.2rem] px-2.5 sm:px-4 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-xs sm:text-base font-black text-white">
                   {f.floor_key.toLowerCase().startsWith("floor-") 
                     ? `${f.sort_order + 1}F` 
                     : f.floor_key}
                 </span>
                 <div className="min-w-0 flex-1">
-                  {/* 주요 전시실/시설 목록 요약 */}
-                  <p className="truncate text-base font-bold text-slate-900 sm:text-[17px]">
+                  {/* 주요 전시실/시설 목록 요약 (모바일 텍스트 잘림 방지: break-keep 적용) */}
+                  <p className="text-sm sm:text-[17px] font-bold text-slate-900 leading-snug break-keep">
                     {f.rooms && f.rooms.length > 0
                       ? f.rooms.map((r) => r.name).join(" · ")
                       : "주요 시설 정보 없음"}
@@ -253,7 +253,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
               }`}
             >
               <div className="overflow-hidden">
-                <div className="grid gap-6 p-6 md:grid-cols-[1.2fr_1fr]">
+                <div className="grid gap-5 sm:gap-6 p-4 sm:p-6 md:grid-cols-[1.2fr_1fr]">
                   {/* 왼쪽: 설명 및 시설 정보 */}
                   <div className="flex flex-col justify-between space-y-5">
                     <div className="space-y-4">
@@ -275,7 +275,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                 <a
                                   key={idx}
                                   href={room.link}
-                                  className="inline-flex items-center gap-2 rounded-xl border border-sky-200 bg-sky-50 px-4 py-2.5 text-base font-extrabold text-sky-900 hover:bg-sky-100/70 transition shadow-sm"
+                                  className="inline-flex items-center gap-1.5 sm:gap-2 rounded-xl border border-sky-200 bg-sky-50 px-3 py-1.5 sm:px-4 sm:py-2.5 text-xs sm:text-base font-extrabold text-sky-900 hover:bg-sky-100/70 transition shadow-sm break-keep"
                                 >
                                   <span>{room.name}</span>
                                   <span className="text-xs" aria-hidden>↗</span>
@@ -283,7 +283,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                               ) : (
                                 <span
                                   key={idx}
-                                  className="inline-block rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-base font-extrabold text-slate-800 shadow-sm"
+                                  className="inline-block rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 sm:px-4 sm:py-2.5 text-xs sm:text-base font-extrabold text-slate-800 shadow-sm break-keep"
                                 >
                                   {room.name}
                                 </span>
@@ -304,7 +304,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                           {f.amenities.map((item, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-4 py-2 text-base font-extrabold text-slate-800 shadow-sm"
+                              className="inline-flex items-center gap-1.5 sm:gap-2 rounded-xl bg-slate-100 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-base font-extrabold text-slate-800 shadow-sm break-keep"
                             >
                               <span aria-hidden className="text-lg">
                                 {AMENITY_ICONS[item.icon] || "📍"}
@@ -372,7 +372,7 @@ export function FloorGuideAccordion({ floors }: FloorGuideAccordionProps) {
                                         </button>
                                       </div>
                                       {title && (
-                                        <span className="text-sm sm:text-base font-extrabold text-slate-700 truncate max-w-full text-center mt-1">
+                                        <span className="text-[11px] sm:text-sm font-extrabold text-slate-700 break-keep line-clamp-2 max-w-full text-center mt-1 leading-tight">
                                           &lt;{title}&gt;
                                         </span>
                                       )}

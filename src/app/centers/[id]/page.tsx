@@ -231,7 +231,7 @@ export default async function CenterDetailPage({ params }: Props) {
           <div className="absolute right-1/4 top-0 h-56 w-56 rounded-full bg-sky-500/5 blur-[80px]" />
           <div className="absolute left-10 bottom-0 h-40 w-40 rounded-full bg-indigo-500/5 blur-[60px]" />
         </div>
-        <div className="relative mx-auto max-w-5xl px-6 py-10 sm:px-10 sm:py-14">
+        <div className="relative mx-auto max-w-5xl px-4 py-8 sm:px-10 sm:py-14">
           <Link
             href="/status"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-700 hover:text-sky-900 transition mb-4 group"
@@ -255,7 +255,7 @@ export default async function CenterDetailPage({ params }: Props) {
                   </span>
                 ))}
               </div>
-              <h1 className="mt-3 text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+              <h1 className="mt-3 text-2xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-slate-900 break-keep">
                 {center.name}
               </h1>
               <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-semibold text-slate-500">
@@ -281,7 +281,7 @@ export default async function CenterDetailPage({ params }: Props) {
             </div>
             <Link
               href={`/reserve?center=${center.id}`}
-              className="shrink-0 inline-flex items-center gap-2 rounded-2xl bg-sky-600 px-6 py-3.5 text-sm font-black text-white shadow-md shadow-sky-600/20 transition hover:bg-sky-500 active:scale-95"
+              className="shrink-0 inline-flex items-center justify-center gap-2 rounded-2xl bg-sky-600 px-6 py-3.5 text-sm font-black text-white shadow-md shadow-sky-600/20 transition hover:bg-sky-500 active:scale-95 w-full sm:w-auto"
             >
               <span>🗓</span> 가이드 투어 예약
             </Link>
@@ -289,7 +289,7 @@ export default async function CenterDetailPage({ params }: Props) {
         </div>
       </div>
 
-      <main className="mx-auto max-w-5xl w-full px-6 py-12 sm:px-10 flex-1">
+      <main className="mx-auto max-w-5xl w-full px-4 py-8 sm:px-10 sm:py-12 flex-1">
 
         {center.visitorNotice && (
           <div
@@ -308,7 +308,7 @@ export default async function CenterDetailPage({ params }: Props) {
 
         {/* 요약 + 운영 상태 */}
         <div className="flex flex-col gap-6 border-b border-slate-100 pb-10 sm:flex-row sm:items-start sm:justify-between">
-          <p className="max-w-2xl text-lg leading-relaxed text-slate-600">
+          <p className="max-w-2xl text-base sm:text-lg leading-relaxed text-slate-600 break-keep">
             {center.summary}
           </p>
           <CenterDetailLiveStatus center={center} />
@@ -330,7 +330,7 @@ export default async function CenterDetailPage({ params }: Props) {
           <h2 className="mb-6 text-2xl font-black tracking-tight text-slate-900">
             시설현황
           </h2>
-          <div className="mb-8 space-y-3.5 text-base leading-relaxed text-slate-600 sm:text-[17px]">
+          <div className="mb-8 space-y-3.5 text-sm sm:text-base leading-relaxed text-slate-600 break-keep">
             {center.profileIntro
               .trim()
               .split(/\n\n+/)
@@ -410,23 +410,23 @@ export default async function CenterDetailPage({ params }: Props) {
               방문 · 위치 안내
             </h2>
           </div>
-          <div className="space-y-4 px-6 py-6 text-sm text-slate-700">
+          <div className="space-y-4 px-4 py-5 sm:px-6 sm:py-6 text-sm text-slate-700">
             <div className="flex gap-3">
-              <span className="w-20 shrink-0 font-bold text-slate-900">위치</span>
-              <span className="text-slate-600">{center.address}</span>
+              <span className="w-16 sm:w-20 shrink-0 font-bold text-slate-900">위치</span>
+              <span className="text-slate-600 break-keep min-w-0">{center.address}</span>
             </div>
             <div className="flex gap-3">
-              <span className="w-20 shrink-0 font-bold text-slate-900">휴관일</span>
-              <span className="text-slate-600">
+              <span className="w-16 sm:w-20 shrink-0 font-bold text-slate-900">휴관일</span>
+              <span className="text-slate-600 break-keep min-w-0">
                 {formatWeeklyClosureSentence(center.weeklyClosedDays)}
               </span>
             </div>
             <div className="flex gap-3">
-              <span className="w-20 shrink-0 font-bold text-slate-900">명절·기타</span>
-              <span className="text-slate-600">{center.holidayClosureSummary}</span>
+              <span className="w-16 sm:w-20 shrink-0 font-bold text-slate-900">명절·기타</span>
+              <span className="text-slate-600 break-keep min-w-0">{center.holidayClosureSummary}</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="w-20 shrink-0 font-bold text-slate-900">문의전화</span>
+              <span className="w-16 sm:w-20 shrink-0 font-bold text-slate-900">문의전화</span>
               <a
                 href={`tel:${center.contactPhone}`}
                 className="inline-flex items-center gap-2 font-bold text-sky-700 hover:text-sky-900 transition hover:underline py-1 -my-1"
@@ -440,7 +440,7 @@ export default async function CenterDetailPage({ params }: Props) {
             </div>
             <p className="text-xs text-slate-400">{center.statusNote}</p>
           </div>
-          <div className="flex flex-wrap gap-3 border-t border-slate-100 px-6 py-5">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 border-t border-slate-100 px-4 py-4 sm:px-6 sm:py-5">
             <a
               href={`tel:${center.contactPhone}`}
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-sky-200 bg-sky-50 px-5 py-3 text-sm font-bold text-sky-800 transition hover:bg-sky-100 active:scale-95 min-h-[44px] w-full sm:w-auto"
@@ -452,13 +452,13 @@ export default async function CenterDetailPage({ params }: Props) {
               href={naverMapSearchHref(center)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 shadow-xs min-h-[44px] flex-1 sm:flex-none"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 shadow-xs min-h-[44px] w-full sm:w-auto"
             >
               지도에서 위치 열기 ↗
             </a>
             <Link
               href={`/reserve?center=${center.id}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-sm font-black text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20 active:scale-95 min-h-[44px] flex-1 sm:flex-none"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-sm font-black text-white transition hover:bg-sky-500 shadow-sm shadow-sky-600/20 active:scale-95 min-h-[44px] w-full sm:w-auto"
             >
               <span>🗓</span> 가이드 투어 예약하기
             </Link>

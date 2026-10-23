@@ -467,7 +467,7 @@ export const CenterCard = memo(function CenterCard({
                   <span className="shrink-0 font-bold text-slate-800 text-xs bg-white px-2 py-0.5 rounded border border-slate-200 shadow-2xs">
                     {f.floorLabel}
                   </span>
-                  <span className="text-slate-700 truncate min-w-0 flex-1 text-xs sm:text-sm font-medium">
+                  <span className="text-slate-700 min-w-0 flex-1 text-xs sm:text-sm font-medium break-keep">
                     {f.highlights.join(", ")}
                   </span>
                 </div>
