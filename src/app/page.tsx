@@ -56,8 +56,22 @@ export default function GatewayLandingPage() {
           1. 모바일 및 태블릿 세로 전용 UI (lg:hidden): 
              소양강댐 히어로 + 물문화관 소개 카드 + 부드러운 인터랙션
          ══════════════════════════════════════════════════════════════ */}
-      <div className="flex lg:hidden min-h-screen bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full">
-        <div className="w-full max-w-xl md:max-w-2xl mx-auto flex flex-col min-h-screen justify-between relative px-5 py-4 sm:px-6 sm:py-5">
+      <div className="flex lg:hidden min-h-screen bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full relative overflow-hidden">
+        {/* ── 상단 소양강댐 실사 배경 (화면 전체 가로폭 100% Full-bleed + 부드러운 비네트 페이드) ── */}
+        <div className="absolute top-0 left-0 right-0 h-[400px] sm:h-[460px] overflow-hidden pointer-events-none z-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center brightness-[0.72] contrast-[1.1] animate-ken-burns will-change-transform"
+            style={{
+              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG')`,
+            }}
+          />
+          {/* 상단 은은한 딤 + 하단 딥 네이비로 완전히 자연스럽게 녹아드는 수직 그라데이션 */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/45 via-[#030712]/70 to-[#030712]" />
+          {/* 양옆 엣지도 부드럽게 감싸는 수평 비네트 */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/50 via-transparent to-[#030712]/50" />
+        </div>
+
+        <div className="w-full max-w-xl md:max-w-2xl mx-auto flex flex-col min-h-screen justify-between relative z-10 px-5 py-4 sm:px-6 sm:py-5">
           
           {/* ── 1. 상단 헤더: 방울이 마스코트 (좌측) ── */}
           <header className="relative z-30 flex items-center justify-start pb-1 shrink-0">
@@ -78,20 +92,8 @@ export default function GatewayLandingPage() {
             </Link>
           </header>
 
-          {/* ── 2. 히어로 섹션 (소양강댐 배경 + 중앙 심볼 로고 + 물문화관 타이틀 + 소개 문구) ── */}
+          {/* ── 2. 히어로 섹션 (중앙 심볼 로고 + 물문화관 타이틀 + 소개 문구) ── */}
           <section className="relative pt-2 pb-4 sm:pt-4 sm:pb-6 flex flex-col items-center text-center shrink-0">
-            {/* 소양강댐 실사 배경 (은은한 비네트 + Ken Burns 애니메이션) */}
-            <div className="absolute inset-0 -top-16 overflow-hidden pointer-events-none">
-              <div
-                className="absolute inset-0 bg-cover bg-center brightness-[0.72] contrast-[1.1] animate-ken-burns will-change-transform"
-                style={{
-                  backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG')`,
-                }}
-              />
-              {/* 상단 및 하단 부드러운 딥 네이비 비네트 그라데이션 */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/50 via-[#030712]/75 to-[#030712]" />
-            </div>
-
             {/* 중앙 심볼 로고 및 타이틀 (탭 시 메인 페이지로 바로 이동 - PC UI와 일치된 개방형 디자인) */}
             <Link
               href="/main"
