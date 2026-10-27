@@ -192,7 +192,7 @@ export default function GatewayLandingPage() {
 
           {/* ── 3. 하단 액션 버튼 & 개인정보처리방침 ── */}
           <footer className="relative z-10 pt-4 pb-2 flex flex-col items-center gap-3.5 w-full shrink-0">
-            {/* 대표 둘러보기 버튼 (쉬머 빛줄기 모션 적용) */}
+            {/* 대표 입장 버튼 (쉬머 빛줄기 모션 적용) */}
             <div className="w-full max-w-sm sm:max-w-md">
               <Link
                 href="/main"
@@ -201,7 +201,7 @@ export default function GatewayLandingPage() {
                 {/* 은은하게 스쳐 지나가는 사선 빛줄기 (Shimmer Effect) */}
                 <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none animate-shimmer" />
 
-                <span className="relative z-10">전국 물문화관 둘러보기</span>
+                <span className="relative z-10">온라인 물문화관 입장하기</span>
                 <span className="relative z-10 ml-2 transform group-hover:translate-x-1.5 transition-transform font-black">→</span>
               </Link>
             </div>
@@ -269,13 +269,13 @@ export default function GatewayLandingPage() {
             </p>
           </Link>
 
-          {/* 3. 하단: 전국 물문화관 둘러보기 버튼 및 개인정보처리방침 */}
+          {/* 3. 하단: 온라인 물문화관 입장하기 버튼 및 개인정보처리방침 */}
           <div className="w-full pt-5 border-t border-white/10 px-1">
             <Link
               href="/main"
               className="w-full min-h-12 px-3 py-3 inline-flex items-center justify-center rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs sm:text-sm font-black transition duration-200 shadow-lg shadow-sky-500/25 group whitespace-nowrap tracking-tight"
             >
-              <span>전국 물문화관 둘러보기</span>
+              <span>온라인 물문화관 입장하기</span>
               <span className="ml-1.5 transform group-hover:translate-x-1 transition duration-200">→</span>
             </Link>
             <div className="mt-3 flex items-center justify-center gap-2.5 text-[11px]">
