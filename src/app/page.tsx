@@ -69,8 +69,8 @@ export default function GatewayLandingPage() {
              100dvh 단일 뷰포트 맞춤형 스플래시 게이트웨이 (스크롤 없이 버튼 노출)
          ══════════════════════════════════════════════════════════════ */}
       <div className="flex lg:hidden h-[100dvh] max-h-[100dvh] bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full relative overflow-hidden">
-        {/* ── 상단 테마별 실사 배경 슬라이더 (2초 초완만 소프트 크로스페이드 + 화사한 밝기 적용) ── */}
-        <div className="absolute top-0 left-0 right-0 h-[65dvh] sm:h-[70dvh] overflow-hidden pointer-events-none z-0">
+        {/* ── 상단 테마별 실사 배경 슬라이더: 시안 A 풀스크린 시네마틱 확장 (2초 초완만 크로스페이드 + 100% 전면 비네트) ── */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           {THEMES.map((theme, idx) => {
             const isActive = idx === bgIndex;
             return (
@@ -84,7 +84,7 @@ export default function GatewayLandingPage() {
                 }}
               >
                 <div
-                  className="w-full h-full bg-cover bg-center brightness-[0.95] contrast-[1.05] will-change-transform animate-ken-burns"
+                  className="w-full h-full bg-cover bg-center brightness-[0.92] contrast-[1.05] will-change-transform animate-ken-burns"
                   style={{
                     backgroundImage: `url('${theme.image}')`,
                   }}
@@ -93,8 +93,8 @@ export default function GatewayLandingPage() {
             );
           })}
 
-          {/* 사진의 디테일과 밝기를 선명하게 살리면서 하단 다크 배경과 자연스럽게 블렌딩되는 비네트 */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/15 via-[#030712]/45 to-[#030712] z-2" />
+          {/* 시네마틱 풀스크린 비네트: 상단/중앙은 화사하게 호수와 산세를 살리고, 하단 버튼 부위는 딥블루-블랙으로 부드럽게 안정화 */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/35 via-[#030712]/20 to-[#030712]/90 z-2" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/30 via-transparent to-[#030712]/30 z-2" />
         </div>
 
@@ -119,7 +119,7 @@ export default function GatewayLandingPage() {
             </Link>
           </header>
 
-          {/* ── 2. 중앙 히어로 섹션 (화면 수직 중앙 자동 정렬 my-auto) ── */}
+          {/* ── 2. 중앙 히어로 섹션 (시안 A: 시네마틱 황금비율 균형 배치) ── */}
           <section className="relative my-auto py-2 sm:py-4 flex flex-col items-center text-center justify-center min-h-0">
             {/* 중앙 심볼 로고 및 타이틀 (터치 시 0ms 즉각 반응 눌림 모션 + 은은한 테두리 빛 모션 + 메인 이동) */}
             <Link
@@ -134,13 +134,13 @@ export default function GatewayLandingPage() {
               title="K-water 온라인 물문화관 메인으로 이동"
             >
               {/* 심볼 로고 (상단 집약형 실키 오로라 글로우 모션 + 터치 피드백) */}
-              <div className="relative mb-2 flex items-center justify-center">
+              <div className="relative mb-2.5 flex items-center justify-center">
                 {/* 1차 외부 광배: 심볼 상단부에 집중되어 아래 텍스트를 침범하지 않는 포지셔닝 */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-18 h-18 sm:w-22 sm:h-22 rounded-full bg-sky-400/20 blur-xl animate-aura-smooth pointer-events-none" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-sky-400/25 blur-xl animate-aura-smooth pointer-events-none" />
 
                 {/* 2차 내부 광배: 로고 심볼 윤곽선에 밀착된 은은한 청록빛 */}
                 <div
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-cyan-300/35 blur-md animate-aura-smooth pointer-events-none"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-14 h-14 sm:w-18 sm:h-18 rounded-full bg-cyan-300/40 blur-md animate-aura-smooth pointer-events-none"
                   style={{ animationDelay: "-1.8s" }}
                 />
 
@@ -150,20 +150,20 @@ export default function GatewayLandingPage() {
                   width={815}
                   height={921}
                   style={{ width: "auto" }}
-                  className="relative z-10 h-14 sm:h-18 w-auto object-contain drop-shadow-[0_6px_16px_rgba(0,148,255,0.3)] transition-transform duration-200"
+                  className="relative z-10 h-16 sm:h-20 w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,148,255,0.4)] transition-transform duration-200"
                   priority
                 />
               </div>
 
               {/* 타이틀 및 서브타이틀 (상위 z-index 부여로 후광 침범 없이 또렷하게 분리) */}
               <div className="relative z-20 flex flex-col items-center space-y-0.5 sm:space-y-1">
-                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:text-sky-300 transition-colors">
+                <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] group-hover:text-sky-300 transition-colors">
                   물문화관
                 </h1>
                 <p
-                  className="text-[10.5px] sm:text-xs font-black text-white tracking-tight whitespace-nowrap pt-0.5"
+                  className="text-xs sm:text-[13px] font-black text-sky-200/95 tracking-wide whitespace-nowrap pt-0.5"
                   style={{
-                    textShadow: "0 1px 3px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.9)",
+                    textShadow: "0 1px 4px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.9)",
                   }}
                 >
                   K-water 온라인 물문화관
@@ -172,7 +172,7 @@ export default function GatewayLandingPage() {
 
               {/* 탭 즉시 반응: 1초 로딩 대기시간 동안 사용자에게 즉각 피드백 전달 */}
               {isNavigating && (
-                <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/90 text-white text-[10.5px] sm:text-[11px] font-bold shadow-lg animate-pulse">
+                <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/90 text-white text-[10.5px] sm:text-[11px] font-bold shadow-lg animate-pulse">
                   <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
@@ -182,8 +182,16 @@ export default function GatewayLandingPage() {
               )}
             </Link>
 
-            {/* 2줄 친근한 소개 문구 */}
-            <p className="relative z-10 mt-2.5 sm:mt-3 text-[12.5px] sm:text-sm text-slate-200/90 font-medium leading-relaxed max-w-xs mx-auto break-keep">
+            {/* 섬세한 시안 A 포인트 구분선 */}
+            <div className="w-8 h-0.5 bg-sky-400/60 rounded-full my-3 shadow-[0_0_8px_rgba(0,148,255,0.5)]" />
+
+            {/* 2줄 친근한 소개 문구 (자연스러운 폰트 및 그림자 보강) */}
+            <p
+              className="relative z-10 text-[13px] sm:text-sm text-slate-100 font-medium leading-relaxed max-w-xs mx-auto break-keep"
+              style={{
+                textShadow: "0 2px 8px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.95)",
+              }}
+            >
               물과 함께한 기술·생태·역사·문화를
               <br />
               한곳에서 만나보세요.
