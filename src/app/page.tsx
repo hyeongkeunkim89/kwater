@@ -119,84 +119,75 @@ export default function GatewayLandingPage() {
             </Link>
           </header>
 
-          {/* ── 2. 본문 영역: 상단 로고부와 하단 문구 분리 배치 (한 화면 100dvh 완전 맞춤) ── */}
-          <section className="relative flex-1 flex flex-col justify-between items-center text-center py-2 sm:py-4 min-h-0">
-            {/* 상단 배치: 중앙 심볼 로고 및 타이틀 (위쪽으로 이동) */}
-            <div className="flex flex-col items-center pt-2 sm:pt-4 shrink-0">
-              <Link
-                href="/main"
-                prefetch={true}
-                onClick={() => setIsNavigating(true)}
-                className={`relative z-10 flex flex-col items-center group cursor-pointer transition-all duration-150 ease-out select-none ${
-                  isNavigating
-                    ? "scale-90 opacity-90 brightness-125"
-                    : "active:scale-90 active:brightness-125 hover:scale-[1.02]"
-                }`}
-                title="K-water 온라인 물문화관 메인으로 이동"
-              >
-                {/* 심볼 로고 (상단 집약형 실키 오로라 글로우 모션 + 터치 피드백) */}
-                <div className="relative mb-2 flex items-center justify-center">
-                  {/* 1차 외부 광배: 심볼 상단부에 집중되어 아래 텍스트를 침범하지 않는 포지셔닝 */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-18 h-18 sm:w-22 sm:h-22 rounded-full bg-sky-400/20 blur-xl animate-aura-smooth pointer-events-none" />
+          {/* ── 2. 중앙 히어로 섹션 (화면 수직 중앙 자동 정렬 my-auto) ── */}
+          <section className="relative my-auto py-2 sm:py-4 flex flex-col items-center text-center justify-center min-h-0">
+            {/* 중앙 심볼 로고 및 타이틀 (터치 시 0ms 즉각 반응 눌림 모션 + 은은한 테두리 빛 모션 + 메인 이동) */}
+            <Link
+              href="/main"
+              prefetch={true}
+              onClick={() => setIsNavigating(true)}
+              className={`relative z-10 flex flex-col items-center group cursor-pointer transition-all duration-150 ease-out select-none ${
+                isNavigating
+                  ? "scale-90 opacity-90 brightness-125"
+                  : "active:scale-90 active:brightness-125 hover:scale-[1.02]"
+              }`}
+              title="K-water 온라인 물문화관 메인으로 이동"
+            >
+              {/* 심볼 로고 (상단 집약형 실키 오로라 글로우 모션 + 터치 피드백) */}
+              <div className="relative mb-2 flex items-center justify-center">
+                {/* 1차 외부 광배: 심볼 상단부에 집중되어 아래 텍스트를 침범하지 않는 포지셔닝 */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-18 h-18 sm:w-22 sm:h-22 rounded-full bg-sky-400/20 blur-xl animate-aura-smooth pointer-events-none" />
 
-                  {/* 2차 내부 광배: 로고 심볼 윤곽선에 밀착된 은은한 청록빛 */}
-                  <div
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-cyan-300/35 blur-md animate-aura-smooth pointer-events-none"
-                    style={{ animationDelay: "-1.8s" }}
-                  />
+                {/* 2차 내부 광배: 로고 심볼 윤곽선에 밀착된 은은한 청록빛 */}
+                <div
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-cyan-300/35 blur-md animate-aura-smooth pointer-events-none"
+                  style={{ animationDelay: "-1.8s" }}
+                />
 
-                  <Image
-                    src="/images/landing_color_symbol.png"
-                    alt="K-water 물문화관 심볼"
-                    width={815}
-                    height={921}
-                    style={{ width: "auto" }}
-                    className="relative z-10 h-14 sm:h-18 w-auto object-contain drop-shadow-[0_6px_16px_rgba(0,148,255,0.3)] transition-transform duration-200"
-                    priority
-                  />
+                <Image
+                  src="/images/landing_color_symbol.png"
+                  alt="K-water 물문화관 심볼"
+                  width={815}
+                  height={921}
+                  style={{ width: "auto" }}
+                  className="relative z-10 h-14 sm:h-18 w-auto object-contain drop-shadow-[0_6px_16px_rgba(0,148,255,0.3)] transition-transform duration-200"
+                  priority
+                />
+              </div>
+
+              {/* 타이틀 및 서브타이틀 (상위 z-index 부여로 후광 침범 없이 또렷하게 분리) */}
+              <div className="relative z-20 flex flex-col items-center space-y-0.5 sm:space-y-1">
+                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:text-sky-300 transition-colors">
+                  물문화관
+                </h1>
+                <p
+                  className="text-[10.5px] sm:text-xs font-black text-white tracking-tight whitespace-nowrap pt-0.5"
+                  style={{
+                    textShadow: "0 1px 3px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.9)",
+                  }}
+                >
+                  K-water 온라인 물문화관
+                </p>
+              </div>
+
+              {/* 탭 즉시 반응: 1초 로딩 대기시간 동안 사용자에게 즉각 피드백 전달 */}
+              {isNavigating && (
+                <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/90 text-white text-[10.5px] sm:text-[11px] font-bold shadow-lg animate-pulse">
+                  <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  <span>메인으로 이동 중...</span>
                 </div>
+              )}
+            </Link>
 
-                {/* 타이틀 및 서브타이틀 (상위 z-index 부여로 후광 침범 없이 또렷하게 분리) */}
-                <div className="relative z-20 flex flex-col items-center space-y-0.5 sm:space-y-1">
-                  <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:text-sky-300 transition-colors">
-                    물문화관
-                  </h1>
-                  <p
-                    className="text-[10.5px] sm:text-xs font-black text-white tracking-tight whitespace-nowrap pt-0.5"
-                    style={{
-                      textShadow: "0 1px 3px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.9)",
-                    }}
-                  >
-                    K-water 온라인 물문화관
-                  </p>
-                </div>
-
-                {/* 탭 즉시 반응: 1초 로딩 대기시간 동안 사용자에게 즉각 피드백 전달 */}
-                {isNavigating && (
-                  <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/90 text-white text-[10.5px] sm:text-[11px] font-bold shadow-lg animate-pulse">
-                    <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                    </svg>
-                    <span>메인으로 이동 중...</span>
-                  </div>
-                )}
-              </Link>
-            </div>
-
-            {/* 사진 가운데 기준 하단 배치: 2줄 친근한 소개 문구 */}
-            <div className="pb-1 sm:pb-3 shrink-0">
-              <p
-                className="relative z-10 text-[13px] sm:text-sm text-slate-100 font-medium leading-relaxed max-w-xs mx-auto break-keep"
-                style={{
-                  textShadow: "0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.95)",
-                }}
-              >
-                물과 함께한 기술·생태·역사·문화를
-                <br />
-                한곳에서 만나보세요.
-              </p>
-            </div>
+            {/* 2줄 친근한 소개 문구 */}
+            <p className="relative z-10 mt-2.5 sm:mt-3 text-[12.5px] sm:text-sm text-slate-200/90 font-medium leading-relaxed max-w-xs mx-auto break-keep">
+              물과 함께한 기술·생태·역사·문화를
+              <br />
+              한곳에서 만나보세요.
+            </p>
           </section>
 
           {/* ── 3. 하단 액션 버튼 & 개인정보처리방침 (한 화면 안에 항상 노출) ── */}
