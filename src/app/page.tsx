@@ -53,11 +53,11 @@ const THEMES = [
 export default function GatewayLandingPage() {
   const [bgIndex, setBgIndex] = useState(0);
 
-  // 몇 초에 한 번씩 PC UI의 4대 테마별 이미지를 부드럽게 순환
+  // 몇 초에 한 번씩 PC UI의 4대 테마별 이미지를 부드럽게 순환 (2초 디졸브 크로스페이드)
   useEffect(() => {
     const timer = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % THEMES.length);
-    }, 4500);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -68,23 +68,33 @@ export default function GatewayLandingPage() {
              테마별 실사 순환 히어로 + 물문화관 소개 카드 + 부드러운 인터랙션
          ══════════════════════════════════════════════════════════════ */}
       <div className="flex lg:hidden min-h-screen bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full relative overflow-hidden">
-        {/* ── 상단 테마별 실사 배경 슬라이더 (4대 테마 순환 크로스페이드 + 화사한 밝기 적용) ── */}
+        {/* ── 상단 테마별 실사 배경 슬라이더 (2초 초완만 소프트 크로스페이드 + 화사한 밝기 적용) ── */}
         <div className="absolute top-0 left-0 right-0 h-[420px] sm:h-[480px] overflow-hidden pointer-events-none z-0">
-          {THEMES.map((theme, idx) => (
-            <div
-              key={theme.id}
-              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out brightness-[0.95] contrast-[1.05] will-change-transform ${
-                idx === bgIndex ? "opacity-100 animate-ken-burns" : "opacity-0"
-              }`}
-              style={{
-                backgroundImage: `url('${theme.image}')`,
-              }}
-            />
-          ))}
+          {THEMES.map((theme, idx) => {
+            const isActive = idx === bgIndex;
+            return (
+              <div
+                key={theme.id}
+                className="absolute inset-0 will-change-[opacity]"
+                style={{
+                  opacity: isActive ? 1 : 0,
+                  transition: "opacity 2000ms cubic-bezier(0.4, 0, 0.2, 1)",
+                  zIndex: isActive ? 1 : 0,
+                }}
+              >
+                <div
+                  className="w-full h-full bg-cover bg-center brightness-[0.95] contrast-[1.05] will-change-transform animate-ken-burns"
+                  style={{
+                    backgroundImage: `url('${theme.image}')`,
+                  }}
+                />
+              </div>
+            );
+          })}
 
           {/* 사진의 디테일과 밝기를 선명하게 살리면서 하단 다크 배경과 자연스럽게 블렌딩되는 비네트 */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/15 via-[#030712]/40 to-[#030712]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/30 via-transparent to-[#030712]/30" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/15 via-[#030712]/40 to-[#030712] z-2" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/30 via-transparent to-[#030712]/30 z-2" />
         </div>
 
         <div className="w-full max-w-xl md:max-w-2xl mx-auto flex flex-col min-h-screen justify-between relative z-10 px-5 py-4 sm:px-6 sm:py-5">
