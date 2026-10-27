@@ -133,14 +133,14 @@ export default function GatewayLandingPage() {
               }`}
               title="K-water 온라인 물문화관 메인으로 이동"
             >
-              {/* 심볼 로고 (초연속 실키 오로라 글로우 모션 + 터치 피드백) */}
-              <div className="relative mb-2 flex items-center justify-center">
-                {/* 1차 외부 광배(Outer Aura): 넓고 은은하게 퍼지는 심해 푸른빛 */}
-                <div className="absolute w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-sky-400/25 blur-2xl animate-aura-smooth pointer-events-none" />
+              {/* 심볼 로고 (상단 집약형 실키 오로라 글로우 모션 + 터치 피드백) */}
+              <div className="relative mb-2.5 flex items-center justify-center">
+                {/* 1차 외부 광배: 심볼 상단부에 집중되어 아래 텍스트를 침범하지 않는 포지셔닝 */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-18 h-18 sm:w-22 sm:h-22 rounded-full bg-sky-400/20 blur-xl animate-aura-smooth pointer-events-none" />
 
-                {/* 2차 내부 광배(Inner Halo): 로고 윤곽선에 밀착된 영롱한 청록빛 */}
+                {/* 2차 내부 광배: 로고 심볼 윤곽선에 밀착된 은은한 청록빛 */}
                 <div
-                  className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-cyan-300/40 blur-lg animate-aura-smooth pointer-events-none"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-cyan-300/35 blur-md animate-aura-smooth pointer-events-none"
                   style={{ animationDelay: "-1.8s" }}
                 />
 
@@ -150,14 +150,14 @@ export default function GatewayLandingPage() {
                   width={815}
                   height={921}
                   style={{ width: "auto" }}
-                  className="relative z-10 h-16 sm:h-20 w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,148,255,0.35)] transition-transform duration-200"
+                  className="relative z-10 h-16 sm:h-20 w-auto object-contain drop-shadow-[0_6px_16px_rgba(0,148,255,0.3)] transition-transform duration-200"
                   priority
                 />
               </div>
 
-              {/* 타이틀 및 서브타이틀 (화이트 고대비 텍스트로 시인성 확보) */}
-              <div className="flex flex-col items-center space-y-1">
-                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-md group-hover:text-sky-300 transition-colors">
+              {/* 타이틀 및 서브타이틀 (상위 z-index 부여로 후광 침범 없이 또렷하게 분리) */}
+              <div className="relative z-20 flex flex-col items-center space-y-1">
+                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:text-sky-300 transition-colors">
                   물문화관
                 </h1>
                 <p
