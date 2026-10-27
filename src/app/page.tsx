@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -50,25 +51,40 @@ const THEMES = [
 ];
 
 export default function GatewayLandingPage() {
+  const [bgIndex, setBgIndex] = useState(0);
+
+  // 몇 초에 한 번씩 PC UI의 4대 테마별 이미지를 부드럽게 순환
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % THEMES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="selection:bg-sky-500 selection:text-white">
       {/* ══════════════════════════════════════════════════════════════
           1. 모바일 및 태블릿 세로 전용 UI (lg:hidden): 
-             소양강댐 히어로 + 물문화관 소개 카드 + 부드러운 인터랙션
+             테마별 실사 순환 히어로 + 물문화관 소개 카드 + 부드러운 인터랙션
          ══════════════════════════════════════════════════════════════ */}
       <div className="flex lg:hidden min-h-screen bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full relative overflow-hidden">
-        {/* ── 상단 소양강댐 실사 배경 (화면 전체 가로폭 100% Full-bleed + 부드러운 비네트 페이드) ── */}
-        <div className="absolute top-0 left-0 right-0 h-[400px] sm:h-[460px] overflow-hidden pointer-events-none z-0">
-          <div
-            className="absolute inset-0 bg-cover bg-center brightness-[0.72] contrast-[1.1] animate-ken-burns will-change-transform"
-            style={{
-              backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG')`,
-            }}
-          />
-          {/* 상단 은은한 딤 + 하단 딥 네이비로 완전히 자연스럽게 녹아드는 수직 그라데이션 */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/45 via-[#030712]/70 to-[#030712]" />
-          {/* 양옆 엣지도 부드럽게 감싸는 수평 비네트 */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/50 via-transparent to-[#030712]/50" />
+        {/* ── 상단 테마별 실사 배경 슬라이더 (4대 테마 순환 크로스페이드 + 화사한 밝기 적용) ── */}
+        <div className="absolute top-0 left-0 right-0 h-[420px] sm:h-[480px] overflow-hidden pointer-events-none z-0">
+          {THEMES.map((theme, idx) => (
+            <div
+              key={theme.id}
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out brightness-[0.95] contrast-[1.05] will-change-transform ${
+                idx === bgIndex ? "opacity-100 animate-ken-burns" : "opacity-0"
+              }`}
+              style={{
+                backgroundImage: `url('${theme.image}')`,
+              }}
+            />
+          ))}
+
+          {/* 사진의 디테일과 밝기를 선명하게 살리면서 하단 다크 배경과 자연스럽게 블렌딩되는 비네트 */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/15 via-[#030712]/40 to-[#030712]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/30 via-transparent to-[#030712]/30" />
         </div>
 
         <div className="w-full max-w-xl md:max-w-2xl mx-auto flex flex-col min-h-screen justify-between relative z-10 px-5 py-4 sm:px-6 sm:py-5">
