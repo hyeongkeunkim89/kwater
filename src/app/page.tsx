@@ -66,11 +66,11 @@ export default function GatewayLandingPage() {
     <div className="selection:bg-sky-500 selection:text-white">
       {/* ══════════════════════════════════════════════════════════════
           1. 모바일 및 태블릿 세로 전용 UI (lg:hidden): 
-             테마별 실사 순환 히어로 + 물문화관 소개 카드 + 부드러운 인터랙션
+             100dvh 단일 뷰포트 맞춤형 스플래시 게이트웨이 (스크롤 없이 버튼 노출)
          ══════════════════════════════════════════════════════════════ */}
-      <div className="flex lg:hidden min-h-screen bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full relative overflow-hidden">
+      <div className="flex lg:hidden h-[100dvh] max-h-[100dvh] bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full relative overflow-hidden">
         {/* ── 상단 테마별 실사 배경 슬라이더 (2초 초완만 소프트 크로스페이드 + 화사한 밝기 적용) ── */}
-        <div className="absolute top-0 left-0 right-0 h-[68vh] sm:h-[72vh] overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-0 left-0 right-0 h-[65dvh] sm:h-[70dvh] overflow-hidden pointer-events-none z-0">
           {THEMES.map((theme, idx) => {
             const isActive = idx === bgIndex;
             return (
@@ -98,10 +98,10 @@ export default function GatewayLandingPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/30 via-transparent to-[#030712]/30 z-2" />
         </div>
 
-        <div className="w-full max-w-xl md:max-w-2xl mx-auto flex flex-col min-h-screen justify-between relative z-10 px-5 py-6 sm:px-6 sm:py-8">
+        <div className="w-full max-w-xl md:max-w-2xl mx-auto h-full flex flex-col justify-between relative z-10 px-5 pt-3 pb-4 sm:px-6 sm:pt-4 sm:pb-6">
           
           {/* ── 1. 상단 헤더: 방울이 마스코트 (좌측) ── */}
-          <header className="relative z-30 flex items-center justify-start pb-1 shrink-0">
+          <header className="relative z-30 flex items-center justify-start shrink-0 pt-1">
             <Link
               href="/main"
               className="flex items-center gap-2 group transition-transform active:scale-95 cursor-pointer"
@@ -113,14 +113,14 @@ export default function GatewayLandingPage() {
                 width={48}
                 height={48}
                 style={{ width: "auto" }}
-                className="h-9 sm:h-10 w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform"
+                className="h-8 sm:h-9 w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform"
                 priority
               />
             </Link>
           </header>
 
-          {/* ── 2. 중앙 히어로 섹션 (심볼 로고 + 물문화관 타이틀 + 소개 문구) ── */}
-          <section className="relative my-auto py-6 sm:py-8 flex flex-col items-center text-center">
+          {/* ── 2. 중앙 히어로 섹션 (화면 수직 중앙 자동 정렬 my-auto) ── */}
+          <section className="relative my-auto py-2 sm:py-4 flex flex-col items-center text-center justify-center min-h-0">
             {/* 중앙 심볼 로고 및 타이틀 (터치 시 0ms 즉각 반응 눌림 모션 + 은은한 테두리 빛 모션 + 메인 이동) */}
             <Link
               href="/main"
@@ -134,7 +134,7 @@ export default function GatewayLandingPage() {
               title="K-water 온라인 물문화관 메인으로 이동"
             >
               {/* 심볼 로고 (상단 집약형 실키 오로라 글로우 모션 + 터치 피드백) */}
-              <div className="relative mb-2.5 flex items-center justify-center">
+              <div className="relative mb-2 flex items-center justify-center">
                 {/* 1차 외부 광배: 심볼 상단부에 집중되어 아래 텍스트를 침범하지 않는 포지셔닝 */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[65%] w-18 h-18 sm:w-22 sm:h-22 rounded-full bg-sky-400/20 blur-xl animate-aura-smooth pointer-events-none" />
 
@@ -150,18 +150,18 @@ export default function GatewayLandingPage() {
                   width={815}
                   height={921}
                   style={{ width: "auto" }}
-                  className="relative z-10 h-16 sm:h-20 w-auto object-contain drop-shadow-[0_6px_16px_rgba(0,148,255,0.3)] transition-transform duration-200"
+                  className="relative z-10 h-14 sm:h-18 w-auto object-contain drop-shadow-[0_6px_16px_rgba(0,148,255,0.3)] transition-transform duration-200"
                   priority
                 />
               </div>
 
               {/* 타이틀 및 서브타이틀 (상위 z-index 부여로 후광 침범 없이 또렷하게 분리) */}
-              <div className="relative z-20 flex flex-col items-center space-y-1">
+              <div className="relative z-20 flex flex-col items-center space-y-0.5 sm:space-y-1">
                 <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:text-sky-300 transition-colors">
                   물문화관
                 </h1>
                 <p
-                  className="text-[11px] sm:text-xs font-black text-white tracking-tight whitespace-nowrap pt-0.5"
+                  className="text-[10.5px] sm:text-xs font-black text-white tracking-tight whitespace-nowrap pt-0.5"
                   style={{
                     textShadow: "0 1px 3px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.9)",
                   }}
@@ -172,7 +172,7 @@ export default function GatewayLandingPage() {
 
               {/* 탭 즉시 반응: 1초 로딩 대기시간 동안 사용자에게 즉각 피드백 전달 */}
               {isNavigating && (
-                <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/90 text-white text-[11px] font-bold shadow-lg animate-pulse">
+                <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/90 text-white text-[10.5px] sm:text-[11px] font-bold shadow-lg animate-pulse">
                   <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
@@ -183,20 +183,20 @@ export default function GatewayLandingPage() {
             </Link>
 
             {/* 2줄 친근한 소개 문구 */}
-            <p className="relative z-10 mt-3.5 text-[13px] sm:text-sm text-slate-200/90 font-medium leading-relaxed max-w-xs mx-auto break-keep">
+            <p className="relative z-10 mt-2.5 sm:mt-3 text-[12.5px] sm:text-sm text-slate-200/90 font-medium leading-relaxed max-w-xs mx-auto break-keep">
               물과 함께한 기술·생태·역사·문화를
               <br />
               한곳에서 만나보세요.
             </p>
           </section>
 
-          {/* ── 3. 하단 액션 버튼 & 개인정보처리방침 ── */}
-          <footer className="relative z-10 pt-4 pb-2 flex flex-col items-center gap-3.5 w-full shrink-0">
+          {/* ── 3. 하단 액션 버튼 & 개인정보처리방침 (한 화면 안에 항상 노출) ── */}
+          <footer className="relative z-10 pt-2 pb-2 sm:pb-3 flex flex-col items-center gap-2.5 w-full shrink-0">
             {/* 대표 입장 버튼 (쉬머 빛줄기 모션 적용) */}
             <div className="w-full max-w-sm sm:max-w-md">
               <Link
                 href="/main"
-                className="group relative overflow-hidden w-full min-h-[52px] sm:min-h-[56px] px-6 py-3.5 inline-flex items-center justify-center rounded-2xl bg-[#0094FF] hover:bg-[#0084e6] active:bg-[#0074cc] text-white font-black text-sm sm:text-base transition-all duration-200 shadow-xl shadow-[#0094FF]/25 tracking-tight active:scale-[0.98]"
+                className="group relative overflow-hidden w-full min-h-[50px] sm:min-h-[54px] px-6 py-3 inline-flex items-center justify-center rounded-2xl bg-[#0094FF] hover:bg-[#0084e6] active:bg-[#0074cc] text-white font-black text-sm sm:text-base transition-all duration-200 shadow-xl shadow-[#0094FF]/25 tracking-tight active:scale-[0.98]"
               >
                 {/* 은은하게 스쳐 지나가는 사선 빛줄기 (Shimmer Effect) */}
                 <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none animate-shimmer" />
@@ -210,7 +210,7 @@ export default function GatewayLandingPage() {
             <div className="pt-0.5">
               <Link
                 href="/privacy"
-                className="text-xs text-white/70 hover:text-white transition"
+                className="text-[11px] sm:text-xs text-white/70 hover:text-white transition"
               >
                 개인정보처리방침
               </Link>
