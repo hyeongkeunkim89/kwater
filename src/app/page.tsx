@@ -139,16 +139,19 @@ export default function GatewayLandingPage() {
                 />
               </div>
 
-              {/* 타이틀 및 영문 서브타이틀 (추천 1안: 반투명 캡슐 배지로 시인성 극대화) */}
-              <div className="flex flex-col items-center space-y-1.5">
+              {/* 타이틀 및 영문 서브타이틀 (2안: 캡슐 없이 미니멀 고대비 텍스트 & 다크 드롭 섀도) */}
+              <div className="flex flex-col items-center space-y-0.5">
                 <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-md group-hover:text-sky-300 transition-colors">
                   물문화관
                 </h1>
-                <div className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-slate-950/70 border border-sky-400/35 backdrop-blur-sm shadow-md">
-                  <span className="text-[9.5px] sm:text-[10.5px] font-black text-sky-300 tracking-[0.18em] uppercase whitespace-nowrap drop-shadow-sm">
-                    WATER CULTURE PORTAL
-                  </span>
-                </div>
+                <p
+                  className="text-[10px] sm:text-[11.5px] font-black text-sky-300 tracking-[0.18em] uppercase whitespace-nowrap pt-0.5"
+                  style={{
+                    textShadow: "0 1px 3px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.85)",
+                  }}
+                >
+                  WATER CULTURE PORTAL
+                </p>
               </div>
             </Link>
 
