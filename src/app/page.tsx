@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -50,17 +49,7 @@ const THEMES = [
   },
 ];
 
-const NAV_LINKS = [
-  { label: "문화관 소개", href: "/intro", desc: "개요, 목적 및 3대 핵심 가치" },
-  { label: "문화관 현황", href: "/status?view=map", desc: "전국 15개 거점 인터랙티브 지도" },
-  { label: "새소식 & 이벤트", href: "/news", desc: "공지사항, 체험행사 및 갤러리" },
-  { label: "투어 예약", href: "/reserve", desc: "물문화관 가이드 투어 신청 및 조회" },
-  { label: "소통창구", href: "/feedback", desc: "문의·건의 및 자주 묻는 질문" },
-];
-
 export default function GatewayLandingPage() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <div className="selection:bg-sky-500 selection:text-white">
       {/* ══════════════════════════════════════════════════════════════
@@ -70,8 +59,8 @@ export default function GatewayLandingPage() {
       <div className="flex lg:hidden min-h-screen bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full">
         <div className="w-full max-w-xl md:max-w-2xl mx-auto flex flex-col min-h-screen justify-between relative px-5 py-4 sm:px-6 sm:py-5">
           
-          {/* ── 1. 상단 헤더: 방울이 마스코트 (좌측) + 햄버거 메뉴 (우측) ── */}
-          <header className="relative z-30 flex items-center justify-between pb-1 shrink-0">
+          {/* ── 1. 상단 헤더: 방울이 마스코트 (좌측) ── */}
+          <header className="relative z-30 flex items-center justify-start pb-1 shrink-0">
             <Link
               href="/main"
               className="flex items-center gap-2 group transition-transform active:scale-95 cursor-pointer"
@@ -87,17 +76,6 @@ export default function GatewayLandingPage() {
                 priority
               />
             </Link>
-
-            <button
-              type="button"
-              onClick={() => setMenuOpen(true)}
-              className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 text-white flex items-center justify-center transition active:scale-95 cursor-pointer border border-white/10"
-              aria-label="메뉴 열기"
-            >
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
           </header>
 
           {/* ── 2. 히어로 섹션 (소양강댐 배경 + 중앙 심볼 로고 + 물문화관 타이틀 + 소개 문구) ── */}
@@ -238,87 +216,6 @@ export default function GatewayLandingPage() {
               </Link>
             </div>
           </footer>
-
-          {/* ── 5. 우측 슬라이드 메뉴 드로어 (햄버거 클릭 시 표시) ── */}
-          {menuOpen && (
-            <div className="fixed inset-0 z-50">
-              {/* 딤드 배경 */}
-              <div
-                className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs transition-opacity duration-300 cursor-pointer"
-                onClick={() => setMenuOpen(false)}
-              />
-
-              {/* 슬라이드 드로어 본체 */}
-              <div className="fixed top-0 right-0 bottom-0 w-[85%] max-w-[340px] bg-[#082752] text-white shadow-2xl flex flex-col z-51 animate-in slide-in-from-right duration-300">
-                {/* 상단 드로어 헤더 */}
-                <div className="px-5 pt-6 pb-5 flex items-center justify-between border-b border-white/10">
-                  <div className="flex items-center gap-2.5">
-                    <Image
-                      src="/images/landing_color_symbol.png"
-                      alt="물문화관 로고"
-                      width={34}
-                      height={38}
-                      style={{ width: "auto" }}
-                      className="h-8 w-auto object-contain drop-shadow"
-                    />
-                    <div>
-                      <p className="text-base font-black text-white leading-tight">물문화관</p>
-                      <p className="text-[9px] font-extrabold text-sky-300 tracking-wider uppercase leading-tight mt-0.5">
-                        WATER CULTURE PORTAL
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setMenuOpen(false)}
-                    className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer"
-                    aria-label="닫기"
-                  >
-                    ✕
-                  </button>
-                </div>
-
-                {/* 메뉴 리스트 */}
-                <div className="flex-1 overflow-y-auto px-5 py-4 space-y-2">
-                  <p className="text-[11px] font-bold text-sky-300 uppercase tracking-wider mb-2">
-                    바로가기 메뉴
-                  </p>
-                  {NAV_LINKS.map((nav) => (
-                    <Link
-                      key={nav.href}
-                      href={nav.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-white/10 active:bg-white/15 transition group"
-                    >
-                      <div>
-                        <p className="text-sm font-bold text-white group-hover:text-sky-300 transition-colors">
-                          {nav.label}
-                        </p>
-                        <p className="text-[11px] text-slate-300/80 mt-0.5">
-                          {nav.desc}
-                        </p>
-                      </div>
-                      <span className="text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-transform">
-                        →
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-
-                {/* 드로어 하단 CTA */}
-                <div className="p-5 border-t border-white/10 bg-slate-950/40">
-                  <Link
-                    href="/main"
-                    onClick={() => setMenuOpen(false)}
-                    className="w-full py-3 rounded-xl bg-[#0094FF] hover:bg-[#0084e6] text-white text-xs font-bold text-center block transition shadow-md"
-                  >
-                    전국 물문화관 둘러보기 →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
