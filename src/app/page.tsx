@@ -148,13 +148,13 @@ export default function GatewayLandingPage() {
                 />
               </div>
 
-              {/* 타이틀 및 영문 서브타이틀 (3안: 방사형 비네트와 조화로운 자연스러운 텍스트) */}
+              {/* 타이틀 및 서브타이틀 */}
               <div className="flex flex-col items-center space-y-1">
                 <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-md group-hover:text-sky-300 transition-colors">
                   물문화관
                 </h1>
-                <p className="text-[10px] sm:text-[11px] font-black text-sky-400 tracking-[0.16em] uppercase whitespace-nowrap drop-shadow-md pt-0.5 opacity-95">
-                  WATER CULTURE PORTAL
+                <p className="text-[11px] sm:text-xs font-bold text-sky-400 tracking-tight whitespace-nowrap drop-shadow-md pt-0.5 opacity-95">
+                  K-water 온라인 물문화관
                 </p>
               </div>
             </Link>
@@ -301,8 +301,8 @@ export default function GatewayLandingPage() {
             <h1 className="mt-3 text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-md group-hover:text-sky-300 transition-colors">
               물문화관
             </h1>
-            <p className="mt-2 text-[10px] sm:text-[11px] font-black text-sky-400 tracking-[0.16em] uppercase whitespace-nowrap opacity-90">
-              WATER CULTURE PORTAL
+            <p className="mt-2 text-[11px] sm:text-xs font-bold text-sky-400 tracking-tight whitespace-nowrap opacity-90">
+              K-water 온라인 물문화관
             </p>
           </Link>
 
