@@ -52,6 +52,7 @@ const THEMES = [
 
 export default function GatewayLandingPage() {
   const [bgIndex, setBgIndex] = useState(0);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   // 몇 초에 한 번씩 PC UI의 4대 테마별 이미지를 부드럽게 순환 (2초 디졸브 크로스페이드)
   useEffect(() => {
@@ -120,34 +121,59 @@ export default function GatewayLandingPage() {
 
           {/* ── 2. 히어로 섹션 (중앙 심볼 로고 + 물문화관 타이틀 + 소개 문구) ── */}
           <section className="relative pt-2 pb-4 sm:pt-4 sm:pb-6 flex flex-col items-center text-center shrink-0">
-            {/* 중앙 심볼 로고 및 타이틀 (탭 시 메인 페이지로 바로 이동 - PC UI와 일치된 개방형 디자인) */}
+            {/* 중앙 심볼 로고 및 타이틀 (터치 시 0ms 즉각 반응 눌림 모션 + 은은한 테두리 빛 모션 + 메인 이동) */}
             <Link
               href="/main"
-              className="relative z-10 flex flex-col items-center group cursor-pointer active:scale-95 transition-transform"
+              prefetch={true}
+              onClick={() => setIsNavigating(true)}
+              className={`relative z-10 flex flex-col items-center group cursor-pointer transition-all duration-150 ease-out select-none ${
+                isNavigating
+                  ? "scale-90 opacity-90 brightness-125"
+                  : "active:scale-90 active:brightness-125 hover:scale-[1.02]"
+              }`}
               title="K-water 온라인 물문화관 메인으로 이동"
             >
-              {/* 심볼 로고 (박스 없이 깔끔하게 배치) */}
-              <div className="mb-2 animate-float-up">
+              {/* 심볼 로고 (테두리 은은한 오로라 글로우 펄스 + 탭 피드백) */}
+              <div className="relative mb-2">
+                {/* 로고 뒤 은은하게 숨쉬는 푸른빛 후광(Aura Glow) */}
+                <div className="absolute inset-0 -m-3 rounded-full bg-sky-400/25 blur-xl animate-pulse pointer-events-none" />
+
                 <Image
                   src="/images/landing_color_symbol.png"
                   alt="K-water 물문화관 심볼"
                   width={815}
                   height={921}
                   style={{ width: "auto" }}
-                  className="h-16 sm:h-20 w-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
+                  className="relative z-10 h-16 sm:h-20 w-auto object-contain animate-logo-glow drop-shadow-2xl transition-transform"
                   priority
                 />
               </div>
 
-              {/* 타이틀 및 서브타이틀 */}
+              {/* 타이틀 및 서브타이틀 (화이트 고대비 텍스트로 시인성 확보) */}
               <div className="flex flex-col items-center space-y-1">
                 <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-md group-hover:text-sky-300 transition-colors">
                   물문화관
                 </h1>
-                <p className="text-[11px] sm:text-xs font-bold text-sky-400 tracking-tight whitespace-nowrap drop-shadow-md pt-0.5 opacity-95">
+                <p
+                  className="text-[11px] sm:text-xs font-black text-white tracking-tight whitespace-nowrap pt-0.5"
+                  style={{
+                    textShadow: "0 1px 3px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.9)",
+                  }}
+                >
                   K-water 온라인 물문화관
                 </p>
               </div>
+
+              {/* 탭 즉시 반응: 1초 로딩 대기시간 동안 사용자에게 즉각 피드백 전달 */}
+              {isNavigating && (
+                <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/90 text-white text-[11px] font-bold shadow-lg animate-pulse">
+                  <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  <span>메인으로 이동 중...</span>
+                </div>
+              )}
             </Link>
 
             {/* 2줄 친근한 소개 문구 */}
