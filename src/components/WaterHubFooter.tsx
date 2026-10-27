@@ -32,7 +32,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-white/50">
             <Link
               href="/privacy"
-              className="font-bold text-yellow-400 hover:text-yellow-300 underline underline-offset-2 transition"
+              className="text-white/70 hover:text-white transition"
             >
               개인정보처리방침
             </Link>
@@ -127,7 +127,7 @@ export function WaterHubFooter({ compact = false }: { compact?: boolean }) {
             <li className="flex items-center">
               <Link
                 href="/privacy"
-                className="font-black text-amber-300 sm:text-yellow-400 hover:text-yellow-300 underline underline-offset-4 tracking-tight"
+                className="text-white/70 hover:text-white transition break-keep"
               >
                 개인정보처리방침
               </Link>

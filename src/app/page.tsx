@@ -214,7 +214,7 @@ export default function GatewayLandingPage() {
             <div className="flex items-center justify-center py-0.5">
               <Link
                 href="/privacy"
-                className="text-[11px] sm:text-xs md:text-sm font-bold text-[#FFD200] hover:text-yellow-300 underline underline-offset-4 transition"
+                className="text-[11px] sm:text-xs md:text-sm text-white/70 hover:text-white transition"
               >
                 개인정보처리방침
               </Link>
@@ -282,7 +282,7 @@ export default function GatewayLandingPage() {
             <div className="mt-3 flex items-center justify-center gap-2.5 text-[11px] text-white/50">
               <Link
                 href="/privacy"
-                className="font-bold text-yellow-400 hover:text-yellow-300 underline underline-offset-2 transition"
+                className="text-white/70 hover:text-white transition"
               >
                 개인정보처리방침
               </Link>
