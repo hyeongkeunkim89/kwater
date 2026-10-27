@@ -114,33 +114,31 @@ export default function GatewayLandingPage() {
               <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/50 via-[#030712]/75 to-[#030712]" />
             </div>
 
-            {/* 중앙 심볼 로고 및 타이틀 (탭 시 메인 페이지로 바로 이동) */}
+            {/* 중앙 심볼 로고 및 타이틀 (탭 시 메인 페이지로 바로 이동 - PC UI와 일치된 개방형 디자인) */}
             <Link
               href="/main"
               className="relative z-10 flex flex-col items-center group cursor-pointer active:scale-95 transition-transform"
               title="K-water 온라인 물문화관 메인으로 이동"
             >
-              {/* 심볼 로고 배지 (플로팅 & 글로우) */}
-              <div className="mb-2.5 animate-float-up">
-                <div className="w-19 h-19 sm:w-22 sm:h-22 rounded-[22px] bg-[#05152e]/90 border border-sky-400/35 flex items-center justify-center shadow-2xl shadow-sky-950/70 backdrop-blur-md transition-all duration-300 group-hover:scale-105 group-hover:border-sky-400/60 group-hover:shadow-sky-500/20">
-                  <Image
-                    src="/images/landing_color_symbol.png"
-                    alt="물문화관 로고 심볼"
-                    width={815}
-                    height={921}
-                    style={{ width: "auto" }}
-                    className="h-11 sm:h-13 w-auto object-contain drop-shadow-md"
-                    priority
-                  />
-                </div>
+              {/* 심볼 로고 (박스 없이 깔끔하게 배치) */}
+              <div className="mb-2 animate-float-up">
+                <Image
+                  src="/images/landing_color_symbol.png"
+                  alt="K-water 물문화관 심볼"
+                  width={815}
+                  height={921}
+                  style={{ width: "auto" }}
+                  className="h-16 sm:h-20 w-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
+                  priority
+                />
               </div>
 
               {/* 타이틀 및 영문 서브타이틀 */}
-              <div className="space-y-0.5">
-                <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md group-hover:text-sky-300 transition-colors">
+              <div className="space-y-1">
+                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight whitespace-nowrap drop-shadow-md group-hover:text-sky-300 transition-colors">
                   물문화관
                 </h1>
-                <p className="text-[10.5px] sm:text-xs font-black text-[#0094FF] tracking-[0.18em] uppercase pt-0.5">
+                <p className="text-[10px] sm:text-[11px] font-black text-sky-400 tracking-[0.16em] uppercase whitespace-nowrap opacity-90 pt-0.5">
                   WATER CULTURE PORTAL
                 </p>
               </div>
