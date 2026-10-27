@@ -126,15 +126,6 @@ export default function GatewayLandingPage() {
               className="relative z-10 flex flex-col items-center group cursor-pointer active:scale-95 transition-transform"
               title="K-water 온라인 물문화관 메인으로 이동"
             >
-              {/* 은은한 방사형(Radial) 다크 비네트 백드롭 (3안: 텍스트 뒤쪽 중앙부에만 부드러운 그림자 형성) */}
-              <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[340px] h-[220px] rounded-full pointer-events-none -z-10"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at center, rgba(3, 7, 18, 0.72) 0%, rgba(3, 7, 18, 0.4) 50%, transparent 75%)",
-                }}
-              />
-
               {/* 심볼 로고 (박스 없이 깔끔하게 배치) */}
               <div className="mb-2 animate-float-up">
                 <Image
