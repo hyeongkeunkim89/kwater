@@ -133,10 +133,16 @@ export default function GatewayLandingPage() {
               }`}
               title="K-water 온라인 물문화관 메인으로 이동"
             >
-              {/* 심볼 로고 (테두리 은은한 오로라 글로우 펄스 + 탭 피드백) */}
-              <div className="relative mb-2">
-                {/* 로고 뒤 은은하게 숨쉬는 푸른빛 후광(Aura Glow) */}
-                <div className="absolute inset-0 -m-3 rounded-full bg-sky-400/25 blur-xl animate-pulse pointer-events-none" />
+              {/* 심볼 로고 (초연속 실키 오로라 글로우 모션 + 터치 피드백) */}
+              <div className="relative mb-2 flex items-center justify-center">
+                {/* 1차 외부 광배(Outer Aura): 넓고 은은하게 퍼지는 심해 푸른빛 */}
+                <div className="absolute w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-sky-400/25 blur-2xl animate-aura-smooth pointer-events-none" />
+
+                {/* 2차 내부 광배(Inner Halo): 로고 윤곽선에 밀착된 영롱한 청록빛 */}
+                <div
+                  className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-cyan-300/40 blur-lg animate-aura-smooth pointer-events-none"
+                  style={{ animationDelay: "-1.8s" }}
+                />
 
                 <Image
                   src="/images/landing_color_symbol.png"
@@ -144,7 +150,7 @@ export default function GatewayLandingPage() {
                   width={815}
                   height={921}
                   style={{ width: "auto" }}
-                  className="relative z-10 h-16 sm:h-20 w-auto object-contain animate-logo-glow drop-shadow-2xl transition-transform"
+                  className="relative z-10 h-16 sm:h-20 w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,148,255,0.35)] transition-transform duration-200"
                   priority
                 />
               </div>
