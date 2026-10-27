@@ -7,36 +7,44 @@ import Image from "next/image";
 const THEMES = [
   {
     id: "technology",
+    num: "01",
     code: "01 · TECHNOLOGY",
     title: "기술",
-    desc: "스마트 수자원·댐 엔지니어링·수력발전",
+    en: "TECHNOLOGY",
+    desc: "스마트 수자원 관리, 댐 엔지니어링, 친환경 수력발전 기술 안내",
     image:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg/1280px-Daecheong_Dam_after_rain_-_%EB%8C%80%EC%B2%AD%EB%8C%90.jpg",
     link: "/main",
   },
   {
     id: "ecology",
+    num: "02",
     code: "02 · ECOLOGY",
     title: "생태",
-    desc: "강과 호수·수변 생태계·둘레길",
+    en: "ECOLOGY",
+    desc: "강과 호수, 수변 동식물 생태계, 아름다운 수변 둘레길 산책 안내",
     image:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG",
     link: "/main",
   },
   {
     id: "history",
+    num: "03",
     code: "03 · HISTORY",
     title: "역사",
-    desc: "치수 발자취·수몰 마을 기록",
+    en: "HISTORY",
+    desc: "대한민국 치수 발자취, 수몰 마을 사람들의 생활 사료와 추억 기록",
     image:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Chungju_Lake.jpg/1280px-Chungju_Lake.jpg",
     link: "/main",
   },
   {
     id: "culture",
+    num: "04",
     code: "04 · CULTURE & ARTS",
     title: "문화",
-    desc: "미디어아트·지역 문화행사·휴식 공간",
+    en: "CULTURE & ARTS",
+    desc: "수변 미디어아트, 레저 및 지역 문화행사, 대중 복합 휴식 공간 안내",
     image: "/peace-dam-trench.jpg",
     link: "/main",
   },
@@ -52,17 +60,23 @@ const NAV_LINKS = [
 
 export default function GatewayLandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTheme, setActiveTheme] = useState<number | null>(null);
+
+  const scrollToThemes = () => {
+    document.getElementById("themes-section")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="selection:bg-sky-500 selection:text-white">
       {/* ══════════════════════════════════════════════════════════════
           1. 모바일 및 태블릿 세로 전용 UI (lg:hidden): 
-             소양강댐 히어로 + 2x2 테마 그리드 + 햄버거 메뉴 레이아웃
+             소양강댐 히어로 + 아코디언 인터랙티브 카드 + 슬라이드 메뉴 드로어
          ══════════════════════════════════════════════════════════════ */}
       <div className="flex lg:hidden min-h-screen bg-[#030712] text-white selection:bg-[#0094FF] selection:text-white flex-col items-center w-full">
-        <div className="w-full max-w-xl md:max-w-4xl mx-auto flex flex-col min-h-screen relative">
+        <div className="w-full max-w-xl md:max-w-2xl mx-auto flex flex-col min-h-screen relative">
+          
           {/* ── 1. 상단 헤더: 방울이 마스코트 (좌측) + 햄버거 메뉴 (우측) ── */}
-          <header className="relative z-30 flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5">
+          <header className="relative z-30 flex items-center justify-between px-5 pt-4 pb-2 sm:px-6 sm:pt-5">
             <Link
               href="/main"
               className="flex items-center gap-2 group transition-transform active:scale-95"
@@ -91,12 +105,12 @@ export default function GatewayLandingPage() {
             </button>
           </header>
 
-          {/* ── 2. 히어로 섹션 (소양강댐 실사 배경 + 심볼 로고 + 물문화관 타이틀 + 설명문 + 둘러보기 버튼) ── */}
-          <section className="relative pt-2 pb-8 sm:pt-4 sm:pb-12 px-5 sm:px-6 flex flex-col items-center text-center">
-            {/* 소양강댐 배경 이미지 (상단 은은하게 비치고 아래로 자연스럽게 페이드아웃) */}
+          {/* ── 2. 히어로 섹션 (소양강댐 실사 배경 + 중앙 심볼 배지 + 타이틀 + 스크롤 가이드) ── */}
+          <section className="relative pt-3 pb-6 sm:pt-6 sm:pb-8 px-5 sm:px-6 flex flex-col items-center text-center">
+            {/* 소양강댐 배경 이미지 (상단 산자락 비네트 + Ken Burns 애니메이션) */}
             <div className="absolute inset-0 -top-16 overflow-hidden pointer-events-none">
               <div
-                className="absolute inset-0 bg-cover bg-center brightness-[0.75] contrast-[1.1] animate-ken-burns will-change-transform"
+                className="absolute inset-0 bg-cover bg-center brightness-[0.72] contrast-[1.1] animate-ken-burns will-change-transform"
                 style={{
                   backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SoyangDam.JPG/1280px-SoyangDam.JPG')`,
                 }}
@@ -107,14 +121,14 @@ export default function GatewayLandingPage() {
 
             {/* 중앙 심볼 로고 배지 (부드러운 플로팅 & 글로우 모션) */}
             <div className="relative z-10 mb-3 animate-float-up">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-[26px] bg-[#05152e]/85 border border-sky-400/30 flex items-center justify-center shadow-2xl shadow-sky-950/60 backdrop-blur-md transition-transform duration-500 hover:scale-105">
+              <div className="w-20 h-20 sm:w-22 sm:h-22 rounded-[24px] bg-[#05152e]/90 border border-sky-400/35 flex items-center justify-center shadow-2xl shadow-sky-950/70 backdrop-blur-md transition-transform duration-500 hover:scale-105">
                 <Image
                   src="/images/landing_color_symbol.png"
                   alt="물문화관 로고 심볼"
                   width={815}
                   height={921}
                   style={{ width: "auto" }}
-                  className="h-12 w-auto sm:h-14 object-contain drop-shadow-md"
+                  className="h-12 w-auto sm:h-13 object-contain drop-shadow-md"
                   priority
                 />
               </div>
@@ -122,40 +136,45 @@ export default function GatewayLandingPage() {
 
             {/* 타이틀 및 영문 서브타이틀 */}
             <div className="relative z-10 space-y-1">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-md">
+              <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
                 물문화관
               </h1>
-              <p className="text-[11px] sm:text-xs md:text-sm font-black text-[#0094FF] tracking-[0.18em] uppercase pt-0.5">
+              <p className="text-[11px] sm:text-xs font-black text-[#0094FF] tracking-[0.18em] uppercase pt-0.5">
                 WATER CULTURE PORTAL
               </p>
             </div>
 
             {/* 2줄 설명 문구 */}
-            <p className="relative z-10 mt-3 text-[13px] sm:text-sm md:text-base text-slate-200/90 font-medium leading-relaxed max-w-xs sm:max-w-md mx-auto break-keep">
+            <p className="relative z-10 mt-3 text-[13px] sm:text-sm text-slate-200/90 font-medium leading-relaxed max-w-xs mx-auto break-keep">
               물과 함께한 기술·생태·역사·문화를
               <br />
               한곳에서 만나보세요.
             </p>
 
-            {/* 대표 액션 버튼: 전국 물문화관 둘러보기 (반짝이는 쉬머 모션 적용) */}
-            <div className="relative z-10 w-full max-w-sm sm:max-w-md mt-6">
-              <Link
-                href="/main"
-                className="group relative overflow-hidden w-full min-h-[52px] sm:min-h-[56px] px-6 py-3.5 inline-flex items-center justify-center rounded-2xl bg-[#0094FF] hover:bg-[#0084e6] active:bg-[#0074cc] text-white font-black text-sm sm:text-base transition-all duration-200 shadow-xl shadow-[#0094FF]/30 tracking-tight active:scale-[0.98]"
+            {/* 스크롤해서 테마 보기 가이드 (클릭 시 하단 테마 섹션으로 부드러운 스크롤 이동) */}
+            <button
+              type="button"
+              onClick={scrollToThemes}
+              className="relative z-10 mt-5 group flex flex-col items-center gap-1 text-slate-400 hover:text-sky-300 transition-colors cursor-pointer select-none"
+            >
+              <span className="text-[11px] sm:text-xs font-medium tracking-tight text-slate-300/80 group-hover:text-sky-300 transition-colors">
+                스크롤해서 테마 보기
+              </span>
+              <svg
+                className="w-4 h-4 text-slate-400 group-hover:text-sky-300 animate-bounce-subtle transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                {/* 은은하게 스쳐 지나가는 사선 빛줄기 (Shimmer Effect) */}
-                <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none animate-shimmer" />
-
-                <span className="relative z-10">전국 물문화관 둘러보기</span>
-                <span className="relative z-10 ml-2 transform group-hover:translate-x-1.5 transition-transform font-black">→</span>
-              </Link>
-            </div>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
           </section>
 
-          {/* ── 3. 중간 섹션: 주제별 둘러보기 (4개 테마 2x2 카드 그리드) ── */}
-          <section className="relative z-10 px-5 sm:px-6 pt-2 pb-6 flex-1 flex flex-col justify-center">
+          {/* ── 3. 중간 섹션: 주제별 둘러보기 (인터랙티브 아코디언 카드 리스트) ── */}
+          <section id="themes-section" className="relative z-10 px-5 sm:px-6 pt-2 pb-6 flex-1 flex flex-col justify-center">
             {/* 섹션 헤더 (좌측: 주제별 둘러보기 / 우측: 4개 테마) */}
-            <div className="flex items-center justify-between mb-3.5 px-0.5">
+            <div className="flex items-center justify-between mb-3 px-0.5">
               <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
                 주제별 둘러보기
               </h2>
@@ -164,61 +183,129 @@ export default function GatewayLandingPage() {
               </span>
             </div>
 
-            {/* 2x2 카드 그리드 */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-4 w-full">
-              {THEMES.map((theme) => (
-                <Link
-                  key={theme.id}
-                  href={theme.link}
-                  className="group relative aspect-[4/5] sm:aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 hover:border-sky-400/50 shadow-lg hover:shadow-sky-500/20 transition-all duration-300 hover:-translate-y-1 active:scale-[0.98] flex flex-col justify-end p-4 sm:p-5"
-                >
-                  {/* 카드 배경 이미지 (호버 시 부드러운 줌 인 모션) */}
+            {/* 아코디언 카드 목록: 탭 시 펼쳐지며 닫기(-) 버튼으로 축소 가능 */}
+            <div className="flex flex-col gap-2.5 w-full">
+              {THEMES.map((theme, index) => {
+                const isActive = activeTheme === index;
+
+                return (
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 will-change-transform brightness-[0.85] contrast-[1.05]"
-                    style={{ backgroundImage: `url('${theme.image}')` }}
-                  />
+                    key={theme.id}
+                    className={`w-full rounded-2xl overflow-hidden border transition-all duration-300 ${
+                      isActive
+                        ? "border-sky-400/50 shadow-xl shadow-sky-950/40 bg-slate-900"
+                        : "border-white/10 hover:border-white/20 bg-slate-900/75"
+                    }`}
+                  >
+                    {isActive ? (
+                      /* ── 펼쳐진 카드 상태 (이미지 2 참고) ── */
+                      <div className="relative min-h-[250px] sm:min-h-[280px] flex flex-col justify-between p-5 sm:p-6 overflow-hidden animate-slide-down">
+                        {/* 카드 전체 배경 실사 사진 */}
+                        <div
+                          className="absolute inset-0 bg-cover bg-center brightness-[0.82] contrast-[1.08] transition-transform duration-700 ease-out scale-105"
+                          style={{ backgroundImage: `url('${theme.image}')` }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/55 to-slate-950/35" />
 
-                  {/* 카드 내부 다크 그라데이션 오버레이 */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent group-hover:from-slate-950/90 transition-all duration-300" />
+                        {/* 상단: 테마 배지 + 축소 토글 버튼(-) */}
+                        <div className="relative z-10 flex items-start justify-between">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#05152e]/85 border border-sky-400/40 text-[10px] sm:text-[11px] font-black text-sky-300 uppercase tracking-wider backdrop-blur-md shadow-sm">
+                            {theme.code}
+                          </span>
 
-                  {/* 카드 텍스트 콘텐츠 */}
-                  <div className="relative z-10 space-y-1">
-                    <span className="text-[9.5px] sm:text-[10.5px] font-black tracking-wider text-sky-400 uppercase">
-                      {theme.code}
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight group-hover:text-sky-300 transition-colors">
-                      {theme.title}
-                    </h3>
-                    <p className="text-[11px] sm:text-xs text-slate-300 font-medium leading-tight line-clamp-2">
-                      {theme.desc}
-                    </p>
+                          <button
+                            type="button"
+                            onClick={() => setActiveTheme(null)}
+                            className="w-8 h-8 rounded-full bg-slate-900/70 hover:bg-slate-900/90 active:scale-95 border border-white/20 text-white flex items-center justify-center transition cursor-pointer backdrop-blur-sm shadow-md"
+                            aria-label={`${theme.title} 카드 닫기`}
+                          >
+                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.6} d="M6 12h12" />
+                            </svg>
+                          </button>
+                        </div>
+
+                        {/* 하단: 타이틀, 설명, 자세히 보기 링크 */}
+                        <div className="relative z-10 space-y-1.5 pt-6">
+                          <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-md">
+                            {theme.title}
+                          </h3>
+                          <p className="text-xs sm:text-[13px] text-slate-200 font-medium leading-relaxed break-keep max-w-sm">
+                            {theme.desc}
+                          </p>
+                          <div className="pt-2">
+                            <Link
+                              href={theme.link}
+                              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-400 hover:text-sky-300 transition-colors group"
+                            >
+                              <span>자세히 보기</span>
+                              <span className="transform group-hover:translate-x-1.5 transition-transform font-bold">→</span>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      /* ── 접힌 카드 상태 (이미지 1 참고) ── */
+                      <button
+                        type="button"
+                        onClick={() => setActiveTheme(index)}
+                        className="group relative w-full h-14 sm:h-16 px-4 sm:px-5 flex items-center justify-between overflow-hidden hover:bg-slate-900/90 active:scale-[0.99] transition-all text-left cursor-pointer"
+                      >
+                        {/* 어두운 은은한 실사 배경 미리보기 */}
+                        <div
+                          className="absolute inset-0 bg-cover bg-center opacity-20 brightness-75 group-hover:opacity-30 transition-opacity duration-300"
+                          style={{ backgroundImage: `url('${theme.image}')` }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-slate-950/85" />
+
+                        {/* 좌측 정보: 01 기술 TECHNOLOGY */}
+                        <div className="relative z-10 flex items-baseline gap-2.5 sm:gap-3">
+                          <span className="text-sky-400 font-black text-sm sm:text-base tracking-wider">
+                            {theme.num}
+                          </span>
+                          <span className="text-white font-black text-base sm:text-lg tracking-tight group-hover:text-sky-300 transition-colors">
+                            {theme.title}
+                          </span>
+                          <span className="text-slate-400 font-bold text-[10px] sm:text-[11px] uppercase tracking-wider">
+                            {theme.en}
+                          </span>
+                        </div>
+
+                        {/* 우측 아이콘: 더보기 (+) */}
+                        <div className="relative z-10 w-7 h-7 flex items-center justify-center text-slate-300 group-hover:text-white transition-colors">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M12 5v14M5 12h14" />
+                          </svg>
+                        </div>
+                      </button>
+                    )}
                   </div>
-                </Link>
-              ))}
+                );
+              })}
             </div>
           </section>
 
-          {/* ── 4. 하단 섹션: 2차 아웃라인 둘러보기 버튼 & 개인정보처리방침 ── */}
-          <footer className="relative z-10 px-5 sm:px-6 pt-2 pb-8 flex flex-col items-center gap-3 w-full">
-            {/* 하단 둘러보기 버튼 (다크 배경 + 블루 테두리 + 쉬머 모션) */}
+          {/* ── 4. 하단 섹션: 둘러보기 버튼 (쉬머 모션) & 개인정보처리방침 ── */}
+          <footer className="relative z-10 px-5 sm:px-6 pt-4 pb-8 flex flex-col items-center gap-3 w-full">
+            {/* 대표 둘러보기 버튼 (쉬머 빛줄기 모션 적용) */}
             <div className="w-full max-w-sm sm:max-w-md">
               <Link
                 href="/main"
-                className="group relative overflow-hidden w-full min-h-[50px] sm:min-h-[54px] px-6 py-3.5 inline-flex items-center justify-center rounded-2xl border-2 border-[#0094FF] bg-[#020b18]/85 hover:bg-[#0094FF]/10 text-white font-black text-sm sm:text-base transition-all duration-200 shadow-lg shadow-[#0094FF]/15 tracking-tight active:scale-[0.98]"
+                className="group relative overflow-hidden w-full min-h-[52px] sm:min-h-[56px] px-6 py-3.5 inline-flex items-center justify-center rounded-2xl bg-[#0094FF] hover:bg-[#0084e6] active:bg-[#0074cc] text-white font-black text-sm sm:text-base transition-all duration-200 shadow-xl shadow-[#0094FF]/25 tracking-tight active:scale-[0.98]"
               >
-                {/* 은은한 사선 빛줄기 모션 (하단 버튼에도 쉬머 적용) */}
-                <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-[#0094FF]/25 to-transparent pointer-events-none animate-shimmer" />
+                {/* 은은하게 스쳐 지나가는 사선 빛줄기 (Shimmer Effect) */}
+                <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none animate-shimmer" />
 
                 <span className="relative z-10">전국 물문화관 둘러보기</span>
-                <span className="relative z-10 ml-2 transform group-hover:translate-x-1.5 transition-transform font-black text-[#0094FF]">→</span>
+                <span className="relative z-10 ml-2 transform group-hover:translate-x-1.5 transition-transform font-black">→</span>
               </Link>
             </div>
 
-            {/* 개인정보처리방침 링크 */}
+            {/* 개인정보처리방침 (3번째 첨부 이미지 스타일: 기본 폰트 색상 및 굵기 적용) */}
             <div className="pt-1">
               <Link
                 href="/privacy"
-                className="text-xs font-bold text-yellow-400 hover:text-yellow-300 underline underline-offset-4 transition"
+                className="text-xs text-white/70 hover:text-white transition"
               >
                 개인정보처리방침
               </Link>
@@ -310,7 +397,7 @@ export default function GatewayLandingPage() {
 
       {/* ══════════════════════════════════════════════════════════════
           2. 데스크톱 및 태블릿 가로 전용 UI (hidden lg:flex): 
-             5열 분할 인터랙티브 레이아웃 (롤백 복원)
+             5열 분할 인터랙티브 레이아웃
          ══════════════════════════════════════════════════════════════ */}
       <div className="hidden lg:flex min-h-screen bg-slate-950 text-white flex-row overflow-x-hidden">
         {/* ── 컬럼 1 (맨 좌측): 브랜딩 사이드바 ── */}
