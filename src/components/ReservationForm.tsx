@@ -943,7 +943,7 @@ export function ReservationForm({
             </div>
 
             {/* 모달 스크롤 본문 */}
-            <div className="overflow-y-auto px-6 py-5 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <div className="overflow-y-auto px-6 py-5 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed break-keep">
               <div className="rounded-xl bg-sky-50/80 p-3.5 border border-sky-100 text-sky-950 text-xs">
                 K-water 온라인 물문화관은 <strong>「개인정보보호법」</strong> 등 관련 법령을 철저히 준수하며, 가이드 투어 예약 서비스 제공을 위해 최소한의 개인정보를 수집·이용합니다. 아래 내용을 확인하신 후 동의해 주시기 바랍니다.
               </div>
@@ -953,11 +953,20 @@ export function ReservationForm({
                 <h3 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                   <span className="text-sky-600 font-black">1.</span> 개인정보의 수집 및 이용 목적
                 </h3>
-                <ul className="list-disc list-inside space-y-1 pl-1 text-slate-600 text-xs sm:text-sm bg-slate-50 p-3 rounded-xl border border-slate-200/70">
-                  <li>물문화관 가이드 투어 예약 신청 접수 및 회차별 정원·일정 관리</li>
-                  <li>방문자 본인 확인 및 예약 확인·안내 (접수, 승인, 변경, 취소 안내 등)</li>
-                  <li>현장 투어 당일 안전 관리 및 긴급 공지(기상 악화, 시설 점검 등) 전달</li>
-                </ul>
+                <div className="space-y-2 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 text-slate-700 text-xs sm:text-sm">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <span className="flex-1 leading-relaxed">물문화관 가이드 투어 예약 신청 접수 및 회차별 정원·일정 관리</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <span className="flex-1 leading-relaxed">방문자 본인 확인 및 예약 확인·안내 (접수, 승인, 변경, 취소 안내 등)</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <span className="flex-1 leading-relaxed">현장 투어 당일 안전 관리 및 긴급 공지(기상 악화, 시설 점검 등) 전달</span>
+                  </div>
+                </div>
               </div>
 
               {/* 2. 수집하는 개인정보 항목 */}
@@ -969,21 +978,21 @@ export function ReservationForm({
                   <table className="min-w-full divide-y divide-slate-200 text-left text-xs">
                     <thead className="bg-slate-100 font-bold text-slate-800">
                       <tr>
-                        <th className="px-3.5 py-2 w-28">구분</th>
-                        <th className="px-3.5 py-2">수집 항목</th>
+                        <th className="px-4 py-2.5 w-24 text-center">구분</th>
+                        <th className="px-4 py-2.5">수집 항목</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 bg-white">
                       <tr>
-                        <td className="px-3.5 py-2 font-bold text-rose-600">필수 항목</td>
-                        <td className="px-3.5 py-2 text-slate-800">
+                        <td className="px-4 py-2.5 font-bold text-rose-600 text-center bg-rose-50/40">필수 항목</td>
+                        <td className="px-4 py-2.5 text-slate-800 leading-relaxed">
                           <strong>성명, 휴대전화번호, 방문인원, 방문목적, 비회원 조회 비밀번호(PIN 4자리)</strong>
-                          {user ? <span className="text-sky-700">, 회원 계정 이메일</span> : ""}
+                          {user ? <span className="text-sky-700 font-medium">, 회원 계정 이메일</span> : ""}
                         </td>
                       </tr>
                       <tr>
-                        <td className="px-3.5 py-2 font-bold text-slate-500">선택 항목</td>
-                        <td className="px-3.5 py-2 text-slate-600">
+                        <td className="px-4 py-2.5 font-bold text-slate-500 text-center bg-slate-50/60">선택 항목</td>
+                        <td className="px-4 py-2.5 text-slate-600 leading-relaxed">
                           요청사항 (휠체어 이용, 유모차 동반, 외국어 해설 요청 등)
                         </td>
                       </tr>
@@ -997,13 +1006,21 @@ export function ReservationForm({
                 <h3 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                   <span className="text-sky-600 font-black">3.</span> 개인정보의 보유 및 이용 기간 (개인정보보호법 제21조)
                 </h3>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/70 space-y-1 text-xs sm:text-sm">
-                  <p className="font-bold text-sky-950">
-                    • <strong>관람 완료일(또는 예약 취소일)로부터 30일간 보관 후 지체 없이 영구 파기(익명화 조치)</strong>
-                  </p>
-                  <p className="text-slate-500 text-[11px] sm:text-xs">
-                    ※ 보유 사유: 투어 관람 완료 후 고객 민원 대응, 분실물 연계 안내, 방문 확인증 발급 지원
-                  </p>
+                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 space-y-2 text-xs sm:text-sm">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <div className="flex-1">
+                      <p className="font-bold text-sky-950 leading-relaxed">
+                        관람 완료일(또는 예약 취소일)로부터 30일간 보관 후 지체 없이 영구 파기 (익명화 조치)
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2 pl-4 text-slate-500 text-[11px] sm:text-xs">
+                    <span className="shrink-0 text-slate-400 mt-0.5">※</span>
+                    <span className="flex-1 leading-relaxed">
+                      보유 사유: 투어 관람 완료 후 고객 민원 대응, 분실물 연계 안내, 방문 확인증 발급 지원
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -1012,10 +1029,26 @@ export function ReservationForm({
                 <h3 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                   <span className="text-sky-600 font-black">4.</span> 개인정보의 파기 절차 및 파기 방법
                 </h3>
-                <ul className="list-disc list-inside space-y-1 pl-1 text-slate-600 text-xs sm:text-sm bg-slate-50 p-3 rounded-xl border border-slate-200/70">
-                  <li><strong>파기 주기:</strong> 보유 기간(30일) 경과 시 Vercel Cron 스케줄러를 통해 매일 자정 자동 파기 배치 가동</li>
-                  <li><strong>파기 방법:</strong> 전자적 DB 레코드의 성명을 <code className="text-rose-600 bg-rose-50 px-1 py-0.5 rounded font-mono">[파기완료]</code>, 연락처를 <code className="text-rose-600 bg-rose-50 px-1 py-0.5 rounded font-mono">010-0000-0000</code>으로 영구 대체하고, 이메일·PIN을 완전 삭제하여 복원 및 개인 식별이 불가능하도록 안전하게 영구 익명화 처리</li>
-                </ul>
+                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 space-y-2.5 text-xs sm:text-sm">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <div className="flex-1 flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                      <span className="font-bold text-slate-900 shrink-0 w-20">파기 주기</span>
+                      <span className="text-slate-600 leading-relaxed flex-1">
+                        보유 기간(30일) 경과 시 Vercel Cron 스케줄러를 통해 매일 자정 자동 파기 배치 가동
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <div className="flex-1 flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                      <span className="font-bold text-slate-900 shrink-0 w-20">파기 방법</span>
+                      <span className="text-slate-600 leading-relaxed flex-1">
+                        전자적 DB 레코드의 성명을 <code className="text-rose-600 bg-rose-50 px-1 py-0.5 rounded font-mono font-bold">[파기완료]</code>, 연락처를 <code className="text-rose-600 bg-rose-50 px-1 py-0.5 rounded font-mono font-bold">010-0000-0000</code>으로 영구 대체하고, 이메일·PIN을 완전 삭제하여 복원 및 개인 식별이 불가능하도록 안전하게 영구 익명화 처리
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* 5. 동의 거부 권리 및 불이익 고지 */}
@@ -1023,8 +1056,19 @@ export function ReservationForm({
                 <h3 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                   <span className="text-sky-600 font-black">5.</span> 동의 거부 권리 및 불이익 고지 (개인정보보호법 제15조 제2항 제4호)
                 </h3>
-                <div className="bg-amber-50/80 p-3 rounded-xl border border-amber-200 text-amber-950 text-xs leading-relaxed">
-                  정보주체는 위와 같은 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다. 단, <strong>필수 항목에 대한 수집·이용 동의를 거부하실 경우 본인 확인 및 일정 관리가 불가능하므로 물문화관 가이드 투어 온라인 예약 서비스 이용이 제한</strong>됩니다. (선택 항목 미입력 시에도 투어 예약 자체는 정상 가능합니다.)
+                <div className="bg-amber-50/80 p-3.5 rounded-xl border border-amber-200 text-amber-950 text-xs sm:text-sm space-y-2">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-amber-600 font-bold shrink-0 mt-0.5">•</span>
+                    <p className="flex-1 leading-relaxed">
+                      정보주체는 위와 같은 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2 pl-4 text-amber-900 text-[11px] sm:text-xs">
+                    <span className="shrink-0 font-bold text-amber-600 mt-0.5">※</span>
+                    <p className="flex-1 leading-relaxed">
+                      <strong>필수 항목에 대한 수집·이용 동의를 거부하실 경우</strong> 본인 확인 및 일정 관리가 불가능하므로 물문화관 가이드 투어 온라인 예약 서비스 이용이 제한됩니다. (선택 항목 미입력 시에도 투어 예약 자체는 정상 가능합니다.)
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -1033,8 +1077,13 @@ export function ReservationForm({
                 <h3 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                   <span className="text-sky-600 font-black">6.</span> 만 14세 미만 아동의 개인정보 처리 (개인정보보호법 제22조의2)
                 </h3>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/70 text-slate-600 text-xs leading-relaxed">
-                  만 14세 미만 아동의 물문화관 가이드 투어 신청은 개인정보보호법 제22조의2에 따라 <strong>법정대리인(보호자 또는 인솔 교사)의 확인 및 동의를 거쳐 보호자가 대표로 신청</strong>하여야 합니다.
+                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 text-slate-700 text-xs sm:text-sm">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <p className="flex-1 leading-relaxed">
+                      만 14세 미만 아동의 물문화관 가이드 투어 신청은 「개인정보 보호법」 제22조의2에 따라 <strong>법정대리인(보호자 또는 인솔 교사)의 확인 및 동의를 거쳐 보호자가 대표로 신청</strong>하여야 합니다.
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -1043,9 +1092,21 @@ export function ReservationForm({
                 <h3 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                   <span className="text-sky-600 font-black">7.</span> 개인정보 보호책임자 및 권익구제 고충처리 (개인정보보호법 제30조)
                 </h3>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/70 text-slate-600 text-xs space-y-1">
-                  <p>• <strong>개인정보 보호책임자:</strong> 한국수자원공사 공간경관처 박석용 처장</p>
-                  <p>• <strong>개인정보 고충처리 문의:</strong> 042-629-3097 (평일 09:00 ~ 18:00)</p>
+                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 text-slate-700 text-xs sm:text-sm space-y-2">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <div className="flex-1 flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                      <span className="font-bold text-slate-900 shrink-0 w-32">개인정보 보호책임자</span>
+                      <span className="text-slate-600 leading-relaxed flex-1">한국수자원공사 공간경관처 박석용 처장</span>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-sky-600 font-bold shrink-0 mt-0.5">•</span>
+                    <div className="flex-1 flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                      <span className="font-bold text-slate-900 shrink-0 w-32">고충처리 문의</span>
+                      <span className="text-slate-600 leading-relaxed flex-1">042-629-3097 (평일 09:00 ~ 18:00)</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
