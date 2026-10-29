@@ -670,24 +670,42 @@ export function AuthModal() {
                   />
                   <span>전체 동의하기</span>
                 </label>
-                <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={agreeTerms}
-                    onChange={(e) => setAgreeTerms(e.target.checked)}
-                    className="h-3.5 w-3.5 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
-                  />
-                  <span><strong className="text-sky-700">[필수]</strong> 이용약관 동의</span>
-                </label>
-                <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={agreePrivacy}
-                    onChange={(e) => setAgreePrivacy(e.target.checked)}
-                    className="h-3.5 w-3.5 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
-                  />
-                  <span><strong className="text-sky-700">[필수]</strong> 개인정보 수집 및 이용 동의</span>
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={agreeTerms}
+                      onChange={(e) => setAgreeTerms(e.target.checked)}
+                      className="h-3.5 w-3.5 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                    />
+                    <span><strong className="text-sky-700">[필수]</strong> 이용약관 동의</span>
+                  </label>
+                  <a
+                    href="/privacy"
+                    target="_blank"
+                    className="text-[11px] text-slate-400 hover:text-sky-600 underline underline-offset-2"
+                  >
+                    전문보기
+                  </a>
+                </div>
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={agreePrivacy}
+                      onChange={(e) => setAgreePrivacy(e.target.checked)}
+                      className="h-3.5 w-3.5 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                    />
+                    <span><strong className="text-sky-700">[필수]</strong> 개인정보 수집 및 이용 동의</span>
+                  </label>
+                  <a
+                    href="/privacy"
+                    target="_blank"
+                    className="text-[11px] text-slate-400 hover:text-sky-600 underline underline-offset-2"
+                  >
+                    전문보기
+                  </a>
+                </div>
                 <label className="flex items-center gap-2 text-slate-500 cursor-pointer">
                   <input
                     type="checkbox"

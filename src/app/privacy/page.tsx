@@ -97,6 +97,99 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
+          {/* ── [법정 고지] K-water 물문화관 특화 서비스(투어 예약, 분실물 센터) 개인정보 처리 기준 고지 ── */}
+          <div className="mb-8 rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/50 via-white to-sky-50/40 p-5 sm:p-6 shadow-xs">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-600 text-white text-xs font-black shadow-xs">
+                🏛️
+              </span>
+              <h2 className="text-base sm:text-lg font-black text-slate-900">
+                물문화관 특화 서비스(가이드 투어 예약·분실물 센터) 개인정보 처리 기준
+              </h2>
+              <span className="ml-auto inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-[11px] font-bold text-indigo-800">
+                개인정보보호법 제15조·제21조·제30조 준수
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-keep mb-4">
+              K-water 온라인 물문화관은 관람객의 안전한 전시 관람 및 편의 서비스를 위해 「개인정보 보호법」 제15조(수집·이용), 제21조(파기), 제30조(처리방침의 수립·공개)에 따라 아래와 같이 개인정보를 수집·보유 및 파기하고 있습니다.
+            </p>
+
+            <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
+              <table className="w-full min-w-[700px] text-left text-xs sm:text-sm">
+                <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                  <tr>
+                    <th className="py-2.5 px-3.5 w-[20%]">서비스 명칭</th>
+                    <th className="py-2.5 px-3.5 w-[25%]">수집·이용 목적</th>
+                    <th className="py-2.5 px-3.5 w-[25%]">수집 항목 (필수/선택)</th>
+                    <th className="py-2.5 px-3.5 w-[30%]">보유 기간 및 파기 절차·방법</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-600">
+                  <tr>
+                    <td className="py-3 px-3.5 font-bold text-slate-900">
+                      가이드 투어 예약<br />
+                      <span className="text-[11px] font-medium text-sky-700">(/reserve)</span>
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      • 가이드 투어 예약 접수 및 회차별 정원·일정 관리<br />
+                      • 예약자 본인 확인 및 접수·변경·취소 안내<br />
+                      • 현장 안전 관리 및 긴급 공지 전달
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      • <strong className="text-slate-800">[필수]</strong> 성명, 휴대전화번호, 방문인원, 방문목적, 비회원 PIN<br />
+                      • <strong className="text-slate-500">[선택]</strong> 요청사항 (휠체어, 유모차, 외국어 해설 등)
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      <strong className="text-rose-600 font-bold">관람 완료일(또는 예약 취소일)로부터 30일간 보관 후 지체 없이 영구 파기(익명화)</strong><br />
+                      <span className="text-[11px] text-slate-500">※ 파기방법: Vercel Cron 스케줄러를 통해 매일 자정 성명('[파기완료]'), 연락처('010-0000-0000')로 비식별 대체 및 PIN·이메일 영구 삭제</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-3.5 font-bold text-slate-900">
+                      분실·습득물 센터<br />
+                      <span className="text-[11px] font-medium text-sky-700">(/lost-found)</span>
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      • 물문화관 내 분실물 접수 및 습득물 보관 안내<br />
+                      • 본인 확인 및 물품 안전 인계
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      • <strong className="text-slate-800">[필수]</strong> 작성자명, 분실·습득 일시/장소, 물품명, 내용, 비밀번호<br />
+                      • <strong className="text-slate-500">[선택]</strong> 연락처
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      <strong>물품 수령 완료 시까지 (최대 1년 보관 후 지체 없이 영구 파기)</strong><br />
+                      <span className="text-[11px] text-slate-500">※ 비밀번호는 암호화되어 클라이언트에 일체 노출되지 않음</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-3.5 font-bold text-slate-900">
+                      소통과 의견<br />
+                      <span className="text-[11px] font-medium text-sky-700">(/feedback)</span>
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      • 물문화관 이용 불편·문의사항 접수 및 답변 처리
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      • <strong className="text-slate-800">[필수]</strong> 작성자명, 비밀번호, 제목, 내용
+                    </td>
+                    <td className="py-3 px-3.5 leading-relaxed">
+                      <strong>게시글 등록일로부터 3년 보관 후 영구 파기</strong><br />
+                      <span className="text-[11px] text-slate-500">※ 작성자 본인 비밀번호 검증을 통해서만 수정·삭제 가능</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-3.5 text-[11px] sm:text-xs text-slate-500 flex items-start gap-1.5 leading-relaxed">
+              <span className="text-sky-600 font-bold shrink-0">ℹ️</span>
+              <span>
+                가이드 투어 예약 시 필수 항목에 대한 수집·이용 동의를 거부하실 경우 서비스 이용이 제한될 수 있으며, 만 14세 미만 아동의 경우 법정대리인(보호자)의 동의 및 대표 신청을 원칙으로 합니다.
+              </span>
+            </div>
+          </div>
+
           {/* 개인정보처리방침 상세 렌더링 영역 */}
           <div
             className="privacy-policy-body text-slate-800 leading-relaxed"

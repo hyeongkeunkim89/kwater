@@ -1012,6 +1012,27 @@ export function ReservationForm({
                   정보주체는 위와 같은 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다. 단, <strong>필수 항목에 대한 수집·이용 동의를 거부하실 경우 본인 확인 및 일정 관리가 불가능하므로 물문화관 가이드 투어 온라인 예약 서비스 이용이 제한</strong>됩니다. (선택 항목 미입력 시에도 투어 예약 자체는 정상 가능합니다.)
                 </div>
               </div>
+
+              {/* 6. 만 14세 미만 아동의 개인정보 처리 */}
+              <div className="space-y-1.5">
+                <h3 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                  <span className="text-sky-600 font-black">6.</span> 만 14세 미만 아동의 개인정보 처리 (개인정보보호법 제22조의2)
+                </h3>
+                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/70 text-slate-600 text-xs leading-relaxed">
+                  만 14세 미만 아동의 물문화관 가이드 투어 신청은 개인정보보호법 제22조의2에 따라 <strong>법정대리인(보호자 또는 인솔 교사)의 확인 및 동의를 거쳐 보호자가 대표로 신청</strong>하여야 합니다.
+                </div>
+              </div>
+
+              {/* 7. 개인정보 보호책임자 및 고충처리 창구 */}
+              <div className="space-y-1.5">
+                <h3 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                  <span className="text-sky-600 font-black">7.</span> 개인정보 보호책임자 및 권익구제 고충처리 (개인정보보호법 제30조)
+                </h3>
+                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/70 text-slate-600 text-xs space-y-1">
+                  <p>• <strong>개인정보 보호책임자:</strong> 한국수자원공사 공간경관처 박석용 처장</p>
+                  <p>• <strong>개인정보 고충처리 문의:</strong> 042-629-3097 (평일 09:00 ~ 18:00)</p>
+                </div>
+              </div>
             </div>
 
             {/* 모달 하단 푸터 버튼 */}
