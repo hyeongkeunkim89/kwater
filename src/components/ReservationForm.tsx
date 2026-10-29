@@ -248,6 +248,10 @@ export function ReservationForm({
 
   const handleSubmit = useCallback(async () => {
     setSubmitError(null);
+    if (!privacyConsent) {
+      setSubmitError("개인정보보호법에 따라 개인정보 수집 및 이용에 동의해야 예약을 접수할 수 있습니다.");
+      return;
+    }
     if (reservationsLive) {
       setSubmitting(true);
       try {
@@ -266,6 +270,7 @@ export function ReservationForm({
             partySize,
             purpose,
             requests: requests.trim(),
+            privacyConsent,
           }),
         });
         const data = (await res.json().catch(() => ({}))) as Reservation | { error?: string };
@@ -310,6 +315,7 @@ export function ReservationForm({
     purpose,
     requests,
     selectedCenter,
+    privacyConsent,
   ]);
 
   // ── 완료 화면 ──────────────────────────────────────────────
@@ -817,20 +823,29 @@ export function ReservationForm({
             </div>
           </div>
 
-          <div className="flex justify-between pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
             <button
+              type="button"
               onClick={() => setStep(0)}
-              className="rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-sky-400 hover:text-sky-800"
+              className="w-full sm:w-auto rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-sky-400 hover:text-sky-800 transition"
             >
               ← 이전
             </button>
-            <button
-              disabled={!step1Valid}
-              onClick={() => setStep(2)}
-              className="rounded-xl bg-sky-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              다음 단계 →
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto justify-end">
+              {!privacyConsent && name.trim().length >= 2 && (
+                <span className="text-xs text-rose-600 font-semibold text-center sm:text-right">
+                  ※ 필수 동의 항목에 체크하셔야 다음 단계로 이동할 수 있습니다.
+                </span>
+              )}
+              <button
+                type="button"
+                disabled={!step1Valid}
+                onClick={() => setStep(2)}
+                className="w-full sm:w-auto rounded-xl bg-sky-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                다음 단계 →
+              </button>
+            </div>
           </div>
         </section>
       )}

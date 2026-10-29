@@ -73,6 +73,14 @@ export async function POST(req: NextRequest) {
   const partySize = typeof b.partySize === "number" ? b.partySize : Number.NaN;
   const purpose = typeof b.purpose === "string" ? b.purpose.trim() : "";
   const requests = typeof b.requests === "string" ? b.requests.trim().slice(0, REQUESTS_MAX) : "";
+  const privacyConsent = b.privacyConsent === true;
+
+  if (!privacyConsent) {
+    return NextResponse.json(
+      { error: "개인정보보호법에 따라 개인정보 수집 및 이용에 동의해야 예약을 접수할 수 있습니다." },
+      { status: 400 },
+    );
+  }
 
   const center = waterCenters.find((c) => c.id === centerId);
   if (!center) {
