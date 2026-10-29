@@ -15,7 +15,7 @@ export const runtime = "nodejs";
  * 1) 관리자 로그인 세션 / x-admin-secret 헤더
  * 2) Vercel Cron 및 자동 배치용 Authorization: Bearer <CRON_SECRET>
  */
-export async function POST(req: NextRequest) {
+export async function handlePurge(req: NextRequest) {
   if (!isReservationsLive()) {
     return NextResponse.json({ error: "예약 서버 저장소가 비활성 상태입니다." }, { status: 503 });
   }
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     const qDays = url.searchParams.get("days");
     if (qDays && !isNaN(Number(qDays))) {
       days = Number(qDays);
-    } else {
+    } else if (req.method === "POST") {
       const body = await req.json().catch(() => null);
       if (body && typeof body.days === "number") {
         days = body.days;
@@ -68,4 +68,14 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+/** Vercel Cron 스케줄러는 GET 요청으로 엔드포인트를 호출합니다. */
+export async function GET(req: NextRequest) {
+  return handlePurge(req);
+}
+
+/** 관리자 콘솔 및 외부 스크립트 수동 호출용 POST 핸들러 */
+export async function POST(req: NextRequest) {
+  return handlePurge(req);
 }
