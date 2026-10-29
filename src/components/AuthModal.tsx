@@ -919,73 +919,141 @@ export function AuthModal() {
             </div>
 
             {/* 모달 스크롤 본문 */}
-            <div className="overflow-y-auto px-5 py-4 space-y-3.5 text-xs text-slate-700 leading-relaxed">
+            <div className="overflow-y-auto px-5 py-4 space-y-4 text-xs text-slate-700 leading-relaxed max-h-[62vh]">
               {activeDetailModal === "terms" ? (
                 <>
                   <div className="rounded-xl bg-sky-50/80 p-3 border border-sky-100 text-sky-950 font-medium">
-                    본 약관은 한국수자원공사가 운영하는 K-water 온라인 물문화관의 제반 서비스 이용과 관련하여 공사와 이용자의 권리, 의무 및 책임사항을 규정합니다.
+                    본 약관은 한국수자원공사가 운영하는 K-water 온라인 물문화관의 제반 서비스 이용과 관련하여 공사와 이용자의 권리, 의무, 책임사항 및 공정거래위원회 표준약관에 따른 준수사항을 규정합니다.
                   </div>
 
                   <div className="space-y-1">
                     <h4 className="font-bold text-slate-900">제1조 (목적)</h4>
                     <p className="text-slate-600">
-                      본 약관은 K-water 온라인 물문화관(이하 "물문화관")이 제공하는 전국 20개 물문화관 전시 안내, 가이드 투어 예약, 문화행사 및 소통 공간 등 제반 온라인 서비스(이하 "서비스")의 이용조건 및 절차에 관한 기본 사항을 정함을 목적으로 합니다.
+                      본 약관은 한국수자원공사(이하 "공사")가 운영하는 K-water 온라인 물문화관(이하 "물문화관")이 제공하는 전국 20개 물문화관 전시 안내, 가이드 투어 예약, 문화·체험 행사, 분실물 센터, 소통과 의견 게시판 등 제반 온라인 서비스(이하 "서비스")의 이용조건 및 절차, 이용자와 공사의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <h4 className="font-bold text-slate-900">제2조 (회원의 정의 및 가입)</h4>
+                    <h4 className="font-bold text-slate-900">제2조 (용어의 정의)</h4>
+                    <ul className="list-disc list-inside space-y-0.5 pl-1 text-slate-600">
+                      <li>"서비스"란 공사가 물문화관 웹사이트를 통해 관람객 및 국민에게 제공하는 정보 안내, 투어 예약, 행사 접수 등의 온라인 제반 기능을 말합니다.</li>
+                      <li>"이용자"란 물문화관 웹사이트에 접속하여 본 약관에 따라 서비스를 이용하는 회원 및 비회원을 말합니다.</li>
+                      <li>"회원"이란 본 약관에 동의하고 소정의 가입 절차를 거쳐 정상적으로 회원 등록을 완료한 자를 말합니다.</li>
+                      <li>"비회원"이란 회원으로 가입하지 않고 가이드 투어 예약 조회, 시설 안내 열람 등 제한된 서비스를 이용하는 자를 말합니다.</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제3조 (약관의 명시, 효력 및 개정)</h4>
                     <p className="text-slate-600">
-                      1. "회원"이란 본 약관에 동의하고 소정의 가입 절차를 거쳐 물문화관의 서비스를 지속적으로 이용할 수 있는 자를 말합니다.<br />
-                      2. 회원은 소셜 간편가입(카카오, 네이버) 또는 직접 입력을 통해 가입할 수 있으며, 타인의 정보를 도용하여 가입할 수 없습니다.
+                      1. 본 약관은 회원이 쉽게 알 수 있도록 서비스 초기 화면 또는 회원가입 창에 게시함으로써 효력이 발생합니다.<br />
+                      2. 공사는 「약관의 규제에 관한 법률」, 「개인정보 보호법」 등 관련 법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.<br />
+                      3. 약관이 개정되는 경우 공사는 개정 약관의 적용일자 7일 전부터 웹사이트에 공지하며, 회원에게 불리한 변경의 경우에는 최소 30일 전에 사전 공지합니다.
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <h4 className="font-bold text-slate-900">제3조 (서비스의 제공 및 변경)</h4>
+                    <h4 className="font-bold text-slate-900">제4조 (이용계약의 성립 및 회원가입)</h4>
                     <p className="text-slate-600">
-                      1. 물문화관은 연중무휴 1일 24시간 온라인 서비스를 제공함을 원칙으로 합니다.<br />
-                      2. 시스템 정기점검, 설비 보수, 통신 장애 등 불가피한 사유가 발생할 경우 사전 또는 사후에 공지하고 서비스 제공을 일시 중단할 수 있습니다.
+                      1. 이용계약은 가입 희망자가 본 약관 및 개인정보 수집·이용 동의서에 동의한 후, 회원가입 신청을 하고 공사가 이를 승낙함으로써 성립합니다.<br />
+                      2. 공사는 다음 각 호에 해당하는 경우 가입 신청에 대한 승낙을 거부하거나 유보할 수 있습니다:
+                    </p>
+                    <ul className="list-disc list-inside space-y-0.5 pl-2 text-slate-500 text-[11px]">
+                      <li>타인의 명의나 이메일을 도용하여 신청한 경우</li>
+                      <li>허위의 정보를 기재하거나 필수 기재사항을 누락한 경우</li>
+                      <li>법령 또는 사회의 안녕질서 및 미풍양속을 저해할 목적으로 신청한 경우</li>
+                      <li>만 14세 미만 아동이 법정대리인의 동의 없이 신청한 경우</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제5조 (서비스의 제공 및 이용)</h4>
+                    <p className="text-slate-600">
+                      1. 물문화관은 연중무휴, 1일 24시간 서비스를 제공함을 원칙으로 합니다.<br />
+                      2. 공사는 시스템 정기 점검, 서버 교체, 통신망 장애 또는 시설 현장 상황 등에 따라 서비스의 전부 또는 일부를 일시적으로 제한하거나 중단할 수 있으며, 이 경우 사전에 공지합니다.
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <h4 className="font-bold text-slate-900">제4조 (회원의 의무)</h4>
+                    <h4 className="font-bold text-slate-900">제6조 (회원의 아이디 및 비밀번호 관리 의무)</h4>
                     <p className="text-slate-600">
-                      1. 회원은 관계 법령, 본 약관의 규정, 공지사항을 준수하여야 하며, 기타 공사의 업무에 방해되는 행위를 하여서는 안 됩니다.<br />
-                      2. 허위 정보 입력, 게시판 내 음란·욕설·비방물 게시, 시스템 비인가 접근 등 불법 행위 적발 시 이용이 제한될 수 있습니다.
+                      1. 회원의 아이디(이메일)와 비밀번호에 관한 관리책임은 회원 본인에게 있습니다.<br />
+                      2. 회원은 자신의 아이디 및 비밀번호를 제3자에게 양도하거나 대여할 수 없으며, 도용이나 유출 사실을 인지한 즉시 공사에 통보하여야 합니다.
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <h4 className="font-bold text-slate-900">제5조 (회원 탈퇴 및 자격 상실)</h4>
+                    <h4 className="font-bold text-slate-900">제7조 (회원의 의무 및 금지행위)</h4>
                     <p className="text-slate-600">
-                      회원은 언제든지 마이페이지 등을 통해 회원 탈퇴를 요청할 수 있으며, 공사는 관련 법령에 따라 즉시 회원 정보를 파기 조치합니다.
+                      회원은 다음 각 호의 행위를 하여서는 안 되며, 위반 시 서비스 이용 제한 및 법적 조치가 따를 수 있습니다:
                     </p>
+                    <ul className="list-disc list-inside space-y-0.5 pl-2 text-slate-500 text-[11px]">
+                      <li>가입 신청 또는 정보 변경 시 허위 내용을 등록하는 행위</li>
+                      <li>타인의 정보(이메일, 연락처, 비밀번호 등)를 무단 도용하는 행위</li>
+                      <li>공사의 사전 승인 없이 서비스를 상업적·영리 목적으로 이용하는 행위</li>
+                      <li>게시판에 음란, 폭력, 비방, 허위사실 유포 등 미풍양속을 해치는 내용을 게시하는 행위</li>
+                      <li>시스템에 비정상적인 반복 호출(DDoS 등)을 가하거나 보안 취약점을 악용하는 행위</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제8조 (게시물의 저작권 및 관리)</h4>
+                    <p className="text-slate-600">
+                      1. 회원이 서비스 내에 게시한 글, 사진(물 이야기 등)의 저작권은 해당 게시자에게 귀속됩니다.<br />
+                      2. 공사는 회원이 게시한 내용이 타인의 명예를 훼손하거나 저작권 등 권리를 침해하는 경우 사전 통보 없이 해당 게시물을 삭제하거나 임시 조치할 수 있습니다.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제9조 (계약 해지 및 이용 제한)</h4>
+                    <p className="text-slate-600">
+                      1. 회원은 언제든지 서비스 내 마이페이지 등을 통해 회원 탈퇴(이용계약 해지)를 신청할 수 있으며, 공사는 관계 법령이 정하는 바에 따라 지체 없이 처리합니다.<br />
+                      2. 회원이 본 약관의 의무를 위반하거나 서비스의 정상적인 운영을 방해한 경우, 공사는 경고, 일시정지, 영구이용정지 등으로 서비스 이용을 단계적으로 제한할 수 있습니다.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제10조 (면책 조항)</h4>
+                    <p className="text-slate-600">
+                      1. 공사는 천재지변, 전시, 사변 또는 이에 준하는 국가 비상사태 등 불가항력으로 인하여 서비스를 제공할 수 없는 경우에는 서비스 제공에 관한 책임이 면제됩니다.<br />
+                      2. 공사는 회원의 귀책사유로 인한 서비스 이용의 장애에 대하여는 책임을 지지 않습니다.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제11조 (분쟁의 해결 및 관할 법원)</h4>
+                    <p className="text-slate-600">
+                      1. 서비스 이용과 관련하여 공사와 회원 간에 분쟁이 발생한 경우 상호 원만하게 해결하기 위하여 성실히 협의합니다.<br />
+                      2. 본 분쟁에 대하여 소송이 제기될 경우 한국수자원공사 본사 소재지를 관할하는 법원을 전속 관할법원으로 합니다.
+                    </p>
+                  </div>
+
+                  <div className="pt-2 text-[11px] text-slate-500 border-t border-slate-200">
+                    <strong>부칙</strong>: 본 약관은 2026년 10월 29일부터 시행됩니다.
                   </div>
                 </>
               ) : (
                 <>
                   <div className="rounded-xl bg-sky-50/80 p-3 border border-sky-100 text-sky-950 font-medium">
-                    K-water 온라인 물문화관은 「개인정보 보호법」 제15조, 제21조, 제22조에 따라 회원가입 시 아래와 같이 최소한의 개인정보를 수집·이용합니다.
+                    K-water 온라인 물문화관은 <strong>「개인정보 보호법」 제15조(수집·이용), 제21조(파기), 제22조(동의 방법), 제22조의2(아동 동의), 제30조(처리방침)</strong>에 따라 회원가입 시 아래와 같이 개인정보를 수집·이용하며, 정보주체의 권리를 안전하게 보호합니다.
                   </div>
 
                   {/* 1. 수집 목적 */}
                   <div className="space-y-1">
                     <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
-                      <span className="text-sky-600 font-black">1.</span> 개인정보의 수집 및 이용 목적
+                      <span className="text-sky-600 font-black">1.</span> 개인정보의 수집 및 이용 목적 (개인정보보호법 제15조제2항제1호)
                     </h4>
                     <ul className="list-disc list-inside space-y-0.5 pl-1 text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200/70">
-                      <li>회원 가입 의사 확인 및 회원제 서비스 이용에 따른 본인 식별·인증</li>
-                      <li>가이드 투어 예약, 문화행사 참여 연계 및 내 예약 내역 관리</li>
-                      <li>불량 회원의 부정이용 방지 및 서비스 관련 주요 고지사항 전달</li>
+                      <li><strong>회원 가입 및 관리:</strong> 회원 가입 의사 확인, 회원제 서비스 제공에 따른 본인 식별·인증, 회원자격 유지 및 관리, 제한적 본인확인제 시행에 따른 본인확인</li>
+                      <li><strong>문화관 서비스 제공:</strong> 전국 20개 물문화관 가이드 투어 예약 접수 및 내역 관리, 문화·체험 행사 참여 신청 및 당첨자 안내, 물 이야기/분실물 게시판 작성자 본인 확인</li>
+                      <li><strong>고충 처리 및 고지사항 전달:</strong> 서비스 이용 관련 중요 공지, 민원·불만 처리, 불량 회원의 부정 이용 방지 및 분쟁 조정을 위한 기록 보존</li>
                     </ul>
                   </div>
 
                   {/* 2. 수집 항목 */}
                   <div className="space-y-1">
                     <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
-                      <span className="text-sky-600 font-black">2.</span> 수집하는 개인정보의 항목
+                      <span className="text-sky-600 font-black">2.</span> 수집하는 개인정보의 항목 (개인정보보호법 제15조제2항제2호 & 제22조)
                     </h4>
                     <div className="rounded-lg border border-slate-200 overflow-hidden">
                       <table className="min-w-full divide-y divide-slate-200 text-left text-xs">
@@ -993,18 +1061,30 @@ export function AuthModal() {
                           <tr>
                             <th className="px-3 py-1.5 w-24">구분</th>
                             <th className="px-3 py-1.5">수집 항목</th>
+                            <th className="px-3 py-1.5 w-32">수집 방법</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 bg-white">
                           <tr>
                             <td className="px-3 py-1.5 font-bold text-rose-600">필수 항목</td>
                             <td className="px-3 py-1.5 text-slate-800">
-                              <strong>이름(성명), 이메일 주소(아이디), 비밀번호(암호화 저장)</strong>
+                              <strong>이름(성명), 이메일 주소(아이디), 비밀번호(단방향 암호화 저장)</strong><br />
+                              <span className="text-[11px] text-slate-500">※ 소셜 간편가입 시: 소셜 계정 고유 식별자, 이름, 이메일</span>
                             </td>
+                            <td className="px-3 py-1.5 text-slate-600">회원가입 폼 직접 입력 또는 소셜 로그인 연동</td>
                           </tr>
                           <tr>
                             <td className="px-3 py-1.5 font-bold text-slate-500">선택 항목</td>
-                            <td className="px-3 py-1.5 text-slate-600">휴대전화번호 (투어 예약 및 알림용)</td>
+                            <td className="px-3 py-1.5 text-slate-600">
+                              휴대전화번호 (가이드 투어 예약 확정·취소 알림 및 주요 행사 안내 수신용)
+                            </td>
+                            <td className="px-3 py-1.5 text-slate-600">회원가입 시 선택 입력</td>
+                          </tr>
+                          <tr>
+                            <td className="px-3 py-1.5 font-bold text-slate-400">자동 수집</td>
+                            <td className="px-3 py-1.5 text-slate-500 text-[11px]" colSpan={2}>
+                              IP 주소, 쿠키(Cookie), 서비스 이용 기록, 접속 로그, 불량 이용 기록
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -1014,32 +1094,64 @@ export function AuthModal() {
                   {/* 3. 보유 기간 */}
                   <div className="space-y-1">
                     <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
-                      <span className="text-sky-600 font-black">3.</span> 개인정보의 보유 및 이용 기간
+                      <span className="text-sky-600 font-black">3.</span> 개인정보의 보유 및 이용 기간 (개인정보보호법 제15조제2항제3호)
                     </h4>
-                    <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200/70 text-slate-700">
-                      <strong className="text-sky-950 font-bold">회원 탈퇴 시까지 (회원 탈퇴 요청 시 지체 없이 영구 파기)</strong>
-                      <p className="text-[11px] text-slate-500 mt-0.5">※ 관계 법령에 따라 보존이 필요한 경우 해당 법정 기간 동안 안전하게 보관</p>
+                    <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200/70 text-slate-700 space-y-1">
+                      <p>
+                        • <strong>원칙: 회원 탈퇴 시까지 (회원 탈퇴 요청 시 지체 없이 영구 파기)</strong>
+                      </p>
+                      <p className="text-[11px] text-slate-500">
+                        • 단, 관계 법령의 규정에 의하여 보존할 의무가 있는 경우 법정 기간 동안 별도 분리하여 안전하게 보관합니다:
+                      </p>
+                      <ul className="list-disc list-inside text-[11px] text-slate-500 pl-2">
+                        <li>계약 또는 청약철회 등에 관한 기록: 5년 (전자상거래 등에서의 소비자보호에 관한 법률)</li>
+                        <li>소비자의 불만 또는 분쟁처리에 관한 기록: 3년 (전자상거래 등에서의 소비자보호에 관한 법률)</li>
+                        <li>웹사이트 방문에 관한 기록: 3개월 (통신비밀보호법)</li>
+                      </ul>
                     </div>
                   </div>
 
-                  {/* 4. 파기 절차 */}
+                  {/* 4. 파기 절차 및 방법 */}
                   <div className="space-y-1">
                     <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
-                      <span className="text-sky-600 font-black">4.</span> 개인정보의 파기 절차 및 방법
+                      <span className="text-sky-600 font-black">4.</span> 개인정보의 파기 절차 및 파기 방법 (개인정보보호법 제21조)
                     </h4>
-                    <p className="text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200/70">
-                      목적 달성 또는 회원 탈퇴 시 전자적 파일 형태로 저장된 개인정보는 재생할 수 없는 기술적 방법을 사용하여 지체 없이 영구 삭제합니다.
+                    <ul className="list-disc list-inside space-y-0.5 pl-1 text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200/70 text-xs">
+                      <li><strong>파기 절차:</strong> 이용자가 회원 탈퇴를 요청하거나 개인정보 보유기간이 경과한 경우 파기 사유를 확인하고 즉시 파기 대상으로 선정합니다.</li>
+                      <li><strong>파기 방법:</strong> 전자적 파일 형태로 저장된 개인정보는 재생할 수 없는 기술적 방법(영구 삭제 및 덮어쓰기)을 사용하여 지체 없이 영구 삭제하며, 인쇄물 등의 서면은 파쇄 또는 소각합니다.</li>
+                    </ul>
+                  </div>
+
+                  {/* 5. 만 14세 미만 아동의 개인정보 처리 */}
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
+                      <span className="text-sky-600 font-black">5.</span> 만 14세 미만 아동의 개인정보 처리 (개인정보보호법 제22조의2)
+                    </h4>
+                    <p className="text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200/70 text-xs">
+                      물문화관은 만 14세 미만 아동의 개인정보를 수집할 경우 「개인정보 보호법」 제22조의2에 따라 법정대리인(보호자)의 동의를 받거나 보호자가 대리하여 신청하도록 조치하고 있습니다.
                     </p>
                   </div>
 
-                  {/* 5. 동의 거부 권리 */}
+                  {/* 6. 동의 거부 권리 및 불이익 */}
                   <div className="space-y-1">
                     <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
-                      <span className="text-sky-600 font-black">5.</span> 동의 거부 권리 및 불이익 고지 (제15조제2항제4호)
+                      <span className="text-sky-600 font-black">6.</span> 동의 거부 권리 및 거부에 따른 불이익 고지 (제15조제2항제4호)
                     </h4>
-                    <p className="text-amber-950 bg-amber-50/90 p-2.5 rounded-lg border border-amber-200">
-                      정보주체는 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 단, 필수 항목 동의 거부 시 회원 식별 및 인증이 불가능하므로 <strong>회원가입이 제한</strong>됩니다. (선택 항목 미동의 시에도 회원가입은 정상 완료됩니다.)
-                    </p>
+                    <div className="bg-amber-50/90 p-2.5 rounded-lg border border-amber-200 text-amber-950 text-xs leading-relaxed">
+                      귀하는 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 단, <strong>필수 항목에 대한 수집·이용 동의를 거부하실 경우 회원 식별 및 인증이 불가능하므로 회원가입이 제한</strong>됩니다. (선택 항목 미동의 시에도 기본 회원가입 및 서비스 이용은 가능합니다.)
+                    </div>
+                  </div>
+
+                  {/* 7. 개인정보 보호책임자 및 권익구제 창구 */}
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
+                      <span className="text-sky-600 font-black">7.</span> 개인정보 보호책임자 및 고충처리 창구 (개인정보보호법 제30조)
+                    </h4>
+                    <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200/70 text-slate-600 text-xs space-y-0.5">
+                      <p>• <strong>개인정보 보호책임자:</strong> 한국수자원공사 공간경관처 박석용 처장</p>
+                      <p>• <strong>개인정보 고충처리 문의:</strong> 042-629-3097 (한국수자원공사 본사)</p>
+                      <p>• <strong>권익침해 구제기관:</strong> 개인정보분쟁조정위원회(1833-6972), 대검찰청(1301), 경찰청(182)</p>
+                    </div>
                   </div>
                 </>
               )}
