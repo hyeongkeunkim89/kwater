@@ -57,6 +57,9 @@ export function AuthModal() {
   const [agreePrivacy, setAgreePrivacy] = useState(false);
   const [agreeMarketing, setAgreeMarketing] = useState(false);
 
+  // 약관 및 개인정보 상세 모달 레이어 상태 (회원가입 창 위에 모달 팝업으로 표시)
+  const [activeDetailModal, setActiveDetailModal] = useState<"terms" | "privacy" | null>(null);
+
   // Guest lookup form state
   const [guestPhone, setGuestPhone] = useState("");
   const [guestPin, setGuestPin] = useState("");
@@ -90,6 +93,9 @@ export function AuthModal() {
     setGuestPhone("");
     setGuestPin("");
     setShowGuestModalPin(false);
+
+    // 5. 약관 모달 닫기
+    setActiveDetailModal(null);
   }, [tab, isAuthOpen]);
 
   if (!isAuthOpen) return null;
@@ -680,13 +686,13 @@ export function AuthModal() {
                     />
                     <span><strong className="text-sky-700">[필수]</strong> 이용약관 동의</span>
                   </label>
-                  <a
-                    href="/privacy"
-                    target="_blank"
-                    className="text-[11px] text-slate-400 hover:text-sky-600 underline underline-offset-2"
+                  <button
+                    type="button"
+                    onClick={() => setActiveDetailModal("terms")}
+                    className="text-[11px] font-bold text-sky-600 hover:text-sky-800 underline underline-offset-2 hover:bg-sky-50 px-1.5 py-0.5 rounded transition cursor-pointer"
                   >
                     전문보기
-                  </a>
+                  </button>
                 </div>
                 <div className="flex items-center justify-between">
                   <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
@@ -698,13 +704,13 @@ export function AuthModal() {
                     />
                     <span><strong className="text-sky-700">[필수]</strong> 개인정보 수집 및 이용 동의</span>
                   </label>
-                  <a
-                    href="/privacy"
-                    target="_blank"
-                    className="text-[11px] text-slate-400 hover:text-sky-600 underline underline-offset-2"
+                  <button
+                    type="button"
+                    onClick={() => setActiveDetailModal("privacy")}
+                    className="text-[11px] font-bold text-sky-600 hover:text-sky-800 underline underline-offset-2 hover:bg-sky-50 px-1.5 py-0.5 rounded transition cursor-pointer"
                   >
                     전문보기
-                  </a>
+                  </button>
                 </div>
                 <label className="flex items-center gap-2 text-slate-500 cursor-pointer">
                   <input
@@ -876,6 +882,199 @@ export function AuthModal() {
           </div>
         )}
       </div>
+
+      {/* ── 회원가입 창 위에 바로 뜨는 이용약관 및 개인정보 상세 모달 레이어 ── */}
+      {activeDetailModal && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-xs animate-in fade-in duration-150"
+          onClick={() => setActiveDetailModal(null)}
+        >
+          <div
+            className="relative w-full max-w-lg max-h-[82vh] flex flex-col rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+          >
+            {/* 모달 상단 헤더 */}
+            <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3.5 bg-slate-50 shrink-0">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
+                {activeDetailModal === "terms" ? (
+                  <>
+                    <span>📜</span> K-water 온라인 물문화관 서비스 이용약관
+                  </>
+                ) : (
+                  <>
+                    <span>📋</span> 개인정보 수집 및 이용 동의 안내
+                  </>
+                )}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setActiveDetailModal(null)}
+                className="rounded-lg p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition"
+                aria-label="닫기"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* 모달 스크롤 본문 */}
+            <div className="overflow-y-auto px-5 py-4 space-y-3.5 text-xs text-slate-700 leading-relaxed">
+              {activeDetailModal === "terms" ? (
+                <>
+                  <div className="rounded-xl bg-sky-50/80 p-3 border border-sky-100 text-sky-950 font-medium">
+                    본 약관은 한국수자원공사가 운영하는 K-water 온라인 물문화관의 제반 서비스 이용과 관련하여 공사와 이용자의 권리, 의무 및 책임사항을 규정합니다.
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제1조 (목적)</h4>
+                    <p className="text-slate-600">
+                      본 약관은 K-water 온라인 물문화관(이하 "물문화관")이 제공하는 전국 20개 물문화관 전시 안내, 가이드 투어 예약, 문화행사 및 소통 공간 등 제반 온라인 서비스(이하 "서비스")의 이용조건 및 절차에 관한 기본 사항을 정함을 목적으로 합니다.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제2조 (회원의 정의 및 가입)</h4>
+                    <p className="text-slate-600">
+                      1. "회원"이란 본 약관에 동의하고 소정의 가입 절차를 거쳐 물문화관의 서비스를 지속적으로 이용할 수 있는 자를 말합니다.<br />
+                      2. 회원은 소셜 간편가입(카카오, 네이버) 또는 직접 입력을 통해 가입할 수 있으며, 타인의 정보를 도용하여 가입할 수 없습니다.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제3조 (서비스의 제공 및 변경)</h4>
+                    <p className="text-slate-600">
+                      1. 물문화관은 연중무휴 1일 24시간 온라인 서비스를 제공함을 원칙으로 합니다.<br />
+                      2. 시스템 정기점검, 설비 보수, 통신 장애 등 불가피한 사유가 발생할 경우 사전 또는 사후에 공지하고 서비스 제공을 일시 중단할 수 있습니다.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제4조 (회원의 의무)</h4>
+                    <p className="text-slate-600">
+                      1. 회원은 관계 법령, 본 약관의 규정, 공지사항을 준수하여야 하며, 기타 공사의 업무에 방해되는 행위를 하여서는 안 됩니다.<br />
+                      2. 허위 정보 입력, 게시판 내 음란·욕설·비방물 게시, 시스템 비인가 접근 등 불법 행위 적발 시 이용이 제한될 수 있습니다.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900">제5조 (회원 탈퇴 및 자격 상실)</h4>
+                    <p className="text-slate-600">
+                      회원은 언제든지 마이페이지 등을 통해 회원 탈퇴를 요청할 수 있으며, 공사는 관련 법령에 따라 즉시 회원 정보를 파기 조치합니다.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="rounded-xl bg-sky-50/80 p-3 border border-sky-100 text-sky-950 font-medium">
+                    K-water 온라인 물문화관은 「개인정보 보호법」 제15조, 제21조, 제22조에 따라 회원가입 시 아래와 같이 최소한의 개인정보를 수집·이용합니다.
+                  </div>
+
+                  {/* 1. 수집 목적 */}
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
+                      <span className="text-sky-600 font-black">1.</span> 개인정보의 수집 및 이용 목적
+                    </h4>
+                    <ul className="list-disc list-inside space-y-0.5 pl-1 text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200/70">
+                      <li>회원 가입 의사 확인 및 회원제 서비스 이용에 따른 본인 식별·인증</li>
+                      <li>가이드 투어 예약, 문화행사 참여 연계 및 내 예약 내역 관리</li>
+                      <li>불량 회원의 부정이용 방지 및 서비스 관련 주요 고지사항 전달</li>
+                    </ul>
+                  </div>
+
+                  {/* 2. 수집 항목 */}
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
+                      <span className="text-sky-600 font-black">2.</span> 수집하는 개인정보의 항목
+                    </h4>
+                    <div className="rounded-lg border border-slate-200 overflow-hidden">
+                      <table className="min-w-full divide-y divide-slate-200 text-left text-xs">
+                        <thead className="bg-slate-100 font-bold text-slate-800">
+                          <tr>
+                            <th className="px-3 py-1.5 w-24">구분</th>
+                            <th className="px-3 py-1.5">수집 항목</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 bg-white">
+                          <tr>
+                            <td className="px-3 py-1.5 font-bold text-rose-600">필수 항목</td>
+                            <td className="px-3 py-1.5 text-slate-800">
+                              <strong>이름(성명), 이메일 주소(아이디), 비밀번호(암호화 저장)</strong>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="px-3 py-1.5 font-bold text-slate-500">선택 항목</td>
+                            <td className="px-3 py-1.5 text-slate-600">휴대전화번호 (투어 예약 및 알림용)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  {/* 3. 보유 기간 */}
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
+                      <span className="text-sky-600 font-black">3.</span> 개인정보의 보유 및 이용 기간
+                    </h4>
+                    <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200/70 text-slate-700">
+                      <strong className="text-sky-950 font-bold">회원 탈퇴 시까지 (회원 탈퇴 요청 시 지체 없이 영구 파기)</strong>
+                      <p className="text-[11px] text-slate-500 mt-0.5">※ 관계 법령에 따라 보존이 필요한 경우 해당 법정 기간 동안 안전하게 보관</p>
+                    </div>
+                  </div>
+
+                  {/* 4. 파기 절차 */}
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
+                      <span className="text-sky-600 font-black">4.</span> 개인정보의 파기 절차 및 방법
+                    </h4>
+                    <p className="text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200/70">
+                      목적 달성 또는 회원 탈퇴 시 전자적 파일 형태로 저장된 개인정보는 재생할 수 없는 기술적 방법을 사용하여 지체 없이 영구 삭제합니다.
+                    </p>
+                  </div>
+
+                  {/* 5. 동의 거부 권리 */}
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-slate-900 flex items-center gap-1.5">
+                      <span className="text-sky-600 font-black">5.</span> 동의 거부 권리 및 불이익 고지 (제15조제2항제4호)
+                    </h4>
+                    <p className="text-amber-950 bg-amber-50/90 p-2.5 rounded-lg border border-amber-200">
+                      정보주체는 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 단, 필수 항목 동의 거부 시 회원 식별 및 인증이 불가능하므로 <strong>회원가입이 제한</strong>됩니다. (선택 항목 미동의 시에도 회원가입은 정상 완료됩니다.)
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* 모달 하단 푸터 버튼 */}
+            <div className="flex items-center justify-between border-t border-slate-200 px-5 py-3 bg-slate-50 shrink-0 gap-2">
+              <span className="text-[11px] text-slate-400">K-water 온라인 물문화관</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setActiveDetailModal(null)}
+                  className="rounded-xl border border-slate-300 px-3.5 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+                >
+                  닫기
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (activeDetailModal === "terms") {
+                      setAgreeTerms(true);
+                    } else if (activeDetailModal === "privacy") {
+                      setAgreePrivacy(true);
+                    }
+                    setActiveDetailModal(null);
+                  }}
+                  className="rounded-xl bg-sky-600 px-4 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-sky-700 transition cursor-pointer"
+                >
+                  내용 확인 및 동의하기 ✓
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
